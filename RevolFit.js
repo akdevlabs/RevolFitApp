@@ -180,7 +180,18 @@ getDataAppLogin().then((data) => {
   changeLinkColors()
   renderIcon(logo)
 
- 
+  const popupBtn = document.getElementById('pop-upBtn');
+  const popup = document.getElementById('backgroundImg');
+
+  // Add a click event listener to the button
+  popupBtn.addEventListener('click', () => {
+      // Toggle the visibility of the pop-up
+      if (popup.style.display === "none" || popup.style.display === "") {
+          popup.style.display = "block";
+      } else {
+          popup.style.display = "none";
+      }
+  });
   
 });
 

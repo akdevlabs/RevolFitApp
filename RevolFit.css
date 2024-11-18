@@ -5,8 +5,8 @@ body{
 
 
 
-.popUp{
-  display: none;
+#backgroundImg{
+  display: block;
   max-width: 100%;
   position: absolute;
   overflow-x: hidden; /* Prevent horizontal scrolling */
@@ -58,7 +58,7 @@ body{
 .login{
   display: block;
   max-width: 100%;
-  position: fixed;
+
   overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 .login #loginImg {

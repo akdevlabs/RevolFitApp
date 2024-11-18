@@ -3,8 +3,8 @@
 
 <svg
    width="1189.6007mm"
-   height="1554.6949mm"
-   viewBox="0 0 1189.6008 1554.695"
+   height="1554.6964mm"
+   viewBox="0 0 1189.6008 1554.6964"
    version="1.1"
    id="svg1"
    xml:space="preserve"
@@ -34,6 +34,14 @@
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" /><defs
      id="defs1"><linearGradient
+       id="linearGradient5"
+       inkscape:collect="always"><stop
+         style="stop-color:#c6d9df;stop-opacity:1;"
+         offset="0"
+         id="stop5" /><stop
+         style="stop-color:#c6d9df;stop-opacity:0;"
+         offset="1"
+         id="stop6" /></linearGradient><linearGradient
        id="linearGradient1"
        inkscape:collect="always"><stop
          style="stop-color:#013948;stop-opacity:1;"
@@ -58,11 +66,19 @@
          width="1189.5984"
          height="1554.6951"
          x="-3896.0508"
-         y="-314.08417" /></clipPath></defs><g
+         y="-314.08417" /></clipPath><linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5"
+       id="linearGradient6"
+       x1="-3265.2866"
+       y1="-283.00757"
+       x2="-3273.8796"
+       y2="-100.97424"
+       gradientUnits="userSpaceOnUse" /></defs><g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(3896.0544,314.08416)"><image
+     transform="translate(3896.0544,314.08553)"><image
        width="1189.5983"
        height="1763.4434"
        preserveAspectRatio="none"
@@ -80,4 +96,10 @@
        height="1254.7142"
        x="-3896.0544"
        y="-14.107883"
-       ry="0" /></g></svg>
+       ry="0" /><rect
+       style="fill:url(#linearGradient6);fill-opacity:1;stroke-width:7.03865;stroke-linecap:round"
+       id="rect5"
+       width="1189.4402"
+       height="553.2226"
+       x="-3896.0532"
+       y="-314.08554" /></g></svg>

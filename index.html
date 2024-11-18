@@ -42,12 +42,20 @@
       <div class="loginContent" id="loginContent">
         <form id="loginForm">
           <div class="input-block">
-              <label for="username">Nombre de usuario *</label>
-              <input type="text" id="username" placeholder="Ingrese su nombre de usuario" required>
+              <div class="inputSec">
+                <img for="username" src="images/App/userIcon.svg"></img>
+                <input type="text" id="username" placeholder="Ingrese su nombre de usuario" required>
+              </div> 
+              
+              <div class="line"></div>
           </div>
           <div class="input-block">
-              <label for="password">Contraseña *</label>
+            <div class="inputSec">
+              <img for="password" src="images/App/lockIcon.svg"></img>
               <input type="password" id="password" placeholder="Ingrese su contraseña" required>
+            </div> 
+              
+              <div class="line"></div>
           </div>
           <div class="remember-me">
               <input type="checkbox" id="remember-me">
@@ -55,7 +63,7 @@
           </div>
           <button type="button" id="ISbtn" >INICIAR SESIÓN</button>
           <div class="form-links">
-              <a href="signup.html">¿No tienes una cuenta?</a>
+              <a id="newA" href="signup.html">¿No tienes una cuenta?</a>
               <a href="forgot-password.html" class="forgot-password">¿Olvidaste tu contraseña?</a>
           </div>
       </form>

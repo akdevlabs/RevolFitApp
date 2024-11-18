@@ -62,20 +62,49 @@ body{
   overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 .login #loginImg img{
-  width: 100%;
+  width: 110%;
   margin-bottom: -2rem;
 }
 .loginContent{
   color: #ffffff;
-  padding: 1rem 0;
+  padding: auto 0;
 
 }
 #loginForm{
   gap: 1rem;
+  padding: 0 1rem;
   display: flex;
   flex-direction: column;
 }
 .input-block{
+  gap: .3rem;
   display: flex;
   flex-direction: column;
+}
+
+
+.inputSec{
+  gap: .5rem;
+  display: flex;
+}
+.input-block input{
+  background-color: transparent;
+  border: none;
+}
+.input-block input::placeholder{
+  color: #ffffff;
+}
+.line{
+  height: .1rem;
+  width: 90%;
+  background-color: #ffffff;
+}
+button{
+  color: #ffff;
+  padding: .8rem;
+  background-color: transparent;
+}
+.form-links{
+  color: #ffff;
+  display: flex;
 }

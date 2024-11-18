@@ -132,10 +132,11 @@ getDataAppLogin().then((data) => {
     
   }
 
+
   // Populate the button border color and other attributes
   setButtonBorderColor(btnColor);
   sbackgroundColor(backgroundColor)
-  
+ 
   // Render the background image
   function renderImage(imageUrl) {
     const imgContainer = document.getElementById("loginImg");
@@ -161,12 +162,43 @@ getDataAppLogin().then((data) => {
   renderImage(backgroundImg);
   renderText(title, Subtitle);
   renderLogo(logo);
+
+
+ 
   
 });
 
+function updateLinkStyles() {
+  const linkElement = document.getElementById("newA");
+  const color = btnColor
+  // Apply styles for different states
+  linkElement.style.color = "#ffff"; // Default link color
 
 
+  // Define hover and active states using CSS
+  const styleSheet = document.createElement("style");
+  styleSheet.innerHTML = `
+  
 
+    #newA:visited {
+      color: pink;
+      background-color: transparent;
+      text-decoration: none;
+    }
+    #newA:hover {
+      color: red;
+      background-color: transparent;
+      text-decoration: underline;
+    }
+    #newA:active {
+      color: yellow;
+      background-color: transparent;
+      text-decoration: underline;
+    }
+  `;
+  document.head.appendChild(styleSheet);
+}
+updateLinkStyles()
 
 
 function updateStatusBar() {

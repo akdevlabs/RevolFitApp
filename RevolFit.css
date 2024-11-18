@@ -61,9 +61,15 @@ body{
   position: fixed;
   overflow-x: hidden; /* Prevent horizontal scrolling */
 }
+.login #loginImg {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
 .login #loginImg img{
-  width: 110%;
-  margin-bottom: -3rem;
+  width: 100%;
+  margin-bottom: -5rem;
 }
 .loginContent{
   color: #ffffff;

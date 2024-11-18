@@ -183,15 +183,15 @@ getDataAppLogin().then((data) => {
   const popupBtn = document.getElementById('pop-upBtn');
   const popup = document.getElementById('backgroundImg');
 
-  // Add a click event listener to the button
-  popupBtn.addEventListener('click', () => {
-      // Toggle the visibility of the pop-up
-      if (popup.style.display === "none" || popup.style.display === "") {
-          popup.style.display = "block";
-      } else {
-          popup.style.display = "none";
-      }
+    // Add a click event listener for a single click
+    popupBtn.addEventListener('click', () => {
+      // Show the pop-up
+      popup.style.display = "block";
+
+      // Remove the event listener to prevent further clicks
+      popupBtn.removeEventListener('click', arguments.callee);
   });
+
   
 });
 

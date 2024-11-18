@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Software Health Solutions/RevolFitAppMobile</title>
+  <link rel="stylesheet" href="RevolFit.css">
+  <link rel="manifest" href="manifest.json"> <!-- Added manifest file link -->
+  <link rel="shortcut icon" href="images/Logos/flower_DB.webp">
+</head>
+<body id="backgroundImg">
+  <header>
+    <div id="status-bar">
+      <span id="time"></span>
+      <span id="wifi"></span>
+      <span id="battery">🔋 100%</span>
+    </div>
+  </header>
+
+  <main>
+    <div id="pop-up">
+      <div id="pop-upImg"></div>
+      <div id="pop-upText">
+        <h3 id="Subtittle"></h3>
+        <h1 id="tittle"></h1>
+        <a id="pop-upBtn">Empezar</a>
+        <div id="pop-upIcon"></div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="RevolFit.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js')
+        .then(() => console.log('Service Worker Registered'))
+        .catch(err => console.error('Service Worker Registration Failed:', err));
+    }
+  </script>
+</body>
+</html>

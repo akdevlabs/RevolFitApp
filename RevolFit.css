@@ -58,7 +58,7 @@ body{
 .login{
   display: block;
   max-width: 100%;
-
+  position: fixed;
   overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 .login #loginImg img{

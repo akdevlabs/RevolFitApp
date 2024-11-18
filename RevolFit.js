@@ -118,7 +118,9 @@ getDataAppLogin().then((data) => {
   const backgroundImg = AppIntroValue.backgroundimg;
   const btnColor = AppIntroValue.btnColor; // Example for button text
   const backgroundColor = AppIntroValue.backgroundColor; // Example for button text
-  const logo = AppIntroValue.logo;   // Example for button link
+  const logo = AppIntroValue.logo; 
+  const Fcolor = AppIntroValue.Fcolor; 
+  // Example for button link
 
   // Render the button border color
   function setButtonBorderColor(color) {
@@ -148,36 +150,40 @@ getDataAppLogin().then((data) => {
     imgContainer.appendChild(img);
   }
 
-  
+    // Render the background image
+    function renderIcon(imageUrl) {
+      const imgContainer = document.getElementById("loginIcon");
+      const img = document.createElement("img");
+      img.src = imageUrl;
+      img.alt = "What We Offer Image";
+      img.style.height = "auto"; 
+      imgContainer.innerHTML = "";
+      imgContainer.appendChild(img);
+    }
  
 
-  // Render button
+  function changeLinkColors() {
+    // Select all <a> tags within the div with id="form-links"
+    const links = document.querySelectorAll("#form-links a");
+
+
+
+    // Loop through each link and change its color
+    links.forEach(link => {
+        link.style.color = Fcolor;
+    });
+}
 
 
   // Populate the elements
   renderImage(backgroundImg);
-
-
+  changeLinkColors()
+  renderIcon(logo)
 
  
   
 });
 
 
-if (screen.orientation && screen.orientation.lock) {
-  screen.orientation.lock('portrait').catch(err => {
-      console.error("Orientation lock failed:", err);
-  });
-} else {
-  console.warn("Screen Orientation API is not supported.");
-}
 
-
-document.addEventListener('DOMContentLoaded', () => {
-  if (screen.orientation && screen.orientation.lock) {
-      screen.orientation.lock('portrait').catch(err => {
-          console.error("Orientation lock failed:", err);
-      });
-  }
-});
 

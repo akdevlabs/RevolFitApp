@@ -63,11 +63,11 @@ body{
 }
 .login #loginImg img{
   width: 110%;
-  margin-bottom: -2rem;
+  margin-bottom: -3rem;
 }
 .loginContent{
   color: #ffffff;
-  padding: auto 0;
+  padding: 1rem 0 4rem 0;
 
 }
 #loginForm{
@@ -104,7 +104,22 @@ button{
   padding: .8rem;
   background-color: transparent;
 }
-.form-links{
-  color: #ffff;
+.form-links {
+
   display: flex;
+  justify-content: space-between;
+
+}
+.form-links a{
+  text-decoration: none;
+  font-size: .8rem;
+  padding: .5rem 0;
+}
+#loginIcon{
+  display: flex;
+  justify-content: center;
+}
+#loginIcon img{
+  width: 15rem ;
+  padding: 1rem;
 }

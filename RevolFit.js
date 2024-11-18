@@ -36,7 +36,23 @@ async function getDataAppIntro() {
     console.error("Error fetching document:", error);
   }
 }
+async function getDataAppLogin() {
+  try {
+    // Reference a document in the "revoFitweb" collection with ID "landing"
+    const docRef = doc(db, 'RevolApp', 'userDefault');
+    const docSnap = await getDoc(docRef);
 
+    if (docSnap.exists()) {
+      const documentData = docSnap.data(); // Store document data
+      return documentData; // Return the data for external use
+    } else {
+      console.log("No such document!");
+      return null; // Return null if no document is found
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+  }
+}
 // Fetch and log the data
 getDataAppIntro().then((data) => {
   const AppIntroValue = data.popup; // Retrieve nested data
@@ -94,7 +110,59 @@ getDataAppIntro().then((data) => {
   
 });
 
+getDataAppLogin().then((data) => {
+  const AppIntroValue = data.login; // Retrieve nested data
 
+  // Access title, subtitle, background image, and logo
+
+  const backgroundImg = AppIntroValue.backgroundimg;
+  const btnColor = AppIntroValue.btnColor; // Example for button text
+  const backgroundColor = AppIntroValue.backgroundColor; // Example for button text
+  const logo = AppIntroValue.logo;   // Example for button link
+
+  // Render the button border color
+  function setButtonBorderColor(color) {
+    const button = document.getElementById("ISbtn");
+    button.style.border = `5px solid ${color}`; // Set the border color dynamically
+    button.style.borderRadius = "5px"; // Optional: Add rounded corners
+  }
+  function sbackgroundColor(color) {
+    const button = document.getElementById("loginContent");
+    button.style.backgroundColor = color; // Set the border color dynamically
+    
+  }
+
+  // Populate the button border color and other attributes
+  setButtonBorderColor(btnColor);
+  sbackgroundColor(backgroundColor)
+  
+  // Render the background image
+  function renderImage(imageUrl) {
+    const imgContainer = document.getElementById("loginImg");
+    const img = document.createElement("img");
+    img.src = imageUrl;
+    img.alt = "What We Offer Image";
+    img.style.height = "auto"; 
+    imgContainer.innerHTML = "";
+    imgContainer.appendChild(img);
+  }
+
+  
+  // Render title and subtitle
+  function renderText(title, subtitle) {
+    document.getElementById("tittle").textContent = title;
+    document.getElementById("Subtittle").textContent = subtitle;
+  }
+
+  // Render button
+
+
+  // Populate the elements
+  renderImage(backgroundImg);
+  renderText(title, Subtitle);
+  renderLogo(logo);
+  
+});
 
 
 

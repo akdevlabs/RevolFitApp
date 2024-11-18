@@ -7,12 +7,12 @@
   "theme_color": "#013948",
   "icons": [
     {
-      "src": "images/Logos/flower_DB.webp",
+      "src": "images/Logos/flower DB.webp",
       "sizes": "192x192",
       "type": "image/webp"
     },
     {
-      "src": "images/Logos/flower_DB.webp",
+      "src": "images/Logos/flower DB.webp",
       "sizes": "512x512",
       "type": "image/webp"
     }

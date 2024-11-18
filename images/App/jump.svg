@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="1207.5616mm"
-   height="1588.299mm"
-   viewBox="0 0 1207.5617 1588.299"
+   width="1207.5615mm"
+   height="2171.6985mm"
+   viewBox="0 0 1207.5616 2171.6985"
    version="1.1"
    id="svg1"
    xml:space="preserve"
@@ -24,9 +24,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="0.0625"
-     inkscape:cx="6488"
-     inkscape:cy="5976"
+     inkscape:zoom="0.044194174"
+     inkscape:cx="-373.35238"
+     inkscape:cy="3903.2294"
      inkscape:window-width="2560"
      inkscape:window-height="1017"
      inkscape:window-x="1912"
@@ -50,7 +50,7 @@
        x2="108.35059"
        y2="-210.19727"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1,0,0,0.6390385,-1982.2319,-79.976959)" /><clipPath
+       gradientTransform="matrix(1,0,0,0.63944512,-1982.2319,-79.887523)" /><clipPath
        clipPathUnits="userSpaceOnUse"
        id="clipPath6"><rect
          style="fill:#6f58b0;fill-opacity:0.615686;stroke:none;stroke-width:5.60406;stroke-linecap:round"
@@ -76,10 +76,10 @@
        inkscape:export-filename="jump.svg"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" /><rect
-       style="fill:url(#linearGradient2);stroke:none;stroke-width:5.42904;stroke-linecap:round"
+       style="fill:url(#linearGradient2);stroke:none;stroke-width:5.43077;stroke-linecap:round"
        id="rect1"
        width="1207.547"
-       height="1253.9247"
+       height="1254.7225"
        x="-2481.0564"
        y="-220.52933"
        ry="0" /></g></svg>

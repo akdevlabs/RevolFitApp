@@ -149,77 +149,22 @@ getDataAppLogin().then((data) => {
   }
 
   
-  // Render title and subtitle
-  function renderText(title, subtitle) {
-    document.getElementById("tittle").textContent = title;
-    document.getElementById("Subtittle").textContent = subtitle;
-  }
+ 
 
   // Render button
 
 
   // Populate the elements
   renderImage(backgroundImg);
-  renderText(title, Subtitle);
-  renderLogo(logo);
+
 
 
  
   
 });
 
-function updateLinkStyles() {
-  const linkElement = document.getElementById("newA");
-  const color = btnColor
-  // Apply styles for different states
-  linkElement.style.color = "#ffff"; // Default link color
 
 
-  // Define hover and active states using CSS
-  const styleSheet = document.createElement("style");
-  styleSheet.innerHTML = `
-  
-
-    #newA:visited {
-      color: pink;
-      background-color: transparent;
-      text-decoration: none;
-    }
-    #newA:hover {
-      color: red;
-      background-color: transparent;
-      text-decoration: underline;
-    }
-    #newA:active {
-      color: yellow;
-      background-color: transparent;
-      text-decoration: underline;
-    }
-  `;
-  document.head.appendChild(styleSheet);
-}
-updateLinkStyles()
-
-
-function updateStatusBar() {
-  const timeElement = document.getElementById('time');
-  const batteryElement = document.getElementById('battery');
-
-  // Update time
-  const now = new Date();
-  const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  timeElement.textContent = timeString;
-
-  // Simulate battery level (for demonstration purposes)
-  const batteryLevel = Math.floor(Math.random() * 100) + 1;
-  batteryElement.textContent = `🔋 ${batteryLevel}%`;
-
-  // Update every minute
-  setTimeout(updateStatusBar, 60000);
-}
-
-// Initialize the status bar
-updateStatusBar();
 
 
 

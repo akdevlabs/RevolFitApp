@@ -10,17 +10,43 @@ body{
 
 .AppTop{
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding:3rem  2rem;
+
+}
+#userName h2{
+  font-size:1.18rem ;
+  font-weight: 300;
+  margin-bottom: -1rem;
+}
+#AppTittle h1{
+  font-size:2rem ;
+  font-weight: 600;
+}
+#lastTime {
+  font-size: 1.18rem;
+  font-weight: 600;
+ 
+}
+
+
+
+.AppImgBlock{
+  gap: 2rem;
+  display: flex;
+  flex-direction: column;
 
 }
 
 
 
 #Icon img{
-  width: 5rem;
+  width: 3rem;
 }
 #userImg img{
-  width: 5rem;
-  height: 5rem;
+  width: 3rem;
+  height: 3rem;
   object-fit: cover;
   border-radius: 50%;
 }

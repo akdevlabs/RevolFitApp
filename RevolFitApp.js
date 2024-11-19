@@ -74,13 +74,13 @@ getDataAppStart().then((data) => {
     
     // If it's the first use, return "Day 1"
     if (firstUseDate === new Date().toISOString().split('T')[0]) {
-      return "Day 1"; // If it's the same day as first use, it's Day 1
+      return "1 Dia"; // If it's the same day as first use, it's Day 1
     }
 
     // Calculate the difference in time (in milliseconds) and convert it to days
     const timeDifference = currentDate - firstUse;
     const streakDays = Math.floor(timeDifference / (1000 * 3600 * 24)); // Convert ms to days
-    return `Day ${streakDays + 1}`; // Add 1 to the streak day to match the first use as Day 1
+    return `${streakDays + 1} Dias`; // Add 1 to the streak day to match the first use as Day 1
   }
 
   // Function to render the streak
@@ -89,7 +89,7 @@ getDataAppStart().then((data) => {
     const streak = calculateStreak();
 
     if (streakElement) {
-      streakElement.textContent = `App streak: ${streak}`; // Render streak
+      streakElement.textContent = `${streak}`; // Render streak
     } else {
       console.log("Element with ID #lastTime not found in the DOM!");
     }

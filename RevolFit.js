@@ -22,7 +22,7 @@ const db = getFirestore(app);
 async function getDataAppIntro() {
   try {
     // Reference a document in the "revoFitweb" collection with ID "landing"
-    const docRef = doc(db, 'RevolAppLogin', 'Default');
+    const docRef = doc(db, 'RevoBuissnes', 'RevolFit');
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
@@ -39,7 +39,7 @@ async function getDataAppIntro() {
 async function getDataAppLogin() {
   try {
     // Reference a document in the "revoFitweb" collection with ID "landing"
-    const docRef = doc(db, 'RevolAppLogin', 'Default');
+    const docRef = doc(db, 'RevoBuissnes', 'RevolFit');
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {

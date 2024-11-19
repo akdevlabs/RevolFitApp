@@ -6,3 +6,20 @@ body{
   height: 100vh;
   margin: 0;
 }
+
+
+.AppTop{
+  display: flex;
+}
+
+
+
+#Icon img{
+  width: 5rem;
+}
+#userImg img{
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+  border-radius: 50%;
+}

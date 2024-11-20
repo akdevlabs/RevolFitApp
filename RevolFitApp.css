@@ -1,4 +1,5 @@
 body{
+  font-family: "Inter", sans-serif;
   background: #C7D8DF;
   background: linear-gradient(180deg, #C7D8DF 0%, rgba(1,57,72,1) 100%);
   background-repeat: no-repeat;
@@ -9,10 +10,11 @@ body{
 
 
 .AppTop{
+  color: #013948;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding:3rem  2rem;
+  padding: 1rem 2rem;
 
 }
 #userName h2{
@@ -21,12 +23,13 @@ body{
   margin-bottom: -1rem;
 }
 #AppTittle h1{
-  font-size:2rem ;
+  font-size:2.5rem ;
   font-weight: 600;
 }
 #lastTime {
   font-size: 1.18rem;
   font-weight: 600;
+
  
 }
 
@@ -36,17 +39,12 @@ body{
   gap: 2rem;
   display: flex;
   flex-direction: column;
-
+  align-items: center;
 }
-
-
-
 #Icon img{
   width: 3rem;
 }
-#userImg img{
-  width: 3rem;
-  height: 3rem;
-  object-fit: cover;
-  border-radius: 50%;
+#userIm{
+  width: 4rem;
 }
+

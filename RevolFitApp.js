@@ -1,6 +1,6 @@
 // Import necessary Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { getFirestore, doc, getDoc, collection, addDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc, collection, addDoc, setDoc  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -18,6 +18,36 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Firestore
 const db = getFirestore(app);
+
+const user =    "DefaultUser"            //1000000001
+const buissnes = "RevolFit"
+const cat =  "red"
+
+
+
+async function checkDocumentExists(collectionName, documentId) {
+  try {
+    // Use `doc` to get a document reference
+    const docRef = doc(db, collectionName, documentId);
+
+    // Fetch the document snapshot
+    const docSnap = await getDoc(docRef);
+
+    // Check if the document exists and log the result
+    if (docSnap.exists()) {
+      console.log(`Document found:`, docSnap.data());
+    } else {
+      console.log(`No document found with ID: ${documentId}`);
+    }
+  } catch (error) {
+    console.error("Error checking document:", error);
+  }
+}
+
+// Call the function with the correct string arguments
+checkDocumentExists("RevoBuissnes", buissnes);
+
+
 
 async function getDataAppStart() {
   try {
@@ -154,7 +184,7 @@ getDataAppStart().then((data) => {
 
     // Create h2 element and set its content to title
     const h2 = document.createElement("h2");
-    h2.textContent = `Hola ${name}`;
+    h2.textContent = `Hola,  ${name}`;
 
     const nameElement = document.getElementById('userName');
     if (nameElement) {
@@ -172,6 +202,7 @@ getDataAppStart().then((data) => {
     img.src = imageUrl;
     img.alt = "What We Offer Image";
     img.style.height = "auto"; 
+    img.id = "userIm"; // Added ID for the img element
     imgContainer.innerHTML = "";
     imgContainer.appendChild(img);
   }

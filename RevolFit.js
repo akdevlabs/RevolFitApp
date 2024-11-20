@@ -1,5 +1,6 @@
 // Import necessary Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
 // Firebase configuration
@@ -7,7 +8,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyBc3B7SM_Itr9LRCv8N3_tbl9BglxHKo-M",
   authDomain: "revofit-ad7c3.firebaseapp.com",
   projectId: "revofit-ad7c3",
-  storageBucket: "revofit-ad7c3.appspot.com", // Note: Added '.appspot.com' for storage URL
+  storageBucket: "revofit-ad7c3.appspot.com",
   messagingSenderId: "643801118133",
   appId: "1:643801118133:web:d679abc998a18f7077d5fc",
   measurementId: "G-E6P96D0M6Z"
@@ -15,186 +16,168 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-// Initialize Firestore
 const db = getFirestore(app);
+const auth = getAuth(app);
 
-async function getDataAppIntro() {
-  try {
-    // Reference a document in the "revoFitweb" collection with ID "landing"
-    const docRef = doc(db, 'RevoBuissnes', 'RevolFit');
-    const docSnap = await getDoc(docRef);
+// Ensure the DOM is loaded before attaching event listeners
+document.addEventListener("DOMContentLoaded", () => {
+  // Login Functionality
+  async function loginUser(email, password) {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log("User logged in:", userCredential.user);
+      window.location.href = "dashboard.html"; // Redirect after successful login
+    } catch (error) {
+      console.error("Error logging in:", error.message);
+      alert("Error: " + error.message);
+    }
+  }
 
-    if (docSnap.exists()) {
-      const documentData = docSnap.data(); // Store document data
-      return documentData; // Return the data for external use
+  // Attach login button listener
+  document.getElementById("ISbtn").addEventListener("click", () => {
+    const email = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    if (email && password) {
+      loginUser(email, password);
     } else {
-      console.log("No such document!");
-      return null; // Return null if no document is found
+      alert("Por favor, complete todos los campos.");
     }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-  }
-}
-async function getDataAppLogin() {
-  try {
-    // Reference a document in the "revoFitweb" collection with ID "landing"
-    const docRef = doc(db, 'RevoBuissnes', 'RevolFit');
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const documentData = docSnap.data(); // Store document data
-      return documentData; // Return the data for external use
-    } else {
-      console.log("No such document!");
-      return null; // Return null if no document is found
-    }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-  }
-}
-// Fetch and log the data
-getDataAppIntro().then((data) => {
-  const AppIntroValue = data.popup; // Retrieve nested data
-
-  // Access title, subtitle, background image, and logo
-  const Subtitle = AppIntroValue.Subtittle;
-  const title = AppIntroValue.tittle;
-  const backgroundImg = AppIntroValue.backgroundImg;
-  const btnColor = AppIntroValue.btnColor; // Example for button text
-  const logo = AppIntroValue.logo;   // Example for button link
-
-  // Render the button border color
-  function setButtonBorderColor(color) {
-    const button = document.getElementById("pop-upBtn");
-    button.style.border = `5px solid ${color}`; // Set the border color dynamically
-    button.style.borderRadius = "5px"; // Optional: Add rounded corners
-  }
-
-  // Populate the button border color and other attributes
-  setButtonBorderColor(btnColor);
-
-  // Render the background image
-  function renderImage(imageUrl) {
-    const imgContainer = document.getElementById("pop-upImg");
-    const img = document.createElement("img");
-    img.src = imageUrl;
-    img.alt = "What We Offer Image";
-    img.style.height = "auto"; 
-    imgContainer.innerHTML = "";
-    imgContainer.appendChild(img);
-  }
-  function renderLogo(imageUrl) {
-    const imgContainer = document.getElementById("pop-upIcon");
-    const img = document.createElement("img");
-    img.src = imageUrl;
-    img.alt = "What We Offer Image";
-    img.style.height = "auto"; 
-    imgContainer.innerHTML = "";
-    imgContainer.appendChild(img);
-  }
-  
-  // Render title and subtitle
-  function renderText(title, subtitle) {
-    document.getElementById("tittle").textContent = title;
-    document.getElementById("Subtittle").textContent = subtitle;
-  }
-
-  // Render button
-
-
-  // Populate the elements
-  renderImage(backgroundImg);
-  renderText(title, Subtitle);
-  renderLogo(logo);
-  
-});
-
-getDataAppLogin().then((data) => {
-  const AppIntroValue = data.login; // Retrieve nested data
-
-  // Access title, subtitle, background image, and logo
-
-  const backgroundImg = AppIntroValue.backgroundimg;
-  const btnColor = AppIntroValue.btnColor; // Example for button text
-  const backgroundColor = AppIntroValue.backgroundColor; // Example for button text
-  const logo = AppIntroValue.logo; 
-  const Fcolor = AppIntroValue.Fcolor; 
-  // Example for button link
-
-  // Render the button border color
-  function setButtonBorderColor(color) {
-    const button = document.getElementById("ISbtn");
-    button.style.border = `5px solid ${color}`; // Set the border color dynamically
-    button.style.borderRadius = "5px"; // Optional: Add rounded corners
-  }
-  function sbackgroundColor(color) {
-    const button = document.getElementById("loginContent");
-    button.style.backgroundColor = color; // Set the border color dynamically
-    
-  }
-
-
-  // Populate the button border color and other attributes
-  setButtonBorderColor(btnColor);
-  sbackgroundColor(backgroundColor)
- 
-  // Render the background image
-  function renderImage(imageUrl) {
-    const imgContainer = document.getElementById("loginImg");
-    const img = document.createElement("img");
-    img.src = imageUrl;
-    img.alt = "What We Offer Image";
-    img.style.height = "auto"; 
-    imgContainer.innerHTML = "";
-    imgContainer.appendChild(img);
-  }
-
-    // Render the background image
-    function renderIcon(imageUrl) {
-      const imgContainer = document.getElementById("loginIcon");
-      const img = document.createElement("img");
-      img.src = imageUrl;
-      img.alt = "What We Offer Image";
-      img.style.height = "auto"; 
-      imgContainer.innerHTML = "";
-      imgContainer.appendChild(img);
-    }
- 
-
-  function changeLinkColors() {
-    // Select all <a> tags within the div with id="form-links"
-    const links = document.querySelectorAll("#form-links a");
-
-
-
-    // Loop through each link and change its color
-    links.forEach(link => {
-        link.style.color = Fcolor;
-    });
-}
-
-
-  // Populate the elements
-  renderImage(backgroundImg);
-  changeLinkColors()
-  renderIcon(logo)
-
-  const popupBtn = document.getElementById('pop-upBtn');
-  const popup = document.getElementById('backgroundImg');
-
-  // Add a click event listener to the button
-  popupBtn.addEventListener('click', () => {
-      // Toggle the visibility of the pop-up
-      if (popup.style.display === "none" || popup.style.display === "") {
-          popup.style.display = "block";
-      } else {
-          popup.style.display = "none";
-      }
   });
+
+  // Monitor authentication state
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("User is logged in:", user.email);
+    } else {
+      console.log("No user is logged in.");
+    }
+  });
+
+  // Function to fetch Firestore document data
+  async function fetchFirestoreData(collection, document) {
+    try {
+      const docRef = doc(db, collection, document);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        return docSnap.data();
+      } else {
+        console.log(`No such document in collection ${collection}`);
+        return null;
+      }
+    } catch (error) {
+      console.error(`Error fetching document from ${collection}:`, error);
+    }
+  }
+
+  // Render App Intro Data
+  fetchFirestoreData("RevoBuissnes", "RevolFit").then((data) => {
+    if (data && data.popup) {
+      const { Subtittle, tittle, backgroundImg, btnColor, logo } = data.popup;
+
+      // Dynamic rendering functions
+      function setButtonBorderColor(color) {
+        const button = document.getElementById("pop-upBtn");
+        if (button) {
+          button.style.border = `5px solid ${color}`;
+          button.style.borderRadius = "5px";
+        }
+      }
+
+      function renderImage(imageUrl, containerId) {
+        const container = document.getElementById(containerId);
+        if (container) {
+          const img = document.createElement("img");
+          img.src = imageUrl;
+          img.alt = "Image";
+          img.style.height = "auto";
+          container.innerHTML = "";
+          container.appendChild(img);
+        }
+      }
+
+      function renderText(title, subtitle) {
+        document.getElementById("tittle").textContent = title;
+        document.getElementById("Subtittle").textContent = subtitle;
+      }
+
+      // Populate UI elements
+      setButtonBorderColor(btnColor);
+      renderImage(backgroundImg, "pop-upImg");
+      renderImage(logo, "pop-upIcon");
+      renderText(tittle, Subtittle);
+    }
+  });
+
+  // Render App Login Data
+  fetchFirestoreData("RevoBuissnes", "RevolFit").then((data) => {
+    if (data && data.login) {
+      const { backgroundimg, btnColor, backgroundColor, logo, Fcolor } = data.login;
+
+      function setButtonBorderColor(color) {
+        const button = document.getElementById("ISbtn");
+        if (button) {
+          button.style.border = `5px solid ${color}`;
+          button.style.borderRadius = "5px";
+        }
+      }
+
+      function setBackgroundColor(color) {
+        const container = document.getElementById("loginContent");
+        if (container) {
+          container.style.backgroundColor = color;
+        }
+      }
+
+      function renderImage(imageUrl, containerId) {
+        const container = document.getElementById(containerId);
+        if (container) {
+          const img = document.createElement("img");
+          img.src = imageUrl;
+          img.alt = "Image";
+          img.style.height = "auto";
+          container.innerHTML = "";
+          container.appendChild(img);
+        }
+      }
+
+      function changeLinkColors(color) {
+        const links = document.querySelectorAll("#form-links a");
+        links.forEach((link) => {
+          link.style.color = color;
+        });
+      }
+
+      // Populate UI elements
+      setButtonBorderColor(btnColor);
+      setBackgroundColor(backgroundColor);
+      renderImage(backgroundimg, "loginImg");
+      renderImage(logo, "loginIcon");
+      changeLinkColors(Fcolor);
+    }
+  });
+
+
+
   
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  // Login Functionality remains unchanged...
 
+  // Add Event Listener for pop-up button
+  const popupBtn = document.getElementById("pop-upBtn");
+  const backgroundImg = document.getElementById("backgroundImg");
 
-
+  if (popupBtn && backgroundImg) {
+    // Toggle display between 'block' and 'none'
+    popupBtn.addEventListener("click", () => {
+      if (backgroundImg.style.display === "none" || backgroundImg.style.display === "") {
+        backgroundImg.style.display = "block";
+      } else {
+        backgroundImg.style.display = "none";
+      }
+    });
+  }
+});

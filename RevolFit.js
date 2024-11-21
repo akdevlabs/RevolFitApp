@@ -19,8 +19,11 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
+
 // Ensure the DOM is loaded before attaching event listeners
 document.addEventListener("DOMContentLoaded", () => {
+
+  
   // Login Functionality
   async function loginUser(email, password) {
     try {
@@ -71,113 +74,183 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Render App Intro Data
-  fetchFirestoreData("RevoBuissnes", "RevolFit").then((data) => {
-    if (data && data.popup) {
-      const { Subtittle, tittle, backgroundImg, btnColor, logo } = data.popup;
+  // Function to apply branding based on the document (RevolFit, MetaV, SHS)
+  async function applyBranding(documentId) {
+    const data = await fetchFirestoreData("RevoBuissnes", documentId);
+    if (data) {
+      const { popup, login, webSite} = data;
 
-      // Dynamic rendering functions
-      function setButtonBorderColor(color) {
-        const button = document.getElementById("pop-upBtn");
-        if (button) {
-          button.style.border = `5px solid ${color}`;
-          button.style.borderRadius = "5px";
+
+      if (webSite) {
+        const {fireIcon, font, glassIcon, icon, weightIcon} = webSite;
+     
+
+
+        function setFontFamily(element, fontFamily) {
+          element.style.fontFamily = fontFamily; // Set the font family on the given element
         }
+        
+        // Example usage
+        const element = document.querySelector('body'); // Select the target element
+        const setFont = font; // Define the font family
+        setFontFamily(element, font); // Apply the font family to the selected element
       }
+      // Render Popup Data
+      if (popup) {
+        const { Subtittle, tittle, backgroundImg, btnColor, logo, } = popup;
 
-      function renderImage(imageUrl, containerId) {
-        const container = document.getElementById(containerId);
-        if (container) {
-          const img = document.createElement("img");
-          img.src = imageUrl;
-          img.alt = "Image";
-          img.style.height = "auto";
-          container.innerHTML = "";
-          container.appendChild(img);
+        // Dynamic rendering functions
+        function setButtonBorderColor(color) {
+          const button = document.getElementById("pop-upBtn");
+          if (button) {
+            button.style.border = `5px solid ${color}`;
+            button.style.borderRadius = "5px";
+          }
         }
-      }
 
-      function renderText(title, subtitle) {
-        document.getElementById("tittle").textContent = title;
-        document.getElementById("Subtittle").textContent = subtitle;
-      }
-
-      // Populate UI elements
-      setButtonBorderColor(btnColor);
-      renderImage(backgroundImg, "pop-upImg");
-      renderImage(logo, "pop-upIcon");
-      renderText(tittle, Subtittle);
-    }
-  });
-
-  // Render App Login Data
-  fetchFirestoreData("RevoBuissnes", "RevolFit").then((data) => {
-    if (data && data.login) {
-      const { backgroundimg, btnColor, backgroundColor, logo, Fcolor } = data.login;
-
-      function setButtonBorderColor(color) {
-        const button = document.getElementById("ISbtn");
-        if (button) {
-          button.style.border = `5px solid ${color}`;
-          button.style.borderRadius = "5px";
+        function renderImage(imageUrl, containerId) {
+          const container = document.getElementById(containerId);
+          if (container) {
+            const img = document.createElement("img");
+            img.src = imageUrl;
+            img.alt = "Image";
+            img.style.height = "auto";
+            container.innerHTML = "";
+            container.appendChild(img);
+          }
         }
-      }
 
-      function setBackgroundColor(color) {
-        const container = document.getElementById("loginContent");
-        if (container) {
-          container.style.backgroundColor = color;
+        function renderText(title, subtitle) {
+          document.getElementById("tittle").textContent = title;
+          document.getElementById("Subtittle").textContent = subtitle;
         }
+
+     
+        // Populate UI elements
+       
+        setButtonBorderColor(btnColor);
+        renderImage(backgroundImg, "pop-upImg");
+        renderImage(logo, "pop-upIcon");
+        renderText(tittle, Subtittle);
       }
 
-      function renderImage(imageUrl, containerId) {
-        const container = document.getElementById(containerId);
-        if (container) {
-          const img = document.createElement("img");
-          img.src = imageUrl;
-          img.alt = "Image";
-          img.style.height = "auto";
-          container.innerHTML = "";
-          container.appendChild(img);
+      // Render Login Data
+      if (login) {
+        const { backgroundimg, btnColor, backgroundColor, logo, Fcolor, lockIcon, userIcon, } = login;
+
+        function setButtonBorderColor(color) {
+          const button = document.getElementById("ISbtn");
+          if (button) {
+            button.style.border = `5px solid ${color}`;
+            button.style.borderRadius = "5px";
+          }
         }
+
+        function setBackgroundColor(color) {
+          const container = document.getElementById("loginContent");
+          if (container) {
+            container.style.backgroundColor = color;
+          }
+        }
+
+        function setBackgroundColorT(color) {
+          const container = document.getElementById("pop-upText");
+          if (container) {
+            container.style.backgroundColor = color;
+          }
+        }
+
+        function renderImage(imageUrl, containerId) {
+          const container = document.getElementById(containerId);
+          if (container) {
+            const img = document.createElement("img");
+            img.src = imageUrl;
+            img.alt = "Image";
+            img.style.height = "auto";
+            container.innerHTML = "";
+            container.appendChild(img);
+          }
+        }
+
+        function changeLinkColors(color) {
+          const links = document.querySelectorAll("#form-links a");
+          links.forEach((link) => {
+            link.style.color = color;
+          });
+        }
+
+        function renderImageIcon(imgId, imgSrc) {
+          // Select the <img> element by its ID
+          const imgElement = document.getElementById(imgId);
+
+          // Check if the element exists
+          if (imgElement) {
+              // Update the src attribute
+              imgElement.src = imgSrc;
+          } else {
+              console.error(`No element found with ID: ${imgId}`);
+          }
+        }
+
+        function renderImageIcon2(imgId, imgSrc) {
+          // Select the <img> element by its ID
+          const imgElement = document.getElementById(imgId);
+
+          // Check if the element exists
+          if (imgElement) {
+              // Update the src attribute
+              imgElement.src = imgSrc;
+          } else {
+              console.error(`No element found with ID: ${imgId}`);
+          }
       }
-
-      function changeLinkColors(color) {
-        const links = document.querySelectorAll("#form-links a");
-        links.forEach((link) => {
-          link.style.color = color;
-        });
-      }
-
-      // Populate UI elements
-      setButtonBorderColor(btnColor);
-      setBackgroundColor(backgroundColor);
-      renderImage(backgroundimg, "loginImg");
-      renderImage(logo, "loginIcon");
-      changeLinkColors(Fcolor);
-    }
-  });
-
-
-
   
-});
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Login Functionality remains unchanged...
+      // Example usage
+    
+      renderImageIcon("passwordImage", lockIcon);
+      renderImageIcon2("userImage", userIcon)
+        // Populate UI elements
+        setBackgroundColorT(backgroundColor)
+        
+        setButtonBorderColor(btnColor);
+        setBackgroundColor(backgroundColor);
+        renderImage(backgroundimg, "loginImg");
+        renderImage(logo, "loginIcon");
+        changeLinkColors(Fcolor);
+      }
+    }
+  }
 
-  // Add Event Listener for pop-up button
+  // Dynamically select the document based on your needs
+  const documentId = "RevolFit"; // Example: "RevolFit", "MetaV", "SHS"
+  applyBranding(documentId);
+  
+  function transferInfo() {
+    const info = documentId
+    if (info) {
+      localStorage.setItem("transferredInfo", info); // Save data in localStorage
+
+    } else {
+      alert("Please enter some text before proceeding!");
+    }
+  }
+  transferInfo()
+
+
+  // Add Event Listener for pop-up button to toggle background image visibility
   const popupBtn = document.getElementById("pop-upBtn");
   const backgroundImg = document.getElementById("backgroundImg");
 
   if (popupBtn && backgroundImg) {
-    // Toggle display between 'block' and 'none'
     popupBtn.addEventListener("click", () => {
-      if (backgroundImg.style.display === "none" || backgroundImg.style.display === "") {
-        backgroundImg.style.display = "block";
-      } else {
-        backgroundImg.style.display = "none";
-      }
+      backgroundImg.style.display =
+        backgroundImg.style.display === "none" || backgroundImg.style.display === ""
+          ? "block"
+          : "none";
     });
   }
+
+
+
 });

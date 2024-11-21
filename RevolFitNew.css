@@ -1,0 +1,48 @@
+body{
+  
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+.registerContent{
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -7rem;
+  padding: 2rem 0;
+}
+#registerForm{
+  gap: .1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+
+
+}
+.inputSec{
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+  padding: .3rem 0;
+}
+.inputSec input{
+  width: 18rem;
+}
+.terms-and-conditions{
+  padding: .8rem;
+}
+.form-links{
+  padding: .3rem 0 0 0;
+}
+#registerBtn{
+ 
+  padding: .3rem 1rem;
+}
+#registerImg img{
+  width: 100%;
+}
+#registerIcon img{
+  width: 8rem;
+}
+

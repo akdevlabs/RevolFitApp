@@ -53,3 +53,94 @@
   renderText(title, Subtitle);
   renderLogo(logo);
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // Ensure the DOM is loaded before attaching event listeners
+document.addEventListener("DOMContentLoaded", () => {
+  // Registration Functionality
+  async function registerUser(email, password, username) {
+    try {
+      // Create a new user with Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      console.log("User registered:", user.email);
+
+      // Add user details to Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        email: email,
+        username: username,
+        createdAt: new Date()
+      });
+
+      alert("Cuenta creada exitosamente. ¡Bienvenido!");
+      window.location.href = "dashboard.html"; // Redirect after successful registration
+    } catch (error) {
+      console.error("Error registering user:", error.message);
+      alert("Error: " + error.message);
+    }
+  }
+
+  // Attach register button listener
+  document.getElementById("registerBtn").addEventListener("click", () => {
+    const username = document.getElementById("username").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (username && email && password && confirmPassword) {
+      if (password === confirmPassword) {
+        registerUser(email, password, username);
+      } else {
+        alert("Las contraseñas no coinciden. Por favor, intente nuevamente.");
+      }
+    } else {
+      alert("Por favor, complete todos los campos.");
+    }
+  });
+  
+
+
+  function getCurrentBU() {
+    const currentBU = localStorage.getItem("currentBU");
+    return currentBU ? currentBU : "Unknown BU"; // Default value if no BU is set
+  }
+
+  // Log the active BU in the console
+  function logCurrentBU() {
+    const currentBU = getCurrentBU();
+    console.log("Active Business Unit (BU):", currentBU);
+  }
+
+  // Call the log function when the page loads
+  document.addEventListener("DOMContentLoaded", logCurrentBU);
+
+
+});

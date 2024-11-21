@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHS/RevoFitApp</title>
+  <link rel="stylesheet" href="RevolFitApp.css">
+
+  <link rel="shortcut icon" href="images/Logos/flower_DB.webp">
+</head>
+<body>
+  <main>
+    <section class="App" id="App">
+      <div class="AppTop">
+        <div class="AppTopContent">
+          <div id="userName"></div>
+          <div id="AppTittle"></div>
+          <div id="lastTime"></div>
+        </div>
+        <div class="AppImgBlock">
+          <div id="Icon"></div>
+          <div id="userImg"></div>
+        </div>
+      </div>
+
+      
+      <div class="ResultsBlock">
+        <div class="ResultsTittleBlock">
+          <h1 id="ResultsTittle"></h1>
+        </div>
+        <div class="Results-Container">
+          <div id="cal"></div>
+          <div id="Time"></div>
+          <div id="weight"></div>
+        </div>
+      </div>
+
+
+
+      <div id="planBlock">
+        <h1>Tu Plan</h1>
+        <a id="See">Ver todo</a>
+        <div id="plans"></div>
+      </div>
+      <div class="Btnblock">
+        <a id="startBtn">INICIAR SESIÓN</a>
+      </div>
+      <div class="navBtns">
+        <img id="home" src="">
+        <img id="Date" src="">
+        <img id="goals" src="">
+        <img id="stats" src="">
+        <img id="gear" src="">
+      </div>
+    </section>
+   
+  </main>
+
+  <script type="module" src="RevolFitApp.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js')
+        .then(() => console.log('Service Worker Registered'))
+        .catch(err => console.error('Service Worker Registration Failed:', err));
+    }
+  </script>
+</body>
+</html>

@@ -27,6 +27,7 @@ body{
   padding: .3rem 0;
 }
 .inputSec input{
+  color: black;
   width: 18rem;
 }
 .terms-and-conditions{

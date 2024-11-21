@@ -1,7 +1,7 @@
 // Import necessary Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
-import { getFirestore, doc, setDoc,getDoc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -11,7 +11,7 @@ const firebaseConfig = {
   storageBucket: "revofit-ad7c3.appspot.com",
   messagingSenderId: "643801118133",
   appId: "1:643801118133:web:d679abc998a18f7077d5fc",
-  measurementId: "G-E6P96D0M6Z"
+  measurementId: "G-E6P96D0M6Z",
 };
 
 // Initialize Firebase
@@ -19,23 +19,63 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-
-
-
 function clearInfo() {
   localStorage.removeItem("transferredInfo"); // Clear the saved data
   window.location.href = "page1.html"; // Redirect back to the first page
 }
 
+// Function to handle account creation
+async function registerAccount() {
+  // Get input values
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const confirmPassword = document.getElementById("confirmPassword").value.trim();
+  const termsAccepted = document.getElementById("terms").checked;
 
+  // Validate inputs
+  if (!email || !password || !confirmPassword) {
+    alert("Por favor, complete todos los campos.");
+    return;
+  }
 
+  if (password !== confirmPassword) {
+    alert("Las contraseñas no coinciden.");
+    return;
+  }
 
+  if (!termsAccepted) {
+    alert("Debe aceptar los términos y condiciones.");
+    return;
+  }
 
+  try {
+    // Create user with Firebase Authentication
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
 
+    console.log("User created:", user);
 
+    // Prepare user data for Firestore
+    const userData = {
+      email: user.email,
+      uid: user.uid,
+      createdAt: new Date().toISOString(),
+      // Add additional fields as needed
+    };
 
+    // Save user data in Firestore
+    await setDoc(doc(db, "users", user.uid), userData);
 
+    console.log("User data saved in Firestore:", userData);
 
+    // Provide feedback to the user
+    alert("Cuenta creada con éxito.");
+    window.location.href = "success.html"; // Redirect to a success page
+  } catch (error) {
+    console.error("Error creating account:", error);
+    alert(`Error al crear la cuenta: ${error.message}`);
+  }
+}
 
 // Ensure the DOM is loaded before attaching event listeners
 document.addEventListener("DOMContentLoaded", () => {
@@ -70,19 +110,15 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("No data retrieved from Firestore.");
         return;
       }
-     
 
       function setFontFamily(element, fontFamily) {
         element.style.fontFamily = fontFamily; // Set the font family on the given element
       }
-      
+
       // Example usage
-      const element = document.querySelector('body'); // Select the target element
-      const fontAc= data.font; // Define the font family
+      const element = document.querySelector("body"); // Select the target element
+      const fontAc = data.font; // Define the font family
       setFontFamily(element, fontAc); // Apply the font family to the selected element
-
-
-
 
       const AppIntroValue = data.register;
 
@@ -91,9 +127,19 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      const { backgroundImg, CPIcon, EIcon, PIcon, backgroundColor,logo,font, color, textColor, textBcolor} = AppIntroValue;
+      const {
+        backgroundImg,
+        CPIcon,
+        EIcon,
+        PIcon,
+        backgroundColor,
+        logo,
+        font,
+        color,
+        textColor,
+        textBcolor,
+      } = AppIntroValue;
 
-    
       // Function to render images into containers
       function renderImage(imgId, imageUrl) {
         const imgContainer = document.getElementById(imgId);
@@ -109,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
         imgContainer.innerHTML = ""; // Clear previous content
         imgContainer.appendChild(img); // Add new image
       }
+
       function renderLogoImage(imgId, imageUrl) {
         const imgContainer = document.getElementById(imgId);
         if (!imgContainer) {
@@ -144,47 +191,50 @@ document.addEventListener("DOMContentLoaded", () => {
         button.style.backgroundColor = color; // Set the background color dynamically
       }
 
-
       function setTextColor(color, excludeId) {
         const container = document.getElementById("registerForm");
         if (!container) {
           console.warn("Element with ID 'registerForm' not found.");
           return;
         }
-      
+
         // Change the color of all child elements except the one with the specified ID
         const elements = container.querySelectorAll("*:not(#" + excludeId + ")");
         elements.forEach((element) => {
-          element.style.color = color;
+          if (element.tagName !== "INPUT") {
+            element.style.color = color; // Set color for non-input elements
+          }
+        });
+
+        // Ensure input fields have black text
+        const inputs = container.querySelectorAll("input");
+        inputs.forEach((input) => {
+          input.style.color = "black"; // Set input text color to black
         });
       }
-      
+
       function setBtnColor(color, textColor) {
         const button = document.getElementById("registerBtn");
         if (!button) {
           console.warn("Element with ID 'registerBtn' not found.");
           return;
         }
-      
+
         button.style.color = textColor; // Set the button text color
         button.style.backgroundColor = color; // Set the button background color
       }
-      
+
       // Combined function for setting colors
       function updateColors(btnBgColor, btnTextColor, textColor) {
         setBtnColor(btnBgColor, btnTextColor); // Set button colors
         setTextColor(textColor, "registerBtn"); // Set other text colors, excluding the button
       }
-      
-    
 
-
- 
       // Apply branding
-      setTextColor(textColor)
-      setBtnColor(color, textBcolor)
+      setTextColor(textColor);
+      setBtnColor(color, textBcolor);
       setBackgroundColor(backgroundColor);
-      renderLogoImage("registerIcon", logo)
+      renderLogoImage("registerIcon", logo);
       renderImage("registerImg", backgroundImg);
       renderIcons("confirmPasswordImage", CPIcon);
       renderIcons("passwordImage", PIcon);
@@ -199,9 +249,10 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("No document ID found in localStorage.");
     }
   };
+
+  // Attach the register function to the button
+  document.getElementById("registerBtn").addEventListener("click", registerAccount);
 });
-
-
 
 
 

@@ -8,7 +8,7 @@ body{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: -9rem;
+  margin-top: -10rem;
   padding: 2rem 0;
 }
 #registerForm{
@@ -41,7 +41,7 @@ body{
 }
 #registerImg img{
   width: 100%;
-  height: 90%;
+  height: 80%;
 }
 #registerIcon img{
   width: 8rem;

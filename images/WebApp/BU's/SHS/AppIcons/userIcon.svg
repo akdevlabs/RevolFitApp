@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="31"
+   height="31"
+   viewBox="0 0 31 31"
+   fill="none"
+   version="1.1"
+   id="svg2"
+   sodipodi:docname="userIcon.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="namedview2"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="11.313709"
+     inkscape:cx="27.267804"
+     inkscape:cy="16.617009"
+     inkscape:window-width="1350"
+     inkscape:window-height="1040"
+     inkscape:window-x="3026"
+     inkscape:window-y="576"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <path
+     style="fill:#556b2f;fill-opacity:1;stroke-width:19.2491;stroke-linecap:round"
+     d="m 15.494357,0.00877441 c 13.133628,0.053833 15.543569,12.26013259 15.483816,15.06706159 -0.131686,6.186024 -2.970697,10.554113 -6.732134,13.196666 -3.021842,2.122959 -6.64391,2.793683 -8.625069,2.722362 -0.121827,-0.0044 -0.0089,-4.743511 0.188065,-7.48584 7.68899,-0.02616 0.0021,0.0028 7.675797,-0.01014 -0.05165,-0.756182 0.07385,-3.59573 -0.821415,-5.560386 -0.295641,-0.648784 -1.143504,-1.93493 -2.547903,-1.937708 l -3.44903,-0.0068 -0.04286,-2.026735 c 2.060419,-0.520885 2.81202,-1.987972 2.812079,-3.404834 7.8e-5,-1.8562473 -1.436709,-3.5111855 -3.189634,-3.547155 -2.474959,-0.050785 -3.87615,1.6622687 -3.707626,3.831819 0.06755,0.869613 0.881889,3.309215 4.081411,3.118163 0.07646,1.309273 0.155907,2.035665 0.0559,2.035434 l -5.687886,-0.01314 c -3.1509033,0.353082 -2.9266161,6.410608 -2.9945061,7.509476 3.3349081,-0.0048 5.3471761,0.004 7.8335851,-0.02794 -0.08326,3.884279 0.0072,7.320516 -0.209549,7.528938 C 4.533379,30.895989 -0.31036701,21.293831 0.00140018,15.324109 0.17632459,11.974654 0.80223275,8.1744115 5.0281579,4.074501 7.3774296,1.7952832 11.23673,0.00134422 15.494357,0.00877441 Z"
+     id="path2"
+     sodipodi:nodetypes="csssccssccssscsccccssc" />
+</svg>

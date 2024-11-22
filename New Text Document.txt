@@ -1,146 +1,79 @@
 
-
-
-
-  // Access title, subtitle, background image, and logo
-  const Subtitle = AppIntroValue.Subtittle;
-  const title = AppIntroValue.tittle;
-  const backgroundImg = AppIntroValue.backgroundImg;
-  const btnColor = AppIntroValue.btnColor; // Example for button text
-  const logo = AppIntroValue.logo;   // Example for button link
-
-  // Render the button border color
-  function setButtonBorderColor(color) {
-    const button = document.getElementById("pop-upBtn");
-    button.style.border = `5px solid ${color}`; // Set the border color dynamically
-    button.style.borderRadius = "5px"; // Optional: Add rounded corners
-  }
-
-  // Populate the button border color and other attributes
-  setButtonBorderColor(btnColor);
-
-  // Render the background image
-  function renderImage(imageUrl) {
-    const imgContainer = document.getElementById("pop-upImg");
-    const img = document.createElement("img");
-    img.src = imageUrl;
-    img.alt = "What We Offer Image";
-    img.style.height = "auto"; 
-    imgContainer.innerHTML = "";
-    imgContainer.appendChild(img);
-  }
-  function renderLogo(imageUrl) {
-    const imgContainer = document.getElementById("pop-upIcon");
-    const img = document.createElement("img");
-    img.src = imageUrl;
-    img.alt = "What We Offer Image";
-    img.style.height = "auto"; 
-    imgContainer.innerHTML = "";
-    imgContainer.appendChild(img);
-  }
-  
-  // Render title and subtitle
-  function renderText(title, subtitle) {
-    document.getElementById("tittle").textContent = title;
-    document.getElementById("Subtittle").textContent = subtitle;
-  }
-
-  // Render button
-
-
-  // Populate the elements
-  renderImage(backgroundImg);
-  renderText(title, Subtitle);
-  renderLogo(logo);
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // Ensure the DOM is loaded before attaching event listeners
-document.addEventListener("DOMContentLoaded", () => {
-  // Registration Functionality
-  async function registerUser(email, password, username) {
-    try {
-      // Create a new user with Firebase Authentication
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      console.log("User registered:", user.email);
-
-      // Add user details to Firestore
-      await setDoc(doc(db, "users", user.uid), {
-        email: email,
-        username: username,
-        createdAt: new Date()
-      });
-
-      alert("Cuenta creada exitosamente. ¡Bienvenido!");
-      window.location.href = "dashboard.html"; // Redirect after successful registration
-    } catch (error) {
-      console.error("Error registering user:", error.message);
-      alert("Error: " + error.message);
-    }
-  }
-
-  // Attach register button listener
-  document.getElementById("registerBtn").addEventListener("click", () => {
-    const username = document.getElementById("username").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
-
-    if (username && email && password && confirmPassword) {
-      if (password === confirmPassword) {
-        registerUser(email, password, username);
-      } else {
-        alert("Las contraseñas no coinciden. Por favor, intente nuevamente.");
+      // Function to render images into containers
+      function renderImage(imgId, imageUrl) {
+        const imgContainer = document.getElementById(imgId);
+        if (!imgContainer) {
+          console.warn(`Container with ID '${imgId}' not found.`);
+          return;
+        }
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.alt = "What We Offer Image";
+        img.style.height = "auto";
+        img.id = "userIm"; // Optional ID for img element
+        imgContainer.innerHTML = ""; // Clear previous content
+        imgContainer.appendChild(img); // Add new image
       }
-    } else {
-      alert("Por favor, complete todos los campos.");
+
+   
+
+      
+      // Function to set background color
+      function setBackgroundColor(color) {
+        const button = document.getElementById("registerContent");
+        if (!button) {
+          console.warn("Element with ID 'registerContent' not found.");
+          return;
+        }
+        button.style.backgroundColor = color; // Set the background color dynamically
+      }
+
+      function setTextColor(color, excludeId) {
+        const container = document.getElementById("registerForm");
+        if (!container) {
+          console.warn("Element with ID 'registerForm' not found.");
+          return;
+        }
+
+        // Change the color of all child elements except the one with the specified ID
+        const elements = container.querySelectorAll("*:not(#" + excludeId + ")");
+        elements.forEach((element) => {
+          if (element.tagName !== "INPUT") {
+            element.style.color = color; // Set color for non-input elements
+          }
+        });
+
+        // Ensure input fields have black text
+        const inputs = container.querySelectorAll("input");
+        inputs.forEach((input) => {
+          input.style.color = "black"; // Set input text color to black
+        });
+      }
+
+      function setBtnColor(color, textColor) {
+        const button = document.getElementById("registerBtn");
+        if (!button) {
+          console.warn("Element with ID 'registerBtn' not found.");
+          return;
+        }
+
+        button.style.color = textColor; // Set the button text color
+        button.style.backgroundColor = color; // Set the button background color
+      }
+
+      // Combined function for setting colors
+      function updateColors(btnBgColor, btnTextColor, textColor) {
+        setBtnColor(btnBgColor, btnTextColor); // Set button colors
+        setTextColor(textColor, "registerBtn"); // Set other text colors, excluding the button
+      }
+
+      // Apply branding
+ 
+   
+      setBackgroundColor(backgroundColor);
+      
+      renderImage("forgot-password-Img", backgroundImg);
+      renderIcons("confirmPasswordImage", CPIcon);
+    
+      renderIcons("emailImage", EIcon);
     }
-  });
-  
-
-
-  function getCurrentBU() {
-    const currentBU = localStorage.getItem("currentBU");
-    return currentBU ? currentBU : "Unknown BU"; // Default value if no BU is set
-  }
-
-  // Log the active BU in the console
-  function logCurrentBU() {
-    const currentBU = getCurrentBU();
-    console.log("Active Business Unit (BU):", currentBU);
-  }
-
-  // Call the log function when the page loads
-  document.addEventListener("DOMContentLoaded", logCurrentBU);
-
-
-});

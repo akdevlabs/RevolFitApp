@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="1200.4465mm"
-   height="1558.7831mm"
-   viewBox="0 0 1200.4466 1558.7831"
+   width="1200.4468mm"
+   height="1340.6346mm"
+   viewBox="0 0 1200.4468 1340.6347"
    version="1.1"
    id="svg1"
    xml:space="preserve"
@@ -37,15 +37,7 @@
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      showgrid="false" /><defs
-     id="defs1"><mask
-       maskUnits="userSpaceOnUse"
-       id="mask6"><rect
-         style="fill:#41ab33;stroke-width:12.784;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill"
-         id="rect7"
-         width="1235.3566"
-         height="1558.9257"
-         x="-2655.8367"
-         y="-314.0863" /></mask><linearGradient
+     id="defs1"><linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient5"
        id="linearGradient4"
@@ -54,7 +46,7 @@
        y1="-276.02521"
        x2="-3254.9988"
        y2="53.801502"
-       gradientTransform="matrix(1.0089524,0,0,1.8188681,1275.0857,474.77018)" /><linearGradient
+       gradientTransform="matrix(1.0089524,0,0,1.8188681,1275.0913,475.49628)" /><linearGradient
        id="linearGradient5"
        inkscape:collect="always"><stop
          style="stop-color:#c6d9df;stop-opacity:1;"
@@ -67,7 +59,7 @@
        xlink:href="#linearGradient8"
        id="linearGradient2"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.99411988,0,0,0.69772118,-2160.0377,29.101438)"
+       gradientTransform="matrix(0.99411988,0,0,0.68322857,-2160.0377,54.351361)"
        x1="115.47828"
        y1="1652.271"
        x2="126.41734"
@@ -91,7 +83,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(2655.9303,314.0863)"><image
+     transform="translate(2655.929,95.920265)"><image
        width="1200.4459"
        height="1558.7694"
        preserveAspectRatio="none"
@@ -100,19 +92,19 @@
        x="-2655.929"
        y="-314.07404"
        clip-path="url(#clipPath2)"
-       inkscape:export-filename="forgot.svg"
+       inkscape:export-filename="nforgot.svg"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" /><rect
-       style="fill:url(#linearGradient2);stroke:none;stroke-width:5.65614;stroke-linecap:round"
+       style="fill:url(#linearGradient2);stroke:none;stroke-width:5.59709;stroke-linecap:round"
        id="rect1-4-2"
        width="1200.4465"
-       height="1369.0721"
+       height="1340.6346"
        x="-2655.9287"
-       y="-124.35775"
+       y="-95.920273"
        ry="0" /><rect
        style="fill:url(#linearGradient4);fill-opacity:1;stroke-width:9.53511;stroke-linecap:round"
        id="rect5-4"
        width="1200.0885"
        height="1006.239"
-       x="-2655.8462"
-       y="-96.510017" /></g></svg>
+       x="-2655.8406"
+       y="-95.78392" /></g></svg>

@@ -1,0 +1,42 @@
+body{
+
+  height: 100vh;
+  margin: 0;
+}
+
+
+.BuyPortalMobile{
+  padding: 0 2rem;
+}
+.tittle h1{
+  font-size: 1.5rem;
+  margin: -1rem 0;
+}
+
+.Tier-Clasic, .Tier-Gold, .Tier-Platinum  {
+  padding: 1rem;
+
+  border-radius: 1rem;
+}
+
+
+
+.TH-top{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.IconImg{
+  width: 3rem;
+}
+.TH-Bottom{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#TCH-pirce{
+  gap: .2rem;
+  display: flex;
+  align-items: center;
+}

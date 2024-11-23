@@ -14,60 +14,76 @@
   <link rel="manifest" href="/site.webmanifest">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SHS/RevoFitApp</title>
-  <link rel="stylesheet" href="RevolFitApp.css">
+  <title>SHS/RevolFit/login/Portal De Compraras</title>
+  <link rel="stylesheet" href="RevolFitBuy.css">
 
   <link rel="shortcut icon" href="images/Logos/flower_DB.webp">
 </head>
 <body>
-  <main>
-    <section class="App" id="App">
-      <div class="AppTop">
-        <div class="AppTopContent">
-          <div id="userName"></div>
-          <div id="AppTittle"></div>
-          <div id="lastTime"></div>
-        </div>
-        <div class="AppImgBlock">
-          <div id="Icon"></div>
-          <div id="userImg"></div>
-        </div>
-      </div>
+ 
+  <section class="BuyPortalMobile" id="BuyPortal">
 
-      
-      <div class="ResultsBlock">
-        <div class="ResultsTittleBlock">
-          <h1 id="ResultsTittle"></h1>
+    <div class="Tier-Clasic">
+      <div class="Tier-Head">
+        <div class="TH-top">
+          <img class="IconImg" id="TCicon">
+          <span id="alertC">Active</span>
         </div>
-        <div class="Results-Container">
-          <div id="cal"></div>
-          <div id="Time"></div>
-          <div id="weight"></div>
+        <div class="TH-Center">
+          <div class="tittle" id="TCTittle"></div>
+          <div id="TClist"></div>
+          <button id="render-more-btnTC" style="display: none;">Render More</button>
+        </div>
+        <div class="TH-Bottom">
+          <div id="TCpirce"></div>
+          <div id="TCBuyBtn">Suscribirse</div>
         </div>
       </div>
-
-
-
-      <div id="planBlock">
-        <h1>Tu Plan</h1>
-        <a id="See">Ver todo</a>
-        <div id="plans"></div>
+    </div>
+  
+    <div class="Tier-Gold">
+      <div class="Tier-Head">
+        <div class="TH-top">
+          <img class="IconImg" id="TOicon">
+          <span id="alertO">Active</span>
+        </div>
+        <div class="TH-Center">
+          <div class="tittle" id="TOTittle"></div>
+          <div id="TOlist"></div>
+          <button id="render-more-btnTO" style="display: none;">Render More</button>
+        </div>
+        <div class="TH-Bottom">
+          <div id="TOpirce"></div>
+          <div id="TOBuyBtn">Suscribirse</div>
+        </div>
       </div>
-      <div class="Btnblock">
-        <a id="startBtn">INICIAR SESIÓN</a>
+    </div>
+  
+    <div class="Tier-Platinum">
+      <div class="Tier-Head">
+        <div class="TH-top">
+          <img class="IconImg" id="TPicon">
+          <span id="alertP">Active</span>
+        </div>
+        <div class="TH-Center">
+          <div class="tittle" id="TPTittle"></div>
+          <div id="TPlist"></div>
+          <button id="render-more-btnTP" style="display: none;">Render More</button>
+        </div>
+        <div class="TH-Bottom">
+          <div id="TPpirce"></div>
+          <div id="TPBuyBtn">Suscribirse</div>
+        </div>
       </div>
-      <div class="navBtns">
-        <img id="home" src="">
-        <img id="Date" src="">
-        <img id="goals" src="">
-        <img id="stats" src="">
-        <img id="gear" src="">
-      </div>
-    </section>
-   
-  </main>
+    </div>
+  </section>
+  
+  
 
-  <script type="module" src="RevolFitApp.js"></script>
+  
+ 
+
+  <script type="module" src="RevolFitBuy.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./service-worker.js')

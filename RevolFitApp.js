@@ -19,9 +19,9 @@ const app = initializeApp(firebaseConfig);
 // Initialize Firestore
 const db = getFirestore(app);
 
-const user =    "DefaultUser"            //1000000001
-const buissnes = "RevolFit"
-const cat =  "red"
+
+
+
 
 
 

@@ -1,7 +1,7 @@
 // Import necessary Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -24,18 +24,64 @@ const auth = getAuth(app);
 document.addEventListener("DOMContentLoaded", () => {
 
   
-  // Login Functionality
   async function loginUser(email, password) {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log("User logged in:", userCredential.user);
-      window.location.href = "index4.html"; // Redirect after successful login
+  
+      // Add a login timestamp to the database
+      const userDocRef = doc(db, "users", userCredential.user.uid);
+      await updateDoc(userDocRef, {
+        lastLogin: serverTimestamp() // Firestore will set the server time
+      });
+  
+      // After login, check subscription status
+      checkUserSubscription(userCredential.user.uid);
     } catch (error) {
       console.error("Error logging in:", error.message);
       alert("Error: " + error.message);
     }
   }
 
+  // Function to check subscription status
+  async function checkUserSubscription(userId) {
+    try {
+      // Assuming the subscription status is stored in Firestore under a "users" collection
+      const userDocRef = doc(db, "users", userId);
+      const userDocSnap = await getDoc(userDocRef);
+     
+      if (userDocSnap.exists()) {
+        const userData = userDocSnap.data();
+      
+        if (userData.activeA) {
+          const userinfo = userData.uid
+          console.log(userinfo)
+
+
+          console.log("User is active. Redirecting to index6.html.");
+           window.location.href = "index6.html"; // Redirect if subscribed
+        
+      
+          if (userinfo){
+            localStorage.setItem("transferreduserInfo", userinfo); // Save data in localStorage
+      
+          } else {
+            alert("Please enter some text before proceeding!");
+          }
+      
+        } else {
+          console.log("User is not active. Redirecting to index5.html.");
+          // window.location.href = "index5.html"; // Redirect if not subscribed
+        }
+      } else {
+        console.error("No such user document found.");
+        alert("Unable to verify subscription status. Please contact support.");
+      }
+    } catch (error) {
+      console.error("Error checking subscription status:", error.message);
+      alert("Error checking subscription status. Please try again later.");
+    }
+  }
   // Attach login button listener
   document.getElementById("ISbtn").addEventListener("click", () => {
     const email = document.getElementById("username").value;
@@ -228,8 +274,10 @@ document.addEventListener("DOMContentLoaded", () => {
   
   function transferInfo() {
     const info = documentId
+
     if (info) {
       localStorage.setItem("transferredInfo", info); // Save data in localStorage
+      
 
     } else {
       alert("Please enter some text before proceeding!");
@@ -254,3 +302,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 });
+
+localStorage.clear();

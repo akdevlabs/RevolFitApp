@@ -208,3 +208,68 @@ const tierTopTittle = document.getElementById("tierTopClasic");
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  body {
+    font-family: Arial, sans-serif;
+  }
+
+  .Block {
+    display: none;
+  }
+
+  .Block.active {
+    display: block;
+  }
+
+  .BusinessContent {
+    display: none;
+  }
+
+  .BusinessContent.active {
+    display: block;
+  }
+
+  .error {
+    border: 1px solid red;
+  }
+
+  .error-message {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 5px;
+  }
+
+
+@media (max-width: 768px) {
+  
+
+  
+  
+  
+  
+
+  
+
+
+ 
+  
+
+}

@@ -1,396 +1,258 @@
-// Fetch and log the data
-getsubscriptionsData().then((data) => {
+/* Prevent horizontal scrollbars globally */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.Evaluation{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   
+}
 
-  function renderClasicTier(){
-    const Clásico = data.Clásico; // Retrieve nested data
-    const Ctittle = Clásico.tittle
-    const CiconImg = Clásico.icon
-    const points = Clásico.points
-    const Mcost = Clásico.monthCost
+.E-left{
+  gap: 2rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.line{
+  width: 90%;
+  float: right;
+  height: .5rem;
+  margin: -1rem 0 2rem 0;
+}
+#IconLogo{
+  width: 15rem;
+}
+.TextContent{
+  padding: 2rem 2rem 80% 2rem;
+  border-radius: 2rem 0 0 2rem;
+}
+.TextContent h1{
+  font-size: 2.5rem;
+}
+.TextContent p{
+  width: 32rem;
+  text-align: justify;
+  font-size: 1.2rem;
+}
+.E-right{
+  padding: 2rem;
+ 
+}
+.form-group{
+  gap: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
 
-
-    
-
-    function setImageSource(imgId, src) {
-      // Get the image element by its ID
-      const imgElement = document.getElementById(imgId);
-      
-      // Check if the element exists and is an image
-      if (imgElement && imgElement.tagName === 'IMG') {
-          imgElement.src = src; // Set the src attribute
-      } else {
-          console.error(`Element with ID '${imgId}' is not an image or does not exist.`);
-      }
-    }
-    function renderTitle() {
-      // Get the parent element where the title will be appended
-      let TCHtop = document.getElementById("TCH-Tittle");
-      if (!TCHtop) {
-        console.error("Element with id 'TCH-top' not found.");
-        return;
-      }
-    
-      // Create a container div for the title
-      const titleDiv = document.createElement("div");
-      titleDiv.id = "titleSection";
-    
-      // Create and populate the <h3> and <h1> elements
-      const h3 = document.createElement("h3");
-      const h1 = document.createElement("h1");
-      h3.textContent = "Plan";
-      
-      // Make sure 'tittle' has a value
-      const tittle = Ctittle; // Replace with your desired title
-      h1.textContent = tittle;
-    
-      // Append the <h3> and <h1> to the container div
-      titleDiv.appendChild(h3);
-      titleDiv.appendChild(h1);
-    
-      // Append the container div to the parent element
-      TCHtop.appendChild(titleDiv);
-    }
-     
-    // Function to render the list
-    function renderListFromPoints(points, limit = 2) {
-          // Check if the input is a valid array
-          if (!Array.isArray(points)) {
-              console.error('Provided input is not an array.');
-              return;
-          }
-
-          // Create the <ul> element
-          const ulElement = document.createElement('ul');
-
-          // Render only the first `limit` items initially
-          points.slice(0, limit).forEach(point => {
-              const liElement = document.createElement('li');
-              liElement.textContent = point; // Set the text of the <li>
-              ulElement.appendChild(liElement); // Append the <li> to the <ul>
-          });
-
-          // Append the <ul> to the "TCH-list" container
-          const container = document.getElementById('TCH-list');
-          if (container) {
-              container.innerHTML = ''; // Clear existing content (if any)
-              container.appendChild(ulElement); // Add the new <ul> to the container
-
-              // Show the "Render More" button if there are more items
-              const renderMoreBtn = document.getElementById('render-more-btn');
-              if (points.length > limit) {
-                  renderMoreBtn.style.display = 'inline-block';
-                  renderMoreBtn.onclick = () => renderFullList(points);
-              } else {
-                  renderMoreBtn.style.display = 'none';
-              }
-          } else {
-              console.error('Container with ID "TCH-list" not found.');
-          }
-    }
-
-    // Function to render the full list
-    function renderFullList(points) {
-          renderListFromPoints(points, points.length);
-    }
-
-    function renderCost() {
-      // Get the parent element where the title will be appended
-      let TCHpirce = document.getElementById("TCH-pirce");
-     
-      // Create and populate the <h3> and <h1> elements
-      const h2   = document.createElement("h2");
-      const a    = document.createElement("span");
-      const span = document.createElement("span");
-      
-      // Make sure 'tittle' has a value
-      const MoCost = Mcost;
-      // Replace with your desired title
-      h2.textContent = MoCost;
-      a.textContent = "/";
-      span.textContent = "Monthly";
-      // Append the <h3> and <h1> to the container div
-      
-      TCHpirce.appendChild(h2);
-      
-      TCHpirce.appendChild(a);
-    
-      TCHpirce.appendChild(span);
-    }
-     
-
-    renderCost()
+input{
+  padding: .5rem;
+}
+.Block {
+  display: none;
+}
+.Block.active {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ 
+  padding: 0 10rem 10rem 10rem;
+  margin-left: -10rem;
 
 
-    // Render the initial list
-    renderListFromPoints(points);
+}
+#pIcon img{
+  width: 50rem;
+  height: 50rem;
+}
+label{
+  font-size: 1.5rem;
+}
+.inputs{
+  gap: .5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.Btn{
+  width: 100%;
+  padding: .3rem;
+  font-size: 1.2rem;
+  margin: 1.2rem 0;
+
+}
+label{
+  font-size: 1.1rem;
+}
+
+.form-group-dropdown{
+  display: flex;
+  flex-direction: column;
+  
+}
+.main-question{
+  gap: 10rem;
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+  justify-content: space-between;
+}
+.extra-question{
+  gap: 1rem;
+  display: none;
+  margin: .5rem 0;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.error {
+  border: 2px solid red;
+  background-color: #ffe6e6;
+}
 
 
-    renderTitle()
-    setImageSource("Cicon", CiconImg)
-    
-   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+  body {
+    width: 100%;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    margin: 0; /* Ensure no default body margin causes issues */
   }
-  function renderGoldTier(){
-    const Oro = data.Oro; // Retrieve nested data
-    const Ctittle = Oro.tittle
-    const CiconImg = Oro.icon
-    const points = Oro.points
-    const Mcost = Oro.monthCost
-
-
-    
-
-    function setImageSource(imgId, src) {
-      // Get the image element by its ID
-      const imgElement = document.getElementById(imgId);
-      
-      // Check if the element exists and is an image
-      if (imgElement && imgElement.tagName === 'IMG') {
-          imgElement.src = src; // Set the src attribute
-      } else {
-          console.error(`Element with ID '${imgId}' is not an image or does not exist.`);
-      }
-    }
-    function renderTitle() {
-      // Get the parent element where the title will be appended
-      let TCHtop = document.getElementById("TOH-Tittle");
-      if (!TCHtop) {
-        console.error("Element with id 'TCH-top' not found.");
-        return;
-      }
-    
-      // Create a container div for the title
-      const titleDiv = document.createElement("div");
-      titleDiv.id = "titleSection";
-    
-      // Create and populate the <h3> and <h1> elements
-      const h3 = document.createElement("h3");
-      const h1 = document.createElement("h1");
-      h3.textContent = "Plan";
-      
-      // Make sure 'tittle' has a value
-      const tittle = Ctittle; // Replace with your desired title
-      h1.textContent = tittle;
-    
-      // Append the <h3> and <h1> to the container div
-      titleDiv.appendChild(h3);
-      titleDiv.appendChild(h1);
-    
-      // Append the container div to the parent element
-      TCHtop.appendChild(titleDiv);
-    }
-     
-    // Function to render the list
-    function renderListFromPoints(points, limit = 2) {
-          // Check if the input is a valid array
-          if (!Array.isArray(points)) {
-              console.error('Provided input is not an array.');
-              return;
-          }
-
-          // Create the <ul> element
-          const ulElement = document.createElement('ul');
-
-          // Render only the first `limit` items initially
-          points.slice(0, limit).forEach(point => {
-              const liElement = document.createElement('li');
-              liElement.textContent = point; // Set the text of the <li>
-              ulElement.appendChild(liElement); // Append the <li> to the <ul>
-          });
-
-          // Append the <ul> to the "TCH-list" container
-          const container = document.getElementById('TOH-list');
-          if (container) {
-              container.innerHTML = ''; // Clear existing content (if any)
-              container.appendChild(ulElement); // Add the new <ul> to the container
-
-              // Show the "Render More" button if there are more items
-              const renderMoreBtn = document.getElementById('render-more-btn');
-              if (points.length > limit) {
-                  renderMoreBtn.style.display = 'inline-block';
-                  renderMoreBtn.onclick = () => renderFullList(points);
-              } else {
-                  renderMoreBtn.style.display = 'none';
-              }
-          } else {
-              console.error('Container with ID "TCH-list" not found.');
-          }
-    }
-
-    // Function to render the full list
-    function renderFullList(points) {
-          renderListFromPoints(points, points.length);
-    }
-
-    function renderCost() {
-      // Get the parent element where the title will be appended
-      let TCHpirce = document.getElementById("TOH-pirce");
-     
-      // Create and populate the <h3> and <h1> elements
-      const h2   = document.createElement("h2");
-      const a    = document.createElement("span");
-      const span = document.createElement("span");
-      
-      // Make sure 'tittle' has a value
-      const MoCost = Mcost;
-      // Replace with your desired title
-      h2.textContent = MoCost;
-      a.textContent = "/";
-      span.textContent = "Monthly";
-      // Append the <h3> and <h1> to the container div
-      
-      TCHpirce.appendChild(h2);
-      
-      TCHpirce.appendChild(a);
-    
-      TCHpirce.appendChild(span);
-    }
-     
-
-    renderCost()
-
-
-    // Render the initial list
-    renderListFromPoints(points);
-
-
-    renderTitle()
-    setImageSource("Oicon", CiconImg)
-    
-   
+  .Evaluation {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
   }
-  function renderPlatinoTier(){
-    const Platino = data.Platino; // Retrieve nested data
-    const Ctittle = Platino.tittle
-    const CiconImg = Platino.icon
-    const points = Platino.points
-    const Mcost = Platino.monthCost
+  #mobileImg {
+    width: 27rem;
+    height: 12rem;
+    border-radius: 0 0 8rem 8rem;
+  }
+  #IconLogo{
+    width: 12em;
+    margin: 8rem 0 0 0;
+    position: absolute;
+  }
+  .TextContent{
+    display: none;
+  }
+  .Basic-Reg-mobile h1{
+    font-size: 2.3rem;
+  }
+  .line {
+    width: 90%;
+    height: 0.5rem;
+    margin: -1rem 0 2rem 0;
+  }
+  .E-right {
+    padding: 4rem 2rem 0 2rem;
+    border-radius: 4rem 4rem 0 0;
+    margin-top: 4rem;
+  }
+  .form-group{
+    gap: 1.2rem;
+    display: flex;
+    flex-direction: row;
+    margin: 1.5rem 0;
+  }
+  .form-group input{
+    width: 90%;
+  }
+  .inputs{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .Btn{
+    width: 100%;
+    padding: .3rem;
+    font-size: 1.2rem;
+    margin: 1.2rem 0;
 
-
-    
-
-    function setImageSource(imgId, src) {
-      // Get the image element by its ID
-      const imgElement = document.getElementById(imgId);
-      
-      // Check if the element exists and is an image
-      if (imgElement && imgElement.tagName === 'IMG') {
-          imgElement.src = src; // Set the src attribute
-      } else {
-          console.error(`Element with ID '${imgId}' is not an image or does not exist.`);
-      }
-    }
-    function renderTitle() {
-      // Get the parent element where the title will be appended
-      let TCHtop = document.getElementById("TPH-Tittle");
-      if (!TCHtop) {
-        console.error("Element with id 'TCH-top' not found.");
-        return;
-      }
-    
-      // Create a container div for the title
-      const titleDiv = document.createElement("div");
-      titleDiv.id = "titleSection";
-    
-      // Create and populate the <h3> and <h1> elements
-      const h3 = document.createElement("h3");
-      const h1 = document.createElement("h1");
-      h3.textContent = "Plan";
-      
-      // Make sure 'tittle' has a value
-      const tittle = Ctittle; // Replace with your desired title
-      h1.textContent = tittle;
-    
-      // Append the <h3> and <h1> to the container div
-      titleDiv.appendChild(h3);
-      titleDiv.appendChild(h1);
-    
-      // Append the container div to the parent element
-      TCHtop.appendChild(titleDiv);
-    }
-     
-    // Function to render the list
-    function renderListFromPoints(points, limit = 2) {
-          // Check if the input is a valid array
-          if (!Array.isArray(points)) {
-              console.error('Provided input is not an array.');
-              return;
-          }
-
-          // Create the <ul> element
-          const ulElement = document.createElement('ul');
-
-          // Render only the first `limit` items initially
-          points.slice(0, limit).forEach(point => {
-              const liElement = document.createElement('li');
-              liElement.textContent = point; // Set the text of the <li>
-              ulElement.appendChild(liElement); // Append the <li> to the <ul>
-          });
-
-          // Append the <ul> to the "TCH-list" container
-          const container = document.getElementById('TPH-list');
-          if (container) {
-              container.innerHTML = ''; // Clear existing content (if any)
-              container.appendChild(ulElement); // Add the new <ul> to the container
-
-              // Show the "Render More" button if there are more items
-              const renderMoreBtn = document.getElementById('render-more-btn');
-              if (points.length > limit) {
-                  renderMoreBtn.style.display = 'inline-block';
-                  renderMoreBtn.onclick = () => renderFullList(points);
-              } else {
-                  renderMoreBtn.style.display = 'none';
-              }
-          } else {
-              console.error('Container with ID "TCH-list" not found.');
-          }
-    }
-
-    // Function to render the full list
-    function renderFullList(points) {
-          renderListFromPoints(points, points.length);
-    }
-
-    function renderCost() {
-      // Get the parent element where the title will be appended
-      let TCHpirce = document.getElementById("TPH-pirce");
-     
-      // Create and populate the <h3> and <h1> elements
-      const h2   = document.createElement("h2");
-      const a    = document.createElement("span");
-      const span = document.createElement("span");
-      
-      // Make sure 'tittle' has a value
-      const MoCost = Mcost;
-      // Replace with your desired title
-      h2.textContent = MoCost;
-      a.textContent = "/";
-      span.textContent = "Monthly";
-      // Append the <h3> and <h1> to the container div
-      
-      TCHpirce.appendChild(h2);
-      
-      TCHpirce.appendChild(a);
-    
-      TCHpirce.appendChild(span);
-    }
-     
-
-    renderCost()
-
-
-    // Render the initial list
-    renderListFromPoints(points);
-
-
-    renderTitle()
-    setImageSource("Picon", CiconImg)
-    
+  }
+  .Block {
+    display: none;
+  }
+  .Block.active {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
    
+    padding:0 4rem;
+    margin-left: -3rem;
+  
+  }
+  /*-------------------- Block 2 -------------------------*/
+  label{
+    font-size: 1.1rem;
   }
 
-  renderClasicTier()
-  renderGoldTier()
-  renderPlatinoTier()
-});
+  .form-group-dropdown{
+    display: flex;
+    flex-direction: column;
+  }
+  .main-question{
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+    justify-content: space-between;
+  }
+  .extra-question{
+    gap: 1rem;
+    display: none;
+    margin: .5rem 0;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  /*-------------------- Block 3 -------------------------*/
+ .bTittle{
+    padding: 2rem 0;
+    font-size: 1.2rem;
+  }
+  .form-group-check{
+    display: flex;
+    flex-direction: column;
+  }
+  .checkBoxBlock{
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+    justify-content: space-between;
+  }
+  .hiddenQuestion{
+    gap: 1rem;
+    display: none;
+    margin: .5rem 0;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+ 
+}

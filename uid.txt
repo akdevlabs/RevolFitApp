@@ -1,0 +1,764 @@
+uid
+"OLwUXPtofBfx8yXuMIiFpQ6ob463"
+subscribed
+true
+createdAt
+"2024-11-29T21:25:49.997Z"
+activeA
+true
+email
+"lillytest2@testit.com"
+
+
+OLwUXPtofBfx8yXuMIiFpQ6ob463
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+  body {
+    width: 100%;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    margin: 0; /* Ensure no default body margin causes issues */
+  }
+
+  #mobileImg {
+    width: 27rem;
+    height: 12rem;
+    border-radius: 0 0 8rem 8rem;
+    margin-bottom: -6rem;
+  }
+
+  .Registro {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .line {
+    width: 80%;
+    float: right;
+    height: 0.5rem;
+    margin: -1rem 0 2rem 0;
+  }
+
+  #IconLogo {
+    width: 8rem;
+  }
+
+  .TextContent {
+    display: none;
+  }
+
+  .E-right {
+    padding: 1rem;
+    background-color: #F5F5F5;
+  }
+
+  .form-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 0 0 2rem;
+  }
+
+  .form-group {
+    gap: 0.2rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #form-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .form-group label {
+    font-size: 1rem;
+  }
+
+  .form-group input {
+    width: 20rem;
+    height: 1.5rem;
+  }
+
+  .Basic-Reg-mobile h1 {
+    font-size: 3rem;
+    padding: 0 0 0 2rem;
+  }
+  .Bquestions{
+    gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .line2{
+    width: 70%;
+    height: .5rem;
+    margin: 1rem 0 1rem -2rem;
+  }
+  .SendBtn{
+    width: 80%;
+    padding: .2rem;
+    font-size: 1rem;
+    margin: 0 auto;
+  }
+  
+
+ 
+  .SendBtn{
+    display: none;
+  }
+  input.error {
+    border: 2px solid red;
+
+  }
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+  }
+  .nextBtn{
+    color: #fff;
+    width: 80%;
+    margin:  2rem;
+    padding: .5rem 0;
+  }
+  .Btn{
+    color: #fff;
+    width: 80%;
+    margin: 2rem;
+    padding: .5rem 0;
+  }
+  .qIcon img{
+    width:  5rem;
+    height: 5rem;
+   
+  }
+  .hidden{
+    display: none;
+  }
+
+  .hiddenBusinessContent {
+    display: none;
+  }
+  .visible {
+    display: block;
+  }
+  .show{
+    display: block;
+  }
+
+}
+
+
+
+
+ async function getDataEvaluation() {
+    try {
+      // Reference a document in the "revoFitweb" collection with ID "landing"
+      const docRef = doc(db, 'RevoBuissnes', transferredInfo);
+      const docSnap = await getDoc(docRef);
+  
+      if (docSnap.exists()) {
+        const documentData = docSnap.data(); // Store document data
+        return documentData; // Return the data for external use
+      } else {
+        console.log("No such document!");
+        return null; // Return null if no document is found
+      }
+    } catch (error) {
+      console.error("Error fetching document:", error);
+    }
+  }
+  // Fetch and log the data
+  getDataEvaluation().then((data) => {
+    const AppIntroValue = data.Evaluation; // Retrieve nested data
+    const Logo = AppIntroValue.Icon; // Retrieve nested data
+
+   
+
+
+    function updateImageSource(imgId, newSrc) {
+      const imgElement = document.getElementById(imgId);
+      if (imgElement) {
+          imgElement.src = newSrc;
+      } else {
+          console.error(`Image element with ID "${imgId}" not found.`);
+      }
+    }
+    function renderLeftcontent(){
+      const title = AppIntroValue.tittle;
+      const titleText = AppIntroValue.TextCont;
+    
+      // Create elements for title, title text, question, input, and button
+      const h1 = document.createElement("h1");
+      const p = document.createElement("p");
+      // Set text and attributes for the elements
+      h1.textContent = title;
+      p.textContent = titleText;
+
+      const courseBannerElement = document.getElementById('TextContent');
+      if (courseBannerElement) {
+        courseBannerElement.appendChild(h1);
+        courseBannerElement.appendChild(p);}
+    }
+    function renderSide(){
+      const sideColor = AppIntroValue.Bcolors;
+      const sideTextColor = AppIntroValue.sideTextColor;
+      
+
+      
+      const textContent = document.getElementById('TextContent');
+      if (textContent) {
+          textContent.style.backgroundColor = sideColor;
+          textContent.style.color = sideTextColor;
+          console.log(`Background color changed to ${sideColor}`);
+      } else {
+          console.error('Element with ID "TextContent" not found.');
+      }
+     
+
+
+    }
+    function renderLineright(){
+      const lines = AppIntroValue.Bcolors;
+      const lineBlock = document.getElementById('lines');
+      if (lineBlock) {
+        lineBlock.style.backgroundColor = lines;
+      } else {
+          console.error('Element with ID "TextContent" not found.');
+      }
+    }
+    function renderLineLeft(){
+      const lines = AppIntroValue.Bcolors;
+      const lineBlock = document.getElementById('linesL');
+      if (lineBlock) {
+        lineBlock.style.backgroundColor = lines;
+      } else {
+          console.error('Element with ID "TextContent" not found.');
+      }
+    }
+    function renderBtnColor(){
+      const lines = AppIntroValue.Bcolors;
+      const sideTextColor = AppIntroValue.sideTextColor;
+      const BtnColor = document.getElementById('SendBtn');
+      if (BtnColor) {
+        BtnColor.style.backgroundColor = lines;
+        BtnColor.style.color = sideTextColor;
+
+     
+          
+      } else {
+          console.error('Element with ID "TextContent" not found.');
+      }
+    }
+    function renderAppheader(){
+      const aHc = AppIntroValue.appHcolor;
+      
+      const BtnColor = document.getElementById('mobileImg');
+      if (BtnColor) {
+        BtnColor.style.backgroundColor = aHc ;    
+      } else {
+          console.error('Element with ID "TextContent" not found.');
+      }
+    }
+    function handleSwitchToggle() {
+      const sideColor = AppIntroValue.Bcolors;
+      const isChecked = document.getElementById('isBusiness').checked;
+      const businessContent = document.getElementById('BusinessContent');
+      const checkbox = document.getElementById('isBusiness');
+      const slider = checkbox.nextElementSibling;
+  
+      if (isChecked) {
+          businessContent.style.display = 'block';
+          slider.style.backgroundColor = sideColor;
+          console.log('Switch is ON. Showing business content.');
+      } else {
+          businessContent.style.display = 'none';
+          slider.style.backgroundColor = '#b8b6b6';
+          console.log('Switch is OFF. Hiding business content.');
+      }
+    }
+
+    function renderNextbtn(){
+      const aHc = AppIntroValue.Bcolors;
+      console.log(aHc)
+      const BtnColor = document.getElementById('nextBtn');
+      const BtnColorTwo = document.getElementById('BtnTwo');
+      const BtnColorThree = document.getElementById('BtnThree');
+      const BtnColorFour = document.getElementById('BtnFour');
+
+      
+      if (BtnColor) {
+        BtnColor.style.backgroundColor = aHc ;   
+        BtnColorTwo.style.backgroundColor = aHc ; 
+        BtnColorThree.style.backgroundColor = aHc ; 
+        BtnColorFour.style.backgroundColor = aHc ; 
+      } else {
+          console.error('Element with ID "TextContent" not found.');
+      }
+    }
+    
+   
+  
+
+    // Add an event listener to the switch
+    document.getElementById('isBusiness').addEventListener('change', handleSwitchToggle);
+
+
+
+    // Example usage
+    updateImageSource("IconLogo" , Logo);
+    renderLeftcontent()
+    renderLineLeft()
+    renderLineright()
+    renderSide()
+    renderBtnColor()
+    renderAppheader()
+    renderNextbtn()
+
+
+    function renderWIcon(){
+      const PIcon = AppIntroValue.PIcon;
+      function renderImage(imageUrl) {
+        const imgContainer = document.getElementById("pIcon");
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.alt = "What We Offer Image";
+        imgContainer.innerHTML = "";
+        imgContainer.appendChild(img);
+      }
+      renderImage(PIcon)
+    }
+    function renderHIcon(){
+      const aIcon = AppIntroValue.aIcon;
+      function renderImage(imageUrl) {
+        const imgContainer = document.getElementById("aIcon");
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.alt = "What We Offer Image";
+        imgContainer.innerHTML = "";
+        imgContainer.appendChild(img);
+      }
+      renderImage(aIcon)
+    }
+    function renderRIcon(){
+      const RIcon = AppIntroValue.RIcon;
+      function renderImage(imageUrl) {
+        const imgContainer = document.getElementById("rIcon");
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.alt = "What We Offer Image";
+        imgContainer.innerHTML = "";
+        imgContainer.appendChild(img);
+      }
+      renderImage(RIcon)
+    }
+
+
+    function renderKIcon(){
+      const KIcon = AppIntroValue.KIcon;
+      function renderImage(imageUrl) {
+        const imgContainer = document.getElementById("kIcon");
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.alt = "What We Offer Image";
+        imgContainer.innerHTML = "";
+        imgContainer.appendChild(img);
+      }
+      renderImage(KIcon)
+    }
+    function renderCIcon(){
+      const CIcon= AppIntroValue.CIcon;
+      function renderImage(imageUrl) {
+        const imgContainer = document.getElementById("wIcon");
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.alt = "What We Offer Image";
+        imgContainer.innerHTML = "";
+        imgContainer.appendChild(img);
+      }
+      renderImage(CIcon)
+    }
+    function renderMIcon(){
+      const CIcon= AppIntroValue.HipIcon;
+      function renderImage(imageUrl) {
+        const imgContainer = document.getElementById("hIcon");
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.alt = "What We Offer Image";
+        imgContainer.innerHTML = "";
+        imgContainer.appendChild(img);
+      }
+      renderImage(CIcon)
+    }
+
+
+    function renderTIcon(){
+      const KIcon = AppIntroValue.Ticon;
+      function renderImage(imageUrl) {
+        const imgContainer = document.getElementById("tIcon");
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.alt = "What We Offer Image";
+        imgContainer.innerHTML = "";
+        imgContainer.appendChild(img);
+      }
+      renderImage(KIcon)
+    }
+    function renderLIcon(){
+      const KIcon = AppIntroValue.Licon;
+      function renderImage(imageUrl) {
+        const imgContainer = document.getElementById("lIcon");
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.alt = "What We Offer Image";
+        imgContainer.innerHTML = "";
+        imgContainer.appendChild(img);
+      }
+      renderImage(KIcon)
+    }
+    function renderNeIcon(){
+      const KIcon = AppIntroValue.Nicon;
+      function renderImage(imageUrl) {
+        const imgContainer = document.getElementById("nIcon");
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.alt = "What We Offer Image";
+        imgContainer.innerHTML = "";
+        imgContainer.appendChild(img);
+      }
+      renderImage(KIcon)
+    }
+
+
+
+    renderWIcon()
+    renderHIcon()
+    renderRIcon()
+    renderKIcon()
+    renderCIcon()
+    renderMIcon()
+    renderTIcon()
+    renderLIcon()
+    renderNeIcon()
+
+
+
+    
+    
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  async function getDataEvaluation() {
+    try {
+      // Reference a document in the "revoFitweb" collection with ID "landing"
+      const docRef = doc(db, 'RevoBuissnes', transferredInfo);
+      const docSnap = await getDoc(docRef);
+  
+      if (docSnap.exists()) {
+        const documentData = docSnap.data(); // Store document data
+        return documentData; // Return the data for external use
+      } else {
+        console.log("No such document!");
+        return null; // Return null if no document is found
+      }
+    } catch (error) {
+      console.error("Error fetching document:", error);
+    }
+  }
+
+
+
+
+  // Fetch and log the data
+  getDataEvaluation().then((data) => {
+    const AppIntroValue = data.Evaluation; // Retrieve nested data
+
+
+   
+
+
+    function renderLeftcontent(){
+      const title = AppIntroValue.tittle;
+      const titleText = AppIntroValue.TextCont;
+    
+      // Create elements for title, title text, question, input, and button
+      const h1 = document.createElement("h1");
+      const p = document.createElement("p");
+      // Set text and attributes for the elements
+      h1.textContent = title;
+      p.textContent = titleText;
+
+      const courseBannerElement = document.getElementById('TextContent');
+      if (courseBannerElement) {
+        courseBannerElement.appendChild(h1);
+        courseBannerElement.appendChild(p);}
+    }
+    function renderSide(){
+      const sideColor = AppIntroValue.Bcolors;
+      const sideTextColor = AppIntroValue.sideTextColor;
+      
+
+      
+      const textContent = document.getElementById('TextContent');
+      if (textContent) {
+          textContent.style.backgroundColor = sideColor;
+          textContent.style.color = sideTextColor;
+          console.log(`Background color changed to ${sideColor}`);
+      } else {
+          console.error('Element with ID "TextContent" not found.');
+      }
+     
+
+
+    }
+
+
+
+
+  
+    
+  
+    function handleSwitchToggle() {
+      const sideColor = AppIntroValue.Bcolors;
+      const isChecked = document.getElementById('isBusiness').checked;
+      const businessContent = document.getElementById('BusinessContent');
+      const checkbox = document.getElementById('isBusiness');
+      const slider = checkbox.nextElementSibling;
+  
+      if (isChecked) {
+          businessContent.style.display = 'block';
+          slider.style.backgroundColor = sideColor;
+          console.log('Switch is ON. Showing business content.');
+      } else {
+          businessContent.style.display = 'none';
+          slider.style.backgroundColor = '#b8b6b6';
+          console.log('Switch is OFF. Hiding business content.');
+      }
+    }
+
+    function renderNextbtn(){
+      const aHc = AppIntroValue.Bcolors;
+   
+      const BtnColor = document.getElementById('nextBtn');
+      const BtnColorTwo = document.getElementById('BtnTwo');
+      const BtnColorThree = document.getElementById('BtnThree');
+      const BtnColorFour = document.getElementById('BtnFour');
+
+      
+      if (BtnColor) {
+        BtnColor.style.backgroundColor = aHc ;   
+        BtnColorTwo.style.backgroundColor = aHc ; 
+        BtnColorThree.style.backgroundColor = aHc ; 
+        BtnColorFour.style.backgroundColor = aHc ; 
+      } else {
+          console.error('Element with ID "TextContent" not found.');
+      }
+    }
+    
+   
+  
+
+    // Add an event listener to the switch
+    document.getElementById('isBusiness').addEventListener('change', handleSwitchToggle);
+
+
+
+    // Example usage
+ 
+    renderLeftcontent()
+ 
+    renderSide()
+  
+   
+    renderNextbtn()
+
+
+
+
+
+
+
+
+    
+    
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  .Basic-Reg-mobile h1 {
+    font-size: 3rem;
+    padding: 0 0 0 2rem;
+  }
+  .Bquestions{
+    gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+  }
+ 
+  .SendBtn{
+    width: 80%;
+    padding: .2rem;
+    font-size: 1rem;
+    margin: 0 auto;
+  }
+  
+
+ 
+  .SendBtn{
+    display: none;
+  }
+  
+  .nextBtn{
+    color: #fff;
+    width: 80%;
+    margin:  2rem;
+    padding: .5rem 0;
+  }
+ 
+  .qIcon img{
+    width:  5rem;
+    height: 5rem;
+   
+  }
+  
+
+
+
+
+
+
+.form-group{
+    gap: 2rem;
+    display: flex;
+    margin: 1rem 0;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .inputs{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .Block{
+    margin: 4rem 0;
+  }
+  label{
+    font-size: 1rem;
+  }
+  input{
+   padding: .1rem;
+   font-size: 1rem;
+  }
+  .Btn{
+    width: 100%;
+    padding: .3rem;
+    font-size: 1.2rem;
+    margin: 1.2rem 0;
+  
+  }
+  .form-group-dropdown{
+    gap: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 1.2rem 0;
+  }
+  .main-question{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .extra-question{
+    gap: 1.3rem;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .main-question a{
+   font-size: 1rem;
+  }
+  .form-group-check{
+    gap: 10rem;
+    display: flex;
+    flex-direction: column;;
+    justify-content: space-between;
+ 
+  }
+  select{
+    padding: 0;
+  }
+  option {
+    font-size: 1rem;
+  }
+  .error {
+    border: 2px solid red;
+    background-color: #ffe6e6;
+  }
+  .bTittle{
+    font-size: 1.2rem;
+  }
+  .checkBoxBlock{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 1.5rem 0;
+    justify-content: space-between;
+  }
+  .checkBoxBlock label {
+    font-size: 1.2rem;
+  }
+   .box {
+    width: 20px;
+    height: 20px;
+  
+  }
+  
+ 
+
+
+

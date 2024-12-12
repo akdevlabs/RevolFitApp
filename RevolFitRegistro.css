@@ -112,65 +112,11 @@ body {
 
 
 
-/* Style the camera container */
-#cameraContainer {
-  display: flex;
-  flex-direction: column;
 
-  align-items: center;
-  justify-content: center;
-  height: 35vh;
-}
 
-/* Style the video feed */
-#video {
-  width: 60%;
-  max-width: 600px;
-  border-radius: 1rem  0 0 1rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
 
-/* Style the capture button */
-#capture {
-  padding: 0 2rem;
-  font-size: 1rem;
-  font-weight: bold;
-  color: #ffffff;
-  background-color: #013948; /* REVOFIT's primary color */
-  border: none;
-  border-radius: 0 1rem 1rem 0;
-  cursor: pointer;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease;
-}
 
-/* Capture button hover effect */
-#capture:hover {
-  background-color: #025a62; /* Slightly lighter shade */
-}
 
-/* Canvas is hidden, but can be styled if displayed */
-#canvas {
-  display: none;
-}
-.picturePortal{
-  display: flex;
-  
-  justify-content: center;
-}
-.CamText{
-  gap: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.HiddeCamText button{
-  font-size: 1rem;
-}
-.cameracontentBlock{
-  display: flex;
-  align-items: center;
-}
 @media (max-width: 768px) {
   body {
     width: 100%;
@@ -211,14 +157,28 @@ body {
     border-radius: 4rem 4rem 0 0;
     margin-top: 4rem;
   }
+
+
+
   .form-container {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
-    margin: -10rem 0 0 0;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
    
   }
+
+  .formBlock{
+    gap: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 2rem ;
+  }
+
   .form-group-Reg{
     gap: .3rem;
     width: 100%;
@@ -226,15 +186,26 @@ body {
     flex-direction: column;
     justify-content: space-between;
   }
-  /* -------------- Registro Groups -------------------*/
+/* -------------- Registro Groups -------------------*/
 
-  #form-group {
-    font-size: 1.2rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 0 2rem;
-  }
+#form-group {
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 2rem;
+}
+
+
+
+
+
+
+
+
+
+
+
 
   input{
     padding: .5rem;
@@ -243,12 +214,14 @@ body {
     width: 14rem;
   }
   #countryCode{
-    width: 8rem;
+    width: 5rem;
 
   }
+
   .phoneinputBlock{
     display: flex;
   }
+
   #gender {
     appearance: none; /* Removes the default browser styles */
     margin: 20px 0; /* Adds spacing around the form group */
@@ -271,41 +244,6 @@ body {
     padding: .6rem; /* Adds padding inside the select box */
     transition: border-color 0.3s ease; /* Adds smooth interaction effect */
   }
-
-  .cameraContainer p{
-    font-size: .8rem;
-  }
-
-  .cameracontentBlock{
-    width: 20rem;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     justify-content: center;
-     margin: 0 2rem;
-   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

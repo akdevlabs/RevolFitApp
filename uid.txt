@@ -21,148 +21,6 @@ OLwUXPtofBfx8yXuMIiFpQ6ob463
 
 
 
-@media (max-width: 768px) {
-  body {
-    width: 100%;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-    margin: 0; /* Ensure no default body margin causes issues */
-  }
-
-  #mobileImg {
-    width: 27rem;
-    height: 12rem;
-    border-radius: 0 0 8rem 8rem;
-    margin-bottom: -6rem;
-  }
-
-  .Registro {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-  }
-
-  .line {
-    width: 80%;
-    float: right;
-    height: 0.5rem;
-    margin: -1rem 0 2rem 0;
-  }
-
-  #IconLogo {
-    width: 8rem;
-  }
-
-  .TextContent {
-    display: none;
-  }
-
-  .E-right {
-    padding: 1rem;
-    background-color: #F5F5F5;
-  }
-
-  .form-container {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0 0 0 2rem;
-  }
-
-  .form-group {
-    gap: 0.2rem;
-    display: flex;
-    flex-direction: column;
-  }
-
-  #form-group {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .form-group label {
-    font-size: 1rem;
-  }
-
-  .form-group input {
-    width: 20rem;
-    height: 1.5rem;
-  }
-
-  .Basic-Reg-mobile h1 {
-    font-size: 3rem;
-    padding: 0 0 0 2rem;
-  }
-  .Bquestions{
-    gap: 1rem;
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .line2{
-    width: 70%;
-    height: .5rem;
-    margin: 1rem 0 1rem -2rem;
-  }
-  .SendBtn{
-    width: 80%;
-    padding: .2rem;
-    font-size: 1rem;
-    margin: 0 auto;
-  }
-  
-
- 
-  .SendBtn{
-    display: none;
-  }
-  input.error {
-    border: 2px solid red;
-
-  }
-  .error-message {
-    color: red;
-    font-size: 12px;
-    margin-top: 5px;
-    display: block;
-  }
-  .nextBtn{
-    color: #fff;
-    width: 80%;
-    margin:  2rem;
-    padding: .5rem 0;
-  }
-  .Btn{
-    color: #fff;
-    width: 80%;
-    margin: 2rem;
-    padding: .5rem 0;
-  }
-  .qIcon img{
-    width:  5rem;
-    height: 5rem;
-   
-  }
-  .hidden{
-    display: none;
-  }
-
-  .hiddenBusinessContent {
-    display: none;
-  }
-  .visible {
-    display: block;
-  }
-  .show{
-    display: block;
-  }
-
-}
-
-
 
 
  async function getDataEvaluation() {
@@ -627,138 +485,185 @@ OLwUXPtofBfx8yXuMIiFpQ6ob463
 
 
 
-  
 
-  .Basic-Reg-mobile h1 {
-    font-size: 3rem;
-    padding: 0 0 0 2rem;
+
+
+  .E-right {
+    padding: 4rem 2rem 0 2rem;
+    border-radius: 4rem 4rem 0 0;
+    margin-top: 4rem;
   }
-  .Bquestions{
-    gap: 1rem;
+  .form-container {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
-  }
- 
-  .SendBtn{
-    width: 80%;
-    padding: .2rem;
-    font-size: 1rem;
-    margin: 0 auto;
-  }
-  
-
- 
-  .SendBtn{
-    display: none;
-  }
-  
-  .nextBtn{
-    color: #fff;
-    width: 80%;
-    margin:  2rem;
-    padding: .5rem 0;
-  }
- 
-  .qIcon img{
-    width:  5rem;
-    height: 5rem;
+    align-items: center;
+    justify-content: center;
+    margin: -10rem 0 0 0;
    
   }
-  
-
-
-
-
-
-
-.form-group{
-    gap: 2rem;
-    display: flex;
-    margin: 1rem 0;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .inputs{
+  .form-group-Reg{
+    gap: .3rem;
     width: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
   }
-  .Block{
-    margin: 4rem 0;
-  }
-  label{
-    font-size: 1rem;
-  }
-  input{
-   padding: .1rem;
-   font-size: 1rem;
-  }
-  .Btn{
-    width: 100%;
-    padding: .3rem;
+  /* -------------- Registro Groups -------------------*/
+
+  #form-group {
     font-size: 1.2rem;
-    margin: 1.2rem 0;
-  
-  }
-  .form-group-dropdown{
-    gap: 1.3rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin: 1.2rem 0;
-  }
-  .main-question{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .extra-question{
-    gap: 1.3rem;
-    width: 70%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .main-question a{
-   font-size: 1rem;
-  }
-  .form-group-check{
-    gap: 10rem;
-    display: flex;
-    flex-direction: column;;
-    justify-content: space-between;
- 
-  }
-  select{
-    padding: 0;
-  }
-  option {
-    font-size: 1rem;
-  }
-  .error {
-    border: 2px solid red;
-    background-color: #ffe6e6;
-  }
-  .bTittle{
-    font-size: 1.2rem;
-  }
-  .checkBoxBlock{
     display: flex;
     flex-direction: row;
-    align-items: center;
-    margin: 1.5rem 0;
+    justify-content: space-between;
+    margin: 0 2rem;
+  }
+
+  input{
+    padding: .5rem;
+  }
+  #phone{
+    width: 14rem;
+  }
+  #countryCode{
+    width: 8rem;
+
+  }
+  .phoneinputBlock{
+    display: flex;
+  }
+  #gender {
+    appearance: none; /* Removes the default browser styles */
+    margin: 20px 0; /* Adds spacing around the form group */
+
+  }
+  #gender select {
+    width: 100%; /* Makes the select element fill its container */
+    max-width: 400px; /* Limits the width for better design */
+    padding: .6rem; /* Adds padding inside the select box */
+    transition: border-color 0.3s ease; /* Adds smooth interaction effect */
+  }
+  #country {
+    appearance: none; /* Removes the default browser styles */
+    margin: 20px 0; /* Adds spacing around the form group */
+
+  }
+  #country select {
+    width: 100%; /* Makes the select element fill its container */
+    max-width: 400px; /* Limits the width for better design */
+    padding: .6rem; /* Adds padding inside the select box */
+    transition: border-color 0.3s ease; /* Adds smooth interaction effect */
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  .E-right{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    border-radius: 4rem 4rem 0 0;
+    margin-top: 4rem;
+
+  }
+  .form-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    
+    justify-content: center;
+    margin: 0 0 0;
+   
+  }
+  .form-group-Reg{
+    gap: .3rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
   }
-  .checkBoxBlock label {
-    font-size: 1.2rem;
-  }
-   .box {
-    width: 20px;
-    height: 20px;
-  
-  }
-  
- 
+ /* -------------- Registro Groups -------------------*/
+
+ #form-group {
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 2rem;
+}
+
+input{
+  padding: .5rem;
+}
+#phone{
+  width: 14rem;
+}
+#countryCode{
+  width: 8rem;
+
+}
+.phoneinputBlock{
+  display: flex;
+}
 
 
+
+
+  .formBlock{
+    width: 23rem;
+    margin: 0 2rem;
+  }
+
+
+
+
+
+
+
+  #gender {
+    appearance: none; /* Removes the default browser styles */
+    margin: 20px 0; /* Adds spacing around the form group */
+
+  }
+  #gender select {
+    width: 70%; /* Makes the select element fill its container */
+    max-width: 400px; /* Limits the width for better design */
+    padding: .6rem; /* Adds padding inside the select box */
+    transition: border-color 0.3s ease; /* Adds smooth interaction effect */
+  }
+  #country {
+    appearance: none; /* Removes the default browser styles */
+    margin: 20px 0; /* Adds spacing around the form group */
+
+  }
+  #country select {
+    width: 70%; /* Makes the select element fill its container */
+    max-width: 400px; /* Limits the width for better design */
+    padding: .6rem; /* Adds padding inside the select box */
+    transition: border-color 0.3s ease; /* Adds smooth interaction effect */
+  }
 

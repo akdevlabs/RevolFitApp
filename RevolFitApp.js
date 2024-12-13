@@ -54,6 +54,80 @@ console.log("Transferred Info:", transferredInfo);
 
 
 
+
+
+
+
+
+// General function to fetch document data
+async function fetchDocumentData(docPath, transferredInfo) {
+  try {
+      const docRef = doc(db, docPath, transferredInfo);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+          return docSnap.data(); // Return the document data
+      } else {
+          console.log("No such document!");
+          return null;
+      }
+  } catch (error) {
+      console.error("Error fetching document:", error);
+      return null;
+  }
+}
+
+// General function to create and append an element (image or h1) to a specified div
+function createElementInDiv(divId, elementType, attributes = {}, textContent = "") {
+  const div = document.getElementById(divId);
+
+  if (!div) {
+      console.error(`Div with id '${divId}' not found.`);
+      return;
+  }
+
+  const element = document.createElement(elementType);
+
+  // Set attributes if provided
+  Object.keys(attributes).forEach(attr => {
+      element[attr] = attributes[attr];
+  });
+
+  // Set text content if provided
+  if (textContent) {
+      element.textContent = textContent;
+  }
+
+  div.appendChild(element);
+}
+
+// Fetch and use the document data
+fetchDocumentData("RevoBuissnes", transferredInfo).then(data => {
+  if (!data) return;
+
+  const appData = data.App;
+
+  // Cal section
+  createElementInDiv("cal", "img", { src: appData.fireIcon, alt: "Fire icon" });
+  createElementInDiv("cal", "h1", {}, "2100");
+
+  // Time section
+  createElementInDiv("Time", "img", { src: appData.timeIcon, alt: "Time icon" });
+  createElementInDiv("Time", "h1", {}, "21h");
+
+  // Weight section
+  createElementInDiv("weight", "img", { src: appData.weightIcon, alt: "Weight icon" });
+  createElementInDiv("weight", "h1", {}, "21h");
+});
+
+
+
+
+
+
+
+
+
   async function getUserinfo() {
     try {
       // Reference a document in the "revoFitweb" collection with ID "landing"
@@ -109,7 +183,5 @@ console.log("Transferred Info:", transferredInfo);
     LasttimeUsed(timestamp);
    
   });
-
-
 
 

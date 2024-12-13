@@ -52,30 +52,36 @@ async function registerAccount() {
     // Create user with Firebase Authentication
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-
+  
     console.log("User created:", user);
-
+  
+    if (!user || !user.uid) {
+      throw new Error("User creation failed or UID is undefined.");
+    }
+  
     // Prepare user data for Firestore
     const userData = {
       email: user.email,
       uid: user.uid,
       createdAt: new Date().toISOString(),
-      // Add additional fields as needed
+      Registration: false, // Add Registration field
+      evaluation: false,   // Add evaluation field
     };
-
+  
     // Save user data in Firestore
     await setDoc(doc(db, "users", user.uid), userData);
-
+  
     console.log("User data saved in Firestore:", userData);
-
-    // Provide feedback to the user
+  
     alert("Cuenta creada con éxito.");
     window.location.href = "index.html"; // Redirect to a success page
   } catch (error) {
-    console.error("Error creating account:", error);
+    console.error("Error updating document:", error); // Log the error
     alert(`Error al crear la cuenta: ${error.message}`);
   }
+  
 }
+
 
 // Ensure the DOM is loaded before attaching event listeners
 document.addEventListener("DOMContentLoaded", () => {

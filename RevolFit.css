@@ -14,7 +14,6 @@
  
 }
 #pop-upText{
-  color: #ffff;
   padding: 4rem 0;
 
 
@@ -36,7 +35,7 @@
   justify-content: center;
   font-size: 24px;
   font-weight: 600;
-  color: #ffffff;
+
   padding: .5rem 2rem;
   margin: 1rem;  
 }
@@ -70,7 +69,7 @@ justify-content: center;
   margin-bottom: -5rem;
 }
 .loginContent{
-  color: #ffffff;
+
   padding: 1rem 0 4rem 0;
 
 }
@@ -96,17 +95,17 @@ justify-content: center;
   border: none;
 }
 .input-block input::placeholder{
-  color: #ffffff;
+ 
 }
 
 
 .line{
   height: .1rem;
   width: 90%;
-  background-color: #ffffff;
+
 }
 button{
-  color: #ffff;
+ 
   padding: .8rem;
   background-color: transparent;
 }
@@ -128,4 +127,7 @@ button{
 #loginIcon img{
   width: 5rem ;
   padding: 2rem;
+}
+input{
+  width: 100%;
 }

@@ -52,35 +52,36 @@ async function registerAccount() {
     // Create user with Firebase Authentication
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-  
+
     console.log("User created:", user);
-  
+
     if (!user || !user.uid) {
       throw new Error("User creation failed or UID is undefined.");
     }
-  
+
     // Prepare user data for Firestore
     const userData = {
       email: user.email,
       uid: user.uid,
       createdAt: new Date().toISOString(),
       Registration: false, // Add Registration field
-      evaluation: false,   // Add evaluation field
+      evaluation: false,    // Add evaluation field
+      TermsAndConditions: termsAccepted, // Save terms acceptance status
     };
-  
+
     // Save user data in Firestore
     await setDoc(doc(db, "users", user.uid), userData);
-  
+
     console.log("User data saved in Firestore:", userData);
-  
+
     alert("Cuenta creada con éxito.");
     window.location.href = "index.html"; // Redirect to a success page
   } catch (error) {
     console.error("Error updating document:", error); // Log the error
     alert(`Error al crear la cuenta: ${error.message}`);
   }
-  
 }
+
 
 
 // Ensure the DOM is loaded before attaching event listeners
@@ -112,6 +113,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Function to apply branding based on the document (RevoFit, MetaV, SHS)
     async function applyBranding(documentId) {
       const data = await fetchFirestoreData("RevoBuissnes", documentId);
+      const { UBU, Register} = data;
+     
+      const BuIcon = UBU.BuLogos
+      const BuLogo = BuIcon.LightLogo
+      
+      const {Base, Prime1, Prime2, Prime3}= UBU.Colors
+
+      const fontAc = UBU.font
       if (!data) {
         console.error("No data retrieved from Firestore.");
         return;
@@ -123,29 +132,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Example usage
       const element = document.querySelector("body"); // Select the target element
-      const fontAc = data.font; // Define the font family
       setFontFamily(element, fontAc); // Apply the font family to the selected element
 
-      const AppIntroValue = data.register;
-
-      if (!AppIntroValue) {
+      if (!Register) {
         console.error("The 'register' field is missing in the document.");
         return;
       }
 
       const {
-        backgroundImg,
         CPIcon,
         EIcon,
         PIcon,
-        backgroundColor,
-        logo,
-        font,
-        color,
-        textColor,
-        textBcolor,
-      } = AppIntroValue;
+        UIcon
+      } = Register.Icons;
 
+      
+      const BgdImg = Register.Imgs;
+      const backgroundImg = BgdImg. backgroundImg;
+    
       // Function to render images into containers
       function renderImage(imgId, imageUrl) {
         const imgContainer = document.getElementById(imgId);
@@ -237,10 +241,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Apply branding
-      setTextColor(textColor);
-      setBtnColor(color, textBcolor);
-      setBackgroundColor(backgroundColor);
-      renderLogoImage("registerIcon", logo);
+      setTextColor(Prime2);
+      setBtnColor(Prime1, Base);
+      setBackgroundColor(Base);
+      renderLogoImage("registerIcon", BuLogo);
       renderImage("registerImg", backgroundImg);
       renderIcons("confirmPasswordImage", CPIcon);
       renderIcons("passwordImage", PIcon);

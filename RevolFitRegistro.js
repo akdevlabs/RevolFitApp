@@ -112,33 +112,6 @@ document.getElementById("userForm").addEventListener("submit", async (event) => 
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
   const isBusinessCheckbox = document.getElementById('isBusiness');
   const businessContent = document.getElementById('BusinessContent');
@@ -154,8 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-
-async function getHeaderTittle() {
+async function getItemsFromDB() {
   try {
     // Reference a document in the "revoFitweb" collection with ID "landing"
     const docRef = doc(db, 'RevoBuissnes', transferredInfo);
@@ -172,216 +144,120 @@ async function getHeaderTittle() {
     console.error("Error fetching document:", error);
   }
 }
-getHeaderTittle().then((data) => {
-  const AppIntroValue = data.Evaluation; // Retrieve nested data
-  const Logo = AppIntroValue.Icon; // Retrieve nested data
-
-  function renderRegBackColor(){
-    const aHc = AppIntroValue.appHcolor;
-    
-    const BtnColor = document.getElementById('mobileImg');
-    if (BtnColor) {
-      BtnColor.style.backgroundColor = aHc ;    
-    } else {
-        console.error('Element with ID "TextContent" not found.');
-    }
-  }
-  function renderBuIcon(imgId, newSrc) {
-    const imgElement = document.getElementById(imgId);
-    if (imgElement) {
-        imgElement.src = newSrc;
-    } else {
-        console.error(`Image element with ID "${imgId}" not found.`);
-    }
-  }  
-
-  renderRegBackColor()
-  renderBuIcon("IconLogo" , Logo);
-});
-async function getBucolors() {
-  try {
-    // Reference a document in the "revoFitweb" collection with ID "landing"
-    const docRef = doc(db, 'RevoBuissnes', transferredInfo);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const documentData = docSnap.data(); // Store document data
-      return documentData; // Return the data for external use
-    } else {
-      console.log("No such document!");
-      return null; // Return null if no document is found
-    }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-  }
-}
-getBucolors().then((data) => {
-  const AppIntroValue = data.Evaluation; // Retrieve nested data
-
-  function renderLinerightleft(){
-    const lines = AppIntroValue.Bcolors;
-    const lineBlockR = document.getElementById('lines');
-    const lineBlockL = document.getElementById('linesL');
-
-
-    if (lineBlockR) {
-      lineBlockR.style.backgroundColor = lines;
-      lineBlockL.style.backgroundColor = lines;
-    } else {
-        console.error('Element with ID "TextContent" not found.');
-    }
-  }
+getItemsFromDB().then((data) => {
+  const UBU = data.UBU;
   
-  function renderBtnColor(){
-    const lines = AppIntroValue.Bcolors;
-    const sideTextColor = AppIntroValue.sideTextColor;
-    const BtnColor = document.getElementById('SendBtn');
-    if (BtnColor) {
-      BtnColor.style.backgroundColor = lines;
-      BtnColor.style.color = sideTextColor;
+  const BuIcon = UBU.BuIcon;
+  const{BuDark, BuLight} = BuIcon
 
-   
+  const Evaluation = data.Evaluation;
+  const {TextCon, tittle} = Evaluation.EtextContent;
+
+
+
+
+  const {Base, Prime1, Prime2, Prime3} = UBU.Colors;
+
+
+
+  function renderLeft(){
+
+    function RenderTextInfo(title, titleText, urlId){
+
+      // Create elements for title, title text, question, input, and button
+      const h1 = document.createElement("h1");
+      const p = document.createElement("p");
+      // Set text and attributes for the elements
+      h1.textContent = title;
+      p.textContent = titleText;
+
+      const courseBannerElement = document.getElementById(urlId);
+      if (courseBannerElement) {
+      courseBannerElement.appendChild(h1);
+      courseBannerElement.appendChild(p);
+      }
+
+    }
+
+    function renderBackgroundColors(color, Tcolor, urlId){
+      const LeftBgColor = document.getElementById(urlId);
+      if (LeftBgColor) {
+        LeftBgColor.style.backgroundColor = color;  
+        LeftBgColor.style.color = Tcolor;  
         
-    } else {
-        console.error('Element with ID "TextContent" not found.');
+      } else {
+          console.error('Element with ID "TextContent" not found.');
+      }
     }
-  }
 
-  function renderRegBackColor(){
-    const Rbackgroundcolor = AppIntroValue.Rbackground;
+    // Render Text & Tittle color
+    RenderTextInfo(tittle, TextCon, 'TextContent')
+    // Render background color
+    renderBackgroundColors(Base, Prime2, 'TextContent')
 
-    const Rbackground = document.getElementById('RegistroBlock');
-    
-    if (Rbackground) {
-      Rbackground.style.backgroundColor = Rbackgroundcolor;
-    } else {
-      console.error('Element with ID "TextContent" not found.');
-    }
-  }
-
-
-  renderRegBackColor()
-  renderLinerightleft()
-  renderBtnColor()
-});
-
-
-
-async function getSideInformation() {
-  try {
-    // Reference a document in the "revoFitweb" collection with ID "landing"
-    const docRef = doc(db, 'RevoBuissnes', transferredInfo);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const documentData = docSnap.data(); // Store document data
-      return documentData; // Return the data for external use
-    } else {
-      console.log("No such document!");
-      return null; // Return null if no document is found
-    }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-  }
-}
-getSideInformation().then((data) => {
-const AppIntroValue = data.Evaluation; // Retrieve nested data
-
-
- 
-
-
-function renderLeftcontent(){
-  const title = AppIntroValue.tittle;
-  const titleText = AppIntroValue.TextCont;
-
-  // Create elements for title, title text, question, input, and button
-  const h1 = document.createElement("h1");
-  const p = document.createElement("p");
-  // Set text and attributes for the elements
-  h1.textContent = title;
-  p.textContent = titleText;
-
-  const courseBannerElement = document.getElementById('TextContent');
-  if (courseBannerElement) {
-    courseBannerElement.appendChild(h1);
-    courseBannerElement.appendChild(p);}
-}
-function renderSide(){
-  const sideColor = AppIntroValue.Bcolors;
-  const sideTextColor = AppIntroValue.sideTextColor;
-  
-
-  
-  const textContent = document.getElementById('TextContent');
-  if (textContent) {
-      textContent.style.backgroundColor = sideColor;
-      textContent.style.color = sideTextColor;
-      console.log(`Background color changed to ${sideColor}`);
-  } else {
-      console.error('Element with ID "TextContent" not found.');
   }
  
-
-
-}
-
-renderLeftcontent()
-renderSide()
-});
+  renderLeft()
 
 
 
+  function renderRight(){
 
 
-function startCamera() {
-  const video = document.getElementById('video');
-  const capture = document.getElementById('capture');
-  const HiddeCamText = document.getElementById('HiddeCamText');
+    function renderBackgroundColors(color, urlId){
+      const LeftBgColor = document.getElementById(urlId);
+      if (LeftBgColor) {
+        LeftBgColor.style.backgroundColor = color;    
+      } else {
+          console.error('Element with ID "TextContent" not found.');
+      }
+    }
+    function renderBuIcon(newSrc, imgId) {
+      const imgElement = document.getElementById(imgId);
+      if (imgElement) {
+          imgElement.src = newSrc;
+      } else {
+          console.error(`Image element with ID "${imgId}" not found.`);
+      }
+    }
+    function renderBtnColor(color, urlId, Tcolor){
+      const BtnColor = document.getElementById(urlId);
+      if (BtnColor) {
+        BtnColor.style.backgroundColor = color;
+        BtnColor.style.color = Tcolor;
   
-  navigator.mediaDevices
-    .getUserMedia({ video: true })
-    .then((stream) => {
-      video.srcObject = stream;
-      video.style.display = 'block'; 
-      capture.style.display = 'block'; 
-      HiddeCamText.style.display = 'none'; 
+     
+          
+      } else {
+          console.error('Element with ID "TextContent" not found.');
+      }
+    }
 
-      // Show the video element
-    })
-    .catch((err) => {
-      console.error('Error accessing the camera:', err);
-      alert('Unable to access the camera. Please check your device permissions.');
-    });
-}
+    // HearderMobile Color
+    renderBackgroundColors(Prime1, 'mobileImg')
+    // FromBackground Color
+    renderBackgroundColors(Prime3, 'RegistroBlock')
+    // Line top Background Color
+    renderBackgroundColors(Base, 'lines')
+    // Line Bottom Background Color
+    renderBackgroundColors(Base, 'linesL')
 
-function capturePhoto() {
-  const video = document.getElementById('video');
-  const canvas = document.getElementById('canvas');
-  const context = canvas.getContext('2d');
+    renderBuIcon(BuLight, 'IconLogo' )
+    // Send Btn Color
+    renderBtnColor(Base, 'SendBtn', Prime2)
 
-  // Set canvas dimensions to match the video
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
 
-  // Draw the current video frame onto the canvas
-  context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-  // Convert canvas to a data URL (image)
-  const imageData = canvas.toDataURL('image/png');
 
-  // Optional: Show or use the captured image
-  console.log('Captured Image:', imageData);
-  alert('Photo captured!');
-}
+  }
+  renderRight()
 
-// Add a click event to start the camera
-document.getElementById('startCamera').addEventListener('click', startCamera);
 
-// Add a click event to capture the photo
-document.getElementById('capture').addEventListener('click', capturePhoto);
-// Function to save the captured photo
 
+
+
+
+})
 
 
 

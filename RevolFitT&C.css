@@ -1,0 +1,37 @@
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 20px;
+  background: #C7D8DF;
+  background: linear-gradient(180deg, #C7D8DF 0%, rgba(1,57,72,1) 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+  margin: 0;
+}
+h1{
+ text-align: center;
+  font-size: 1.5rem;
+  margin: 0 2rem;
+}
+ul {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+li {
+  margin-bottom: 5px;
+}
+.section {
+  margin-bottom: 20px;
+}
+.Content{
+  padding:0 1rem;
+  margin: 0 2rem;
+ 
+}
+.HCont{
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

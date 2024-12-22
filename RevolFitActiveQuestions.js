@@ -78,85 +78,43 @@ document.getElementById("EvaluationQuestions").addEventListener("submit", async 
     tiempoSinFumar: document.getElementById("smoke-select")?.value === "false"
       ? document.getElementById("quit-smoking-time")?.value
       : null,
+    timestamp: new Date().toISOString(),
   };
 
-  const chronicDiseases = [
-    { id: "Hipertensión", tratadoId: "HipertensiónTratado-select" },
-    { id: "Hipercolesteremia", tratadoId: "HipercolesteremiaTratado-select" },
-    { id: "Diabetes", tratadoId: "DiabeteTratado-select" },
-    { id: "Obesidad", tratadoId: "ObesidadTratado-select" },
-    { id: "HígadoGraso", tratadoId: "HígadoGrasoTratado-select" },
-    { id: "OtraECNT", tratadoId: "OtraECNTTratado-select" },
-  ];
-
-  chronicDiseases.forEach((disease) => {
-    const element = document.getElementById(disease.id);
-    if (element) {
-      const isChecked = element.checked;
-      formData[disease.id] = isChecked;
-      formData[`${disease.id}Tratado`] = isChecked
-        ? document.getElementById(disease.tratadoId)?.value || null
-        : null;
-    } else {
-      console.warn(`Element with ID "${disease.id}" not found.`);
-    }
-  });
-
-  const autoimmuneDiseases = [
-    { id: "Lupus", tratadoId: "LupusTratado-select" },
-    { id: "Celíaca", tratadoId: "CelíacaTratado-select" },
-    { id: "Cáncer", tratadoId: "CáncerTratado-select" },
-    { id: "VIH", tratadoId: "VIHTratado-select" },
-    { id: "Artritis", tratadoId: "ArtritisTratado-select" },
-    { id: "OEA", tratadoId: "OEATratado-select" },
-  ];
-
-  autoimmuneDiseases.forEach((disease) => {
-    const element = document.getElementById(disease.id);
-    if (element) {
-      const isChecked = element.checked;
-      formData[disease.id] = isChecked;
-      formData[`${disease.id}Tratado`] = isChecked
-        ? document.getElementById(disease.tratadoId)?.value || null
-        : null;
-    } else {
-      console.warn(`Element with ID "${disease.id}" not found.`);
-    }
-  });
-
-  formData.timestamp = new Date().toISOString();
-
   try {
-    // Ensure `transferreduserInfo` and Firebase setup are correctly defined
-    const userInfo = transferreduserInfo; 
-    const userRef = doc(db, "users", userInfo);
-    const evaluationsRef = collection(userRef, "evaluation");
+    const userId = transferreduserInfo; // Retrieved from localStorage
+    const userRef = doc(db, "users", userId);
 
+    // Add the evaluation data to a sub-collection within the user document
+    const evaluationsRef = collection(userRef, "evaluation");
     const newDocRef = await addDoc(evaluationsRef, formData);
+
     console.log(`New evaluation added with ID: ${newDocRef.id}`);
-    alert("Evaluation submitted successfully!");
+
+    // Update the user's main document with a reference or summary of the evaluation
+    await updateDoc(userRef, {
+      lastEvaluation: formData, // Save a summary of the latest evaluation
+      lastEvaluationId: newDocRef.id, // Optionally save the document ID
+    });
+
+    alert("Evaluation submitted and saved successfully!");
+    window.location.href = "index9.html";
   } catch (error) {
     console.error("Error submitting the evaluation:", error);
     alert("Error submitting the evaluation. Please try again.");
   }
 });
 
-
-
-
-
-// Select all blocks and ensure only the first one is visible
+// Block initialization logic
 const blocks = document.querySelectorAll('.Block');
 let currentBlockIndex = 0;
 
-// Show the first block on page load
 function initializeBlocks() {
   blocks.forEach((block, index) => {
     block.classList.toggle('active', index === 0);
   });
 }
 
-// Function to validate required fields in a block
 function validateBlock(blockIndex) {
   const block = blocks[blockIndex];
   const requiredFields = block.querySelectorAll("[required]");
@@ -165,7 +123,7 @@ function validateBlock(blockIndex) {
   requiredFields.forEach((field) => {
     if (!field.value.trim()) {
       isValid = false;
-      field.classList.add("error"); // Add error class for styling
+      field.classList.add("error");
     } else {
       field.classList.remove("error");
     }
@@ -177,17 +135,14 @@ function validateBlock(blockIndex) {
   return isValid;
 }
 
-// Function to show a specific block by index
 function showBlock(index) {
   blocks.forEach((block, i) => {
     block.classList.toggle('active', i === index);
   });
 }
 
-// Initialize blocks on page load
 initializeBlocks();
 
-// Navigation buttons
 document.getElementById('BtnTwo').addEventListener('click', () => {
   if (validateBlock(0)) {
     currentBlockIndex = 1;
@@ -383,7 +338,10 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-async function getHeaderTittle() {
+
+
+
+async function getItemsFromDB() {
   try {
     // Reference a document in the "revoFitweb" collection with ID "landing"
     const docRef = doc(db, 'RevoBuissnes', transferredInfo);
@@ -400,119 +358,112 @@ async function getHeaderTittle() {
     console.error("Error fetching document:", error);
   }
 }
-getHeaderTittle().then((data) => {
-  const AppIntroValue = data.Evaluation; // Retrieve nested data
-  const Logo = AppIntroValue.Icon; // Retrieve nested data
-
-  function renderRegBackColor(){
-    const aHc = AppIntroValue.appHcolor;
-    
-    const BtnColor = document.getElementById('mobileImg');
-    if (BtnColor) {
-      BtnColor.style.backgroundColor = aHc ;    
-    } else {
-        console.error('Element with ID "TextContent" not found.');
-    }
-  }
-  function renderBuIcon(imgId, newSrc) {
-    const imgElement = document.getElementById(imgId);
-    if (imgElement) {
-        imgElement.src = newSrc;
-    } else {
-        console.error(`Image element with ID "${imgId}" not found.`);
-    }
-  }  
-
-  renderRegBackColor()
-  renderBuIcon("IconLogo" , Logo);
-});
-async function getBucolors() {
-  try {
-    // Reference a document in the "revoFitweb" collection with ID "landing"
-    const docRef = doc(db, 'RevoBuissnes', transferredInfo);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const documentData = docSnap.data(); // Store document data
-      return documentData; // Return the data for external use
-    } else {
-      console.log("No such document!");
-      return null; // Return null if no document is found
-    }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-  }
-}
-getBucolors().then((data) => {
-  const AppIntroValue = data.Evaluation; // Retrieve nested data
-
-  function renderLinerightleft(){
-    const lines = AppIntroValue.Bcolors;
-    const lineBlockR = document.getElementById('lines');
-    
-
-
-    if (lineBlockR) {
-      lineBlockR.style.backgroundColor = lines;
-     
-    } else {
-        console.error('Element with ID "TextContent" not found.');
-    }
-  }
+getItemsFromDB().then((data) => {
+  const UBU = data.UBU;
   
-  function renderBtnColor(){
-    const lines = AppIntroValue.Bcolors;
-    const sideTextColor = AppIntroValue.sideTextColor;
-    const BtnColor = document.getElementById('rSendBtn');
-    if (BtnColor) {
-      BtnColor.style.backgroundColor = lines;
-      BtnColor.style.color = sideTextColor;
-    } else {
-        console.error('Element with ID "TextContent" not found.');
+  const BuIcon = UBU.BuIcon;
+  const{BuDark, BuLight} = BuIcon
+
+  const Evaluation = data.Evaluation;
+  const {TextCon, tittle} = Evaluation.EtextContent;
+
+
+
+
+  const {Base, Prime1, Prime2, Prime3} = UBU.Colors;
+
+
+
+  function renderLeft(){
+
+    function RenderTextInfo(title, titleText, urlId){
+
+      // Create elements for title, title text, question, input, and button
+      const h1 = document.createElement("h1");
+      const p = document.createElement("p");
+      // Set text and attributes for the elements
+      h1.textContent = title;
+      p.textContent = titleText;
+
+      const courseBannerElement = document.getElementById(urlId);
+      if (courseBannerElement) {
+      courseBannerElement.appendChild(h1);
+      courseBannerElement.appendChild(p);
+      }
+
     }
+    function renderBackgroundColors(color, Tcolor, urlId){
+      const LeftBgColor = document.getElementById(urlId);
+      if (LeftBgColor) {
+        LeftBgColor.style.backgroundColor = color;  
+        LeftBgColor.style.color = Tcolor;  
+        
+      } else {
+          console.error('Element with ID "TextContent" not found.');
+      }
+    }
+
+    // Render Text & Tittle color
+    RenderTextInfo(tittle, TextCon, 'TextContent')
+    // Render background color
+    renderBackgroundColors(Base, Prime2, 'TextContent')
+
   }
+ 
+  renderLeft()
 
-  function renderRegBackColor(){
-    const Rbackgroundcolor = AppIntroValue.Rbackground;
 
-    const Rbackground = document.getElementById('RegistroBlock');
+
+  function renderRight(){
+      const ReviewIcons = Evaluation.ReviewIcons;
     
-    if (Rbackground) {
-      Rbackground.style.backgroundColor = Rbackgroundcolor;
-    } else {
-      console.error('Element with ID "TextContent" not found.');
-    }
-  }
+      
+      // Mapping of icon data to parent element IDs
+      const icons = [
+          { src: ReviewIcons.PIcon, alt: 'Weight Icon', parentId: 'pIcon' },
+          { src: ReviewIcons.aIcon, alt: 'Height Icon', parentId: 'aIcon' },
+          { src: ReviewIcons.RIcon, alt: 'Wrist Icon', parentId: 'rIcon' },
+          { src: ReviewIcons.KIcon, alt: 'Knee Icon', parentId: 'kIcon' },
+          { src: ReviewIcons.CIcon, alt: 'Waist Icon', parentId: 'wIcon' },
+          { src: ReviewIcons.HipIcon, alt: 'Hips Icon', parentId: 'hIcon' },
+          { src: ReviewIcons.Ticon, alt: 'Arm Icon', parentId: 'tIcon' },
+          { src: ReviewIcons.Licon, alt: 'Leg Icon', parentId: 'lIcon' },
+          { src: ReviewIcons.Nicon, alt: 'Neck Icon', parentId: 'nIcon' },
+      ];
+    
+      // Reusable function to create and append icons
+      function createIcon(src, alt, parentId, styles = {}) {
+          const img = document.createElement('img');
+          img.src = src;
+          img.alt = alt;
+    
+          // Apply styles to the image
+          Object.entries(styles).forEach(([key, value]) => {
+              img.style[key] = value;
+          });
+    
+          // Find and validate the parent element
+          const parent = document.getElementById(parentId);
+          if (parent && parent.classList.contains('qIcon')) {
+              parent.appendChild(img);
+          } else {
+              console.error(
+                  `Parent element with ID "${parentId}" and class "qIcon" not found.`
+              );
+          }
+      }
+    
+      // Loop through the icons array and create each icon
+      icons.forEach(({ src, alt, parentId }) => {
+          createIcon(src, alt, parentId, { width: '60px', height: '60px' });
+      });
 
-
-  renderRegBackColor()
-  renderLinerightleft()
-  renderBtnColor()
-});
-async function getBtncolors() {
-  try {
-    // Reference a document in the "revoFitweb" collection with ID "landing"
-    const docRef = doc(db, 'RevoBuissnes', transferredInfo);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const documentData = docSnap.data(); // Store document data
-      return documentData; // Return the data for external use
-    } else {
-      console.log("No such document!");
-      return null; // Return null if no document is found
-    }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-  }
-}
-getBtncolors().then((data) => {
-  const AppIntroValue = data.Evaluation; // Retrieve nested data
-
-  function renderBtnColor() {
+    function renderBtnColor(Bcolor, Tcolor){
       // Extract colors
-      const backgroundColor = AppIntroValue?.Bcolors || '#ffffff'; // Default to white if undefined
-      const textColor = AppIntroValue?.Rbackground || '#000000';  // Default to black if undefined
+      const backgroundColor = Bcolor|| '#ffffff'; 
+      // Default to white if undefined
+      const textColor = Tcolor|| '#000000'; 
+       // Default to black if undefined
 
       // List of button IDs
       const buttonIds = ['BtnTwo', 'BtnThree', 'BtnFour'];
@@ -527,212 +478,70 @@ getBtncolors().then((data) => {
               console.error(`Element with ID "${id}" not found.`);
           }
       });
-  }
-
-  renderBtnColor();
-});
-async function getSideInformation() {
-  try {
-    // Reference a document in the "revoFitweb" collection with ID "landing"
-    const docRef = doc(db, 'RevoBuissnes', transferredInfo);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const documentData = docSnap.data(); // Store document data
-      return documentData; // Return the data for external use
-    } else {
-      console.log("No such document!");
-      return null; // Return null if no document is found
     }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-  }
-}
-getSideInformation().then((data) => {
-const AppIntroValue = data.Evaluation; // Retrieve nested data
-
-
- 
-
-
-function renderLeftcontent(){
-  const title = AppIntroValue.tittle;
-  const titleText = AppIntroValue.TextCont;
-
-  // Create elements for title, title text, question, input, and button
-  const h1 = document.createElement("h1");
-  const p = document.createElement("p");
-  // Set text and attributes for the elements
-  h1.textContent = title;
-  p.textContent = titleText;
-
-  const courseBannerElement = document.getElementById('TextContent');
-  if (courseBannerElement) {
-    courseBannerElement.appendChild(h1);
-    courseBannerElement.appendChild(p);}
-}
-function renderSide(){
-  const sideColor = AppIntroValue.Bcolors;
-  const sideTextColor = AppIntroValue.sideTextColor;
-  
-
-  
-  const textContent = document.getElementById('TextContent');
-  if (textContent) {
-      textContent.style.backgroundColor = sideColor;
-      textContent.style.color = sideTextColor;
-      console.log(`Background color changed to ${sideColor}`);
-  } else {
-      console.error('Element with ID "TextContent" not found.');
-  }
- 
-
-
-}
-
-
-
-
-
-renderLeftcontent()
-renderSide()
-});
-async function getEIcons() {
-  try {
-    // Reference a document in the "revoFitweb" collection with ID "landing"
-    const docRef = doc(db, 'RevoBuissnes', transferredInfo);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const documentData = docSnap.data(); // Store document data
-      return documentData; // Return the data for external use
-    } else {
-      console.log("No such document!");
-      return null; // Return null if no document is found
-    }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-  }
-}
-getEIcons().then((data) => {
-  const AppIntroValue = data.Evaluation; // Retrieve nested data
-
-  // Mapping of icon data to parent element IDs
-  const icons = [
-      { src: AppIntroValue.PIcon, alt: 'Weight Icon', parentId: 'pIcon' },
-      { src: AppIntroValue.aIcon, alt: 'Height Icon', parentId: 'aIcon' },
-      { src: AppIntroValue.RIcon, alt: 'Wrist Icon', parentId: 'rIcon' },
-      { src: AppIntroValue.KIcon, alt: 'Knee Icon', parentId: 'kIcon' },
-      { src: AppIntroValue.CIcon, alt: 'Waist Icon', parentId: 'wIcon' },
-      { src: AppIntroValue.HipIcon, alt: 'Hips Icon', parentId: 'hIcon' },
-      { src: AppIntroValue.Ticon, alt: 'Arm Icon', parentId: 'tIcon' },
-      { src: AppIntroValue.Licon, alt: 'Leg Icon', parentId: 'lIcon' },
-      { src: AppIntroValue.Nicon, alt: 'Neck Icon', parentId: 'nIcon' },
-  ];
-
-  // Reusable function to create and append icons
-  function createIcon(src, alt, parentId, styles = {}) {
-      const img = document.createElement('img');
-      img.src = src;
-      img.alt = alt;
-
-      // Apply styles to the image
-      Object.entries(styles).forEach(([key, value]) => {
-          img.style[key] = value;
-      });
-
-      // Find and validate the parent element
-      const parent = document.getElementById(parentId);
-      if (parent && parent.classList.contains('qIcon')) {
-          parent.appendChild(img);
-      } else {
-          console.error(
-              `Parent element with ID "${parentId}" and class "qIcon" not found.`
-          );
+    function setCheckboxAccentColor(color) {
+      // Create a <style> element if it doesn't already exist
+      let styleElement = document.getElementById('dynamicCheckboxStyles');
+      
+      if (!styleElement) {
+          styleElement = document.createElement('style');
+          styleElement.id = 'dynamicCheckboxStyles';
+          document.head.appendChild(styleElement);
       }
-  }
-
-  // Loop through the icons array and create each icon
-  icons.forEach(({ src, alt, parentId }) => {
-      createIcon(src, alt, parentId, { width: '60px', height: '60px' });
-  });
-});
-
-
-
-
-
-
-
-
-
-async function getCheckboxColor() {
-  try {
-    // Reference a document in the "revoFitweb" collection with ID "landing"
-    const docRef = doc(db, 'RevoBuissnes', transferredInfo);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const documentData = docSnap.data(); // Store document data
-      return documentData; // Return the data for external use
-    } else {
-      console.log("No such document!");
-      return null; // Return null if no document is found
-    }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-  }
-}
-getCheckboxColor().then((data) => {
-const AppIntroValue = data.Evaluation; // Retrieve nested data
-const boxColor = AppIntroValue.BtnColor;
-
-
-function setCheckboxAccentColor(color) {
-  // Create a <style> element if it doesn't already exist
-  let styleElement = document.getElementById('dynamicCheckboxStyles');
-  
-  if (!styleElement) {
-      styleElement = document.createElement('style');
-      styleElement.id = 'dynamicCheckboxStyles';
-      document.head.appendChild(styleElement);
-  }
-
-  // Update the style content
-  styleElement.textContent = `
-      input[type="checkbox"] {
-          accent-color: ${color};
-      }
-  `;
-}
-
-// Example usage:
-setCheckboxAccentColor(boxColor);
- 
-
-
-});
-
-
-document.getElementById("rSendBtn").addEventListener("click", async (event) => {
-  event.preventDefault();
-
-  // Your form submission logic here
-  const formData = {
-    peso: document.getElementById("peso")?.value || null,
-    altura: document.getElementById("altura")?.value || null,
-    muneca: document.getElementById("muneca")?.value || null,
-    // Add other fields here...
-  };
-
-  try {
-    // Submit logic (if any)
-    console.log("Form submitted successfully:", formData);
     
-    // After successful submission, redirect to index9.html
-    window.location.href = "index9.html";
-  } catch (error) {
-    console.error("Error during submission:", error);
-    alert("Submission failed. Please try again.");
+      // Update the style content
+      styleElement.textContent = `
+          input[type="checkbox"] {
+              accent-color: ${color};
+          }
+      `;
+    }
+    function renderBackgroundColors(color, urlId){
+      const LeftBgColor = document.getElementById(urlId);
+      if (LeftBgColor) {
+        LeftBgColor.style.backgroundColor = color;    
+      } else {
+          console.error('Element with ID "TextContent" not found.');
+      }
+    }
+    function renderBuIcon(newSrc, imgId) {
+      const imgElement = document.getElementById(imgId);
+      if (imgElement) {
+          imgElement.src = newSrc;
+      } else {
+          console.error(`Image element with ID "${imgId}" not found.`);
+      }
+    }
+      
+    setCheckboxAccentColor(Base)
+    renderBtnColor(Base, Prime2)
+    // HearderMobile Color
+    renderBackgroundColors(Prime1, 'mobileImg')
+    // FromBackground Color
+    renderBackgroundColors(Prime3, 'RegistroBlock')
+    // Line top Background Color
+    renderBackgroundColors(Base, 'lines')
+    // Line Bottom Background Color
+    renderBackgroundColors(Base, 'linesL')
+
+    renderBuIcon(BuLight, 'IconLogo' )
+
+
+
+
+
+
+ 
+
+
+
+
   }
-});
+  renderRight()
+
+
+
+
+
+
+})

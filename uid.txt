@@ -488,6 +488,16 @@ OLwUXPtofBfx8yXuMIiFpQ6ob463
 
 
 
+
+
+
+
+
+
+
+
+
+
   .E-right {
     padding: 4rem 2rem 0 2rem;
     border-radius: 4rem 4rem 0 0;
@@ -667,3 +677,181 @@ input{
     transition: border-color 0.3s ease; /* Adds smooth interaction effect */
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // Function to apply branding based on the document (RevolFit, MetaV, SHS)
+  async function applyBranding(documentId) {
+    const data = await fetchFirestoreData("RevoBuissnes", documentId);
+
+    if (data) {
+      const { UBU, Portal} = data;
+     
+      const BuIcon = UBU.BuIcon
+      const Colors = UBU.Colors
+
+      const Popup = Portal.popup
+      const Login = Portal.login
+
+
+
+      if (webSite) {
+        const {BuIcon, Colors, font,} = UBU;
+     
+
+
+        function setFontFamily(element, fontFamily) {
+          element.style.fontFamily = fontFamily; // Set the font family on the given element
+        }
+        
+        // Example usage
+        const element = document.querySelector('body'); // Select the target element
+        const setFont = font; // Define the font family
+        setFontFamily(element, font); // Apply the font family to the selected element
+      }
+      // Render Popup Data
+      if (Popup) {
+        const {  Colors, BuLogos, BuIcons} = UBU;
+        const { BuIcon, PImgs, PopupText} = Popup;
+
+
+        const tittle    = PopupText.tittle
+        const Subtittle    = PopupText.Subtittle
+
+        const Base  = Colors.Base
+        const Prime1  = Colors.Prime1
+        const Prime2  = Colors.Prime2
+
+
+        const BackImg = PImgs.backgroundImg
+
+
+        const BuLight = BuIcon.BuLight
+      
+        // Dynamic rendering functions
+        function setButtonBorderColor(color) {
+          const button = document.getElementById("pop-upBtn");
+          if (button) {
+            button.style.border = `5px solid ${color}`;
+            button.style.borderRadius = "5px";
+            button.style.color = Prime2;
+          }
+        }
+
+        function renderImage(imageUrl, containerId) {
+          const container = document.getElementById(containerId);
+          if (container) {
+            const img = document.createElement("img");
+            img.src = imageUrl;
+            img.alt = "Image";
+            img.style.height = "auto";
+            container.innerHTML = "";
+            container.appendChild(img);
+          }
+        }
+
+        function renderText(title, subtitle) {
+          document.getElementById("tittle").textContent = title;
+          document.getElementById("Subtittle").textContent = subtitle;
+          document.getElementById("tittle").style.color = Prime2;
+          document.getElementById("Subtittle").style.color = Prime2;
+
+        }
+
+     
+        // Populate UI elements
+       
+        setButtonBorderColor(Prime1);
+        renderImage(BackImg, "pop-upImg");
+        renderImage(BuLight, "pop-upIcon");
+        renderText(tittle, Subtittle);
+      }
+
+      // Render Login Data
+      if (Login) {
+        const {  Colors, BuLogos, BuIcons} = UBU;
+        const { Icons, LImgs } = Login;
+
+
+        const tittle    = PopupText.tittle
+        const Subtittle    = PopupText.Subtittle
+
+        const Base  = Colors.Base
+        const Prime1  = Colors.Prime1
+        const Prime2  = Colors.Prime2
+
+
+        const BackImg = LImgs.backgroundImg
+
+
+        const BuLight = BuIcon.BuLight
+
+
+
+
+        
+
+        function setPopupColors(Btncolor,Cbackground, popText,containerBI ){
+
+          const button = document.getElementById("ISbtn");
+          const container = document.getElementById("loginContent");
+          const container2 = document.getElementById("pop-upText");
+          const containerBI = document.getElementById("loginImg");
+
+
+
+
+          if (button) {
+            button.style.border = `5px solid ${Btncolor}`;
+            button.style.borderRadius = "5px";
+          }
+
+          if (container) {
+            container.style.backgroundColor = Cbackground;
+          }
+
+          
+          if (container2) {
+            container2.style.backgroundColor = popText;
+          }
+
+          
+          if (containerBI) {
+            const imgBi = document.createElement("img");
+            imgBi.src = imageUrl;
+            imgBi.alt = "Image";
+            imgBi.style.height = "auto";
+            containerBI.innerHTML = "";
+            containerBI.appendChild(imgBi);
+          }
+
+
+
+
+          backgroundimg
+
+        }
+
+        setPopupColors(Prime1, Base, Base,BackImg )

@@ -219,7 +219,7 @@ const selectedPhrase = chooseFromArray(variable, motivationText);
 }
  // Fetch and use the document data
  getbUiCON().then((data) => {
-  const App    = data.App;
+  const App    =data.UBU;
   const BuIcon   = App.BuIcon;
   const BuLight   = BuIcon.BuLight;
 
@@ -432,8 +432,8 @@ getResultsContainerColors().then((data) => {
     console.error("Invalid data structure or missing App property.");
     return;
   }
-
-  const App = data.App;
+  
+  const App = data.UBU;
   const Colors = App.Colors;
   const Base = Colors.Base;
   const Prime1 = Colors.Prime1;
@@ -507,8 +507,8 @@ getBtnblockColors().then((data) => {
     console.error("Invalid data structure or missing App property.");
     return;
   }
-
-  const App = data.App;
+  
+  const App = data.UBU; 
   const Colors  = App.Colors;
   const Prime1   = Colors.Prime1;
 
@@ -539,7 +539,7 @@ getBtnblockColors().then((data) => {
 
 
 
-
+// Bottom Icons
 
 async function getBtnIcons() {
   try {
@@ -559,6 +559,7 @@ async function getBtnIcons() {
   }
 }
 getBtnIcons().then((data) => {
+  
   const App = data.App; // Retrieve nested data
   const Btns = App.Btns
 
@@ -590,8 +591,6 @@ getBtnIcons().then((data) => {
     // Append the image to the div
     div.appendChild(img);
   }
-  
-  
   createfireIcon(blue, 'Example image');
   }
   function getDateBtn() {
@@ -626,7 +625,7 @@ getBtnIcons().then((data) => {
     }
 
     createfireIcon(white, 'Example image');
-}
+  }
   function getGoalBtn(){
     const GoalBtns = Btns.GoalBtns
     const blue  = GoalBtns[0]
@@ -716,7 +715,7 @@ getBtnIcons().then((data) => {
 
       // Add an event listener to redirect when the image is clicked
       img.addEventListener('click', function() {
-        window.location.href = 'index13.html'; // Redirect to index10.html
+        window.location.href = 'index9.5.html'; // Redirect to index10.html
       });
     
       // Append the image to the div
@@ -726,13 +725,6 @@ getBtnIcons().then((data) => {
     
     createfireIcon(white , 'Example image');
   }
-
-
-
-
-
-
-
 
 
   getHomeBtn()

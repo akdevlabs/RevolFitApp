@@ -19,149 +19,205 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
+// Constants
+const loginPage = "/index.html"; // Adjust path if necessary
+const protectedPage = "/index1.html";
 
-// Ensure the DOM is loaded before attaching event listeners
-document.addEventListener("DOMContentLoaded", () => {
 
-  
-  async function loginUser(email, password) {
-    try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        console.log("User logged in:", userCredential.user);
 
-        const userDocRef = doc(db, "users", userCredential.user.uid);
 
-        // Increment streak count and push to array
-        const userDocSnap = await getDoc(userDocRef);
-        if (userDocSnap.exists()) {
-            let userData = userDocSnap.data();
-            let newStreakCount = (userData.currentStreak || 0) + 1; // Default to 0 if undefined
-            let updatedStreakArray = userData.streakCount || []; // Use existing array or initialize
-
-            updatedStreakArray.push(newStreakCount); // Add new streak to the array
-
-            await updateDoc(userDocRef, {
-                currentStreak: newStreakCount, // Update the current streak
-                streakCount: updatedStreakArray // Update the array
-            });
-
-            console.log("Streak updated. Current streak:", newStreakCount);
-        } else {
-            console.error("User document does not exist.");
-        }
-
-        // Add a login timestamp to the database
-        await updateDoc(userDocRef, {
-            lastLogin: serverTimestamp() // Firestore will set the server time
-        });
-
-        // After login, check the user flow
-        checkUserFlow(userCredential.user.uid);
-    } catch (error) {
-        console.error("Error logging in:", error.message);
-        alert("Error: " + error.message);
-    }
+// Utility: Redirect to a specific page
+function redirectTo(page) {
+  window.location.href = page;
 }
 
-
-// Function to check user flow based on registration and evaluation status
-async function checkUserFlowAfterLogin(userId) {
+// Function: Log in the user
+async function loginUser(email, password) {
   try {
-      // Reference the user's document in Firestore
-      const userDocRef = doc(db, "users", userId);
-      const userDocSnap = await getDoc(userDocRef);
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    console.log("User logged in:", user);
 
-      // Check if the user document exists
-      if (userDocSnap.exists()) {
-          const userData = userDocSnap.data();
+    // Save UID to localStorage
+    saveUserUIDToLocalStorage(user.uid);
 
-          // Save user info to localStorage if activeA is true
-          if (userData.activeA) {
-              const userinfo = userData.uid;
-
-              if (userinfo) {
-                  localStorage.setItem("transferreduserInfo", userinfo); // Save data in localStorage
-                  console.log("User info saved in localStorage:", userinfo);
-              } else {
-                  alert("User information is missing. Please contact support.");
-                  return;
-              }
-          } else {
-              console.log("User is not active. No information stored.");
-          }
-
-          // Point 1: Check if registration is finished
-          if (!userData.Registration) {
-              console.log("Registration not finished. Redirecting to index6.html.");
-              window.location.href = "index6.html";
-              return;
-          }
-
-          // Point 2: Check if evaluation is finished
-          if (!userData.evaluation) {
-              console.log("Evaluation not finished. Redirecting to index7.html.");
-              window.location.href = "index7.html";
-              return;
-          }
-
-          // Point 3: Both registration and evaluation are completed
-          console.log("User registration and evaluation completed. Redirecting to index9.html.");
-          window.location.href = "index9.html";
-      } else {
-          console.error("No such user document found.");
-          alert("Unable to verify user data. Please contact support.");
-      }
+    // Update streak in Firestore
+    await updateUserStreak(user.uid);
+    
+    redirectTo(protectedPage);
   } catch (error) {
-      console.error("Error checking user flow:", error.message);
-      alert("Error checking user data. Please try again later.");
+    console.error("Error logging in:", error.message);
+    alert("Error: " + error.message);
   }
 }
 
 
 
-// Attach login button listener
-document.getElementById("ISbtn").addEventListener("click", () => {
+
+
+
+
+
+// Function: Save user UID to localStorage
+function saveUserUIDToLocalStorage(uid) {
+  try {
+    localStorage.setItem("transferreduserInfo", uid);
+    console.log("User UID saved to localStorage:", uid);
+  } catch (error) {
+    console.error("Error saving UID to localStorage:", error);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Function: Update user streak in Firestore  Error: Firebase: Error (auth/invalid-login-credentials).
+async function updateUserStreak(userId) {
+  const userDocRef = doc(db, "users", userId);
+  const userDocSnap = await getDoc(userDocRef);
+
+  if (userDocSnap.exists()) {
+    const userData = userDocSnap.data();
+    const newStreakCount = (userData.currentStreak || 0) + 1; // Increment streak
+    const updatedStreakArray = [...(userData.streakCount || []), newStreakCount]; // Add streak to array
+
+    await updateDoc(userDocRef, {
+      currentStreak: newStreakCount,
+      streakCount: updatedStreakArray,
+      lastLogin: serverTimestamp()
+    });
+    
+    console.log("Streak updated. Current streak:", newStreakCount);
+  } else {
+    console.error("User document does not exist.");
+  }
+
+}
+
+
+
+
+
+// Function: Log out user once on initial load
+async function logoutUserOnce() {
+  const hasLoggedOut = sessionStorage.getItem("hasLoggedOut");
+  if (!hasLoggedOut) {
+    try {
+      await signOut(auth);
+      console.log("User logged out on first load.");
+      sessionStorage.setItem("hasLoggedOut", "true"); // Prevent repeat logout
+    } catch (error) {
+      console.error("Error logging out:", error.message);
+    }
+  }
+}
+
+// Function: Handle authentication state
+function handleAuthState() {
+  onAuthStateChanged(auth, async (user) => {
+    const currentPage = window.location.pathname;
+
+    if (currentPage === loginPage && user) {
+      console.log("User is already logged in:", user.email);
+
+      // Force sign out for re-authentication
+      try {
+        await signOut(auth);
+       
+      } catch (error) {
+        console.error("Error during forced sign out:", error.message);
+      }
+    }
+  });
+}
+
+// Event Listener: Attach login button listener
+function attachLoginListener() {
+  document.getElementById("ISbtn").addEventListener("click", () => {
     const email = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
     if (email && password) {
-        loginUser(email, password);
+      loginUser(email, password);
     } else {
-        alert("Por favor, complete todos los campos.");
+      alert("Por favor, complete todos los campos.");
     }
-});
+  });
+}
 
-// Monitor authentication state
-auth.onAuthStateChanged(async (user) => {
-    if (user) {
-      await checkUserFlowAfterLogin(user.uid);
-        console.log("User is logged in:", user.email);
+// Function: Fetch Firestore document data
+async function fetchFirestoreData(collection, documentId) {
+  try {
+    const docRef = doc(db, collection, documentId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data();
     } else {
-        console.log("No user is logged in.");
+      console.log(`No such document in collection ${collection}`);
+      return null;
     }
-});
-
-
-
-
-
-
-  // Function to fetch Firestore document data
-  async function fetchFirestoreData(collection, document) {
-    try {
-      const docRef = doc(db, collection, document);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        return docSnap.data();
-      } else {
-        console.log(`No such document in collection ${collection}`);
-        return null;
-      }
-    } catch (error) {
-      console.error(`Error fetching document from ${collection}:`, error);
-    }
+  } catch (error) {
+    console.error(`Error fetching document from ${collection}:`, error);
   }
+}
+
+// Initialize App
+document.addEventListener("DOMContentLoaded", () => {
+  logoutUserOnce(); // Log out on first load
+  handleAuthState(); // Monitor authentication state
+  attachLoginListener(); // Attach event listener for login button
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -396,31 +452,7 @@ auth.onAuthStateChanged(async (user) => {
 
 
 
-});
 
 
 
-// Initialize a timer variable
-let inactivityTimer;
 
-// Function to reset the inactivity timer
-function resetInactivityTimer() {
-    clearTimeout(inactivityTimer); // Clear the existing timer
-    inactivityTimer = setTimeout(() => {
-        auth.signOut().then(() => {
-            console.log("User logged out due to inactivity.");
-            alert("You have been logged out due to inactivity.");
-            window.location.href = "index.html"; // Redirect to login page
-        }).catch((error) => {
-            console.error("Error during logout:", error);
-        });
-    }, 5 * 60 * 1000); // 5 minutes in milliseconds
-}
-
-// Event listeners to detect user activity
-window.addEventListener("mousemove", resetInactivityTimer);
-window.addEventListener("keypress", resetInactivityTimer);
-window.addEventListener("click", resetInactivityTimer);
-
-// Start the inactivity timer when the script loads
-resetInactivityTimer();

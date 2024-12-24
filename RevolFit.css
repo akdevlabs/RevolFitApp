@@ -131,3 +131,29 @@ button{
 input{
   width: 100%;
 }
+
+
+
+
+
+
+#googleSignInBtn {
+  padding: 10px;
+  background-color: #4285F4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  width: 100%;
+  cursor: pointer;
+}
+
+#googleSignInBtn:hover {
+  background-color: #357ae8;
+}
+
+#errorMessage {
+  color: red;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 10px;
+}

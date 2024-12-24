@@ -1,3 +1,41 @@
+// Import necessary Firebase modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBc3B7SM_Itr9LRCv8N3_tbl9BglxHKo-M",
+  authDomain: "revofit-ad7c3.firebaseapp.com",
+  projectId: "revofit-ad7c3",
+  storageBucket: "revofit-ad7c3.appspot.com",
+  messagingSenderId: "643801118133",
+  appId: "1:643801118133:web:d679abc998a18f7077d5fc",
+  measurementId: "G-E6P96D0M6Z"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+
+// Retrieve data from localStorage
+const transferreduserInfo = localStorage.getItem("transferreduserInfo");
+const transferredBuInfo = localStorage.getItem("transferredInfo");
+
+console.log(transferreduserInfo)
+
+console.log(transferredBuInfo)
+
+
+
+
+
+
+
+
+
 // Function to check user flow based on registration and evaluation status
 async function checkUserFlowAfterLogin(userId) {
   try {
@@ -25,7 +63,7 @@ async function checkUserFlowAfterLogin(userId) {
           }
 
           // Point 1: Check if registration is finished
-          if (!userData.Registration) {
+          if (!userData.registrationCompleted) {
               console.log("Registration not finished. Redirecting to index6.html.");
               window.location.href = "index6.html";
               return;
@@ -51,37 +89,4 @@ async function checkUserFlowAfterLogin(userId) {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-        // After login, check the user flow
-        checkUserFlow(userCredential.user.uid);
-
-
-
- // Point 1: Check if registration is finished
-          if (!userData.Registration) {
-              console.log("Registration not finished. Redirecting to index6.html.");
-              window.location.href = "index6.html";
-              return;
-          }
-
-          // Point 2: Check if evaluation is finished
-          if (!userData.evaluation) {
-              console.log("Evaluation not finished. Redirecting to index7.html.");
-              window.location.href = "index7.html";
-              return;
-          }
-
-          // Point 3: Both registration and evaluation are completed
-          console.log("User registration and evaluation completed. Redirecting to index9.html.");
-            window.location.href = "index9.html";
+checkUserFlowAfterLogin(transferreduserInfo)

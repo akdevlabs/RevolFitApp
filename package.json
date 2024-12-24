@@ -1,6 +1,8 @@
 {
   "name": "project",
-  "dependencies": {},
+  "dependencies": {
+    "firebase-functions": "^6.2.0"
+  },
   "devDependencies": {
     "vite": "latest"
   },

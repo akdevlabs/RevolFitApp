@@ -83,7 +83,13 @@ document.getElementById("EvaluationQuestions").addEventListener("submit", async 
 
   try {
     const userId = transferreduserInfo; // Retrieved from localStorage
+    if (!userId) {
+      throw new Error("User ID is not set in localStorage.");
+    }
+
     const userRef = doc(db, "users", userId);
+
+    console.log(typeof userRef);
 
     // Add the evaluation data to a sub-collection within the user document
     const evaluationsRef = collection(userRef, "evaluation");
@@ -94,8 +100,14 @@ document.getElementById("EvaluationQuestions").addEventListener("submit", async 
     // Update the user's main document with a reference or summary of the evaluation
     await updateDoc(userRef, {
       lastEvaluation: formData, // Save a summary of the latest evaluation
-      lastEvaluationId: newDocRef.id, // Optionally save the document ID
+      lastEvaluationId: newDocRef.id, // Save the document ID
     });
+
+
+
+    // Update the evaluation field in the user's main document
+    await updateDoc(userRef, { evaluation: true });
+    console.log("Evaluation field updated to true in the user's document.");
 
     alert("Evaluation submitted and saved successfully!");
     window.location.href = "index9.html";
@@ -104,6 +116,24 @@ document.getElementById("EvaluationQuestions").addEventListener("submit", async 
     alert("Error submitting the evaluation. Please try again.");
   }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Block initialization logic
 const blocks = document.querySelectorAll('.Block');

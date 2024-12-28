@@ -355,102 +355,118 @@ async function getWorkouts() {
 }
 
 getWorkouts().then((data) => {
-  // Validate the data structure
-  if (!data || !data.App || !data.UBU || !data.App.workoutBtns) {
-      console.error("Invalid data structure or missing properties.");
-      return;
-  }
-
-  const App = data.App;
+  const app = data.App;
   const UBU = data.UBU;
-
-  const workoutBtns = App.workoutBtns;
-  const { Gym, Home } = workoutBtns;
-
-  // Validate Gym and Home objects
-  if (!Gym || !Gym.backgroundImg || !Home || !Home.backgroundImg) {
-      console.error("Missing background image data for Gym or Home.");
-      return;
-  }
-
-  const GBG = Gym.backgroundImg;
-  const HBG = Home.backgroundImg;
 
   const { Base, Prime1, Prime2 } = UBU.Colors;
 
-  // Function to convert hex color to RGBA
-  function hexToRgba(hex, alpha = 0.5) {
-      const bigint = parseInt(hex.slice(1), 16);
-      const r = (bigint >> 16) & 255;
-      const g = (bigint >> 8) & 255;
-      const b = bigint & 255;
-      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  const { Gym, Home } = app.workoutBtns;
+  const GymImg = Gym.backgroundImg;
+  const HImg = Home.backgroundImg;
+
+  // Function to create buttons
+  function createGymImageAndHeading1(ImgScr, Btext, DivId, workoutLocation) {
+    const workoutDiv = document.getElementById(DivId);
+
+    if (!workoutDiv) {
+      console.error('Div with the provided ID does not exist.');
+      return;
+    }
+
+    // Create the button element
+    const button = document.createElement('button');
+
+    // Set the button's background image and style
+    button.style.backgroundImage = `url('${ImgScr}')`;
+    button.style.backgroundSize = 'cover';
+    button.style.backgroundPosition = 'center';
+    button.style.width = '10rem';
+    button.style.height = '10rem';
+    button.style.border = 'none';
+    button.style.backgroundColor = 'transparent'; // Ensures the button's background is transparent
+
+    // Add inner HTML with a background color for the text
+    button.innerHTML = `<span style="
+      display: inline-block;
+      background-color: ${Base}; 
+      color: ${Prime2}; 
+      padding: 5px 10px; 
+      border-radius: 5px;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    ">${Btext}</span>`;
+
+    // Add click event listener to the button
+    button.addEventListener('click', () => handleButtonClick(workoutLocation, DivId));
+
+    // Append the button to the container div
+    workoutDiv.appendChild(button);
   }
 
-  // Function to render a workout button
-  function renderWorkoutButton(Src, h1Text, divId, locationType) {
-      // Find the div with the specified ID
-      const div = document.getElementById(divId);
+  // Function to handle button click
+  function handleButtonClick(workoutLocation, DivId) {
+    console.log(`Button clicked: ${workoutLocation}`);
+    localStorage.setItem('WorkoutLocation', workoutLocation); // Save the workout location in local storage
 
-      if (!div) {
-          console.error(`Div with id '${divId}' not found.`);
-          return;
-      }
-
-      // Check if the image URL is valid
-      const img = new Image();
-      img.src = Src;
-      img.onload = () => {
-          console.log(`Image ${Src} loaded successfully.`);
-      };
-      img.onerror = () => {
-          console.error(`Failed to load image: ${Src}`);
-      };
-
-      // Create a button element
-      const button = document.createElement('button');
-      button.style.backgroundImage = `url(${Src})`;
-      button.style.backgroundSize = 'cover';
-      button.style.backgroundPosition = 'center';
-      button.style.color = Prime2;
-      button.style.boxShadow = `0px 4px 10px ${Prime1}`;
-      button.style.backgroundColor = Prime1;
-      button.style.border = `2px solid ${Prime1}`;
-  
-      
-       // Adjust based on your layout
-     ; // Adjust based on your layout
-
-      // Add an event listener for click actions
-      button.addEventListener('click', () => {
-          localStorage.setItem('workoutLocation', locationType);
-          window.location.href = `index9.1.html`;
-      });
-
-      // Create an h1 element for the button label
-      const h1 = document.createElement('h1');
-      h1.textContent = h1Text;
-      h1.style.margin = '0';
-      h1.style.color = Prime2;
-      h1.style.backgroundColor = hexToRgba(Base, 0.8);
-      h1.style.padding = '.7rem';
-      h1.style.textAlign = 'center';
-
-      // Append the h1 to the button
-      button.appendChild(h1);
-
-      // Append the button to the div
-      div.appendChild(button);
+    if (workoutLocation === 'Gym') {
+      createSeeAllLink(DivId, 'index9.1.1.html');
+    } else if (workoutLocation === 'Home') {
+      createSeeAllLink(DivId, 'index9.1.2.html');
+    }
   }
 
-  // Render buttons for Gym and Home
-  renderWorkoutButton(GBG, 'Rutina En el Gym', 'Gym', 'gym');
-  renderWorkoutButton(HBG, 'Rutina En Casa', 'Home', 'home');
-}).catch((error) => {
-  console.error("An error occurred while fetching workouts:", error);
+  // Function to create the "See All" link
+  function createSeeAllLink(DivId, redirectUrl) {
+    const workoutDiv = document.getElementById(DivId);
+    if (!workoutDiv) {
+      console.error('Div with the provided ID does not exist.');
+      return;
+    }
+
+    // Check if the link already exists
+    if (document.getElementById('See')) {
+      console.log('Link already exists.');
+      return;
+    }
+
+    // Create the link element
+    const link = document.createElement('a');
+    link.id = 'See';
+    link.href = redirectUrl;
+    link.innerText = 'See All';
+    link.style.display = 'block';
+    link.style.marginTop = '10px';
+    link.style.textDecoration = 'none';
+    link.style.color = Base;
+    link.style.fontWeight = 'bold';
+
+    // Append the link to the container div
+    workoutDiv.appendChild(link);
+  }
+
+  // Function to get the saved workout location
+  function getSavedWorkoutLocation() {
+    const savedWorkoutLocation = localStorage.getItem('WorkoutLocation');
+    if (savedWorkoutLocation) {
+      console.log(`Saved Workout Location: ${savedWorkoutLocation}`);
+      return savedWorkoutLocation;
+    } else {
+      console.log('No Workout Location found in local storage.');
+      return null;
+    }
+  }
+
+  // Create buttons
+  createGymImageAndHeading1(GymImg, 'Rutina en Gym', 'Gym', 'Gym');
+  createGymImageAndHeading1(HImg, 'Rutina en Casa', 'Home', 'Home');
+
+  // Retrieve the saved workout location (for demonstration)
+  const savedLocation = getSavedWorkoutLocation();
+  if (savedLocation) {
+    console.log(`Previously selected: ${savedLocation}`);
+  }
 });
-
-
 
 
 
@@ -504,6 +520,20 @@ getResultsContainerColors().then((data) => {
     element.style.backgroundColor = backgroundColor;
     element.style.border = `2px solid ${borderColor}`;
   }
+  function changeTextColors(newColor) {
+    const appTop = document.getElementById("AppTop");
+    if (appTop) {
+      const textElements = appTop.querySelectorAll("*"); // Selects all child elements
+      textElements.forEach(element => {
+        element.style.color = newColor; // Changes text color
+      });
+    } else {
+      console.error("Element with id 'AppTop' not found.");
+    }
+  }
+  
+  // Example usage:
+  changeTextColors(Base);
 
   // Render shadow boxes with dynamic colors
   applyShadowBoxStyles('cal', {

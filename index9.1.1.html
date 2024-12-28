@@ -15,17 +15,49 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SHS/RevoFitApp/Workout</title>
-  <link rel="stylesheet" href="RevolFitAppWorkout.css">
+  <link rel="stylesheet" href="Workout.css">
 
   <link rel="shortcut icon" href="images/Logos/flower_DB.webp">
 </head>
 <body>
   <main>
+    <section class="TimerBlock">
+      <div id="Ttittle"></div>
+      <div id="Timer"></div>
+    </section>
+
+    <section class="InfoBlock">
+      <div id="Info"></div>
+    </section>
+    
+    <section class="videoBlock">
+
+    </section>
+
+
+    <section class="descriptionBlock">
+      <div id="description"></div>
+    </section>
+
+    <section class="btnBlock">
+      <button id="actionBtn">Start</button>
+    </section>
+
+   
+    <section>
+      <div class="navBtns">
+        <div id="home"></div>
+        <div id="Date"></div>
+        <div id="goals"></div>
+        <div id="stats"></div>
+        <div id="gear" ></div>
+      </div>
+    </section>
    
    
   </main>
 
-  <script type="module" src="RevolFitAppWorkout.js"></script>
+  <script type="module" src="Workout.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./service-worker.js')

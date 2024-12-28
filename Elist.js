@@ -29,6 +29,8 @@ const Exersise = "block1";
 
 
 
+console.log(workoutLocation)
+
 
 console.log("Transferred User Info:", transferreduserInfo);
 console.log("Transferred Info:", transferredInfo);
@@ -39,7 +41,13 @@ console.log(workoutLocation)
 // Function to determine the workout type
 function checkValue() {
   const value = workoutLocation;
-  return value === "gym" ? "GymWorkout" : "homeWorkout";
+  console.log(value)
+  if (value === "gym"){
+    return("GymWorkout")
+  }else{
+    return("homeWorkout")
+  }
+
 }
 
 // Function to fetch workouts

@@ -1,57 +1,15 @@
-body {
-  font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-  margin: 0;
-  overflow: hidden; /* Disables scrolling */
-  height: 100vh; /* Ensures the body height fits the viewport */
-  width: 100vw; /* Ensures the body width fits the viewport */
-}
-
-
-
-.AppTop{
-  
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 2rem;
-
-}
-#userName h2{
-  font-size:1.18rem ;
-  font-weight: 300;
-  margin-bottom: -1rem;
-}
-#AppTittle h1{
-  font-size:2.5rem ;
-  font-weight: 600;
-}
-#lastTime {
-  font-size: 1.18rem;
-  font-weight: 600;
-
- 
-}
-
-
-
-.AppImgBlock{
-  gap: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-#Icon img{
-  width: 3rem;
-}
-#userImg{
-  width: 4rem;
-}
-
 @media (max-width: 700px) {
 
- 
+  body {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+    overflow: hidden; /* Disables scrolling */
+    height: 100vh; /* Ensures the body height fits the viewport */
+    width: 100vw; /* Ensures the body width fits the viewport */
+  }
+  
 
   #userName{
     font-size: .8rem;
@@ -96,31 +54,28 @@ body {
 
 
   }
-  
+  #plans {
+    gap: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content:center;
 
-#plans {
-  gap: 1rem;
-  display: flex;
-  justify-content: center;
-}
+  }
+  #plans button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 1rem;
+    width: 10rem;
+    height:10rem;
+    border: none;
+    cursor: pointer;
+    font-size: .5rem;
+    margin:10px;
+    padding:10px  20px;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  }
 
 
 

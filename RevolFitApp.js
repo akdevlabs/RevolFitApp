@@ -416,10 +416,10 @@ getWorkouts().then((data) => {
       button.style.boxShadow = `0px 4px 10px ${Prime1}`;
       button.style.backgroundColor = Prime1;
       button.style.border = `2px solid ${Prime1}`;
-      button.style.cursor = 'pointer';
-      button.style.padding = '0';
-      button.style.width = '100%'; // Adjust based on your layout
-      button.style.height = '200px'; // Adjust based on your layout
+  
+      
+       // Adjust based on your layout
+     ; // Adjust based on your layout
 
       // Add an event listener for click actions
       button.addEventListener('click', () => {

@@ -3,9 +3,12 @@ body {
   font-optical-sizing: auto;
   font-style: normal;
   margin: 0;
-  overflow-x: hidden; /* Prevents horizontal scrolling */
-  overflow-y: scroll; /* Ensures a vertical scrollbar is always visible */
+  overflow: hidden; /* Disables scrolling */
+  height: 100vh; /* Ensures the body height fits the viewport */
+  width: 100vw; /* Ensures the body width fits the viewport */
 }
+
+
 
 .AppTop{
   color: #013948;

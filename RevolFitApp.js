@@ -30,35 +30,30 @@ console.log("Transferred User Info:", transferreduserInfo);
 console.log("Transferred Info:", transferredInfo);
 
 
-  async function checkDocumentExists(collectionName, documentId) {
-    try {
-      // Use `doc` to get a document reference
-      const docRef = doc(db, collectionName, documentId);
+async function checkDocumentExists(collectionName, documentId) {
+  try {
+    // Use `doc` to get a document reference
+    const docRef = doc(db, collectionName, documentId);
 
-      // Fetch the document snapshot
-      const docSnap = await getDoc(docRef);
+    // Fetch the document snapshot
+    const docSnap = await getDoc(docRef);
 
-      // Check if the document exists and log the result
-      if (docSnap.exists()) {
-        console.log(`Document found:`, docSnap.data());
-      } else {
-        console.log(`No document found with ID: ${documentId}`);
-      }
-    } catch (error) {
-      console.error("Error checking document:", error);
+    // Check if the document exists and log the result
+    if (docSnap.exists()) {
+      console.log(`Document found:`, docSnap.data());
+    } else {
+      console.log(`No document found with ID: ${documentId}`);
     }
+  } catch (error) {
+    console.error("Error checking document:", error);
   }
+}
 
   // Call the function with the correct string arguments
   checkDocumentExists("RevoBuissnes", transferredInfo);
 
 
-
-
-
-
-
-  async function getUserinfo() {
+async function getUserinfo() {
     try {
       // Reference a document in the "revoFitweb" collection with ID "landing"
       const docRef = doc(db, 'users', transferreduserInfo);
@@ -74,10 +69,10 @@ console.log("Transferred Info:", transferredInfo);
     } catch (error) {
       console.error("Error fetching document:", error);
     }
-  }
-  getUserinfo().then((data) => {
+}
+getUserinfo().then((data) => {
     const nombre = data.nombre; // Retrieve nested data
-    const timestamp = data.createdAt; // Retrieve nested data
+    const streakCount = data.streakCount; // Retrieve nested data
 
     
     function createUserNameHeading(userName) {
@@ -96,111 +91,52 @@ console.log("Transferred Info:", transferredInfo);
     // Call the function with the desired username
     createUserNameHeading(nombre);
 
-    function LasttimeUsed(stamp) {
+
+
+
+
+    function LasttimeUsed(streaks) {
       // Get the div by its ID
       const userNameDiv = document.getElementById('lastTime');
-    
-      // Create an h1 element
-      const h1 = document.createElement('h3');
-    
-      // Set the content of the h1 element to include "Hola," followed by the user's name
-      h1.textContent = stamp;
-    
-      // Append the h1 element to the div
-      userNameDiv.appendChild(h1);
+
+      // Get the last item from the array
+      const lastStreak = streaks[streaks.length - 1];
+
+      // Determine the appropriate time unit
+      let resultText;
+      if (lastStreak === 1) {
+        resultText = `${lastStreak} dia`;
+      } else if (lastStreak <= 7) {
+        resultText = `${lastStreak} dias`;
+      } else {
+        const weeks = Math.floor(lastStreak / 7);
+        if (weeks === 1) {
+          resultText = `${weeks} semana`;
+        } else {
+          resultText = `${weeks} semanas`;
+        }
+      }
+
+      // Create an h3 element
+      const h3 = document.createElement('h3');
+
+      // Set the content of the h3 element
+      h3.textContent = `Racha: ${resultText}`;
+
+      // Append the h3 element to the div
+      userNameDiv.appendChild(h3);
     }
-    // Call the function with the desired username
-    LasttimeUsed(timestamp);
+
+    // Example usage: Call the function with an array of streak counts
+
+    LasttimeUsed(streakCount);
+
    
-  });
-
-
-
+});
 
 
  // PENDING  NEED MORE POINTS IN THE DATABASE 
-  async function getMotivationText() {
-    try {
-      const docRef = doc(db, "RevoBuissnes", transferredInfo);
-      const docSnap = await getDoc(docRef);
-  
-      if (docSnap.exists()) {
-        const documentData = docSnap.data();
-        return documentData; // Return the document data
-      } else {
-        console.log("No such document!");
-        return null;
-      }
-    } catch (error) {
-      console.error("Error fetching document:", error);
-      return null;
-    }
-  }
-  getMotivationText().then((data) => {
-    const App    = data.App;
-    const motivationText   = App.motFrases;
-  
-    function chooseFromArray(value, array) {
-      /**
-       * Chooses an element from the array based on the provided value.
-       *
-       * @param {number} value - The value to determine the index.
-       * @param {Array} array - The array to choose from.
-       * @returns {*} The selected element from the array, or null if the value is out of range.
-       */
-      if (value >= 0 && value < array.length) {
-          return array[value];
-      } else {
-          return null;
-      }
-  }
-  
-
- // Example usage with App.motFrases PENDING  
-
-const variable = 0; // This can be any integer
-const selectedPhrase = chooseFromArray(variable, motivationText);
-
-  
-  
-    function creatMotivation(textContent) {
-      // Find the div with id 'cal'
-      const div = document.getElementById('motivation');
-    
-      // Check if the div exists
-      if (!div) {
-          console.error("Div with id 'cal' not found.");
-          return;
-      }
-    
-      // Create an h1 element
-      const h1 = document.createElement('h1');
-    
-      // Set the text content of the h1 element
-      h1.textContent = textContent;
-    
-      // Append the h1 to the div
-      div.appendChild(h1);
-    }
-    
-    creatMotivation(selectedPhrase)
-    
-    
-  });
-  
-
-
-
-
-
-
-
-
-
-
-
- // Function to fetch document data
- async function getbUiCON() {
+async function getMotivationText() {
   try {
     const docRef = doc(db, "RevoBuissnes", transferredInfo);
     const docSnap = await getDoc(docRef);
@@ -217,8 +153,81 @@ const selectedPhrase = chooseFromArray(variable, motivationText);
     return null;
   }
 }
+
+getMotivationText().then((data) => {
+  const App    = data.App;
+  const motivationText   = App.motFrases;
+
+  function chooseFromArray(value, array) {
+    /**
+     * Chooses an element from the array based on the provided value.
+     *
+     * @param {number} value - The value to determine the index.
+     * @param {Array} array - The array to choose from.
+     * @returns {*} The selected element from the array, or null if the value is out of range.
+     */
+    if (value >= 0 && value < array.length) {
+        return array[value];
+    } else {
+        return null;
+    }
+}
+
+
+// Example usage with App.motFrases PENDING  
+
+const variable = 0; // This can be any integer
+const selectedPhrase = chooseFromArray(variable, motivationText);
+
+
+
+  function creatMotivation(textContent) {
+    // Find the div with id 'cal'
+    const div = document.getElementById('motivation');
+  
+    // Check if the div exists
+    if (!div) {
+        console.error("Div with id 'cal' not found.");
+        return;
+    }
+  
+    // Create an h1 element
+    const h1 = document.createElement('h1');
+  
+    // Set the text content of the h1 element
+    h1.textContent = textContent;
+  
+    // Append the h1 to the div
+    div.appendChild(h1);
+  }
+  
+  creatMotivation(selectedPhrase)
+  
+  
+});
+
+
+ // Function to fetch document data
+async function getbUiCON() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.log("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+
  // Fetch and use the document data
- getbUiCON().then((data) => {
+getbUiCON().then((data) => {
   const App    =data.UBU;
   const BuIcon   = App.BuIcon;
   const BuLight   = BuIcon.BuLight;
@@ -249,76 +258,6 @@ createfireIcon(BuLight, 'Example image');
 
 
 });
- 
-
-
-
-
-
-
-
-
-async function getUserimg() {
-  try {
-    // Reference a document in the "revoFitweb" collection with ID "landing"
-    const docRef = doc(db, 'users', transferreduserInfo);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const documentData = docSnap.data(); // Store document data
-      return documentData; // Return the data for external use
-    } else {
-      console.log("No such document!");
-      return null; // Return null if no document is found
-    }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-  }
-}
-getUserimg().then((data) => {
-  const userImg = data.userImg; // Retrieve nested data
-  
-
-  
-  function createfireIcon(imgSrc, imgAlt) {
-    // Find the div with id 'cal'
-    const div = document.getElementById('Icon');
-  
-    // Check if the div exists
-    if (!div) {
-        console.error("Div with id 'Icon' not found.");
-        return;
-    }
-  
-    // Create an image element
-    const img = document.createElement('img');
-  
-    // Set the image source and alternative text
-    img.src = imgSrc;
-    img.alt = imgAlt;
-  
-    // Append the image to the div
-    div.appendChild(img);
-  }
-  
-  
-  createfireIcon(userImg, 'Example image');
-  
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // General function to fetch document data
@@ -338,6 +277,7 @@ async function fetchDocumentData(docPath, transferredInfo) {
       return null;
   }
 }
+
 
 // General function to create and append an element (image or h1) to a specified div
 function createElementInDiv(divId, elementType, attributes = {}, textContent = "") {
@@ -362,10 +302,8 @@ function createElementInDiv(divId, elementType, attributes = {}, textContent = "
 
   div.appendChild(element);
 }
-
 // Fetch and use the document data
 fetchDocumentData("RevoBuissnes", transferredInfo).then
-
 (data => {
   if (!data) return;
 
@@ -398,13 +336,125 @@ fetchDocumentData("RevoBuissnes", transferredInfo).then
 
 
 
+async function getWorkouts() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.error("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+
+getWorkouts().then((data) => {
+  // Validate the data structure
+  if (!data || !data.App || !data.UBU || !data.App.workoutBtns) {
+      console.error("Invalid data structure or missing properties.");
+      return;
+  }
+
+  const App = data.App;
+  const UBU = data.UBU;
+
+  const workoutBtns = App.workoutBtns;
+  const { Gym, Home } = workoutBtns;
+
+  // Validate Gym and Home objects
+  if (!Gym || !Gym.backgroundImg || !Home || !Home.backgroundImg) {
+      console.error("Missing background image data for Gym or Home.");
+      return;
+  }
+
+  const GBG = Gym.backgroundImg;
+  const HBG = Home.backgroundImg;
+
+  const { Base, Prime1, Prime2 } = UBU.Colors;
+
+  // Function to convert hex color to RGBA
+  function hexToRgba(hex, alpha = 0.5) {
+      const bigint = parseInt(hex.slice(1), 16);
+      const r = (bigint >> 16) & 255;
+      const g = (bigint >> 8) & 255;
+      const b = bigint & 255;
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+
+  // Function to render a workout button
+  function renderWorkoutButton(Src, h1Text, divId, locationType) {
+      // Find the div with the specified ID
+      const div = document.getElementById(divId);
+
+      if (!div) {
+          console.error(`Div with id '${divId}' not found.`);
+          return;
+      }
+
+      // Check if the image URL is valid
+      const img = new Image();
+      img.src = Src;
+      img.onload = () => {
+          console.log(`Image ${Src} loaded successfully.`);
+      };
+      img.onerror = () => {
+          console.error(`Failed to load image: ${Src}`);
+      };
+
+      // Create a button element
+      const button = document.createElement('button');
+      button.style.backgroundImage = `url(${Src})`;
+      button.style.backgroundSize = 'cover';
+      button.style.backgroundPosition = 'center';
+      button.style.color = Prime2;
+      button.style.boxShadow = `0px 4px 10px ${Prime1}`;
+      button.style.backgroundColor = Prime1;
+      button.style.border = `2px solid ${Prime1}`;
+      button.style.cursor = 'pointer';
+      button.style.padding = '0';
+      button.style.width = '100%'; // Adjust based on your layout
+      button.style.height = '200px'; // Adjust based on your layout
+
+      // Add an event listener for click actions
+      button.addEventListener('click', () => {
+          localStorage.setItem('workoutLocation', locationType);
+          window.location.href = `index9.1.html`;
+      });
+
+      // Create an h1 element for the button label
+      const h1 = document.createElement('h1');
+      h1.textContent = h1Text;
+      h1.style.margin = '0';
+      h1.style.color = Prime2;
+      h1.style.backgroundColor = hexToRgba(Base, 0.8);
+      h1.style.padding = '.7rem';
+      h1.style.textAlign = 'center';
+
+      // Append the h1 to the button
+      button.appendChild(h1);
+
+      // Append the button to the div
+      div.appendChild(button);
+  }
+
+  // Render buttons for Gym and Home
+  renderWorkoutButton(GBG, 'Rutina En el Gym', 'Gym', 'gym');
+  renderWorkoutButton(HBG, 'Rutina En Casa', 'Home', 'home');
+}).catch((error) => {
+  console.error("An error occurred while fetching workouts:", error);
+});
 
 
 
 
 
 
- 
 
 
 
@@ -425,7 +475,6 @@ async function getResultsContainerColors() {
     return null;
   }
 }
-
 // Fetch and use the document data
 getResultsContainerColors().then((data) => {
   if (!data || !data.App) {
@@ -478,11 +527,6 @@ getResultsContainerColors().then((data) => {
     borderColor: Prime1,
   });
 });
-
-
-
-
-
 
 async function getBtnblockColors() {
   try {
@@ -537,10 +581,7 @@ getBtnblockColors().then((data) => {
 
 });
 
-
-
 // Bottom Icons
-
 async function getBtnIcons() {
   try {
     const docRef = doc(db, "RevoBuissnes", transferredInfo);
@@ -559,179 +600,69 @@ async function getBtnIcons() {
   }
 }
 getBtnIcons().then((data) => {
-  
-  const App = data.App; // Retrieve nested data
-  const Btns = App.Btns
+  const App = data.App;
+  const Btns = App.Btns;
 
-  function getHomeBtn(){
-  const homeBtns = Btns.homeBtns
-  const blue  = homeBtns[0]
-  const white = homeBtns[1]
+  function createButton(buttonType, divId, imgSrcIndex, redirectUrl, imgAlt = "Example image") {
+    const buttonGroup = Btns[buttonType];
+    const imgSrc = buttonGroup[imgSrcIndex];
 
-  function createfireIcon(imgSrc, imgAlt) {
-    // Find the div with id 'cal'
-    const div = document.getElementById('home');
-  
-    // Check if the div exists
+    const div = document.getElementById(divId);
     if (!div) {
-        console.error("Div with id 'Icon' not found.");
-        return;
+      console.error(`Div with id '${divId}' not found.`);
+      return;
     }
-  
-    // Create an image element
-    const img = document.createElement('img');
-  
-    // Set the image source and alternative text
+
+    const img = document.createElement("img");
     img.src = imgSrc;
     img.alt = imgAlt;
-    // Add an event listener to redirect when the image is clicked
-    img.addEventListener('click', function() {
-      window.location.href = 'index9.html'; // Redirect to index10.html
+    img.addEventListener("click", () => {
+      window.location.href = redirectUrl;
     });
-    // Append the image to the div
+
     div.appendChild(img);
   }
-  createfireIcon(blue, 'Example image');
-  }
-  function getDateBtn() {
-    const DateBtns = Btns.DateBtns;
-    const blue = DateBtns[0];
-    const white = DateBtns[1];
 
-    function createfireIcon(imgSrc, imgAlt) {
-        // Find the div with id 'Date'
-        const div = document.getElementById('Date');
-        
-        // Check if the div exists
-        if (!div) {
-            console.error("Div with id 'Date' not found.");
-            return;
-        }
-        
-        // Create an image element
-        const img = document.createElement('img');
-        
-        // Set the image source and alternative text
-        img.src = imgSrc;
-        img.alt = imgAlt;
-        
-        // Add an event listener to redirect when the image is clicked
-        img.addEventListener('click', function() {
-            window.location.href = 'index10.html'; // Redirect to index10.html
-        });
+  const buttonsConfig = [
+    { buttonType: "homeBtns", divId: "home", imgSrcIndex: 0, redirectUrl: "index9.html" },
+    { buttonType: "DateBtns", divId: "Date", imgSrcIndex: 1, redirectUrl: "index9.2.html" },
+    { buttonType: "GoalBtns", divId: "goals", imgSrcIndex: 1, redirectUrl: "index9.3.html" },
+    { buttonType: "StatBtns", divId: "stats", imgSrcIndex: 1, redirectUrl: "index9.4.html" },
+    { buttonType: "GearBtns", divId: "gear", imgSrcIndex: 1, redirectUrl: "index9.5.html" },
+  ];
 
-        // Append the image to the div
-        div.appendChild(img);
+  buttonsConfig.forEach(({ buttonType, divId, imgSrcIndex, redirectUrl }) => {
+    createButton(buttonType, divId, imgSrcIndex, redirectUrl);
+  });
+});
+
+
+async function backgroundColor() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.error("No such document!");
+      return null;
     }
-
-    createfireIcon(white, 'Example image');
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
   }
-  function getGoalBtn(){
-    const GoalBtns = Btns.GoalBtns
-    const blue  = GoalBtns[0]
-    const white = GoalBtns[1]
-  
-    function createfireIcon(imgSrc, imgAlt) {
-      // Find the div with id 'cal'
-      const div = document.getElementById('goals');
-    
-      // Check if the div exists
-      if (!div) {
-          console.error("Div with id 'Icon' not found.");
-          return;
-      }
-    
-      // Create an image element
-      const img = document.createElement('img');
-    
-      // Set the image source and alternative text
-      img.src = imgSrc;
-      img.alt = imgAlt;
-      // Add an event listener to redirect when the image is clicked
-      img.addEventListener('click', function() {
-        window.location.href = 'index11.html'; // Redirect to index10.html
-      });
-      // Append the image to the div
-      div.appendChild(img);
-    }
-    
-    
-    createfireIcon(white , 'Example image');
-  }
-  function getStatBtn(){
-    const StatBtns = Btns.StatBtns
-    const blue  = StatBtns[0]
-    const white = StatBtns[1]
-  
-    function createfireIcon(imgSrc, imgAlt) {
-      // Find the div with id 'cal'
-      const div = document.getElementById('stats');
-    
-      // Check if the div exists
-      if (!div) {
-          console.error("Div with id 'Icon' not found.");
-          return;
-      }
-    
-      // Create an image element
-      const img = document.createElement('img');
-    
-      // Set the image source and alternative text
-      img.src = imgSrc;
-      img.alt = imgAlt;
-      
-      // Add an event listener to redirect when the image is clicked
-      img.addEventListener('click', function() {
-        window.location.href = 'index12.html'; // Redirect to index10.html
-      });
-      // Append the image to the div
-      div.appendChild(img);
-    }
-    
-    
-    createfireIcon(white , 'Example image');
-  }
-  function getGearBtn(){
-    const GearBtns = Btns.GearBtns
-    const blue  = GearBtns[0]
-    const white = GearBtns[1]
-  
-    function createfireIcon(imgSrc, imgAlt) {
-      // Find the div with id 'cal'
-      const div = document.getElementById('gear');
-    
-      // Check if the div exists
-      if (!div) {
-          console.error("Div with id 'Icon' not found.");
-          return;
-      }
-    
-      // Create an image element
-      const img = document.createElement('img');
-    
-      // Set the image source and alternative text
-      img.src = imgSrc;
-      img.alt = imgAlt;
+}
+backgroundColor().then((data) => {
+  const UBU = data.UBU;
+  const { top, bottom } = UBU.BackgroundColor;
+  const { Base, Prime1, Prime2, Prime3 } = UBU.Colors;
+// Function to change the background gradient dynamically
+function setGradient(color1, color2) {
+  document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2})`;
+}
 
-      // Add an event listener to redirect when the image is clicked
-      img.addEventListener('click', function() {
-        window.location.href = 'index9.5.html'; // Redirect to index10.html
-      });
-    
-      // Append the image to the div
-      div.appendChild(img);
-    }
-    
-    
-    createfireIcon(white , 'Example image');
-  }
-
-
-  getHomeBtn()
-  getDateBtn()
-  getGoalBtn()
-  getStatBtn()
-  getGearBtn()
-
+setGradient(top, bottom); 
 
 });

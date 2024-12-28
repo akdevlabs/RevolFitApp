@@ -14,57 +14,73 @@
   <link rel="manifest" href="/site.webmanifest">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SHS/RevoFitApp</title>
-  <link rel="stylesheet" href="RevolFitApp.css">
+  <title>SHS/RevoFitApp/Stats</title>
+  <link rel="stylesheet" href="Calendar.css">
 
   <link rel="shortcut icon" href="images/Logos/flower_DB.webp">
 </head>
 <body>
   <main>
-    <section class="App" id="App">
-      <div class="AppTop">
+    <section class="Settings" id="Settings">
+      <div class="SettingsTop">
+        <div class="settingBanner">
+          <h1>Settings</h1>
+          <div id="BuIcon"></div>
+
+        </div>
+
+        <div class="MainSettings">
+       
+          <div class="dropdown" id="Profile">
+            <button id="btn1">Mi Perfil</button>
+              <div class="dropdown-content">
+                <a href="#option1">Option 1</a>
+                <a href="#option2">Option 2</a>
+                <a href="#option3">Option 3</a>
+              </div>
+          </div>
+
+          
+          <div class="dropdown" id="MesumentsUnits">
+            <button id="btn2">Unidades de Medida</button>
+              <div class="dropdown-content">
+                <a href="#option1">Option 1</a>
+                <a href="#option2">Option 2</a>
+                <a href="#option3">Option 3</a>
+              </div>
+          </div>
+
+
+
+          <div id="Alerts"></div>
+
+          <div id="Messages"></div>
         
 
-        <div class="AppTopContent">
-          <div id="userName"></div>
-          <div id="motivation"></div>
-          <div id="lastTime"></div>
+          <div class="dropdown" id="Model">
+            <button id="btn3">Elegir Modelo</button>
+              <div class="dropdown-content">
+                <a href="#option1">Option 1</a>
+                <a href="#option2">Option 2</a>
+                <a href="#option3">Option 3</a>
+              </div>
+          </div>
+        
+
+          <div id="Membership"></div>
+          
+          <div id="Logout">
+            <button id="logoutBtn">Logout</button>
+          </div>
         </div>
-        <div class="AppImgBlock">
-          <div id="Icon"></div>
-          <div id="userImg"></div>
-        </div>
+       
       </div>
 
       
-      <div class="ResultsBlock">
-        <div class="ResultsTittleBlock">
-          <h1 id="ResultsTittle">Resultado de la Semana Pasada</h1>
-        </div>
-
-        <div class="Results-Container">
-          <div id="cal"></div>
-          <div id="Time"></div>
-          <div id="weight"></div>
-        </div>
-
-      </div>
+    
 
 
 
-      <div id="planBlock">
-        <div class="planBlocktittle" id="pBt">
-          <h1>Tu Plan</h1>
-        </div>
-        <div id="plans">
-          <div id="Gym"></div>
-          <div id="Home"></div>
-        </div>
-      </div>
-
-      <div class="Btnblock">
-        <a id="startBtn" href="index9.1.1.html">INICIAR SESIÓN</a>
-      </div>
 
       <div class="navBtns">
         <div id="home"></div>
@@ -78,7 +94,7 @@
    
   </main>
 
-  <script type="module" src="RevolFitApp.js"></script>
+  <script type="module" src="Calendar.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./service-worker.js')

@@ -1,275 +1,387 @@
-
-const auth = getAuth();
-createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed up 
-    const user = userCredential.user;
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-  });
-  getAuth, signInWithEmailAndPassword 
-
-  signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-  });
-  
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/auth.user
-      const uid = user.uid;
-      // ...
-    } else {
-      // User is signed out
-      // ...
-    }
-  });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const nestedValue = data.header; // Retrieve nested data
- 
-  // Access title, title text, and question
-  const title = nestedValue.tittle;
-  const titleText = nestedValue.tittleText;
-
-  
-  // Create elements for title, title text, question, input, and button
-  const h1 = document.createElement("h1");
-
-  const p = document.createElement("p");
-
-
-  // Set text and attributes for the elements
-  h1.textContent = title;
-  p.textContent = titleText;
-
-
-  
-
- 
-
-  // Find the course banner element and append the created elements
-  const courseBannerElement = document.getElementById('hero');
-  if (courseBannerElement) {
-    courseBannerElement.appendChild(h1);
-    courseBannerElement.appendChild(p);
-
-
-  } else {
-    console.log("Element with ID #hero not found in the DOM!");
+getWorkouts().then((data) => {
+  // Validate the data structure
+  if (!data || !data.App || !data.UBU || !data.App.workoutBtns) {
+      console.error("Invalid data structure or missing properties.");
+      return;
   }
 
-  // Set background image for the 'nav' element if available
-  const backgroundElement = document.getElementById('topSec');
-  if (backgroundElement && nestedValue.backgroundImg) {
-    backgroundElement.style.backgroundImage = `url(${nestedValue.backgroundImg})`;
-    backgroundElement.style.backgroundSize = 'cover'; // Cover the entire area
-    backgroundElement.style.backgroundPosition = 'center'; // Center the image
-  } else if (!nestedValue.backgroundImg) {
-    console.log("No backgroundImg property found in the data!");
+  const App = data.App;
+  const UBU = data.UBU;
+
+  const workoutBtns = App.workoutBtns;
+  const { Gym, Home } = workoutBtns;
+
+  // Validate Gym and Home objects
+  if (!Gym || !Gym.backgroundImg || !Home || !Home.backgroundImg) {
+      console.error("Missing background image data for Gym or Home.");
+      return;
   }
 
+  const GBG = Gym.backgroundImg;
+  const HBG = Home.backgroundImg;
 
+  const { Base, Prime1, Prime2 } = UBU.Colors;
 
+  // Function to convert hex color to RGBA
+  function hexToRgba(hex, alpha = 0.5) {
+      const bigint = parseInt(hex.slice(1), 16);
+      const r = (bigint >> 16) & 255;
+      const g = (bigint >> 8) & 255;
+      const b = bigint & 255;
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
 
+  // Function to render a workout button
+  function renderWorkoutButton(imgSrct, h1Text, divId, locationType) {
+      // Find the div with the specified ID
+      const div = document.getElementById(divId);
 
-
-
-
-
-
-const tierTopTittle = document.getElementById("tierTopClasic");
-    if (tierTopTittle) {
-      // Create and append the title
-      const h3 = document.createElement("h3");
-      const h1 = document.createElement("h1")
-      h3.textContent = "Plan";
-      h1.textContent = tittle;
-      tierTopTittle.appendChild(h3);
-      tierTopTittle.appendChild(h1);
-    } else {
-      console.log("Container with ID #partnerBlock not found in the DOM!");
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     // Function to dynamically create and render the tierTopClasic section
-    function createTierTopClasic(tittle, imageUrl) {
-      // Check if the parent container already exists
-      let tierTopTittle = document.getElementById("tierTopClasic");
-
-      if (!tierTopTittle) {
-        // Create the main container if it doesn't exist
-        tierTopTittle = document.createElement("div");
-        tierTopTittle.id = "tierTopClasic";
-        document.body.appendChild(tierTopTittle); // Append it to the body or a specific container
+      if (!div) {
+          console.error(`Div with id '${divId}' not found.`);
+          return;
       }
 
-      // Clear previous content to avoid duplication
-      tierTopTittle.innerHTML = "";
+      // Check if the image URL is valid
+      const img = new Image();
+      img.src = imgSrct;
+      img.onload = () => {
+          console.log(`Image ${imgSrct} loaded successfully.`);
+      };
+      img.onerror = () => {
+          console.error(`Failed to load image: ${imgSrct}`);
+      };
 
-      // Create a div for the title
-      const titleDiv = document.createElement("div");
-      titleDiv.id = "titleSection";
+      // Create a button element
+      const button = document.createElement('button');
+      button.style.backgroundImage = `url(${imgSrct})`;
+      button.style.backgroundSize = 'cover';
+      button.style.backgroundPosition = 'center';
+      button.style.color = Prime2;
+      button.style.boxShadow = `0px 4px 10px ${Prime1}`;
+      button.style.backgroundColor = Prime1;
+      button.style.border = `2px solid ${Prime1}`;
+      button.style.cursor = 'pointer';
+      button.style.padding = '0';
+      button.style.width = '100%'; // Adjust based on your layout
+      button.style.height = '200px'; // Adjust based on your layout
 
-      const h3 = document.createElement("h3");
-      const h1 = document.createElement("h1");
-      h3.textContent = "Plan";
-      h1.textContent = tittle;
+      // Add an event listener for click actions
+      button.addEventListener('click', () => {
+          localStorage.setItem('workoutLocation', locationType);
+          window.location.href = `index9.1.html`;
+      });
 
-      titleDiv.appendChild(h3);
-      titleDiv.appendChild(h1);
+      // Create an h1 element for the button label
+      const h1 = document.createElement('h1');
+      h1.textContent = h1Text;
+      h1.style.margin = '0';
+      h1.style.color = Prime2;
+      h1.style.backgroundColor = hexToRgba(Base, 0.8);
+      h1.style.padding = '.7rem';
+      h1.style.textAlign = 'center';
 
-      // Create a div for the image
-      const imageDiv = document.createElement("div");
-      imageDiv.id = "imageSection";
+      // Append the h1 to the button
+      button.appendChild(h1);
 
-      const img = document.createElement("img");
-      img.src = imageUrl;
-      img.alt = "Tier Plan Image";
-      img.style.width = "100%"; // Adjust styling as needed
-      img.style.height = "auto";
-
-      imageDiv.appendChild(img);
-
-      // Append both divs to the main container
-      tierTopTittle.appendChild(titleDiv);
-      tierTopTittle.appendChild(imageDiv);
-    }
-
-    // Example usage
-    createTierTopClasic(tittle, iconImg);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  body {
-    font-family: Arial, sans-serif;
+      // Append the button to the div
+      div.appendChild(button);
   }
 
-  .Block {
-    display: none;
-  }
-
-  .Block.active {
-    display: block;
-  }
-
-  .BusinessContent {
-    display: none;
-  }
-
-  .BusinessContent.active {
-    display: block;
-  }
-
-  .error {
-    border: 1px solid red;
-  }
-
-  .error-message {
-    color: red;
-    font-size: 0.8rem;
-    margin-top: 5px;
-  }
+  // Render buttons for Gym and Home
+  renderWorkoutButton(GBG, 'Rutina En el Gym', 'Gym', 'gym');
+  renderWorkoutButton(HBG, 'Rutina En Casa', 'Home', 'home');
+}).catch((error) => {
+  console.error("An error occurred while fetching workouts:", error);
+});
 
 
-@media (max-width: 768px) {
-  
 
-  
-  
-  
-  
 
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
  
+
+
+
+
+
+
+
+
+async function getUserimg() {
+  try {
+    // Reference a document in the "revoFitweb" collection with ID "landing"
+    const docRef = doc(db, 'users', transferreduserInfo);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data(); // Store document data
+      return documentData; // Return the data for external use
+    } else {
+      console.log("No such document!");
+      return null; // Return null if no document is found
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+  }
+}
+getUserimg().then((data) => {
+  const userImg = data.userImg; // Retrieve nested data
   
 
+  
+  function createfireIcon(imgSrc, imgAlt) {
+    // Find the div with id 'cal'
+    const div = document.getElementById('Icon');
+  
+    // Check if the div exists
+    if (!div) {
+        console.error("Div with id 'Icon' not found.");
+        return;
+    }
+  
+    // Create an image element
+    const img = document.createElement('img');
+  
+    // Set the image source and alternative text
+    img.src = imgSrc;
+    img.alt = imgAlt;
+  
+    // Append the image to the div
+    div.appendChild(img);
+  }
+  
+  
+  createfireIcon(userImg, 'Example image');
+  
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+getWorkouts().then((data) => {
+  const App = data.App
+  const UBU = data.UBU;
+  const {Gym, Home} = App.workoutBtns
+
+
+  const GymImg  = Gym.backgroundImg
+  const HomeImg = Home.backgroundImg
+  const { Base, Prime1, Prime2 } = UBU.Colors;
+
+  // Find the div with the specified ID
+  const div = document.getElementById(divId);
+
+  // Check if the div exists
+  if (!div) {
+      console.error(Div with id '${divId}' not found.);
+      return;
+  }
+
+
+
+  function renderWorkoutButton() {
+
+
+
+
+  }
+  console.log(GymImg)
+  console.log(HomeImg)
+});
+
+
+
+
+
+ 
+ // Function to convert hex to rgba
+      function hexToRgba(hex, alpha = 0.5) {
+          const bigint = parseInt(hex.slice(1), 16);
+          const r = (bigint >> 16) & 255;
+          const g = (bigint >> 8) & 255;
+          const b = bigint & 255;
+          return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+      }
+
+   h1.style.backgroundColor = hexToRgba(Base, 0.8); // Adjust alpha as needed
+
+
+
+
+ // Add an event listener to save location type and redirect
+      button.addEventListener('click', function () {
+          // Save the location type to localStorage
+          localStorage.setItem('workoutLocation', locationType);
+          window.location.href = 'index9.1.html'; // Redirect to the desired URL
+      });
+
+
+
+      // Create an h1 element
+      const h1 = document.createElement('h1');
+      h1.textContent = h1Text;
+      h1.style.margin = '0';
+      h1.style.color = Prime2;
+   
+      h1.style.padding = '.7rem';
+
+      // Append the h1 to the button
+      button.appendChild(h1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ // Function to convert hex to rgba
+      function hexToRgba(hex, alpha = 0.5) {
+          const bigint = parseInt(hex.slice(1), 16);
+          const r = (bigint >> 16) & 255;
+          const g = (bigint >> 8) & 255;
+          const b = bigint & 255;
+          return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+      }
+
+      // Create an h1 element
+      const h1 = document.createElement('h1');
+      h1.textContent = h1Text;
+      h1.style.margin = '0';
+      h1.style.color = Prime2;
+      h1.style.backgroundColor = hexToRgba(Base, 0.8); // Adjust alpha as needed
+      h1.style.padding = '.7rem';
+
+      // Append the h1 to the button
+      button.appendChild(h1);
+
+      // Append the button to the div
+      div.appendChild(button);
+
+
+
+
+
+
+
+
+
+
+
+      // Function to render a workout button
+function renderWorkoutButton(imgSrc, h1Text, divId, locationType) {
+  // Find the div with the specified ID
+  const div = document.getElementById(divId);
+
+  // Check if the div exists
+  if (!div) {
+      console.error(`Div with id '${divId}' not found.`);
+      return;
+  }
+
+  // Create a button element
+  const button = document.createElement('button');
+  button.style.backgroundImage = `url(${imgSrc})`;
+  button.style.backgroundSize = 'cover';
+  button.style.backgroundPosition = 'center';
+  button.style.color = Prime2;
+  button.style.boxShadow = `0px 4px 10px ${Prime1}`;
+  button.style.backgroundColor = Prime1;
+  button.style.border = `2px solid ${Prime1}`;
+
+  // Add an event listener to save location type and redirect
+  button.addEventListener('click', function () {
+      // Save the location type to localStorage
+      localStorage.setItem('workoutLocation', locationType);
+      window.location.href = 'index9.1.html'; // Redirect to the desired URL
+  });
+
+  // Function to convert hex to rgba
+  function hexToRgba(hex, alpha = 0.5) {
+      const bigint = parseInt(hex.slice(1), 16);
+      const r = (bigint >> 16) & 255;
+      const g = (bigint >> 8) & 255;
+      const b = bigint & 255;
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+
+  // Create an h1 element
+  const h1 = document.createElement('h1');
+  h1.textContent = h1Text;
+  h1.style.margin = '0';
+  h1.style.color = Prime2;
+  h1.style.backgroundColor = hexToRgba(Base, 0.8); // Adjust alpha as needed
+  h1.style.padding = '.7rem';
+
+  // Append the h1 to the button
+  button.appendChild(h1);
+
+  // Append the button to the div
+  div.appendChild(button);
 }
+
+
+
+renderWorkoutButton(GymImg, 'Rutina En el Gym', 'Gym', 'gym');

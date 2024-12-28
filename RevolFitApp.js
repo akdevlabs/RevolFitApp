@@ -656,13 +656,14 @@ async function backgroundColor() {
 }
 backgroundColor().then((data) => {
   const UBU = data.UBU;
-  const { top, bottom } = UBU.BackgroundColor;
+  const { top, center, bottom } = UBU.BackgroundColor;
   const { Base, Prime1, Prime2, Prime3 } = UBU.Colors;
 // Function to change the background gradient dynamically
-function setGradient(color1, color2) {
-  document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2})`;
+function setGradient(color1, color2, color3) {
+  document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2}, ${color3})`;
 }
 
-setGradient(top, bottom); 
+// Example usage:
+setGradient(top, center, bottom);
 
 });

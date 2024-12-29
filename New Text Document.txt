@@ -468,3 +468,42 @@ getWorkouts().then((data) => {
     padding:10px  20px;
 
   }
+
+
+
+
+
+
+
+
+
+
+
+  function fillBackgroundProgressively() {
+    const startBtn = document.getElementById('startBtn');
+
+    // Set initial styles for the button
+    startBtn.style.position = 'relative';
+    startBtn.style.overflow = 'hidden';
+    startBtn.style.color = 'white'; // Ensures text is visible
+    startBtn.style.zIndex = '1'; // Keep text on top
+
+    // Create a pseudo-progress element
+    const progressBar = document.createElement('div');
+    progressBar.style.position = 'absolute';
+    progressBar.style.top = '0';
+    progressBar.style.left = '0';
+    progressBar.style.height = '100%';
+    progressBar.style.width = '0';
+    progressBar.style.backgroundColor = `${Prime1}`; // Background color
+    progressBar.style.transition = 'width 3s linear'; // Smooth fill effect
+    progressBar.style.zIndex = '0'; // Place behind the text
+
+    // Append the progress bar to the button
+    startBtn.appendChild(progressBar);
+
+    // Trigger the fill effect
+    setTimeout(() => {
+        progressBar.style.width = '100%';
+    }, 100);
+}

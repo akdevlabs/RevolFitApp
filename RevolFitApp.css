@@ -99,7 +99,7 @@ body {
   
 
 #plans {
-  gap: 1rem;
+  gap: 2rem;
   display: flex;
   justify-content: center;
 }

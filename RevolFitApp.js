@@ -364,6 +364,9 @@ getWorkouts().then((data) => {
   const GymImg = Gym.backgroundImg;
   const HImg = Home.backgroundImg;
 
+  // Variable to keep track of the previously selected button
+  let previousSelectedButton = null;
+
   // Function to create buttons
   function createGymImageAndHeading1(ImgScr, Btext, DivId, workoutLocation) {
     const workoutDiv = document.getElementById(DivId);
@@ -383,6 +386,7 @@ getWorkouts().then((data) => {
     button.style.width = '10rem';
     button.style.height = '10rem';
     button.style.border = 'none';
+    button.style.borderRadius = '2rem';
     button.style.backgroundColor = 'transparent'; // Ensures the button's background is transparent
 
     // Add inner HTML with a background color for the text
@@ -398,7 +402,10 @@ getWorkouts().then((data) => {
     ">${Btext}</span>`;
 
     // Add click event listener to the button
-    button.addEventListener('click', () => handleButtonClick(workoutLocation, DivId));
+    button.addEventListener('click', () => {
+      handleButtonClick(workoutLocation, DivId);
+      highlightButton(button); // Highlight the selected button
+    });
 
     // Append the button to the container div
     workoutDiv.appendChild(button);
@@ -415,6 +422,23 @@ getWorkouts().then((data) => {
       createSeeAllLink(DivId, 'index9.1.2.html');
     }
   }
+
+  // Function to highlight the selected button
+  function highlightButton(button) {
+    // Remove the glow from the previously selected button, if any
+    if (previousSelectedButton) {
+        previousSelectedButton.style.boxShadow = 'none';
+    }
+
+    // Add the glow to the current button
+    button.style.boxShadow = `0 0 15px 5px ${Prime2}`;
+
+    // Trigger the background fill effect
+    fillBackgroundProgressively();
+
+    // Update the reference to the currently selected button
+    previousSelectedButton = button;
+}
 
   // Function to create the "See All" link
   function createSeeAllLink(DivId, redirectUrl) {
@@ -445,6 +469,43 @@ getWorkouts().then((data) => {
     workoutDiv.appendChild(link);
   }
 
+
+
+
+
+  function fillBackgroundProgressively() {
+    const startBtn = document.getElementById('startBtn');
+
+    // Set initial styles for the button
+    startBtn.style.position = 'relative';
+    startBtn.style.overflow = 'hidden';
+    startBtn.style.color = 'white'; // Ensures text is visible
+    startBtn.style.zIndex = '1'; // Keep text on top
+
+    // Create a pseudo-progress element
+    const progressBar = document.createElement('div');
+    progressBar.style.position = 'absolute';
+    progressBar.style.top = '0';
+    progressBar.style.left = '0';
+    progressBar.style.height = '100%';
+    progressBar.style.width = '0';
+    progressBar.style.backgroundColor = `${Prime1}`; // Background color
+    progressBar.style.transition = 'width 3s linear'; // Smooth fill effect
+    progressBar.style.zIndex = '-1'; // Place behind the text
+
+    // Append the progress bar to the button
+    startBtn.appendChild(progressBar);
+
+    // Trigger the fill effect
+    setTimeout(() => {
+        progressBar.style.width = '100%';
+    }, 100);
+}
+
+
+
+
+
   // Function to get the saved workout location
   function getSavedWorkoutLocation() {
     const savedWorkoutLocation = localStorage.getItem('WorkoutLocation');
@@ -457,6 +518,24 @@ getWorkouts().then((data) => {
     }
   }
 
+  function renderCalShadowBox() {
+    // Select the div element with the ID 'startBtn'
+    const calDiv = document.getElementById('startBtn');
+
+    if (!calDiv) {
+      console.error("Element with ID 'startBtn' not found.");
+      return;
+    }
+
+    // Apply shadow box styling
+    calDiv.style.color = Prime1;
+    calDiv.style.boxShadow = `0px 4px 10px ${Prime1}`;
+    calDiv.style.backgroundColor = 'transparent'; // Initially transparent
+    calDiv.style.border = `5px solid ${Prime1}`;
+    calDiv.style.transition = 'background-color 3s ease-in-out'; // Smooth transition
+    console.log("Shadow box rendered.");
+  }
+  renderCalShadowBox()
   // Create buttons
   createGymImageAndHeading1(GymImg, 'Rutina en Gym', 'Gym', 'Gym');
   createGymImageAndHeading1(HImg, 'Rutina en Casa', 'Home', 'Home');
@@ -467,6 +546,8 @@ getWorkouts().then((data) => {
     console.log(`Previously selected: ${savedLocation}`);
   }
 });
+
+
 
 
 
@@ -558,58 +639,9 @@ getResultsContainerColors().then((data) => {
   });
 });
 
-async function getBtnblockColors() {
-  try {
-    const docRef = doc(db, "RevoBuissnes", transferredInfo);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const documentData = docSnap.data();
-      return documentData; // Return the document data
-    } else {
-      console.log("No such document!");
-      return null;
-    }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-    return null;
-  }
-}
-// Fetch and use the document data
-getBtnblockColors().then((data) => {
-  if (!data || !data.App) {
-    console.error("Invalid data structure or missing App property.");
-    return;
-  }
-  
-  const App = data.UBU; 
-  const Colors  = App.Colors;
-  const Prime1   = Colors.Prime1;
 
 
 
-
-  function renderCalShadowBox() {
-    // Select the div element with the ID 'cal'
-    const calDiv = document.getElementById('startBtn');
-
-    // Check if the element exists to avoid runtime errors
-    if (!calDiv) {
-        console.error("Element with ID 'cal' not found.");
-        return;
-    }
-
-    // Apply shadow box styling
-    
-    calDiv.style.color = Prime1 ;
-    calDiv.style.boxShadow = `0px 4px 10px ${Prime1}`;
-    calDiv.style.backgroundColor = 'trasperant'; // Set dynamic background color
-    calDiv.style.border = `5px solid ${Prime1 }`; // Set dynamic border color
-  }
- 
-  renderCalShadowBox()
-
-});
 
 // Bottom Icons
 async function getBtnIcons() {

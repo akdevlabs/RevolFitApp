@@ -24,10 +24,31 @@ const db = getFirestore(app);
 // Retrieve data from localStorage
 const transferreduserInfo = localStorage.getItem("transferreduserInfo");
 const transferredInfo = localStorage.getItem("transferredInfo");
+const workoutLocation = localStorage.getItem('workoutLocation');
+const Exersise = "block1";
+
+
+
+
 
 
 console.log("Transferred User Info:", transferreduserInfo);
 console.log("Transferred Info:", transferredInfo);
+console.log(workoutLocation)
+
+
+
+// Function to determine the workout type
+function checkValue() {
+  const value = workoutLocation;
+  console.log(value)
+  if (value === "gym"){
+    return("GymWorkout")
+  }else{
+    return("homeWorkout")
+  }
+
+}
 
 
 async function checkDocumentExists(collectionName, documentId) {
@@ -54,62 +75,149 @@ async function checkDocumentExists(collectionName, documentId) {
 
 
 
+// Bottom Icons
+async function getBuLogo() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo);
+    const docSnap = await getDoc(docRef);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function countdown(){
-let timerInterval;
-let isRunning = false;
-let seconds = 30; // Set the starting time in seconds (e.g., 5 minutes)
-
-const timerElement = document.getElementById('Timer');
-const actionButton = document.getElementById('actionBtn');
-
-function formatTime(seconds) {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-}
-
-function startStopTimer() {
-    if (isRunning) {
-        clearInterval(timerInterval);
-        actionButton.textContent = 'Start';
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
     } else {
-        timerInterval = setInterval(() => {
-            if (seconds > 0) {
-                seconds--;
-                timerElement.textContent = formatTime(seconds);
-            } else {
-                clearInterval(timerInterval);
-                actionButton.textContent = 'Completado';
-            }
-        }, 1000);
-        actionButton.textContent = 'Stop';
+      console.log("No such document!");
+      return null;
     }
-    isRunning = !isRunning;
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+getBuLogo().then((data) => {
+  const UBU = data.UBU;
+  const {DarkLogo, LightLogo} = UBU.BuLogos;
+
+  function createfireIcon(imgSrc, imgAlt) {
+    // Find the div with id 'cal'
+    const div = document.getElementById('Logo');
+  
+    // Check if the div exists
+    if (!div) {
+        console.error("Div with id 'Icon' not found.");
+        return;
+    }
+  
+    // Create an image element
+    const img = document.createElement('img');
+  
+    // Set the image source and alternative text
+    img.src = imgSrc;
+    img.alt = imgAlt;
+  
+    // Append the image to the div
+    div.appendChild(img);
+  }
+  
+  
+  createfireIcon(LightLogo, 'Example image');
+  
+    
+});
+
+
+
+
+async function getVideo() {
+  try {
+    const docRef = doc(db, "RevolApp", checkValue());
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.log("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+getVideo().then((data) => {
+  const {Crunch} = data.block1;
+  const Vid = Crunch.Video;
+  
+  console.log(Vid)
+
+  function setVideoSource(src) {
+    const videoSource = document.getElementById("videoSource");
+    const video = document.getElementById("customVideo");
+    videoSource.src = src;
+    video.load();
+  }
+  setVideoSource(Vid)
+  document.getElementById('playButton').addEventListener('click', function() {
+    document.getElementById('customVideo').play();
+  });
+  
+    
+});
+
+
+
+
+
+
+
+
+
+
+
+
+  function countdown() {
+    let timerInterval;
+    let isRunning = false;
+    let minutes = 2; // Set the starting time in minutes (e.g., 2 minutes)
+    let seconds = minutes * 60; // Convert minutes to seconds
+
+    const timerElement = document.getElementById('Timer');
+    const actionButton = document.getElementById('actionBtn');
+
+    function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')} min`; // Added 'min' here
+    }
+
+    function startStopTimer() {
+        if (isRunning) {
+            clearInterval(timerInterval);
+            actionButton.textContent = 'Empezar';
+        } else {
+            timerInterval = setInterval(() => {
+                if (seconds > 0) {
+                    seconds--;
+                    timerElement.textContent = formatTime(seconds);
+                } else {
+                    clearInterval(timerInterval);
+                    actionButton.textContent = 'Completado';
+                }
+            }, 1000);
+            actionButton.textContent = 'Pausar';
+        }
+        isRunning = !isRunning;
+    }
+
+    actionButton.addEventListener('click', startStopTimer);
+
+    // Initialize the timer display with "min"
+    timerElement.textContent = formatTime(seconds);
 }
 
-actionButton.addEventListener('click', startStopTimer);
+countdown();
 
-}
 
-countdown()
 
 
 

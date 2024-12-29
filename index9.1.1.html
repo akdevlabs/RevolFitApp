@@ -22,7 +22,8 @@
 <body>
   <main>
     <section class="TimerBlock">
-      <div id="Ttittle"></div>
+      <div id="Logo"></div>
+      <div id="Ttittle">Tiempo restante en la serie:</div>
       <div id="Timer"></div>
     </section>
 
@@ -31,7 +32,13 @@
     </section>
     
     <section class="videoBlock">
-
+      <div class="video-container">
+          <video id="customVideo" controls>
+              <source id="videoSource" src="" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+          <button id="playButton">▶</button>
+      </div>
     </section>
 
 
@@ -65,5 +72,6 @@
         .catch(err => console.error('Service Worker Registration Failed:', err));
     }
   </script>
+  
 </body>
 </html>

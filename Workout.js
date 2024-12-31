@@ -27,7 +27,8 @@ const transferredInfo = localStorage.getItem("transferredInfo");
 const workoutLocation = localStorage.getItem('workoutLocation');
 const Exersise = "block1";
 
-
+const Tier = 'Beginner'
+const Block = 'Block1'
 
 
 
@@ -262,12 +263,50 @@ function createDescription(HText, PText) {
 }
 
 // Call the function to create and append the elements
-createDescription();
+
   
 });
 
 
+// Bottom Icons
+async function getStartBtnColors() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo);
+    const docSnap = await getDoc(docRef);
 
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.log("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+getStartBtnColors().then((data) => {
+  
+  const UBU = data.UBU;
+
+  const { Base, Prime1, Prime2 } = UBU.Colors;
+
+
+
+  function addbtnColors(){
+    const actionBtn = document.getElementById('actionBtn');
+
+    actionBtn .style.color = Base;
+    actionBtn.style.border = `5px solid ${Base}`; 
+    actionBtn.style.backgroundColor = 'transparent'; 
+    actionBtn.style.boxShadow = `0 0 15px 5px ${Base}`;
+
+  }
+  addbtnColors()
+
+
+});
 
 
 

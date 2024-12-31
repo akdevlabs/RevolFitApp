@@ -24,6 +24,9 @@ const db = getFirestore(app);
 // Retrieve data from localStorage
 const transferreduserInfo = localStorage.getItem("transferreduserInfo");
 const transferredInfo = localStorage.getItem("transferredInfo");
+// list of tiers (Beginner, Intermediate, Advance)
+
+
 
 
 console.log("Transferred User Info:", transferreduserInfo);
@@ -336,6 +339,24 @@ fetchDocumentData("RevoBuissnes", transferredInfo).then
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 async function getWorkouts() {
   try {
     const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
@@ -364,7 +385,6 @@ getWorkouts().then((data) => {
   const GymImg = Gym.backgroundImg;
   const HImg = Home.backgroundImg;
 
-  // Variable to keep track of the previously selected button
   let previousSelectedButton = null;
 
   // Function to create buttons
@@ -376,10 +396,7 @@ getWorkouts().then((data) => {
       return;
     }
 
-    // Create the button element
     const button = document.createElement('button');
-
-    // Set the button's background image and style
     button.style.backgroundImage = `url('${ImgScr}')`;
     button.style.backgroundSize = 'cover';
     button.style.backgroundPosition = 'center';
@@ -387,9 +404,8 @@ getWorkouts().then((data) => {
     button.style.height = '10rem';
     button.style.border = 'none';
     button.style.borderRadius = '2rem';
-    button.style.backgroundColor = 'transparent'; // Ensures the button's background is transparent
+    button.style.backgroundColor = 'transparent';
 
-    // Add inner HTML with a background color for the text
     button.innerHTML = `<span style="
       display: inline-block;
       background-color: ${Base}; 
@@ -401,20 +417,18 @@ getWorkouts().then((data) => {
       transform: translateY(-50%);
     ">${Btext}</span>`;
 
-    // Add click event listener to the button
     button.addEventListener('click', () => {
       handleButtonClick(workoutLocation, DivId);
-      highlightButton(button); // Highlight the selected button
+      highlightButton(button);
     });
 
-    // Append the button to the container div
     workoutDiv.appendChild(button);
   }
 
-  // Function to handle button click
+  // Handle button click
   function handleButtonClick(workoutLocation, DivId) {
     console.log(`Button clicked: ${workoutLocation}`);
-    localStorage.setItem('WorkoutLocation', workoutLocation); // Save the workout location in local storage
+    addWorkoutLocation(workoutLocation);
 
     if (workoutLocation === 'Gym') {
       createSeeAllLink(DivId, 'index9.1.1.html');
@@ -423,38 +437,30 @@ getWorkouts().then((data) => {
     }
   }
 
-  // Function to highlight the selected button
+  // Highlight the selected button
   function highlightButton(button) {
-    // Remove the glow from the previously selected button, if any
     if (previousSelectedButton) {
-        previousSelectedButton.style.boxShadow = 'none';
+      previousSelectedButton.style.boxShadow = 'none';
     }
-
-    // Add the glow to the current button
     button.style.boxShadow = `0 0 15px 5px ${Prime2}`;
-
-    // Trigger the background fill effect
     fillBackgroundProgressively();
-
-    // Update the reference to the currently selected button
     previousSelectedButton = button;
-}
+  }
 
-  // Function to create the "See All" link
+  // Create the "See All" link
   function createSeeAllLink(DivId, redirectUrl) {
     const workoutDiv = document.getElementById(DivId);
+
     if (!workoutDiv) {
       console.error('Div with the provided ID does not exist.');
       return;
     }
 
-    // Check if the link already exists
     if (document.getElementById('See')) {
       console.log('Link already exists.');
       return;
     }
 
-    // Create the link element
     const link = document.createElement('a');
     link.id = 'See';
     link.href = redirectUrl;
@@ -465,61 +471,50 @@ getWorkouts().then((data) => {
     link.style.color = Base;
     link.style.fontWeight = 'bold';
 
-    // Append the link to the container div
     workoutDiv.appendChild(link);
   }
 
-
-
-
-
+  // Fill the background of the start button progressively
   function fillBackgroundProgressively() {
     const startBtn = document.getElementById('startBtn');
 
-    // Set initial styles for the button
     startBtn.style.position = 'relative';
     startBtn.style.overflow = 'hidden';
-    startBtn.style.color = 'white'; // Ensures text is visible
-    startBtn.style.zIndex = '1'; // Keep text on top
+    startBtn.style.color = `${Prime2}`;
+    startBtn.style.zIndex = '1';
 
-    // Create a pseudo-progress element
     const progressBar = document.createElement('div');
     progressBar.style.position = 'absolute';
     progressBar.style.top = '0';
     progressBar.style.left = '0';
     progressBar.style.height = '100%';
     progressBar.style.width = '0';
-    progressBar.style.backgroundColor = `${Prime1}`; // Background color
-    progressBar.style.transition = 'width 3s linear'; // Smooth fill effect
-    progressBar.style.zIndex = '-1'; // Place behind the text
+    progressBar.style.backgroundColor = `${Prime1}`;
+    progressBar.style.transition = 'width 3s linear';
+    progressBar.style.zIndex = '-1';
 
-    // Append the progress bar to the button
     startBtn.appendChild(progressBar);
 
-    // Trigger the fill effect
     setTimeout(() => {
-        progressBar.style.width = '100%';
+      progressBar.style.width = '100%';
     }, 100);
-}
-
-
-
-
-
-  // Function to get the saved workout location
-  function getSavedWorkoutLocation() {
-    const savedWorkoutLocation = localStorage.getItem('WorkoutLocation');
-    if (savedWorkoutLocation) {
-      console.log(`Saved Workout Location: ${savedWorkoutLocation}`);
-      return savedWorkoutLocation;
-    } else {
-      console.log('No Workout Location found in local storage.');
-      return null;
-    }
   }
 
+  // Add workout location to localStorage
+  function addWorkoutLocation(newLocation) {
+    const locations = JSON.parse(localStorage.getItem('workoutLocations')) || [];
+    locations.push(newLocation);
+    localStorage.setItem('workoutLocations', JSON.stringify(locations));
+  }
+
+  // Get the most recently added workout location
+  function getNewestWorkoutLocation() {
+    const locations = JSON.parse(localStorage.getItem('workoutLocations')) || [];
+    return locations.length > 0 ? locations[locations.length - 1] : null;
+  }
+
+  // Render shadow box for the start button
   function renderCalShadowBox() {
-    // Select the div element with the ID 'startBtn'
     const calDiv = document.getElementById('startBtn');
 
     if (!calDiv) {
@@ -527,25 +522,48 @@ getWorkouts().then((data) => {
       return;
     }
 
-    // Apply shadow box styling
     calDiv.style.color = Prime1;
     calDiv.style.boxShadow = `0px 4px 10px ${Prime1}`;
-    calDiv.style.backgroundColor = 'transparent'; // Initially transparent
+    calDiv.style.backgroundColor = 'transparent';
     calDiv.style.border = `5px solid ${Prime1}`;
-    calDiv.style.transition = 'background-color 3s ease-in-out'; // Smooth transition
-    console.log("Shadow box rendered.");
+    calDiv.style.transition = 'background-color 3s ease-in-out';
   }
-  renderCalShadowBox()
-  // Create buttons
+
+  renderCalShadowBox();
   createGymImageAndHeading1(GymImg, 'Rutina en Gym', 'Gym', 'Gym');
   createGymImageAndHeading1(HImg, 'Rutina en Casa', 'Home', 'Home');
 
-  // Retrieve the saved workout location (for demonstration)
-  const savedLocation = getSavedWorkoutLocation();
-  if (savedLocation) {
-    console.log(`Previously selected: ${savedLocation}`);
+  const newestLocation = getNewestWorkoutLocation();
+  if (newestLocation) {
+    console.log(`Most recently selected: ${newestLocation}`);
   }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -639,10 +657,6 @@ getResultsContainerColors().then((data) => {
   });
 });
 
-
-
-
-
 // Bottom Icons
 async function getBtnIcons() {
   try {
@@ -697,7 +711,6 @@ getBtnIcons().then((data) => {
     createButton(buttonType, divId, imgSrcIndex, redirectUrl);
   });
 });
-
 
 async function backgroundColor() {
   try {

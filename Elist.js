@@ -20,16 +20,24 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
+// Retrieving the newest workout location
+function getNewestWorkoutLocation() {
+  const locations = JSON.parse(localStorage.getItem('workoutLocations')) || [];
+  // Return the last item if the array exists and isn't empty
+  return locations.length ? locations[locations.length - 1] : null;
+}
 
 // Retrieve data from localStorage
 const transferreduserInfo = localStorage.getItem("transferreduserInfo");
 const transferredInfo = localStorage.getItem("transferredInfo");
-const workoutLocation = localStorage.getItem('workoutLocation');
+const workoutLocation = getNewestWorkoutLocation();
 const Exersise = "block1";
 
+const Tier = "Beginner"
+const Block = 'Block1'
+const Routine = 'Routine1'
 
 
-console.log(workoutLocation)
 
 
 console.log("Transferred User Info:", transferreduserInfo);
@@ -39,10 +47,9 @@ console.log(workoutLocation)
 
 
 // Function to determine the workout type
-function checkValue() {
+function checkworkoutLocationValue() {
   const value = workoutLocation;
-  console.log(value)
-  if (value === "gym"){
+  if (value === "Gym"){
     return("GymWorkout")
   }else{
     return("homeWorkout")
@@ -50,11 +57,13 @@ function checkValue() {
 
 }
 
+console.log(checkworkoutLocationValue())
+
 // Function to fetch workouts
 async function getWorkouts() {
   try {
     // Get the appropriate document reference based on the location
-    const docRef = doc(db, "RevolApp", checkValue());
+    const docRef = doc(db, "RevolApp", checkworkoutLocationValue());
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
@@ -74,69 +83,149 @@ async function getWorkouts() {
 
 // Use the function and handle the result
 getWorkouts().then((data) => {
-  // Access the Block property from the data object
-  const Exersiseses = data[Exersise];
+  // Define Tier and Block (replace with actual logic to set these values)
+  const Tier = "Beginner"; // Example: Replace with dynamic logic
+  const Block = "Block1"; // Example: Replace with dynamic logic
+  const Routine = "Routine1"; // Example: Replace with dynamic logic
 
-  function renderGymList(workout) {
-    if (!workout) return; // Skip if the workout is undefined
-
-    // Target the GymList section in the DOM
-    const gymListSection = document.getElementById("GymList");
-
-    // Create a container for the workout
-    const workoutContainer = document.createElement("div");
-    workoutContainer.className = "workout-container";
-
-    // Add the workout title
-    const title = document.createElement("h2");
-    title.textContent = workout.Tittle; // Updated property name
-    workoutContainer.appendChild(title);
-
-    // Add reps and time
-    const reps = document.createElement("p");
-    reps.textContent = `Reps: ${workout.Reps}`;
-    workoutContainer.appendChild(reps);
-
-    const time = document.createElement("p");
-    time.textContent = `Time: ${workout.time}`;
-    workoutContainer.appendChild(time);
-
-    // Add the sets list
-    const setsList = document.createElement("ul");
-    setsList.className = "sets-list";
-    workout.Sets.forEach((set) => {
-      const listItem = document.createElement("li");
-      listItem.textContent = set;
-      setsList.appendChild(listItem);
-    });
-    workoutContainer.appendChild(setsList);
-
-    // Add the instructions
-    const instructionsTitle = document.createElement("h3");
-    instructionsTitle.textContent = "Instructions";
-    workoutContainer.appendChild(instructionsTitle);
-
-    const instructionsList = document.createElement("ul");
-    instructionsList.className = "instructions-list";
-    workout.instructions.forEach((instruction) => {
-      const listItem = document.createElement("li");
-      listItem.textContent = instruction;
-      instructionsList.appendChild(listItem);
-    });
-    workoutContainer.appendChild(instructionsList);
-
-    // Append the workout container to the GymList section
-    gymListSection.appendChild(workoutContainer);
+  // Function to get tier-specific data
+  function checkTierValue() {
+      if (Tier === "Beginner") {
+          return (data.Beginner); // Access the 'Beginner' property
+      } else if (Tier === "Intermediate") {
+          return data.Intermediate; // Access the 'Intermediate' property
+      } else if (Tier === "Advance") {
+          return data.Advance; // Access the 'Advance' property
+      } else {
+          console.error(`Tier ${Tier} not recognized.`);
+          return null;
+      }
+  }
+  
+  // Function to determine the block value
+  function checkBlockValue() {
+      return Block; // Return the currently selected block
   }
 
-  // Iterate over all workouts in the Exersiseses object and render them
-  Object.values(Exersiseses).forEach((workout) => {
-    renderGymList(workout);
-  });
+  // Function to get the active block data
+  function getActiveBlock() {
+      const TierValue = checkTierValue(); // Get the value for the current tier
+      const block = checkBlockValue(); // Determine the block
+      
+      // Ensure the block exists in the selected tier
+      if (TierValue && TierValue[block]) {
+          return TierValue[block]; // Return the active block data
+      } else {
+          console.error(`Block ${block} not found in tier ${Tier}`);
+          return null; // Handle case where the block doesn't exist
+      }
+  }
+
+  // Function to determine the routine value
+  function checkRoutineValue() {
+      return Routine; // Return the currently selected routine
+  }
+
+  // Function to get the active routine data
+  function getActiveRoutine() {
+      const activeBlock = getActiveBlock(); // Get the active block data
+      const routine = checkRoutineValue(); // Determine the routine
+
+      // Ensure the routine exists in the active block
+      if (activeBlock && activeBlock[routine]) {
+          return activeBlock[routine]; // Return the active routine data
+      } else {
+          console.error(`Routine ${routine} not found in block.`);
+          return null; // Handle case where the routine doesn't exist
+      }
+  }
+
+  // Call the function to get and log the active routine
+  const activeRoutine = getActiveRoutine();
+
+  if (activeRoutine) {
+      console.log("Active Routine Data:", activeRoutine);
+  }
+
+ 
+
+
+
+
+
+  function getExerciseContent() {
+    const obj = activeRoutine;
+    const Exercises = obj.Exercises;
+    console.log(Exercises)
+
+    function renderExerciseContent() {
+      // Clear prior renders
+      const existingContainer = document.querySelector(".exercise-container");
+      if (existingContainer) {
+        existingContainer.remove();
+      }
+  
+      const container = document.createElement("div");
+      container.className = "exercise-container";
+  
+      Object.keys(Exercises).forEach((exercise) => {
+        const exerciseData = Exercises[exercise];
+  
+        const exerciseElement = document.createElement("div");
+        exerciseElement.className = "exercise-item";
+  
+        const title = document.createElement("h3");
+        title.textContent = exercise;
+        exerciseElement.appendChild(title);
+  
+        if (exerciseData.Description) {
+          const description = document.createElement("p");
+          description.textContent = exerciseData.Description;
+          exerciseElement.appendChild(description);
+        }
+  
+        if (exerciseData.Sets) {
+          const setsContainer = document.createElement("div");
+          setsContainer.textContent = "Sets: ";
+          setsContainer.style.display = "inline";
+  
+          exerciseData.Sets.forEach((set, index) => {
+            const span = document.createElement("span");
+            span.textContent = set;
+            span.style.marginRight = "10px";
+  
+            setsContainer.appendChild(span);
+          });
+  
+          exerciseElement.appendChild(setsContainer);
+        }
+  
+        if (exerciseData.Definition) {
+          const definitionList = document.createElement("ul");
+          definitionList.textContent = "Definition:";
+          exerciseData.Definition.forEach((def) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = def;
+            
+            definitionList.appendChild(listItem);
+          });
+          exerciseElement.appendChild(definitionList);
+        }
+  
+        container.appendChild(exerciseElement);
+      });
+  
+      document.body.appendChild(container);
+    }
+  
+    renderExerciseContent();
+  }
+  
+  getExerciseContent();
+  
+  
+ 
 });
-
-
-
 
 
 

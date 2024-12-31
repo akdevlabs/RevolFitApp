@@ -43,13 +43,15 @@
   justify-content: center;
   align-items: center;
   margin: 20px 0;
+  
 }
 
 /* Video container styling */
 .video-container {
   position: relative;
-  max-width: 100%;
+  max-width: 90%;
   width: 640px;  /* You can adjust the width as needed */
+  
 }
 
 /* Style the play button */
@@ -63,7 +65,7 @@
   font-size: 30px;
   border: none;
   padding: 15px 20px;
-  border-radius: 50%;
+  border-radius: 3rem;
   cursor: pointer;
   z-index: 10;
   transition: background-color 0.3s ease;
@@ -79,7 +81,7 @@
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 8px;  /* Optional: adds rounded corners */
+  border-radius: 2.5rem;  /* Optional: adds rounded corners */
 }
 
 /* Optional: Style for browsers that don't support the video */
@@ -95,10 +97,16 @@ video:empty {
 
 
 
+.btnBlock{
+  margin: 2rem;
+}
 
-
-
-
+#actionBtn{
+  width: 100%;
+  font-size: 1.5rem;
+  padding: .5rem 2rem;
+  border-radius: .5rem;
+}
 
 
 

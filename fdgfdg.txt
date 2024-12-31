@@ -1,387 +1,99 @@
-getWorkouts().then((data) => {
-  // Validate the data structure
-  if (!data || !data.App || !data.UBU || !data.App.workoutBtns) {
-      console.error("Invalid data structure or missing properties.");
-      return;
+
+  function renderGymList(workout) {
+    if (!workout) return; // Skip if the workout is undefined
+
+    // Target the GymList section in the DOM
+    const gymListSection = document.getElementById("GymList");
+
+    // Create a container for the workout
+    const workoutContainer = document.createElement("div");
+    workoutContainer.className = "workout-container";
+
+    // Add the workout title
+    const title = document.createElement("h2");
+    title.textContent = workout.Tittle; // Updated property name
+    workoutContainer.appendChild(title);
+
+    // Add reps and time
+    const reps = document.createElement("p");
+    reps.textContent = `Reps: ${workout.Reps}`;
+    workoutContainer.appendChild(reps);
+
+    const time = document.createElement("p");
+    time.textContent = `Time: ${workout.time}`;
+    workoutContainer.appendChild(time);
+
+    // Add the sets list
+    const setsList = document.createElement("ul");
+    setsList.className = "sets-list";
+    workout.Sets.forEach((set) => {
+      const listItem = document.createElement("li");
+      listItem.textContent = set;
+      setsList.appendChild(listItem);
+    });
+    workoutContainer.appendChild(setsList);
+
+    // Add the instructions
+    const instructionsTitle = document.createElement("h3");
+    instructionsTitle.textContent = "Instructions";
+    workoutContainer.appendChild(instructionsTitle);
+
+    const instructionsList = document.createElement("ul");
+    instructionsList.className = "instructions-list";
+    workout.instructions.forEach((instruction) => {
+      const listItem = document.createElement("li");
+      listItem.textContent = instruction;
+      instructionsList.appendChild(listItem);
+    });
+    workoutContainer.appendChild(instructionsList);
+
+    // Append the workout container to the GymList section
+    gymListSection.appendChild(workoutContainer);
   }
 
-  const App = data.App;
-  const UBU = data.UBU;
-
-  const workoutBtns = App.workoutBtns;
-  const { Gym, Home } = workoutBtns;
-
-  // Validate Gym and Home objects
-  if (!Gym || !Gym.backgroundImg || !Home || !Home.backgroundImg) {
-      console.error("Missing background image data for Gym or Home.");
-      return;
-  }
-
-  const GBG = Gym.backgroundImg;
-  const HBG = Home.backgroundImg;
-
-  const { Base, Prime1, Prime2 } = UBU.Colors;
-
-  // Function to convert hex color to RGBA
-  function hexToRgba(hex, alpha = 0.5) {
-      const bigint = parseInt(hex.slice(1), 16);
-      const r = (bigint >> 16) & 255;
-      const g = (bigint >> 8) & 255;
-      const b = bigint & 255;
-      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-  }
-
-  // Function to render a workout button
-  function renderWorkoutButton(imgSrct, h1Text, divId, locationType) {
-      // Find the div with the specified ID
-      const div = document.getElementById(divId);
-
-      if (!div) {
-          console.error(`Div with id '${divId}' not found.`);
-          return;
-      }
-
-      // Check if the image URL is valid
-      const img = new Image();
-      img.src = imgSrct;
-      img.onload = () => {
-          console.log(`Image ${imgSrct} loaded successfully.`);
-      };
-      img.onerror = () => {
-          console.error(`Failed to load image: ${imgSrct}`);
-      };
-
-      // Create a button element
-      const button = document.createElement('button');
-      button.style.backgroundImage = `url(${imgSrct})`;
-      button.style.backgroundSize = 'cover';
-      button.style.backgroundPosition = 'center';
-      button.style.color = Prime2;
-      button.style.boxShadow = `0px 4px 10px ${Prime1}`;
-      button.style.backgroundColor = Prime1;
-      button.style.border = `2px solid ${Prime1}`;
-      button.style.cursor = 'pointer';
-      button.style.padding = '0';
-      button.style.width = '100%'; // Adjust based on your layout
-      button.style.height = '200px'; // Adjust based on your layout
-
-      // Add an event listener for click actions
-      button.addEventListener('click', () => {
-          localStorage.setItem('workoutLocation', locationType);
-          window.location.href = `index9.1.html`;
-      });
-
-      // Create an h1 element for the button label
-      const h1 = document.createElement('h1');
-      h1.textContent = h1Text;
-      h1.style.margin = '0';
-      h1.style.color = Prime2;
-      h1.style.backgroundColor = hexToRgba(Base, 0.8);
-      h1.style.padding = '.7rem';
-      h1.style.textAlign = 'center';
-
-      // Append the h1 to the button
-      button.appendChild(h1);
-
-      // Append the button to the div
-      div.appendChild(button);
-  }
-
-  // Render buttons for Gym and Home
-  renderWorkoutButton(GBG, 'Rutina En el Gym', 'Gym', 'gym');
-  renderWorkoutButton(HBG, 'Rutina En Casa', 'Home', 'home');
-}).catch((error) => {
-  console.error("An error occurred while fetching workouts:", error);
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-async function getUserimg() {
-  try {
-    // Reference a document in the "revoFitweb" collection with ID "landing"
-    const docRef = doc(db, 'users', transferreduserInfo);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const documentData = docSnap.data(); // Store document data
-      return documentData; // Return the data for external use
-    } else {
-      console.log("No such document!");
-      return null; // Return null if no document is found
-    }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-  }
-}
-getUserimg().then((data) => {
-  const userImg = data.userImg; // Retrieve nested data
-  
-
-  
-  function createfireIcon(imgSrc, imgAlt) {
-    // Find the div with id 'cal'
-    const div = document.getElementById('Icon');
-  
-    // Check if the div exists
-    if (!div) {
-        console.error("Div with id 'Icon' not found.");
-        return;
-    }
-  
-    // Create an image element
-    const img = document.createElement('img');
-  
-    // Set the image source and alternative text
-    img.src = imgSrc;
-    img.alt = imgAlt;
-  
-    // Append the image to the div
-    div.appendChild(img);
-  }
-  
-  
-  createfireIcon(userImg, 'Example image');
-  
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-getWorkouts().then((data) => {
-  const App = data.App
-  const UBU = data.UBU;
-  const {Gym, Home} = App.workoutBtns
-
-
-  const GymImg  = Gym.backgroundImg
-  const HomeImg = Home.backgroundImg
-  const { Base, Prime1, Prime2 } = UBU.Colors;
-
-  // Find the div with the specified ID
-  const div = document.getElementById(divId);
-
-  // Check if the div exists
-  if (!div) {
-      console.error(Div with id '${divId}' not found.);
-      return;
-  }
-
-
-
-  function renderWorkoutButton() {
-
-
-
-
-  }
-  console.log(GymImg)
-  console.log(HomeImg)
-});
-
-
-
-
-
- 
- // Function to convert hex to rgba
-      function hexToRgba(hex, alpha = 0.5) {
-          const bigint = parseInt(hex.slice(1), 16);
-          const r = (bigint >> 16) & 255;
-          const g = (bigint >> 8) & 255;
-          const b = bigint & 255;
-          return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-      }
-
-   h1.style.backgroundColor = hexToRgba(Base, 0.8); // Adjust alpha as needed
-
-
-
-
- // Add an event listener to save location type and redirect
-      button.addEventListener('click', function () {
-          // Save the location type to localStorage
-          localStorage.setItem('workoutLocation', locationType);
-          window.location.href = 'index9.1.html'; // Redirect to the desired URL
-      });
-
-
-
-      // Create an h1 element
-      const h1 = document.createElement('h1');
-      h1.textContent = h1Text;
-      h1.style.margin = '0';
-      h1.style.color = Prime2;
-   
-      h1.style.padding = '.7rem';
-
-      // Append the h1 to the button
-      button.appendChild(h1);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- // Function to convert hex to rgba
-      function hexToRgba(hex, alpha = 0.5) {
-          const bigint = parseInt(hex.slice(1), 16);
-          const r = (bigint >> 16) & 255;
-          const g = (bigint >> 8) & 255;
-          const b = bigint & 255;
-          return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-      }
-
-      // Create an h1 element
-      const h1 = document.createElement('h1');
-      h1.textContent = h1Text;
-      h1.style.margin = '0';
-      h1.style.color = Prime2;
-      h1.style.backgroundColor = hexToRgba(Base, 0.8); // Adjust alpha as needed
-      h1.style.padding = '.7rem';
-
-      // Append the h1 to the button
-      button.appendChild(h1);
-
-      // Append the button to the div
-      div.appendChild(button);
-
-
-
-
-
-
-
-
-
-
-
-      // Function to render a workout button
-function renderWorkoutButton(imgSrc, h1Text, divId, locationType) {
-  // Find the div with the specified ID
-  const div = document.getElementById(divId);
-
-  // Check if the div exists
-  if (!div) {
-      console.error(`Div with id '${divId}' not found.`);
-      return;
-  }
-
-  // Create a button element
-  const button = document.createElement('button');
-  button.style.backgroundImage = `url(${imgSrc})`;
-  button.style.backgroundSize = 'cover';
-  button.style.backgroundPosition = 'center';
-  button.style.color = Prime2;
-  button.style.boxShadow = `0px 4px 10px ${Prime1}`;
-  button.style.backgroundColor = Prime1;
-  button.style.border = `2px solid ${Prime1}`;
-
-  // Add an event listener to save location type and redirect
-  button.addEventListener('click', function () {
-      // Save the location type to localStorage
-      localStorage.setItem('workoutLocation', locationType);
-      window.location.href = 'index9.1.html'; // Redirect to the desired URL
+  // Iterate over all workouts in the Exersiseses object and render them
+  Object.values(Exersiseses).forEach((workout) => {
+    renderGymList(workout);
   });
 
-  // Function to convert hex to rgba
-  function hexToRgba(hex, alpha = 0.5) {
-      const bigint = parseInt(hex.slice(1), 16);
-      const r = (bigint >> 16) & 255;
-      const g = (bigint >> 8) & 255;
-      const b = bigint & 255;
-      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-  }
-
-  // Create an h1 element
-  const h1 = document.createElement('h1');
-  h1.textContent = h1Text;
-  h1.style.margin = '0';
-  h1.style.color = Prime2;
-  h1.style.backgroundColor = hexToRgba(Base, 0.8); // Adjust alpha as needed
-  h1.style.padding = '.7rem';
-
-  // Append the h1 to the button
-  button.appendChild(h1);
-
-  // Append the button to the div
-  div.appendChild(button);
-}
 
 
 
-renderWorkoutButton(GymImg, 'Rutina En el Gym', 'Gym', 'gym');
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    // Mocked checkTierValue function
+    function checkBlockValue() {
+      // Logic to determine which block to select
+      // Replace this with your actual implementation
+      return "Block1"; // Example return value
+    }
+
+    // Function to choose a block
+    function chooseBlock(blockName) {
+      if (gym[blockName]) {
+        return gym[blockName];
+      } else {
+        console.error(`Block "${blockName}" does not exist in the gym object.`);
+        return null;
+      }
+    }
+
+    // Example usage
+    const TierValue = checkTierValue(); // Retrieve the block name dynamically
+    const selectedBlock = chooseBlock(TierValue);
+
+    if (selectedBlock) {
+      console.log(`Selected Block (${TierValue}):`, selectedBlock);
+    }

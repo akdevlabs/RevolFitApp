@@ -158,74 +158,6 @@ getWorkouts().then((data) => {
     const Exercises = obj.Exercises;
     console.log(Exercises)
 
-    function renderExerciseContent() {
-      // Clear prior renders
-      const existingContainer = document.querySelector(".exercise-container");
-      if (existingContainer) {
-        existingContainer.remove();
-      }
-  
-      const container = document.createElement("div");
-      container.className = "exercise-container";
-  
-      Object.keys(Exercises).forEach((exercise) => {
-        const exerciseData = Exercises[exercise];
-  
-        const section = document.createElement("section");
-        section.className = "exercise-section";
-  
-        const exerciseWrapper = document.createElement("div");
-        exerciseWrapper.className = "exercise-wrapper";
-  
-        const exerciseElement = document.createElement("div");
-        exerciseElement.className = "exercise-item";
-  
-        const title = document.createElement("h3");
-        title.textContent = exercise;
-        exerciseElement.appendChild(title);
-  
-        if (exerciseData.Description) {
-          const description = document.createElement("p");
-          description.textContent = exerciseData.Description;
-          exerciseElement.appendChild(description);
-        }
-  
-        if (exerciseData.Sets) {
-          const setsContainer = document.createElement("div");
-          setsContainer.textContent = "Sets: ";
-          setsContainer.style.display = "inline";
-  
-          exerciseData.Sets.forEach((set, index) => {
-            const span = document.createElement("span");
-            span.textContent = set;
-            span.style.marginRight = "10px";
-  
-            setsContainer.appendChild(span);
-          });
-  
-          exerciseElement.appendChild(setsContainer);
-        }
-  
-        if (exerciseData.Definition) {
-          const definitionList = document.createElement("ul");
-          definitionList.textContent = "Definition:";
-          exerciseData.Definition.forEach((def) => {
-            const listItem = document.createElement("li");
-            listItem.textContent = def;
-            definitionList.appendChild(listItem);
-          });
-          exerciseElement.appendChild(definitionList);
-        }
-  
-        exerciseWrapper.appendChild(exerciseElement);
-        section.appendChild(exerciseWrapper);
-        container.appendChild(section);
-      });
-  
-      document.body.appendChild(container);
-    }
-  
-    renderExerciseContent();
   }
   
   getExerciseContent();
@@ -264,37 +196,6 @@ function setGradient(color1, color2) {
   document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2})`;
 }
 
-function setTextColor() {
-  const h2Elements = document.querySelectorAll("h2");
-  h2Elements.forEach((h2) => {
-    h2.style.color = Prime1;
-  });
-
-  const h3Elements = document.querySelectorAll("h3");
-  h3Elements.forEach((h3) => {
-    h3.style.color = Prime1;
-  });
-
-  const pElements = document.querySelectorAll("p");
-  pElements.forEach((p) => {
-    p.style.color = Prime2;
-  });
-
-  const ulElements = document.querySelectorAll("ul");
-  ulElements.forEach((ul) => {
-    ul.style.color = Base;
-  });
-
-  const liElements = document.querySelectorAll("li");
-  liElements.forEach((li) => {
-    li.style.color = Prime3;
-  });
-
-  const divElements = document.querySelectorAll("div");
-  divElements.forEach((div) => {
-    div.style.backgroundColor = Base;
-  });
-}
 
 
 
@@ -306,10 +207,6 @@ function setTextColor() {
 
 
 
-
-
-
-setTextColor()
 
 
 
@@ -320,16 +217,20 @@ setGradient(top, bottom);
 
 });
 
-async function SetBulogo() {
+
+
+
+// Bottom Icons
+async function getBtnIcons() {
   try {
-    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
+    const docRef = doc(db, "RevoBuissnes", transferredInfo);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
       const documentData = docSnap.data();
       return documentData; // Return the document data
     } else {
-      console.error("No such document!");
+      console.log("No such document!");
       return null;
     }
   } catch (error) {
@@ -337,26 +238,39 @@ async function SetBulogo() {
     return null;
   }
 }
-SetBulogo().then((data) => {
-  const UBU = data.UBU;
-  const { DarkLogo, LightLogo } = UBU.BuLogos;
-  
-  function setBuIcon(imgSrc, imgAlt) {
-      // Find the img element with id 'logo-img'
-      const img = document.getElementById('logo');
-  
-      // Check if the img element exists
-      if (img) {
-          // Set the image source and alternative text
-          img.src = imgSrc;
-          img.alt = imgAlt;
-      } else {
-          console.error("Image element with id 'logo-img' not found.");
-      }
+getBtnIcons().then((data) => {
+  const App = data.App;
+  const Btns = App.Btns;
+
+  function createButton(buttonType, divId, imgSrcIndex, redirectUrl, imgAlt = "Example image") {
+    const buttonGroup = Btns[buttonType];
+    const imgSrc = buttonGroup[imgSrcIndex];
+
+    const div = document.getElementById(divId);
+    if (!div) {
+      console.error(`Div with id '${divId}' not found.`);
+      return;
+    }
+
+    const img = document.createElement("img");
+    img.src = imgSrc;
+    img.alt = imgAlt;
+    img.addEventListener("click", () => {
+      window.location.href = redirectUrl;
+    });
+
+    div.appendChild(img);
   }
-  
-  setBuIcon(LightLogo, 'Example image');  
+
+  const buttonsConfig = [
+    { buttonType: "homeBtns", divId: "home", imgSrcIndex: 0, redirectUrl: "index9.html" },
+    { buttonType: "DateBtns", divId: "Date", imgSrcIndex: 1, redirectUrl: "index9.2.html" },
+    { buttonType: "GoalBtns", divId: "goals", imgSrcIndex: 1, redirectUrl: "index9.3.html" },
+    { buttonType: "StatBtns", divId: "stats", imgSrcIndex: 1, redirectUrl: "index9.4.html" },
+    { buttonType: "GearBtns", divId: "gear", imgSrcIndex: 1, redirectUrl: "index9.5.html" },
+  ];
+
+  buttonsConfig.forEach(({ buttonType, divId, imgSrcIndex, redirectUrl }) => {
+    createButton(buttonType, divId, imgSrcIndex, redirectUrl);
+  });
 });
-
-
-

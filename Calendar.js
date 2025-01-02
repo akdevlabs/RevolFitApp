@@ -65,7 +65,43 @@ console.log(workoutLocation)
 
 
 
+async function SetBulogo() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
+    const docSnap = await getDoc(docRef);
 
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.error("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+SetBulogo().then((data) => {
+  const UBU = data.UBU;
+  const { DarkLogo, LightLogo } = UBU.BuLogos;
+  
+  function setBuIcon(imgSrc, imgAlt) {
+      // Find the img element with id 'logo-img'
+      const img = document.getElementById('logo');
+  
+      // Check if the img element exists
+      if (img) {
+          // Set the image source and alternative text
+          img.src = imgSrc;
+          img.alt = imgAlt;
+      } else {
+          console.error("Image element with id 'logo-img' not found.");
+      }
+  }
+  
+  setBuIcon(LightLogo, 'Example image');  
+});
 
 
 
@@ -121,7 +157,8 @@ calanderColor().then((data) => {
       if (calendar) {
         calendar.style.backgroundColor = Prime2 ||'#fff';
         calendar.style.border = `1px solid '${Prime3}'`;
-
+        calendar.style.boxShadow = `0px 6px 6px ${Prime1 || 'rgba(0, 0, 0, 0.2)'}`
+        calendar.style.border = `2px solid ${Prime1 || '#000'}`;
       } else {
         console.error('Element with id "calendar" not found.');
       }
@@ -472,6 +509,47 @@ function setGradient(color1, color2) {
 
 setGradient(top, bottom); 
 
+});
+
+
+
+async function setBtnColor() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.error("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+setBtnColor().then((data) => {
+  const UBU = data.UBU;
+
+  const { Base, Prime1, Prime2, Prime3 } = UBU.Colors;
+
+  function setBtnBackgroundColor(BtnUrl) {
+    const Btn = document.getElementById(BtnUrl);
+    if (Btn) {
+      Btn.style.backgroundColor = Base || '#013948';
+      Btn.style.color = Prime2 || '#fff';
+      Btn.style.boxShadow = `0px 4px 6px ${Prime1 || 'rgba(0, 0, 0, 0.2)'}`;
+      Btn.style.border = `2px solid ${Prime1 || '#000'}`;
+    } else {
+      console.error(`Element with id "${BtnUrl}" not found.`);
+    }
+  }
+
+  setBtnBackgroundColor('mealplan');
+  setBtnBackgroundColor('Partnerships');
+  setBtnBackgroundColor('Events');
 });
 
 

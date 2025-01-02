@@ -18,6 +18,16 @@ body {
     padding: 0;
  
 }
+.CalHeader{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: .5rem 2rem;
+}
+#logo{
+  width: 6rem;
+  margin: 1rem 0;
+}
 .calendar {
   max-width: 90%;
   height: 25rem;
@@ -101,6 +111,49 @@ body {
   z-index: 999;
 }
 
+
+
+
+
+
+
+
+.BtnBlocks{
+  gap: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.BtnStack{
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+
+}
+
+
+
+  
+
+
+#mealplan{
+  padding: 17% 15%;
+  border-radius: 1rem;
+  text-decoration: none;
+}
+#Partnerships{
+  border-radius: 1rem;
+  text-decoration: none;
+  padding: 1.8rem 1.5rem;
+}
+#Events{
+  border-radius: 1rem;
+  text-decoration: none;
+  padding: 1.5rem 2.7rem;
+}
 
 
 

@@ -24,136 +24,6 @@ const db = getFirestore(app);
 
 
 
-function renderCalanderBlock(){
-  const monthYearElement = document.getElementById('month-year');
-  const datesElement = document.getElementById('dates');
-  const prevMonthButton = document.getElementById('prev-month');
-  const nextMonthButton = document.getElementById('next-month');
-  const eventPopup = document.getElementById('event-popup');
-  const overlay = document.getElementById('overlay');
-  const addEventButton = document.getElementById('add-event');
-  const eventTitleInput = document.getElementById('event-title');
-  const eventTypeSelect = document.getElementById('event-type');
-
-  let currentDate = new Date();
-  const EventBase = {
-      "2025-1-1": ["New Year's Day"],
-      "2025-1-14": ["Meeting at 10 AM", "Lunch with Sarah"],
-      "2025-1-20": ["Project Deadline"]
-  };
-
-  const WorkoutBase = {
-      "2025-1-5": ["Cardio Workout"],
-      "2025-1-10": ["Leg Day"],
-      "2025-1-15": ["Yoga Session"],
-      "2025-1-20": ["HIIT Session"],
-  };
-
-  const MealPlanBase = {
-      "2025-1-3": ["Breakfast: Oatmeal", "Lunch: Grilled Chicken Salad", "Dinner: Salmon with Veggies"],
-      "2025-1-10": ["Breakfast: Smoothie Bowl", "Lunch: Turkey Sandwich", "Dinner: Spaghetti Bolognese"],
-      "2025-1-15": ["Breakfast: Avocado Toast", "Lunch: Caesar Salad", "Dinner: Chicken Stir-fry"],
-      "2025-1-20": ["Breakfast: Pancakes", "Lunch: Tuna Wrap", "Dinner: Steak with Potatoes"],
-  };
-
-  function renderCalendar() {
-      const year = currentDate.getFullYear();
-      const month = currentDate.getMonth();
-
-      monthYearElement.textContent = currentDate.toLocaleDateString('en-US', {
-          month: 'long',
-          year: 'numeric'
-      });
-
-      datesElement.innerHTML = '';
-      const firstDayIndex = new Date(year, month, 1).getDay();
-      const lastDate = new Date(year, month + 1, 0).getDate();
-
-      for (let i = 0; i < firstDayIndex; i++) {
-          datesElement.innerHTML += '<div></div>';
-      }
-
-      for (let i = 1; i <= lastDate; i++) {
-          const dateElement = document.createElement('div');
-          dateElement.className = 'date';
-          dateElement.textContent = i;
-          const dateKey = `${year}-${month + 1}-${i}`;
-
-          if (EventBase[dateKey]) {
-              EventBase[dateKey].forEach(event => {
-                  const eventElement = document.createElement('div');
-                  eventElement.className = 'event';
-                  eventElement.textContent = event;
-                  dateElement.appendChild(eventElement);
-              });
-          }
-
-          if (WorkoutBase[dateKey]) {
-              WorkoutBase[dateKey].forEach(workout => {
-                  const workoutElement = document.createElement('div');
-                  workoutElement.className = 'event';
-                  workoutElement.textContent = workout;
-                  dateElement.appendChild(workoutElement);
-              });
-          }
-
-          if (MealPlanBase[dateKey]) {
-              MealPlanBase[dateKey].forEach(meal => {
-                  const mealElement = document.createElement('div');
-                  mealElement.className = 'event';
-                  mealElement.textContent = meal;
-                  dateElement.appendChild(mealElement);
-              });
-          }
-
-          dateElement.addEventListener('click', () => openEventPopup(dateKey));
-          datesElement.appendChild(dateElement);
-      }
-  }
-
-  function openEventPopup(date) {
-      overlay.style.display = 'block';
-      eventPopup.style.display = 'block';
-      addEventButton.onclick = () => {
-          const eventTitle = eventTitleInput.value;
-          const eventType = eventTypeSelect.value;
-          if (eventTitle) {
-              console.log(`Event added: ${eventType} - ${eventTitle}`);
-              if (!EventBase[date]) {
-                  EventBase[date] = [];
-              }
-              EventBase[date].push(`${eventType}: ${eventTitle}`);
-              closeEventPopup();
-              renderCalendar();
-          }
-      };
-  }
-
-  function closeEventPopup() {
-      overlay.style.display = 'none';
-      eventPopup.style.display = 'none';
-      eventTitleInput.value = '';
-  }
-
-  overlay.addEventListener('click', closeEventPopup);
-  prevMonthButton.addEventListener('click', () => {
-      currentDate.setMonth(currentDate.getMonth() - 1);
-      renderCalendar();
-  });
-
-  nextMonthButton.addEventListener('click', () => {
-      currentDate.setMonth(currentDate.getMonth() + 1);
-      renderCalendar();
-  });
-
-  renderCalendar();
-}
-
-renderCalanderBlock()
-
-
-
-
 
 
 
@@ -190,6 +60,246 @@ const Routine = 'Routine1'
 console.log("Transferred User Info:", transferreduserInfo);
 console.log("Transferred Info:", transferredInfo);
 console.log(workoutLocation)
+
+
+
+
+
+
+
+
+
+async function calanderColor() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData;
+    } else {
+      console.error("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+
+calanderColor().then((data) => {
+  const UBU = data.UBU;
+
+  const { Base, Prime1, Prime2,Prime3 } = UBU.Colors;
+
+  function SetCalanderColors(){
+
+    function setHeaderBackgroundColor() {
+      const header = document.getElementById('header');
+      if (header) {
+        header.style.backgroundColor = Base ||'#013948';
+        header.style.color = Prime2 || '#fff';
+      } else {
+        console.error('Element with id "header" not found.');
+      }
+    }
+
+    function setcalendarBackgroundColor() {
+      const calendar = document.getElementById('calendar');
+      if (calendar) {
+        calendar.style.backgroundColor = Prime2 ||'#fff';
+        calendar.style.border = `1px solid '${Prime3}'`;
+
+      } else {
+        console.error('Element with id "calendar" not found.');
+      }
+    }
+
+    
+    function setcalendarBackgroundColor() {
+      const calendar = document.getElementById('calendar');
+      if (calendar) {
+        calendar.style.backgroundColor = Prime2 ||'#fff';
+        calendar.style.border = `1px solid '${Prime3}'`;
+
+      } else {
+        console.error('Element with id "calendar" not found.');
+      }
+    }
+
+    function setDayBackgroundColor() {
+      const day = document.getElementById('day');
+      if (day) {
+        day.style.backgroundColor = Prime1 ||'#013948';
+
+      } else {
+        console.error('Element with id "header" not found.');
+      }
+    }
+    
+    // Call the function to apply the background color
+    setDayBackgroundColor();
+    setcalendarBackgroundColor();
+    setHeaderBackgroundColor();
+
+
+
+
+
+
+  }
+  function renderCalanderBlock() {
+    const monthYearElement = document.getElementById('month-year');
+    const datesElement = document.getElementById('dates');
+    const prevMonthButton = document.getElementById('prev-month');
+    const nextMonthButton = document.getElementById('next-month');
+    const eventPopup = document.getElementById('event-popup');
+    const overlay = document.getElementById('overlay');
+    const addEventButton = document.getElementById('add-event');
+    const eventTitleInput = document.getElementById('event-title');
+    const eventTypeSelect = document.getElementById('event-type');
+    const eventList = document.getElementById('event-list');
+
+    let currentDate = new Date();
+    const EventBase = {
+      "2025-1-1": ["Año Nuevo"],
+      "2025-1-14": ["Reunión a las 10 AM", "Almuerzo con Sarah"],
+      "2025-1-20": ["Fecha límite del proyecto"]
+    };
+
+    const WorkoutBase = {
+      "2025-1-5": ["Entrenamiento de cardio"],
+      "2025-1-10": ["Día de pierna"],
+      "2025-1-15": ["Sesión de yoga"],
+      "2025-1-20": ["Sesión de HIIT"],
+    };
+
+    const MealPlanBase = {
+      "2025-1-3": ["Desayuno: Avena", "Almuerzo: Ensalada de pollo a la parrilla", "Cena: Salmón con verduras"],
+      "2025-1-10": ["Desayuno: Tazón de batido", "Almuerzo: Sándwich de pavo", "Cena: Espaguetis a la boloñesa"],
+      "2025-1-15": ["Desayuno: Tostada de aguacate", "Almuerzo: Ensalada César", "Cena: Salteado de pollo"],
+      "2025-1-20": ["Desayuno: Panqueques", "Almuerzo: Wrap de atún", "Cena: Bistec con papas"],
+    };
+
+    function renderCalendar() {
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+
+      const monthNames = [
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+      ];
+
+      monthYearElement.textContent = `${monthNames[month]} ${year}`;
+      monthYearElement.style.backgroundColor = Base || '#013948';
+      monthYearElement.style.color = Prime2 || '#fff';
+
+      datesElement.innerHTML = '';
+      const firstDayIndex = new Date(year, month, 1).getDay();
+      const lastDate = new Date(year, month + 1, 0).getDate();
+
+      for (let i = 0; i < firstDayIndex; i++) {
+        const emptyDiv = document.createElement('div');
+        datesElement.appendChild(emptyDiv);
+      }
+
+      for (let i = 1; i <= lastDate; i++) {
+        const dateElement = document.createElement('div');
+        dateElement.className = 'date';
+        dateElement.textContent = i;
+        dateElement.style.padding = '10px';
+        dateElement.style.backgroundColor = Prime3 || '#e9e8e8';
+        dateElement.style.textAlign = 'center';
+        dateElement.style.cursor = 'pointer';
+        dateElement.style.position = 'relative';
+        dateElement.style.fontSize = '12px';
+
+        const dateKey = `${year}-${month + 1}-${i}`;
+        if (EventBase[dateKey] || WorkoutBase[dateKey] || MealPlanBase[dateKey]) {
+          dateElement.classList.add('event');
+          dateElement.style.backgroundColor = Base || '#013948';
+          dateElement.style.color = '#fff';
+          dateElement.style.borderRadius = '3px';
+          dateElement.style.padding = '2px 5px';
+          dateElement.style.marginTop = '5px';
+        }
+
+        dateElement.addEventListener('click', () => openEventPopup(dateKey));
+        datesElement.appendChild(dateElement);
+      }
+    }
+
+    function openEventPopup(date) {
+      overlay.style.display = 'block';
+      eventPopup.style.display = 'block';
+
+      eventList.innerHTML = '';
+      if (EventBase[date]) {
+        EventBase[date].forEach(event => {
+          const eventItem = document.createElement('div');
+          eventItem.textContent = `Evento: ${event}`;
+          eventList.appendChild(eventItem);
+        });
+      }
+
+      if (WorkoutBase[date]) {
+        WorkoutBase[date].forEach(workout => {
+          const workoutItem = document.createElement('div');
+          workoutItem.textContent = `Ejercicio: ${workout}`;
+          eventList.appendChild(workoutItem);
+        });
+      }
+
+      if (MealPlanBase[date]) {
+        MealPlanBase[date].forEach(meal => {
+          const mealItem = document.createElement('div');
+          mealItem.textContent = `Comida: ${meal}`;
+          eventList.appendChild(mealItem);
+        });
+      }
+
+      if (!EventBase[date] && !WorkoutBase[date] && !MealPlanBase[date]) {
+        eventList.textContent = 'No hay eventos para esta fecha.';
+      }
+
+      addEventButton.onclick = () => {
+        const eventTitle = eventTitleInput.value;
+        const eventType = eventTypeSelect.value;
+        if (eventTitle) {
+          const newEvent = `${eventType}: ${eventTitle}`;
+          if (!EventBase[date]) {
+            EventBase[date] = [];
+          }
+          EventBase[date].push(newEvent);
+
+          console.log(`Nuevo evento agregado el ${date}: ${newEvent}`);
+          renderCalendar();
+          overlay.style.display = 'none';
+          eventPopup.style.display = 'none';
+        }
+      };
+    }
+
+    overlay.addEventListener('click', () => {
+      overlay.style.display = 'none';
+      eventPopup.style.display = 'none';
+    });
+
+    prevMonthButton.addEventListener('click', () => {
+      currentDate.setMonth(currentDate.getMonth() - 1);
+      renderCalendar();
+    });
+
+    nextMonthButton.addEventListener('click', () => {
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      renderCalendar();
+    });
+
+    renderCalendar();
+  }
+  SetCalanderColors()
+  renderCalanderBlock();
+});
 
 
 

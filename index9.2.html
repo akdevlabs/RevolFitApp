@@ -22,36 +22,39 @@
 <body>
   <main>
 
+    
     <section>
-      <div class="calendar">
-        <div class="header">
+      <div class="calendar" id="calendar">
+        <div class="header" id="header">
             <button id="prev-month">&#8592;</button>
             <h2 id="month-year"></h2>
             <button id="next-month">&#8594;</button>
         </div>
-        <div class="days">
-            <div>Sun</div>
-            <div>Mon</div>
-            <div>Tue</div>
-            <div>Wed</div>
-            <div>Thu</div>
-            <div>Fri</div>
-            <div>Sat</div>
+        <div class="days" id="day">
+            <div>Dom</div>
+            <div>Lun</div>
+            <div>Mar</div>
+            <div>Mié</div>
+            <div>Jue</div>
+            <div>Vie</div>
+            <div>Sáb</div>
         </div>
         <div class="dates" id="dates"></div>
     </div>
-
+    
     <div class="overlay" id="overlay"></div>
     <div class="event-popup" id="event-popup">
-        <h3>Add Event</h3>
+        <div class="event-list" id="event-list"></div>
+        <h3>Agregar Evento</h3>
         <select id="event-type">
-            <option value="Massage">Massage</option>
-            <option value="Dentist">Dentist</option>
+            <option value="Masaje">Masaje</option>
+            <option value="Dentista">Dentista</option>
             <option value="Doctor">Doctor</option>
         </select>
-        <input type="text" id="event-title" placeholder="Event Title" />
-        <button id="add-event">Add</button>
+        <input type="text" id="event-title" placeholder="Título del Evento" />
+        <button id="add-event">Agregar</button>
     </div>
+    
     </section>
     <section class="Settings" id="Settings">
     

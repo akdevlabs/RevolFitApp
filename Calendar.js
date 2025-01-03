@@ -492,21 +492,6 @@ function setGradient(color1, color2) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 setGradient(top, bottom); 
 
 });
@@ -547,6 +532,18 @@ setBtnColor().then((data) => {
     }
   }
 
+  function setTittleColor(BtnUrl) {
+    const tittle = document.getElementById(BtnUrl);
+    if (tittle) {
+      tittle.style.color = Base || '#013948';
+    } else {
+      console.error(`Element with id "${BtnUrl}" not found.`);
+    }
+  }
+
+
+
+  setTittleColor('Caltittle') 
   setBtnBackgroundColor('mealplan');
   setBtnBackgroundColor('Partnerships');
   setBtnBackgroundColor('Events');

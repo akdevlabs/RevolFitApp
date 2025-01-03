@@ -31,11 +31,7 @@ function getNewestWorkoutLocation() {
 const transferreduserInfo = localStorage.getItem("transferreduserInfo");
 const transferredInfo = localStorage.getItem("transferredInfo");
 const workoutLocation = getNewestWorkoutLocation();
-const Exersise = "block1";
 
-const Tier = "Beginner"
-const Block = 'Block1'
-const Routine = 'Routine1'
 
 
 
@@ -46,126 +42,26 @@ console.log(workoutLocation)
 
 
 
-// Function to determine the workout type
-function checkworkoutLocationValue() {
-  const value = workoutLocation;
-  if (value === "Gym"){
-    return("GymWorkout")
-  }else{
-    return("homeWorkout")
-  }
-
-}
-
-console.log(checkworkoutLocationValue())
-
-// Function to fetch workouts
-async function getWorkouts() {
-  try {
-    // Get the appropriate document reference based on the location
-    const docRef = doc(db, "RevolApp", checkworkoutLocationValue());
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const documentData = docSnap.data();
-      return documentData; // Return the document data
-    } else {
-      console.error("No such document!");
-      return null;
-    }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-    return null;
-  }
-}
 
 
 
-// Use the function and handle the result
-getWorkouts().then((data) => {
-  // Define Tier and Block (replace with actual logic to set these values)
-  const Tier = "Beginner"; // Example: Replace with dynamic logic
-  const Block = "Block1"; // Example: Replace with dynamic logic
-  const Routine = "Routine1"; // Example: Replace with dynamic logic
-
-  // Function to get tier-specific data
-  function checkTierValue() {
-      if (Tier === "Beginner") {
-          return (data.Beginner); // Access the 'Beginner' property
-      } else if (Tier === "Intermediate") {
-          return data.Intermediate; // Access the 'Intermediate' property
-      } else if (Tier === "Advance") {
-          return data.Advance; // Access the 'Advance' property
-      } else {
-          console.error(`Tier ${Tier} not recognized.`);
-          return null;
-      }
-  }
-  
-  // Function to determine the block value
-  function checkBlockValue() {
-      return Block; // Return the currently selected block
-  }
-
-  // Function to get the active block data
-  function getActiveBlock() {
-      const TierValue = checkTierValue(); // Get the value for the current tier
-      const block = checkBlockValue(); // Determine the block
-      
-      // Ensure the block exists in the selected tier
-      if (TierValue && TierValue[block]) {
-          return TierValue[block]; // Return the active block data
-      } else {
-          console.error(`Block ${block} not found in tier ${Tier}`);
-          return null; // Handle case where the block doesn't exist
-      }
-  }
-
-  // Function to determine the routine value
-  function checkRoutineValue() {
-      return Routine; // Return the currently selected routine
-  }
-
-  // Function to get the active routine data
-  function getActiveRoutine() {
-      const activeBlock = getActiveBlock(); // Get the active block data
-      const routine = checkRoutineValue(); // Determine the routine
-
-      // Ensure the routine exists in the active block
-      if (activeBlock && activeBlock[routine]) {
-          return activeBlock[routine]; // Return the active routine data
-      } else {
-          console.error(`Routine ${routine} not found in block.`);
-          return null; // Handle case where the routine doesn't exist
-      }
-  }
-
-  // Call the function to get and log the active routine
-  const activeRoutine = getActiveRoutine();
-
-  if (activeRoutine) {
-      console.log("Active Routine Data:", activeRoutine);
-  }
-
- 
+// Data to check
+const logrosData = {
+  Footsteps: { Active: true },
+  CCheckmarks: { Active: true },
+  FitGraph: { Active: true },
+  Clock: { Active: true },
+  Dumbbell: { Active: true },
+  BalancedScales: { Active: true },
+  Timer: { Active: true },
+  Stretching: { Active: false },
+  FullBody: { Active: false  },
+  Trophy: { Active: false  },
+};
 
 
+    
 
-
-
-  function getExerciseContent() {
-    const obj = activeRoutine;
-    const Exercises = obj.Exercises;
-    console.log(Exercises)
-
-  }
-  
-  getExerciseContent();
-  
-  
-  
- 
-});
 
 
 
@@ -195,27 +91,191 @@ backgroundColor().then((data) => {
 function setGradient(color1, color2) {
   document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2})`;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 setGradient(top, bottom); 
 
 });
+
+async function SetBulogo() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.error("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+SetBulogo().then((data) => {
+  const UBU = data.UBU;
+  const { DarkLogo, LightLogo } = UBU.BuLogos;
+  
+  function setBuIcon(imgSrc, imgAlt) {
+      // Find the img element with id 'logo-img'
+      const img = document.getElementById('logo');
+  
+      // Check if the img element exists
+      if (img) {
+          // Set the image source and alternative text
+          img.src = imgSrc;
+          img.alt = imgAlt;
+      } else {
+          console.error("Image element with id 'logo-img' not found.");
+      }
+  }
+  
+  setBuIcon(LightLogo, 'Example image');  
+});
+
+async function setTittleColor() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.error("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+setTittleColor().then((data) => {
+  const UBU = data.UBU;
+
+  const { Base, Prime1, Prime2, Prime3 } = UBU.Colors;
+
+
+  function setTittleColor(BtnUrl) {
+    const tittle = document.getElementById(BtnUrl);
+    if (tittle) {
+      tittle.style.color = Base || '#013948';
+    } else {
+      console.error(`Element with id "${BtnUrl}" not found.`);
+    }
+  }
+
+
+
+  setTittleColor('Troptittle') 
+
+});
+
+
+
+
+
+
+
+
+// Bottom Icons
+async function getSkillIcons() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.log("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+getSkillIcons().then((data) => {
+  const UBU = data.UBU;
+
+  const { Base, Prime1, Prime2, Prime3 } = UBU.Colors;
+
+  const App = data.App;
+  const {
+    Footsteps,
+    CCheckmarks,
+    FitGraph,
+    Clock,
+    Dumbbell,
+    BalancedScales,
+    Timer,
+    Stretching,
+    FullBody,
+    Trophy
+  } = App.Logros;
+
+  // Target the logrosBlock element
+
+
+ 
+
+
+
+// Function to render slot content
+function renderSlotContent(logroData, slot, Tvalue) {
+  const logrosBlock = document.getElementById(slot);
+  if (!logrosBlock) return; // Skip if the slot doesn't exist
+
+  const logroItem = document.createElement('div');
+  logroItem.className = 'SlotTittle';
+
+  // Determine color based on Active status
+  const color = logroData.Active ? Prime2 : 
+  Prime1;
+  const AIcon = logroData.Active ? 0 : 
+  1;
+  // Green if true, white if false
+
+  // Add an icon if it exists
+  if (Tvalue.Icon) {
+    const iconElement = document.createElement('img');
+    iconElement.src = Tvalue.Icon[AIcon]; // Assuming Tvalue.Icon contains the URL of the icon
+
+    logroItem.appendChild(iconElement);
+  }
+  // Add title with appropriate color
+  const titleElement = document.createElement('h3');
+  titleElement.textContent = Tvalue.Tittle; // Use slot name as title
+  titleElement.style.color = color;
+  logroItem.appendChild(titleElement);
+
+
+  logrosBlock.appendChild(logroItem);
+
+  logrosBlock.appendChild(logroItem);
+}
+
+// Render content for each logro
+renderSlotContent(logrosData.Footsteps, 'slot1',Footsteps);
+renderSlotContent(logrosData.CCheckmarks, 'slot2',CCheckmarks);
+renderSlotContent(logrosData.FitGraph, 'slot3',FitGraph);
+renderSlotContent(logrosData.Clock, 'slot4', Clock);
+renderSlotContent(logrosData.Dumbbell, 'slot5',Dumbbell);
+renderSlotContent(logrosData.BalancedScales, 'slot6', BalancedScales);
+renderSlotContent(logrosData.Timer, 'slot7',Timer);
+renderSlotContent(logrosData.Stretching, 'slot8',Stretching);
+renderSlotContent(logrosData.FullBody, 'slot9',FullBody);
+renderSlotContent(logrosData.Trophy, 'slot10',Trophy);
+
+});
+
+
+
+
+
+
+
 
 
 

@@ -189,6 +189,9 @@ BtnColor(Base, Prime2)
 
 
 
+
+
+// Bottom Icons
 async function getBtnIcons() {
   try {
     const docRef = doc(db, "RevoBuissnes", transferredInfo);
@@ -207,187 +210,38 @@ async function getBtnIcons() {
   }
 }
 getBtnIcons().then((data) => {
-  const App = data.App; // Retrieve nested data
-  const Btns = App.Btns
+  const App = data.App;
+  const Btns = App.Btns;
 
-  function getHomeBtn(){
-  const homeBtns = Btns.homeBtns
-  const blue  = homeBtns[0]
-  const white = homeBtns[1]
+  function createButton(buttonType, divId, imgSrcIndex, redirectUrl, imgAlt = "Example image") {
+    const buttonGroup = Btns[buttonType];
+    const imgSrc = buttonGroup[imgSrcIndex];
 
-  function createfireIcon(imgSrc, imgAlt) {
-    // Find the div with id 'cal'
-    const div = document.getElementById('home');
-  
-    // Check if the div exists
+    const div = document.getElementById(divId);
     if (!div) {
-        console.error("Div with id 'Icon' not found.");
-        return;
+      console.error(`Div with id '${divId}' not found.`);
+      return;
     }
-  
-    // Create an image element
-    const img = document.createElement('img');
-  
-    // Set the image source and alternative text
+
+    const img = document.createElement("img");
     img.src = imgSrc;
     img.alt = imgAlt;
-    // Add an event listener to redirect when the image is clicked
-    img.addEventListener('click', function() {
-      window.location.href = 'index9.html'; // Redirect to index10.html
+    img.addEventListener("click", () => {
+      window.location.href = redirectUrl;
     });
-    // Append the image to the div
+
     div.appendChild(img);
   }
-  
-  
-  createfireIcon(blue, 'Example image');
-  }
-  function getDateBtn() {
-    const DateBtns = Btns.DateBtns;
-    const blue = DateBtns[0];
-    const white = DateBtns[1];
 
-    function createfireIcon(imgSrc, imgAlt) {
-        // Find the div with id 'Date'
-        const div = document.getElementById('Date');
-        
-        // Check if the div exists
-        if (!div) {
-            console.error("Div with id 'Date' not found.");
-            return;
-        }
-        
-        // Create an image element
-        const img = document.createElement('img');
-        
-        // Set the image source and alternative text
-        img.src = imgSrc;
-        img.alt = imgAlt;
-        
-        // Add an event listener to redirect when the image is clicked
-        img.addEventListener('click', function() {
-            window.location.href = 'index10.html'; // Redirect to index10.html
-        });
+  const buttonsConfig = [
+    { buttonType: "homeBtns", divId: "home", imgSrcIndex: 0, redirectUrl: "index9.html" },
+    { buttonType: "DateBtns", divId: "Date", imgSrcIndex: 1, redirectUrl: "index9.2.html" },
+    { buttonType: "GoalBtns", divId: "goals", imgSrcIndex: 1, redirectUrl: "index9.3.html" },
+    { buttonType: "StatBtns", divId: "stats", imgSrcIndex: 1, redirectUrl: "index9.4.html" },
+    { buttonType: "GearBtns", divId: "gear", imgSrcIndex: 1, redirectUrl: "index9.5.html" },
+  ];
 
-        // Append the image to the div
-        div.appendChild(img);
-    }
-
-    createfireIcon(white, 'Example image');
-}
-  function getGoalBtn(){
-    const GoalBtns = Btns.GoalBtns
-    const blue  = GoalBtns[0]
-    const white = GoalBtns[1]
-  
-    function createfireIcon(imgSrc, imgAlt) {
-      // Find the div with id 'cal'
-      const div = document.getElementById('goals');
-    
-      // Check if the div exists
-      if (!div) {
-          console.error("Div with id 'Icon' not found.");
-          return;
-      }
-    
-      // Create an image element
-      const img = document.createElement('img');
-    
-      // Set the image source and alternative text
-      img.src = imgSrc;
-      img.alt = imgAlt;
-      // Add an event listener to redirect when the image is clicked
-      img.addEventListener('click', function() {
-        window.location.href = 'index11.html'; // Redirect to index10.html
-      });
-      // Append the image to the div
-      div.appendChild(img);
-    }
-    
-    
-    createfireIcon(white , 'Example image');
-  }
-  function getStatBtn(){
-    const StatBtns = Btns.StatBtns
-    const blue  = StatBtns[0]
-    const white = StatBtns[1]
-  
-    function createfireIcon(imgSrc, imgAlt) {
-      // Find the div with id 'cal'
-      const div = document.getElementById('stats');
-    
-      // Check if the div exists
-      if (!div) {
-          console.error("Div with id 'Icon' not found.");
-          return;
-      }
-    
-      // Create an image element
-      const img = document.createElement('img');
-    
-      // Set the image source and alternative text
-      img.src = imgSrc;
-      img.alt = imgAlt;
-      
-      // Add an event listener to redirect when the image is clicked
-      img.addEventListener('click', function() {
-        window.location.href = 'index12.html'; // Redirect to index10.html
-      });
-      // Append the image to the div
-      div.appendChild(img);
-    }
-    
-    
-    createfireIcon(white , 'Example image');
-  }
-  function getGearBtn(){
-    const GearBtns = Btns.GearBtns
-    const blue  = GearBtns[0]
-    const white = GearBtns[1]
-  
-    function createfireIcon(imgSrc, imgAlt) {
-      // Find the div with id 'cal'
-      const div = document.getElementById('gear');
-    
-      // Check if the div exists
-      if (!div) {
-          console.error("Div with id 'Icon' not found.");
-          return;
-      }
-    
-      // Create an image element
-      const img = document.createElement('img');
-    
-      // Set the image source and alternative text
-      img.src = imgSrc;
-      img.alt = imgAlt;
-
-      // Add an event listener to redirect when the image is clicked
-      img.addEventListener('click', function() {
-        window.location.href = 'index9.5.html'; // Redirect to index10.html
-      });
-    
-      // Append the image to the div
-      div.appendChild(img);
-    }
-    
-    
-    createfireIcon(white , 'Example image');
-  }
-
-
-
-
-
-
-
-
-
-  getHomeBtn()
-  getDateBtn()
-  getGoalBtn()
-  getStatBtn()
-  getGearBtn()
-
-
+  buttonsConfig.forEach(({ buttonType, divId, imgSrcIndex, redirectUrl }) => {
+    createButton(buttonType, divId, imgSrcIndex, redirectUrl);
+  });
 });

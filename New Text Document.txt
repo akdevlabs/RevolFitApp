@@ -135,3 +135,338 @@ getWorkouts().then((data) => {
  
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+async function getBtnIcons() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.log("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+getBtnIcons().then((data) => {
+  const App = data.App; // Retrieve nested data
+  const Btns = App.Btns
+
+  function getHomeBtn(){
+  const homeBtns = Btns.homeBtns
+  const blue  = homeBtns[0]
+  const white = homeBtns[1]
+
+  function createfireIcon(imgSrc, imgAlt) {
+    // Find the div with id 'cal'
+    const div = document.getElementById('home');
+  
+    // Check if the div exists
+    if (!div) {
+        console.error("Div with id 'Icon' not found.");
+        return;
+    }
+  
+    // Create an image element
+    const img = document.createElement('img');
+  
+    // Set the image source and alternative text
+    img.src = imgSrc;
+    img.alt = imgAlt;
+    // Add an event listener to redirect when the image is clicked
+    img.addEventListener('click', function() {
+      window.location.href = 'index9.html'; // Redirect to index10.html
+    });
+    // Append the image to the div
+    div.appendChild(img);
+  }
+  
+  
+  createfireIcon(blue, 'Example image');
+  }
+  function getDateBtn() {
+    const DateBtns = Btns.DateBtns;
+    const blue = DateBtns[0];
+    const white = DateBtns[1];
+
+    function createfireIcon(imgSrc, imgAlt) {
+        // Find the div with id 'Date'
+        const div = document.getElementById('Date');
+        
+        // Check if the div exists
+        if (!div) {
+            console.error("Div with id 'Date' not found.");
+            return;
+        }
+        
+        // Create an image element
+        const img = document.createElement('img');
+        
+        // Set the image source and alternative text
+        img.src = imgSrc;
+        img.alt = imgAlt;
+        
+        // Add an event listener to redirect when the image is clicked
+        img.addEventListener('click', function() {
+            window.location.href = 'index10.html'; // Redirect to index10.html
+        });
+
+        // Append the image to the div
+        div.appendChild(img);
+    }
+
+    createfireIcon(white, 'Example image');
+}
+  function getGoalBtn(){
+    const GoalBtns = Btns.GoalBtns
+    const blue  = GoalBtns[0]
+    const white = GoalBtns[1]
+  
+    function createfireIcon(imgSrc, imgAlt) {
+      // Find the div with id 'cal'
+      const div = document.getElementById('goals');
+    
+      // Check if the div exists
+      if (!div) {
+          console.error("Div with id 'Icon' not found.");
+          return;
+      }
+    
+      // Create an image element
+      const img = document.createElement('img');
+    
+      // Set the image source and alternative text
+      img.src = imgSrc;
+      img.alt = imgAlt;
+      // Add an event listener to redirect when the image is clicked
+      img.addEventListener('click', function() {
+        window.location.href = 'index11.html'; // Redirect to index10.html
+      });
+      // Append the image to the div
+      div.appendChild(img);
+    }
+    
+    
+    createfireIcon(white , 'Example image');
+  }
+  function getStatBtn(){
+    const StatBtns = Btns.StatBtns
+    const blue  = StatBtns[0]
+    const white = StatBtns[1]
+  
+    function createfireIcon(imgSrc, imgAlt) {
+      // Find the div with id 'cal'
+      const div = document.getElementById('stats');
+    
+      // Check if the div exists
+      if (!div) {
+          console.error("Div with id 'Icon' not found.");
+          return;
+      }
+    
+      // Create an image element
+      const img = document.createElement('img');
+    
+      // Set the image source and alternative text
+      img.src = imgSrc;
+      img.alt = imgAlt;
+      
+      // Add an event listener to redirect when the image is clicked
+      img.addEventListener('click', function() {
+        window.location.href = 'index12.html'; // Redirect to index10.html
+      });
+      // Append the image to the div
+      div.appendChild(img);
+    }
+    
+    
+    createfireIcon(white , 'Example image');
+  }
+  function getGearBtn(){
+    const GearBtns = Btns.GearBtns
+    const blue  = GearBtns[0]
+    const white = GearBtns[1]
+  
+    function createfireIcon(imgSrc, imgAlt) {
+      // Find the div with id 'cal'
+      const div = document.getElementById('gear');
+    
+      // Check if the div exists
+      if (!div) {
+          console.error("Div with id 'Icon' not found.");
+          return;
+      }
+    
+      // Create an image element
+      const img = document.createElement('img');
+    
+      // Set the image source and alternative text
+      img.src = imgSrc;
+      img.alt = imgAlt;
+
+      // Add an event listener to redirect when the image is clicked
+      img.addEventListener('click', function() {
+        window.location.href = 'index9.5.html'; // Redirect to index10.html
+      });
+    
+      // Append the image to the div
+      div.appendChild(img);
+    }
+    
+    
+    createfireIcon(white , 'Example image');
+  }
+
+
+
+
+
+
+
+
+
+  getHomeBtn()
+  getDateBtn()
+  getGoalBtn()
+  getStatBtn()
+  getGearBtn()
+
+
+});
+
+
+
+
+
+
+ function createButton(buttonType, divId, imgSrcIndex, redirectUrl, imgAlt = "Example image") {
+    const buttonGroup = Btns[buttonType];
+    const imgSrc = buttonGroup[imgSrcIndex];
+
+    const div = document.getElementById(divId);
+    if (!div) {
+      console.error(`Div with id '${divId}' not found.`);
+      return;
+    }
+
+    const img = document.createElement("img");
+    img.src = imgSrc;
+    img.alt = imgAlt;
+    img.addEventListener("click", () => {
+      window.location.href = redirectUrl;
+    });
+
+    div.appendChild(img);
+  }
+
+  const buttonsConfig = [
+    { buttonType: "homeBtns", divId: "home", imgSrcIndex: 0, redirectUrl: "index9.html" },
+    { buttonType: "DateBtns", divId: "Date", imgSrcIndex: 1, redirectUrl: "index9.2.html" },
+    { buttonType: "GoalBtns", divId: "goals", imgSrcIndex: 1, redirectUrl: "index9.3.html" },
+    { buttonType: "StatBtns", divId: "stats", imgSrcIndex: 1, redirectUrl: "index9.4.html" },
+    { buttonType: "GearBtns", divId: "gear", imgSrcIndex: 1, redirectUrl: "index9.5.html" },
+  ];
+
+  buttonsConfig.forEach(({ buttonType, divId, imgSrcIndex, redirectUrl }) => {
+    createButton(buttonType, divId, imgSrcIndex, redirectUrl);
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+ function renderLogros(logrosObject) {
+  const logrosBlock = document.getElementById('LogrosBlock');
+
+  if (!logrosBlock) {
+      console.error('Section with ID "LogrosBlock" not found!');
+      return;
+  }
+
+  // Clear existing content
+  logrosBlock.innerHTML = '';
+
+  // Iterate through the object
+  Object.entries(logrosObject).forEach(([key, value]) => {
+      // Create a container for each item
+      const logroItem = document.createElement('div');
+      logroItem.className = 'logro-item';
+
+      // Add the title
+      if (value.Tittle) {
+          const titleElement = document.createElement('h3');
+          titleElement.textContent = value.Tittle;
+          logroItem.appendChild(titleElement);
+      }
+
+      // Add the date
+      if (value.Date) {
+          const dateElement = document.createElement('p');
+          dateElement.textContent = `Date: ${value.Date}`;
+          logroItem.appendChild(dateElement);
+      }
+
+      // Add the icon
+      if (Array.isArray(value.Icon) && value.Icon.length > 0) {
+          const iconElement = document.createElement('div');
+          iconElement.className = 'icon-container';
+          value.Icon.forEach((icon) => {
+              const iconImg = document.createElement('img');
+              iconImg.src = icon; // Assuming `icon` is a URL
+              iconImg.alt = `${key} icon`;
+              iconElement.appendChild(iconImg);
+          });
+          logroItem.appendChild(iconElement);
+      }
+
+      // Append the logroItem to the LogrosBlock
+      logrosBlock.appendChild(logroItem);
+  });
+}
+
+
+
+// Call the function to render the items
+renderLogros(Logros);
+
+
+
+
+
+
+
+
+
+ 

@@ -22,12 +22,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: .5rem 2rem;
+  margin: .1rem 2rem;
 }
 #logo{
   width: 6rem;
   margin: 1rem 0;
 }
+
+#Caltittle{
+  font-weight: bold;
+}
+
 .calendar {
   max-width: 90%;
   height: 25rem;

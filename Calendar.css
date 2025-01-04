@@ -141,11 +141,13 @@ body {
 
 
 
-  
+#mPlan{
+  width: 5rem;
+}
 
 
 #mealplan{
-  padding: 20% 15%;
+  padding: 10% 15%;
   border-radius: 1rem;
   text-decoration: none;
 }

@@ -497,6 +497,46 @@ setGradient(top, bottom);
 });
 
 
+async function SetMealPlanBtn() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.error("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+SetMealPlanBtn().then((data) => {
+  const App = data.App;
+  const MealPlanBtn = App.MealPlanBtn;
+  const Icon = MealPlanBtn.Icon;
+
+
+  console.log(Icon)
+  function setBuIcon(imgSrc, imgAlt) {
+      // Find the img element with id 'logo-img'
+      const img = document.getElementById('mPlan');
+  
+      // Check if the img element exists
+      if (img) {
+          // Set the image source and alternative text
+          img.src = imgSrc;
+          img.alt = imgAlt;
+      } else {
+          console.error("Image element with id 'logo-img' not found.");
+      }
+  }
+  
+  setBuIcon(Icon, 'Example image');  
+});
 
 async function setBtnColor() {
   try {

@@ -36,15 +36,7 @@ body {
 }
 
 
-#LogrosBlock {
-  width: 23rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content:space-between;
-  margin: 1rem ;
 
-
-}
 .SlotTittle{
   width: 7rem;
   display: flex;
@@ -63,7 +55,45 @@ body {
 }
 
 
+/* Apply this to the LogrosBlock section */
+#LogrosBlock {
+  height: 550px; /* Set the desired height for the scrollable area */
+  width: 23rem;
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Disable horizontal scrolling */
+  
+  padding: 10px; /* Optional: Add some padding */
 
+  
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-between;
+    margin: 1rem ;
+  }
+
+
+/* Style for the entire page to prevent scrolling */
+body {
+  overflow: hidden; /* Disable scrolling for the rest of the page */
+}
+
+/* Optional: Add custom scrollbar styling */
+#LogrosBlock::-webkit-scrollbar {
+  width: 8px;
+}
+
+#LogrosBlock::-webkit-scrollbar-thumb {
+  background-color: #555; /* Customize the scrollbar thumb */
+  border-radius: 4px;
+}
+
+#LogrosBlock::-webkit-scrollbar-thumb:hover {
+  background-color: #333; /* Darker on hover */
+}
+
+#LogrosBlock::-webkit-scrollbar-track {
+  background-color: #e9e8e8; /* Customize the scrollbar track */
+}
 
 
 

@@ -45,7 +45,6 @@ console.log("Transferred Info:", transferredInfo);
 console.log(workoutLocation)
 
 
-
 // Function to determine the workout type
 function checkworkoutLocationValue() {
   const value = workoutLocation;
@@ -168,6 +167,43 @@ getWorkouts().then((data) => {
 });
 
 
+async function SetBulogo() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.error("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+SetBulogo().then((data) => {
+  const UBU = data.UBU;
+  const { DarkLogo, LightLogo } = UBU.BuLogos;
+  
+  function setBuIcon(imgSrc, imgAlt) {
+      // Find the img element with id 'logo-img'
+      const img = document.getElementById('logo');
+  
+      // Check if the img element exists
+      if (img) {
+          // Set the image source and alternative text
+          img.src = imgSrc;
+          img.alt = imgAlt;
+      } else {
+          console.error("Image element with id 'logo-img' not found.");
+      }
+  }
+  
+  setBuIcon(LightLogo, 'Example image');  
+});
 
 
 async function backgroundColor() {

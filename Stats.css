@@ -132,19 +132,11 @@ body {
 }
 .bar div {
   width: 100%;
+  background: #ACE2E4;
+  border-radius: 5px;
   position: absolute;
   bottom: 0;
-
-  background: repeating-linear-gradient(
-    45deg,
-    #ACE2E4, /* Dark color */
-    #ACE2E4  10px,
-    transparent 10px,
-    transparent 20px /* Transparent stripes */
-  );
-  border-radius: 5px;
 }
-
 
 
 
@@ -160,9 +152,9 @@ body {
   text-align: center;
   font-size: 12px;
   font-weight: bold;
-  border-top: 2px dotted red; /* Dotted line for the goal marker */
+  border-top: 2px dotted rgb(255, 255, 255); /* Dotted line for the goal marker */
   margin-top: -1px; /* Prevent overlap with the bar */
-  color: red; /* Optional: Label color to match the line */
+  color: rgb(255, 255, 255); /* Optional: Label color to match the line */
 }
 
 
@@ -187,7 +179,7 @@ body {
 
 .progress-bar .filled {
   height: 100%;
-  background: #555;
+  background: #ACE2E4;
   border-radius: 5px;
 }
 

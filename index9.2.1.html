@@ -14,69 +14,58 @@
   <link rel="manifest" href="/site.webmanifest">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SHS/RevoFitApp/Calendar</title>
-  <link rel="stylesheet" href="Calendar.css">
+  <title>SHS/RevoFitApp/Calendar/Meal Plan</title>
+  <link rel="stylesheet" href="MealPlan.css">
 
   <link rel="shortcut icon" href="images/Logos/flower_DB.webp">
 </head>
 <body>
   <main>
-    <section class="CalHeader">
-      <a id="Caltittle">CALENDARIO</a>
+    <section class="MpHeader">
+      <a id="Mptittle">Meal Plan</a>
       <img id="logo" src=""></img>  
     </section>
 
-    
-    <section>
-      <div class="calendar" id="calendar">
-        <div class="header" id="header">
-            <button id="prev-month">&#8592;</button>
-            <h2 id="month-year"></h2>
-            <button id="next-month">&#8594;</button>
-        </div>
-        <div class="days" id="day">
-            <div>Dom</div>
-            <div>Lun</div>
-            <div>Mar</div>
-            <div>Mié</div>
-            <div>Jue</div>
-            <div>Vie</div>
-            <div>Sáb</div>
-        </div>
-        <div class="dates" id="dates"></div>
-    </div>
-    
-    <div class="overlay" id="overlay"></div>
-    <div class="event-popup" id="event-popup">
-        <div class="event-list" id="event-list"></div>
-        <h3>Agregar Evento</h3>
-        <select id="event-type">
-            <option value="Masaje">Masaje</option>
-            <option value="Dentista">Dentista</option>
-            <option value="Doctor">Doctor</option>
-        </select>
-        <input type="text" id="event-title" placeholder="Título del Evento" />
-        <button id="add-event">Agregar</button>
-    </div>
-    
+    <section class="MpUser">
+      <div id="userName"></div>
+      <div id="motivation"></div>
     </section>
-
-    <section class="BtnBlocks">
-
-
-        <a href="index9.2.1.html" class="Btns" id="mealplan"><img id="mPlan"></a>
-
-
-      <div class="BtnStack">
-  
-          <a href="#" class="Btns" id="Partnerships">Partnerships</a>
-      
-          <a href="#" class="Btns" id="Events">Events</a>
+    <div class="Line"></div>
+    
+    <section class="MealPlanBtns">
    
-      </div>
+        
+       <a id="MO">Meal Options</a>
+       <div class="hiddenDiv"  id="HMO">
+         <a value="vegetarian">Vegetariano</a>
+         <a value="vegan">Vegano</a>
+       </div>
+       <a id="CM">Change Meal</a>
+       <div class="hiddenDiv" id="CMO">
+         <a value="breakfast">Comida:</a>
+         <a value="breakfast">Desayuno</a>
+         <a value="lunch">Almuerzo</a>
+         <a value="dinner">Cena</a>
+         <a value="snack">Snack</a>
+
+       </div>
+       <a>Shopping List</a>
+      
+      
+
+
+
 
     </section>
 
+    
+    <div class="Line"></div>
+    <section class="MealPlanDishes" id="MealPlanDishes">
+      
+
+
+      
+    </section>
 
 
     
@@ -99,7 +88,7 @@
    
   </main>
 
-  <script type="module" src="Calendar.js"></script>
+  <script type="module" src="MealPlan.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./service-worker.js')

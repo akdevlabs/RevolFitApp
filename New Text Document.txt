@@ -404,62 +404,24 @@ getBtnIcons().then((data) => {
 
 
 
-
-
-  
- function renderLogros(logrosObject) {
-  const logrosBlock = document.getElementById('LogrosBlock');
-
-  if (!logrosBlock) {
-      console.error('Section with ID "LogrosBlock" not found!');
-      return;
-  }
-
-  // Clear existing content
-  logrosBlock.innerHTML = '';
-
-  // Iterate through the object
-  Object.entries(logrosObject).forEach(([key, value]) => {
-      // Create a container for each item
-      const logroItem = document.createElement('div');
-      logroItem.className = 'logro-item';
-
-      // Add the title
-      if (value.Tittle) {
-          const titleElement = document.createElement('h3');
-          titleElement.textContent = value.Tittle;
-          logroItem.appendChild(titleElement);
-      }
-
-      // Add the date
-      if (value.Date) {
-          const dateElement = document.createElement('p');
-          dateElement.textContent = `Date: ${value.Date}`;
-          logroItem.appendChild(dateElement);
-      }
-
-      // Add the icon
-      if (Array.isArray(value.Icon) && value.Icon.length > 0) {
-          const iconElement = document.createElement('div');
-          iconElement.className = 'icon-container';
-          value.Icon.forEach((icon) => {
-              const iconImg = document.createElement('img');
-              iconImg.src = icon; // Assuming `icon` is a URL
-              iconImg.alt = `${key} icon`;
-              iconElement.appendChild(iconImg);
-          });
-          logroItem.appendChild(iconElement);
-      }
-
-      // Append the logroItem to the LogrosBlock
-      logrosBlock.appendChild(logroItem);
-  });
-}
+ 
 
 
 
-// Call the function to render the items
-renderLogros(Logros);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -470,3 +432,54 @@ renderLogros(Logros);
 
 
  
+async function setBtnColor() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.error("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+setBtnColor().then((data) => {
+  const UBU = data.UBU;
+
+  const { Base, Prime1, Prime2, Prime3 } = UBU.Colors;
+
+  function setBtnBackgroundColor(BtnUrl) {
+    const Btn = document.getElementById(BtnUrl);
+    if (Btn) {
+      Btn.style.backgroundColor = Base || '#013948';
+      Btn.style.color = Prime2 || '#fff';
+      Btn.style.boxShadow = `0px 4px 6px ${Prime1 || 'rgba(0, 0, 0, 0.2)'}`;
+      Btn.style.border = `2px solid ${Prime1 || '#000'}`;
+    } else {
+      console.error(`Element with id "${BtnUrl}" not found.`);
+    }
+  }
+
+  function setTittleColor(BtnUrl) {
+    const tittle = document.getElementById(BtnUrl);
+    if (tittle) {
+      tittle.style.color = Base || '#013948';
+    } else {
+      console.error(`Element with id "${BtnUrl}" not found.`);
+    }
+  }
+
+
+
+  setTittleColor('Caltittle') 
+  setBtnBackgroundColor('mealplan');
+  setBtnBackgroundColor('Partnerships');
+  setBtnBackgroundColor('Events');
+});
+

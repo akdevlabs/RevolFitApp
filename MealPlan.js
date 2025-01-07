@@ -170,10 +170,8 @@ const selectedPhrase = chooseFromArray(variable, motivationText);
 
 
 
-const Desayuno = "Desayuno"
-const Almuerzo = "Almuerzo"
-const Cena     = "Cena"
-const Snack    = "Snack"
+
+const Coption    = "Clasic"
 
 
 const mealTime = "45 mins"
@@ -221,104 +219,187 @@ SetBulogo().then((data) => {
 
 
 
-function createMealPlanDishes(MealN, MealT ) {
-  // Get the parent section
-  const mealPlanSection = document.getElementById("MealPlanDishes");
 
-  // Create the main div
-  const mainDiv = document.createElement("div");
-  mainDiv.classList.add("meal-plan-container");
 
-  // Create the first inner div
-  const textDiv = document.createElement("div");
-  textDiv.classList.add("text-container");
 
-  // Create and append h1
-  const title = document.createElement("h1");
-  title.textContent = MealN;
-  textDiv.appendChild(title);
 
-  // Create and append a tag
-  const link = document.createElement("a");
-  link.href = "#";
-  link.textContent = MealT;
-  textDiv.appendChild(link);
 
-  // Create the second inner div
-  const imgDiv = document.createElement("div");
-  imgDiv.classList.add("image-container");
 
-  // Create and append img
-  const img = document.createElement("img");
-  img.src = "https://via.placeholder.com/150"; // Placeholder image
-  img.alt = "Meal Plan Dish";
-  imgDiv.appendChild(img);
 
-  // Append inner divs to main div
-  mainDiv.appendChild(textDiv);
-  mainDiv.appendChild(imgDiv);
 
-  // Append the main div to the section
-  mealPlanSection.appendChild(mainDiv);
-}
-createMealPlanDishes(Desayuno, mealTime)
 
-createMealPlanDishes(Almuerzo, mealTime)
 
-createMealPlanDishes(Cena, mealTime)
 
-createMealPlanDishes(Snack, mealTime)
 
-async function setBtnColor() {
-  try {
-    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
-    const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-      const documentData = docSnap.data();
-      return documentData; // Return the document data
-    } else {
-      console.error("No such document!");
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  async function SetMealPlan() {
+    try {
+      const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
+      const docSnap = await getDoc(docRef);
+  
+      if (docSnap.exists()) {
+        const documentData = docSnap.data();
+        return documentData; // Return the document data
+      } else {
+        console.error("No such document!");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching document:", error);
       return null;
     }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-    return null;
   }
-}
-setBtnColor().then((data) => {
-  const UBU = data.UBU;
-
-  const { Base, Prime1, Prime2, Prime3 } = UBU.Colors;
-
-  function setBtnBackgroundColor(BtnUrl) {
-    const Btn = document.getElementById(BtnUrl);
-    if (Btn) {
-      Btn.style.backgroundColor = Base || '#013948';
-      Btn.style.color = Prime2 || '#fff';
-      Btn.style.boxShadow = `0px 4px 6px ${Prime1 || 'rgba(0, 0, 0, 0.2)'}`;
-      Btn.style.border = `2px solid ${Prime1 || '#000'}`;
-    } else {
-      console.error(`Element with id "${BtnUrl}" not found.`);
+  SetMealPlan().then((data) => {
+    const App = data.App;
+    const MealPlan = App.MealPlan;
+  
+    const Cat = MealPlan.Categories;
+    const {Clasic, Vegetariano, vegan} = MealPlan.Moptions;
+  
+  
+    function selectOption(){
+      if(Coption === 'Clasic'){
+        const imgBlock = Clasic
+  
+        
+        return(imgBlock)
+      }else if(Coption === 'Vegetariano'){
+  
+        const imgBlock = Vegetariano
+        
+        return(imgBlock)
+      }else{
+  
+        const imgBlock = vegan
+        
+        return(imgBlock)
+        
+      }
     }
-  }
-
-  function setTittleColor(BtnUrl) {
-    const tittle = document.getElementById(BtnUrl);
-    if (tittle) {
-      tittle.style.color = Base || '#013948';
-    } else {
-      console.error(`Element with id "${BtnUrl}" not found.`);
+  
+  
+    function createMealPlanDishes(MealN, MealT, MealI ) {
+      // Get the parent section
+      const mealPlanSection = document.getElementById("MealPlanDishes");
+    
+      // Create the main div
+      const mainDiv = document.createElement("div");
+      mainDiv.classList.add("meal-plan-container");
+    
+      // Create the first inner div
+      const textDiv = document.createElement("div");
+      textDiv.classList.add("text-container");
+    
+      // Create and append h1
+      const title = document.createElement("h1");
+      title.textContent = MealN;
+      textDiv.appendChild(title);
+    
+      // Create and append a tag
+      const link = document.createElement("a");
+      link.href = '#';
+      link.textContent = MealT;
+      textDiv.appendChild(link);
+    
+      // Create the second inner div
+      const imgDiv = document.createElement("div");
+      imgDiv.classList.add("image-container");
+    
+      // Create and append img
+      const img = document.createElement("img");
+      img.src = MealI; // Placeholder image
+      img.alt = "Meal Plan Dish";
+      imgDiv.appendChild(img);
+    
+      // Append inner divs to main div
+      mainDiv.appendChild(textDiv);
+      mainDiv.appendChild(imgDiv);
+    
+      // Append the main div to the section
+      mealPlanSection.appendChild(mainDiv);
     }
-  }
+
+
+    function renderMealPlan(){
+      const {Breakfast, Dinner, Lunch, Snack} = selectOption()
+
+       const BF = Breakfast.slot1
+       const D  = Dinner.slot1
+       const L  = Lunch.slot1
+       const S  = Snack.slot1
+
+       const BFimg  = BF.img
+       const Dimg   = D.img
+       const Limg   = L.img
+       const Simg   = S.img
 
 
 
-  setTittleColor('Caltittle') 
-  setBtnBackgroundColor('mealplan');
-  setBtnBackgroundColor('Partnerships');
-  setBtnBackgroundColor('Events');
+
+      createMealPlanDishes(Cat[0], mealTime, BFimg )
+      createMealPlanDishes(Cat[1], mealTime, Dimg )
+      createMealPlanDishes(Cat[2], mealTime, Limg)
+      createMealPlanDishes(Cat[3], mealTime, Simg )
+  
+    
+        // Initially log "red"
+      console.log("red");
+
+      // Add a click event listener to the section
+      const mealPlanBtnsSection = document.querySelector(".MealPlanBtns");
+    
+      if (mealPlanBtnsSection) {
+          mealPlanBtnsSection.addEventListener("click", function (event) {
+              // Log "blue" on click of any child element
+              console.log("blue");
+    
+              // Get the clicked element
+              const clickedItem = event.target;
+    
+              // Log details about the clicked item
+              if (clickedItem) {
+                  console.log(`Clicked item: ${clickedItem.tagName}, Text: "${clickedItem.textContent.trim()}"`);
+              }
+          });
+      }
+
+
+
+
+
+
+
+    }
+
+    renderMealPlan()
+  
+  
+  
+
+
+
+  
+    
+  
+  
+  
+  
+  });
+  
+
 });
+
+
+
+
+
+
+
 
 
 

@@ -42,7 +42,7 @@ body {
     width: 85%;
     height: .3rem;
     background-color: aliceblue;
-    margin: 0 2rem;
+    margin: -.8rem 2rem 0 2rem;
   }
   .MealPlanBtns{
     gap: 1rem;
@@ -53,7 +53,7 @@ body {
     font-size: 1rem;
   }
   .MealPlanBtns a{
-    font-size: .8rem;
+    font-size:1rem;
     padding: .5rem;
     border:  2px solid #333;
   }
@@ -61,6 +61,7 @@ body {
     gap: 1rem;
     display: none;
     justify-content: left;
+    margin: -1rem 0;
   }
   .MpUser{
     margin: 0 2rem;
@@ -131,7 +132,7 @@ body {
 
   /* Apply this to the MealPlanDishes section */
   #MealPlanDishes {
-    height: 460px; /* Set the desired height for the scrollable area */
+    height: 430px; /* Set the desired height for the scrollable area */
     overflow-y: auto; /* Enable vertical scrolling */
     overflow-x: hidden; /* Disable horizontal scrolling */
     margin: 0 1rem;

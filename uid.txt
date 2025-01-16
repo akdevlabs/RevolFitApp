@@ -855,3 +855,73 @@ input{
         }
 
         setPopupColors(Prime1, Base, Base,BackImg )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          // Add a click event listener to the section
+      const mealPlanBtnsSection = document.querySelector(".MealPlanBtns");
+    
+      if (mealPlanBtnsSection) {
+          mealPlanBtnsSection.addEventListener("click", function (event) {
+              // Log "blue" on click of any child element
+              console.log("blue");
+    
+              // Get the clicked element
+              const clickedItem = event.target;
+    
+              // Log details about the clicked item
+              if (clickedItem) {
+                  console.log(`Clicked item: ${clickedItem.tagName}, Text: "${clickedItem.textContent.trim()}"`);
+              }
+          });
+      }
+

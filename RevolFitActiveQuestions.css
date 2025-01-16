@@ -85,6 +85,10 @@ input{
   margin: 1.2rem 0;
 
 }
+#BtnThree{
+  display: none;
+}
+
 .form-group-dropdown{
   gap: 1.3rem;
   display: flex;

@@ -1,0 +1,415 @@
+{\rtf1}
+
+
+
+  
+  
+  function calculateResidualMass(bodyWeight, residualPercentage) {
+     if (bodyWeight <= 0 || residualPercentage < 0) {
+      throw new Error("Invalid inputs: Body weight must be greater than 0 and residual percentage cannot be negative.");
+     }
+      
+        return bodyWeight * residualPercentage;
+  }
+  const residualMass = calculateResidualMass(bodyWeight, residualPercentage);
+      
+  console.log(`Residual Mass: ${residualMass.toFixed(2)} kg`);
+      
+  
+  function calculateBoneMass(weight, height, gender) {
+        // Gender-specific coefficients (example values)
+    const coefficients = {
+      Male: 0.2,   // Example coefficient for males
+      Female: 0.17 // Example coefficient for females
+    };
+      
+    if (weight <= 0 || height <= 0) {
+      throw new Error("Invalid inputs: Weight and height must be greater than 0.");
+    }
+      
+    if (!coefficients[gender]) {
+      throw new Error("Invalid gender: Please specify 'Male' or 'Female'.");
+    }
+      
+      const coefficient = coefficients[gender];
+      const boneMass = coefficient * weight * height;
+      
+    return boneMass;    
+  }
+  const boneMass = calculateBoneMass(bodyWeight, height, gender);
+  
+  console.log(`Bone Mass: ${boneMass.toFixed(2)} kg`);
+      
+  
+  
+  function calculateMasaOsea(estatura, diametroBiestiloideo, diametroBiepicondileo) {
+    // Calculate estatura squared
+    const estaturaCuadrada = estatura ** 2;
+      
+    // Apply the formula
+    const masaOsea = 3.02 * (estaturaCuadrada * diametroBiestiloideo * diametroBiepicondileo);
+      
+    return masaOsea;
+  }
+  const MasaOsea = calculateMasaOsea(height, diametroBiestiloideo, diametroBiepicondileo)
+  console.log(MasaOsea)
+  
+  
+  function calculateSkinMass(weight, height, gender) {
+    // Gender-specific coefficients (example values)
+    const coefficients = {
+      Male: 0.15,   // Example coefficient for males
+      Female: 0.14  // Example coefficient for females
+    };    
+    
+    if (weight <= 0 || height <= 0) {
+      throw new Error("Invalid inputs: Weight and height must be greater than 0.");
+    }
+  
+    if (!coefficients[gender]) {
+      throw new Error("Invalid gender: Please specify 'Male' or 'Female'.");
+    }    
+    
+    const coefficient = coefficients[gender];
+    const skinMass = coefficient * weight * height;
+    
+    return skinMass;
+        
+  }
+    const skinMass = calculateSkinMass(bodyWeight, height, gender);
+    console.log(`Skin Mass: ${skinMass.toFixed(2)} kg`);
+    
+    
+  
+  function calculateMuscleMassAndScore(weight, bodyFat, gender) {
+      // Gender-specific coefficients for muscle mass calculation (example values)
+      const coefficients = {
+          Male: 0.45,   // Example coefficient for males
+          Female: 0.42  // Example coefficient for females
+      };
+  
+      // Scoring ranges (example thresholds)
+      const scoringRanges = {
+          Male: [
+              { max: 30, score: 5, classification: "Low" },
+              { max: 40, score: 7, classification: "Normal" },
+              { max: 50, score: 9, classification: "High" }
+          ],
+          Female: [
+              { max: 25, score: 5, classification: "Low" },
+              { max: 35, score: 7, classification: "Normal" },
+              { max: 45, score: 9, classification: "High" }
+          ]
+      };
+  
+      if (weight <= 0 || bodyFat < 0) {
+          throw new Error("Invalid inputs: Weight must be greater than 0, and body fat cannot be negative.");
+      }
+  
+      if (!coefficients[gender] || !scoringRanges[gender]) {
+          throw new Error("Invalid gender: Please specify 'Male' or 'Female'.");
+      }
+  
+      // Calculate muscle mass
+      const coefficient = coefficients[gender];
+      const muscleMass = coefficient * (weight - bodyFat);
+  
+      // Determine score based on ranges
+      const ranges = scoringRanges[gender];
+      let scoreDetails = { score: 0, classification: "Unknown" };
+  
+      for (const range of ranges) {
+          if (muscleMass <= range.max) {
+              scoreDetails = { score: range.score, classification: range.classification };
+              break;
+          }
+      }
+  
+      return {
+          muscleMass: muscleMass.toFixed(2),
+          ...scoreDetails
+      };
+  }
+  
+  const result = calculateMuscleMassAndScore(bodyWeight, bodyFat, gender);
+  
+  console.log(`Muscle Mass: ${result.muscleMass} kg, Score: ${result.score}, Classification: ${result.classification}`);
+  
+  
+  
+  
+  function calculateWaistCircumferenceScore(waistCircumference, gender) {
+    // Gender-specific scoring ranges (example values)
+    const scoringRanges = {
+        Male: [
+            { max: 90, score: 9, classification: "Excellent" },
+            { max: 100, score: 7, classification: "Good" },
+            { max: 110, score: 5, classification: "Average" },
+            { max: Infinity, score: 3, classification: "Poor" }
+        ],
+        Female: [
+            { max: 80, score: 9, classification: "Excellent" },
+            { max: 90, score: 7, classification: "Good" },
+            { max: 100, score: 5, classification: "Average" },
+            { max: Infinity, score: 3, classification: "Poor" }
+        ]
+    };
+  
+    if (waistCircumference <= 0) {
+        throw new Error("Invalid input: Waist circumference must be greater than 0.");
+    }
+  
+    if (!scoringRanges[gender]) {
+        throw new Error("Invalid gender: Please specify 'Male' or 'Female'.");
+    }
+  
+    // Determine score and classification based on ranges
+    const ranges = scoringRanges[gender];
+    let result = { score: 0, classification: "Unknown" };
+  
+    for (const range of ranges) {
+        if (waistCircumference <= range.max) {
+            result = { score: range.score, classification: range.classification };
+            break;
+        }
+    }
+  
+    return result;
+  }
+  
+  const Cresult = calculateWaistCircumferenceScore(waistCircumference, gender);
+  
+  console.log(`Score: ${Cresult.score}, Classification: ${Cresult.classification}`);
+  
+  
+  
+  function calculateHeartRateZones(age, restingHR) {
+    // Estimate maximum heart rate
+    const maxHR = 220 - age;
+  
+    if (age <= 0 || restingHR <= 0) {
+        throw new Error("Invalid inputs: Age and resting heart rate must be greater than 0.");
+    }
+  
+    // Calculate zones as percentages of maxHR
+    const zones = {
+        Recovery: {
+            min: Math.round(0.5 * (maxHR - restingHR) + restingHR),
+            max: Math.round(0.6 * (maxHR - restingHR) + restingHR)
+        },
+        Aerobic: {
+            min: Math.round(0.6 * (maxHR - restingHR) + restingHR),
+            max: Math.round(0.7 * (maxHR - restingHR) + restingHR)
+        },
+        Anaerobic: {
+            min: Math.round(0.7 * (maxHR - restingHR) + restingHR),
+            max: Math.round(0.85 * (maxHR - restingHR) + restingHR)
+        },
+        MaxEffort: {
+            min: Math.round(0.85 * (maxHR - restingHR) + restingHR),
+            max: Math.round(maxHR)
+        }
+    };
+  
+    return {
+        maxHR,
+        zones
+    };
+  }
+  
+  const Hresult = calculateHeartRateZones(age, restingHR);
+  
+  console.log(`Max HR: ${Hresult.maxHR} bpm`);
+  console.log("Heart Rate Zones:");
+  console.log(`Recovery Zone: ${Hresult.zones.Recovery.min}–${Hresult.zones.Recovery.max} bpm`);
+  console.log(`Aerobic Zone: ${Hresult.zones.Aerobic.min}–${Hresult.zones.Aerobic.max} bpm`);
+  console.log(`Anaerobic Zone: ${Hresult.zones.Anaerobic.min}–${Hresult.zones.Anaerobic.max} bpm`);
+  console.log(`Maximum Effort Zone: ${Hresult.zones.MaxEffort.min}–${Hresult.zones.MaxEffort.max} bpm`);
+  
+  
+  
+  
+  
+  function calculateAlcoholScore(drinksPerWeek) {
+    // Define scoring ranges
+    const scoringRanges = [
+        { max: 0, score: 9, riskLevel: "None" },
+        { max: 2, score: 7, riskLevel: "Low" },
+        { max: 7, score: 5, riskLevel: "Moderate" },
+        { max: 14, score: 3, riskLevel: "High" },
+        { max: Infinity, score: 1, riskLevel: "Very High" }
+    ];
+  
+    if (drinksPerWeek < 0) {
+        throw new Error("Invalid input: Drinks per week must be a non-negative number.");
+    }
+  
+    // Determine score and risk level
+    for (const range of scoringRanges) {
+        if (drinksPerWeek <= range.max) {
+            return {
+                score: range.score,
+                riskLevel: range.riskLevel
+            };
+        }
+    }
+  
+    // Default response (shouldn't reach here)
+    return {
+        score: 0,
+        riskLevel: "Unknown"
+    };
+  }
+  
+  
+  const Dresult = calculateAlcoholScore(drinksPerWeek);
+  
+  console.log(`Score: ${Dresult.score}, Risk Level: ${Dresult.riskLevel}`);
+  
+  
+  
+  function calculateSmokingScore(cigarettesPerDay) {
+    // Define scoring ranges
+    const scoringRanges = [
+        { max: 0, score: 9, riskLevel: "None" },
+        { max: 5, score: 7, riskLevel: "Low" },
+        { max: 15, score: 5, riskLevel: "Moderate" },
+        { max: 25, score: 3, riskLevel: "High" },
+        { max: Infinity, score: 1, riskLevel: "Very High" }
+    ];
+  
+    if (cigarettesPerDay < 0) {
+        throw new Error("Invalid input: Cigarettes per day must be a non-negative number.");
+    }
+  
+    // Determine score and risk level
+    for (const range of scoringRanges) {
+        if (cigarettesPerDay <= range.max) {
+            return {
+                score: range.score,
+                riskLevel: range.riskLevel
+            };
+        }
+    }
+  
+    // Default response (shouldn't reach here)
+    return {
+        score: 0,
+        riskLevel: "Unknown"
+    };
+  }
+  
+  const Presult = calculateSmokingScore(cigarettesPerDay);
+  
+  console.log(`Score: ${Presult.score}, Risk Level: ${Presult.riskLevel}`);
+  
+  
+  function calculateSmokingScoreWithPackYears(cigarettesPerDay, smokingYears) {
+    const packYears = (cigarettesPerDay / 20) * smokingYears;
+  
+    const scoringRanges = [
+        { max: 0, score: 9, riskLevel: "None" },
+        { max: 5, score: 7, riskLevel: "Low" },
+        { max: 15, score: 5, riskLevel: "Moderate" },
+        { max: 25, score: 3, riskLevel: "High" },
+        { max: Infinity, score: 1, riskLevel: "Very High" }
+    ];
+  
+    if (cigarettesPerDay < 0 || smokingYears < 0) {
+        throw new Error("Invalid inputs: Cigarettes per day and smoking years must be non-negative numbers.");
+    }
+  
+    let scoreDetails = { score: 0, riskLevel: "Unknown" };
+    for (const range of scoringRanges) {
+        if (cigarettesPerDay <= range.max) {
+            scoreDetails = { score: range.score, riskLevel: range.riskLevel };
+            break;
+        }
+    }
+  
+    return {
+        ...scoreDetails,
+        packYears: packYears.toFixed(2)
+    };
+  }
+  const resultWithPackYears = calculateSmokingScoreWithPackYears(10, smokingYears);
+  
+  console.log(`Score: ${resultWithPackYears.score}, Risk Level: ${resultWithPackYears.riskLevel}, Pack-Years: ${resultWithPackYears.packYears}`);
+  
+  
+  
+  
+  function calculateExerciseScore(frequency, intensity) {
+    // Define scoring ranges
+    const intensityMultipliers = {
+        low: 0.5,
+        moderate: 1,
+        high: 1.5
+    };
+  
+    const scoringRanges = [
+        { max: 0, score: 1, activityLevel: "Sedentary" },
+        { max: 2, score: 3, activityLevel: "Low" },
+        { max: 4, score: 5, activityLevel: "Moderate" },
+        { max: 6, score: 7, activityLevel: "High" },
+        { max: Infinity, score: 9, activityLevel: "Very High" }
+    ];
+  
+    if (frequency < 0 || !intensityMultipliers[intensity]) {
+        throw new Error("Invalid inputs: Frequency must be non-negative, and intensity must be 'low', 'moderate', or 'high'.");
+    }
+  
+    // Adjust frequency by intensity multiplier
+    const adjustedFrequency = frequency * intensityMultipliers[intensity];
+  
+    // Determine score and activity level
+    for (const range of scoringRanges) {
+        if (adjustedFrequency <= range.max) {
+            return {
+                score: range.score,
+                activityLevel: range.activityLevel
+            };
+        }
+    }
+  
+    // Default response (shouldn't reach here)
+    return {
+        score: 0,
+        activityLevel: "Unknown"
+    };
+  }
+  
+  const ExerciseScore = calculateExerciseScore(frequency, intensity);
+  
+  console.log(`Score: ${ExerciseScore.score}, Activity Level: ${ExerciseScore.activityLevel}`);
+  
+  
+  
+  
+  function calculateMetabolicAge(weight, height, age, gender) {
+    if (weight <= 0 || height <= 0 || age <= 0) {
+        throw new Error("Invalid inputs: Weight, height, and age must be greater than 0.");
+    }
+  
+    // BMR calculation based on Harris-Benedict equations
+    let bmr;
+    if (gender.toLowerCase() === "male") {
+        bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+    } else if (gender.toLowerCase() === "female") {
+        bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+    } else {
+        throw new Error("Invalid gender: Please specify 'male' or 'female'.");
+    }
+  
+    // Estimate metabolic age using average BMR for the given chronological age
+    const averageBMRForAge = 1500; // Replace with an actual reference value
+    const metabolicAge = Math.round((bmr / averageBMRForAge) * age);
+  
+    return metabolicAge;
+  }
+  
+  
+  
+  const metabolicAge = calculateMetabolicAge(bodyWeight, height, age, gender);
+  
+  console.log(`Metabolic Age: ${metabolicAge} years`);

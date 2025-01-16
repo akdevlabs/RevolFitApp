@@ -65,6 +65,7 @@ document.getElementById("userForm").addEventListener("submit", async (event) => 
     Cuidad: document.getElementById("Cuidad").value,
    
     isBusiness: document.getElementById("isBusiness").checked,
+    isCensus: document.getElementById("isCensus").checked,
     registrationCompleted: true, // New field to indicate registration is complete
   };
 
@@ -79,6 +80,7 @@ document.getElementById("userForm").addEventListener("submit", async (event) => 
     };
   }
 
+  
   try {
     const userInfo = transferreduserInfo; // Ensure this variable is defined elsewhere
     const docRef = doc(db, "users", userInfo);
@@ -87,25 +89,32 @@ document.getElementById("userForm").addEventListener("submit", async (event) => 
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      // Update the document with new information
-      await updateDoc(docRef, formData);
-      console.log("Document updated successfully!");
+        // Update the document with new information
+        await updateDoc(docRef, formData);
+        console.log("Document updated successfully!");
     } else {
-      // Create a new document if it doesn't exist
-      await setDoc(docRef, formData);
-      console.log("Document created successfully!");
+        // Create a new document if it doesn't exist
+        await setDoc(docRef, formData);
+        console.log("Document created successfully!");
     }
 
     // Optionally save data in localStorage
     localStorage.setItem(userInfo, JSON.stringify(formData));
 
+    // Check if the census checkbox is checked
+    const isCensusChecked = document.getElementById("isCensus").checked;
+
     alert("Form submitted successfully!");
-    // Redirect to index7.html
-    window.location.href = "index7.html";
-  } catch (error) {
+    // Redirect based on checkbox status
+    if (isCensusChecked) {
+        window.location.href = "index7.1.html";
+    } else {
+        window.location.href = "index7.html";
+    }
+} catch (error) {
     console.error("Error updating document:", error);
     alert("Error submitting the form. Please try again.");
-  }
+}
 
 
 
@@ -126,6 +135,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const isCensusCheckbox = document.getElementById('isCensusCheckbox');
+  const censusContent = document.getElementById('CensusContent');
+
+  isCensusCheckbox.addEventListener('change', () => {
+    if (isCensusCheckbox.checked) {
+      censusContent.classList.remove('hiddenCensusContent');
+      censusContent.classList.add('visibleCensusContent');
+    } else {
+      censusContent.classList.remove('visibleCensusContent');
+      censusContent.classList.add('hiddenCensusContent');
+    }
+  });
+});
+
 
 async function getItemsFromDB() {
   try {

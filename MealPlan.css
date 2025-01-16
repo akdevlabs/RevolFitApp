@@ -18,161 +18,145 @@ body {
     margin: 0;
     padding: 0;
  
-}
-.MpHeader{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 1rem 2rem -1rem 2rem;
-}
-#logo{
-  width: 6rem;
-  margin: 1rem 0;
-}
-#Mptittle{
-  font-weight: bold;
-}
-.Line{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 85%;
-  height: .3rem;
-  background-color: aliceblue;
-   margin: 0 2rem;
-}
-.MealPlanBtns{
-  display: flex;
-  justify-content: space-evenly;
-  margin: 1.5rem 1rem;
-  font-size: 1rem;
-
-}
-.MealPlanBtns a{
-
-  font-size: .8rem;
-  padding: .5rem;
-  border:  2px solid #333;
-
-
-}
-.hiddenDiv{
-  display: none;
-}
-
-.MpUser{
-  margin: 0 2rem;
-}
-
-#motivation h4{
-  font-weight: lighter;
-  font-size: .8rem;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.meal-plan-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-
-  border-radius: 8px;
-  background-color: #013C4C;
-  margin: 10px 2rem;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.text-container {
-  flex: 1;
-  padding: 10px;
-}
-
-.text-container h1 {
-  font-size: 1.5rem;
-  color: #ACE2E4; /* Matches user's color palette */
-  margin-bottom: 10px;
-}
-
-.text-container a {
-  font-size: 1rem;
-  color: #ACE2E4; /* Matches user's color palette */
-  text-decoration: none;
-}
-
-.text-container a:hover {
-  text-decoration: underline;
-}
-
-.image-container {
-  flex: 0 0 150px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.image-container img {
-  max-width: 100%;
-  border-radius: 8px;
-}
-
-
-
-
-
-/* Apply this to the MealPlanDishes section */
-#MealPlanDishes {
-  height: 400px; /* Set the desired height for the scrollable area */
-  overflow-y: auto; /* Enable vertical scrolling */
-  overflow-x: hidden; /* Disable horizontal scrolling */
-  margin: 0 1rem;
-  padding: 10px; /* Optional: Add some padding */
-  
-}
-.MealPlanDishes img{
-  width: 10rem;
-  height: 10rem;
-}
-
-
-/* Optional: Add custom scrollbar styling */
-#MealPlanDishes::-webkit-scrollbar {
-  width: 8px;
-}
-
-#MealPlanDishes::-webkit-scrollbar-thumb {
-  background-color: #555; /* Customize the scrollbar thumb */
-  border-radius: 4px;
-}
-
-#MealPlanDishes::-webkit-scrollbar-thumb:hover {
-  background-color: #333; /* Darker on hover */
-}
-
-#MealPlanDishes::-webkit-scrollbar-track {
-  background-color: #e9e8e8; /* Customize the scrollbar track */
-}
-
-
-
-
-
+  }
+  .MpHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem 2rem -1rem 2rem;
+  }
+  #logo{
+    width: 6rem;
+    margin: 1rem 0;
+  }
+  #Mptittle{
+    font-weight: bold;
+  }
+  #userName h1{
+    font-size: 1.7rem;
+  }
+  .Line{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+    height: .3rem;
+    background-color: aliceblue;
+    margin: 0 2rem;
+  }
+  .MealPlanBtns{
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin:  1rem;
+    font-size: 1rem;
+  }
+  .MealPlanBtns a{
+    font-size: .8rem;
+    padding: .5rem;
+    border:  2px solid #333;
+  }
+  .hiddenDiv{
+    gap: 1rem;
+    display: none;
+    justify-content: left;
+  }
+  .MpUser{
+    margin: 0 2rem;
+  }
 
  
+
+  .MealPlan{
+    display: none;
+  }
+  .MealPlan span{
+    color: #e9e8e8;
+    font-weight: bold;
+  }
+
+  .block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  
+    border-radius: 8px;
+    background-color: #013C4C;
+    margin: 10px 2rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .text-container {
+    flex: 1;
+    padding: 10px;
+  }
+  .text-container h1 {
+    font-size: 1.5rem;
+    color: #ACE2E4; /* Matches user's color palette */
+    margin-bottom: 10px;
+  }
+  
+  .text-container a {
+    font-size: 1rem;
+    color: #ACE2E4; /* Matches user's color palette */
+    text-decoration: none;
+  }
+
+  .text-container a:hover {
+    text-decoration: underline;
+  }
+  
+  .image-container {
+    flex: 0 0 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .image-container img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+
+
+#DMealPlanDishes{
+  display: block;
+}
+
+
+
+  /* Apply this to the MealPlanDishes section */
+  #MealPlanDishes {
+    height: 460px; /* Set the desired height for the scrollable area */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Disable horizontal scrolling */
+    margin: 0 1rem;
+    padding: 10px; /* Optional: Add some padding */
+    
+  }
+  .MealPlanDishes img{
+    width: 10rem;
+    height: 10rem;
+  }
+  /* Optional: Add custom scrollbar styling */
+  #MealPlanDishes::-webkit-scrollbar{
+    width: 8px;
+  }
+  #MealPlanDishes::-webkit-scrollbar-thumb {
+    background-color: #555; /* Customize the scrollbar thumb */
+    border-radius: 4px;
+  }
+  #MealPlanDishes::-webkit-scrollbar-thumb:hover {
+    background-color: #333; /* Darker on hover */
+  }
+  #MealPlanDishes::-webkit-scrollbar-track {
+    background-color: #e9e8e8; /* Customize the scrollbar track */
+  }
+
+
 
   .navBtns{
     gap: 2rem;
@@ -180,15 +164,8 @@ body {
     margin: 2rem 0;
     justify-content: center;
   }
-
   .navBtns div img{
     width:  2rem;
     height: 2rem;
   }
-
-
-
-
-
-
 }

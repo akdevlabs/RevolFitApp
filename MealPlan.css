@@ -49,7 +49,7 @@ body {
     gap: 1rem;
     display: flex;
     align-items: center;
-    margin: 1rem 0 1.5rem 0;
+    margin: 1rem;
     justify-content: center;
   }
   .MealPlanBlockTop a{

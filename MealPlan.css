@@ -94,7 +94,7 @@ body {
     padding: 10px;
   }
   .text-container h1 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: #ACE2E4; /* Matches user's color palette */
     margin-bottom: 10px;
   }
@@ -117,7 +117,8 @@ body {
   }
 
   .image-container img {
-    max-width: 100%;
+    max-width: 80%;
+    width: 10rem;
     border-radius: 8px;
   }
 

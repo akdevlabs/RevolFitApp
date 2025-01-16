@@ -202,7 +202,6 @@ document.getElementById("MO").addEventListener("click", function (event) {
   const hiddenDiv = document.getElementById("HMO");
   if (hiddenDiv.style.display === "none") {
     hiddenDiv.style.display = "flex"; // Show the div
-    hiddenDiv.style.margin = ".2rem 0"; // Show the div
   } else {
     hiddenDiv.style.display = "none"; // Hide the div
   }

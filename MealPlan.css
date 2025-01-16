@@ -44,25 +44,54 @@ body {
     background-color: aliceblue;
     margin: -.8rem 2rem 0 2rem;
   }
-  .MealPlanBtns{
+
+  .MealPlanBlockTop{
     gap: 1rem;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    margin:  1rem;
-    font-size: 1rem;
+    margin: 1rem 0 1.5rem 0;
+    justify-content: center;
   }
-  .MealPlanBtns a{
+  .MealPlanBlockTop a{
+    gap: .5rem;
+    display: flex;
+    align-items: center;
+    font-size:1rem;
+    font-weight: 400;
+    padding: .5rem;
+    border:  2px solid #333;
+  }
+  .MealPlanBlockTop img{
+    width:  2rem;
+    height: 2rem;
+  }
+
+
+  .hiddenDiv {
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+    margin: 1rem;
+    justify-content: center;
+  }
+  .hiddenDiv a{
+    gap: .5rem;
+    display: flex;
+    align-items: center;
     font-size:1rem;
     padding: .5rem;
     border:  2px solid #333;
   }
-  .hiddenDiv{
-    gap: 1rem;
-    display: none;
-    justify-content: left;
-    margin: -1rem 0;
+  .hiddenDiv img{
+    width:  2rem;
+    height: 2rem;
   }
+
+
+
+
+
+
   .MpUser{
     margin: 0 2rem;
   }

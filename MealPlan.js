@@ -142,6 +142,57 @@ SetBulogo().then((data) => {
 
 
 
+async function SetNavBtns() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.error("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+SetNavBtns().then((data) => {
+  const app = data.App
+
+ const { List, Option,  Plate,  Vega } = app.MealPlanBtn;
+  
+  function setBuIcon(imgSrc, imgAlt, urlBtns) {
+      // Find the img element with id 'logo-img'
+      const img = document.getElementById(urlBtns);
+  
+      // Check if the img element exists
+      if (img) {
+          // Set the image source and alternative text
+          img.src = imgSrc;
+          img.alt = imgAlt;
+      } else {
+          console.error("Image element with id 'logo-img' not found.");
+      }
+  }
+  
+  
+    // Set icons for specific IDs
+    setBuIcon(List, "List Icon", "LCicon");
+    setBuIcon(Plate, "Option Icon", "OCicon"); // Example for additional icons
+    setBuIcon(Option, "Plate Icon", "Dicon");
+    setBuIcon(Vega, "Vega Icon", "Vicon");
+  
+
+
+  
+});
+
+
+
+
 
 
 
@@ -151,7 +202,7 @@ document.getElementById("MO").addEventListener("click", function (event) {
   const hiddenDiv = document.getElementById("HMO");
   if (hiddenDiv.style.display === "none") {
     hiddenDiv.style.display = "flex"; // Show the div
-    hiddenDiv.style.margin = ".5rem 0"; // Show the div
+    hiddenDiv.style.margin = ".2rem 0"; // Show the div
   } else {
     hiddenDiv.style.display = "none"; // Hide the div
   }

@@ -451,6 +451,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById("DBreakfast").addEventListener("click", () => {
 
+   
     DMealPlan.style.display = 'none'
     VMealPlan.style.display = 'none'
     Slot1.style.display = 'block'
@@ -488,8 +489,6 @@ document.addEventListener("DOMContentLoaded", function () {
     Slot3.style.display = 'none'
     Slot4.style.display = 'block'
   });
-
-
 
   document.getElementById("VBreakfast").addEventListener("click", () => {
 
@@ -557,6 +556,47 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+// Define the function to save to localStorage
+function saveToLocalStorage(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+    console.log(`Saved to localStorage: ${key}`, value); // Debugging log
+  } catch (e) {
+    console.error("Error saving to localStorage", e);
+  }
+}
+
+// Generalized function to add click event listeners
+function addClickListener(buttonId, slotContent) {
+  document.addEventListener("DOMContentLoaded", () => {
+    const button = document.getElementById(buttonId);
+    if (button) {
+      button.addEventListener("click", () => {
+        saveToLocalStorage('sContent', slotContent);
+        console.log(`Navigating to index9.2.2.html for ${buttonId}...`); // Debugging log
+        window.location.href = "index9.2.2.html";
+      });
+    } else {
+      console.error(`Button with ID "${buttonId}" not found!`);
+    }
+  });
+}
+
+// Slot configurations
+const slots = [
+  { id: "BSlot1", content: { type: "BS1type", meal: "Desayuno", title: "DBreakfast.slot1.tittle", titleKey: "BS1tittle", time: "DBreakfast.slot1.time", timeKey: "BS1time", img: "DBreakfast.slot1.img", imgKey: "BS1Img" } },
+  { id: "BSlot2", content: { type: "BS2type", meal: "Desayuno", title: "DBreakfast.slot2.tittle", titleKey: "BS2tittle", time: "DBreakfast.slot2.time", timeKey: "BS2time", img: "DBreakfast.slot2.img", imgKey: "BS2Img" } },
+  { id: "BSlot3", content: { type: "BS3type", meal: "Desayuno", title: "DBreakfast.slot3.tittle", titleKey: "BS3tittle", time: "DBreakfast.slot3.time", timeKey: "BS3time", img: "DBreakfast.slot3.img", imgKey: "BS3Img" } },
+  
+
+  { id: "LSlot1", content: { type: "LS1type", meal: "Almuerzo", title: "DLunch.slot1.tittle", titleKey: "LS1tittle", time: "DLunch.slot1.time", timeKey: "LS1time", img: "DLunch.slot1.img", imgKey: "LS1Img" } },
+  { id: "LSlot2", content: { type: "LS2type", meal: "Almuerzo", title: "DLunch.slot2.tittle", titleKey: "LS2tittle", time: "DLunch.slot2.time", timeKey: "LS2time", img: "DLunch.slot2.img", imgKey: "LS2Img" } },
+  { id: "LSlot3", content: { type: "LS3type", meal: "Almuerzo", title: "DLunch.slot3.tittle", titleKey: "LS3tittle", time: "DLunch.slot3.time", timeKey: "LS3time", img: "DLunch.slot3.img", imgKey: "LS3Img" } },
+
+
+  { id: "DSlot1", content: { type: "DS1type", meal: "Cena", title: "DDinner.slot1.tittle", titleKey: "DS1tittle", time: "DDinner.slot1.time", timeKey: "DS1time", img: "DDinner.slot1.img", imgKey: "DS1Img" } },
+  { id: "DSlot2", content: { type: "DS2type", meal: "Cena", title: "DDinner.slot2.tittle", titleKey: "DS2tittle", time: "DDinner.slot2.time", timeKey: "DS2time", img: "DDinner.slot2.img", imgKey: "DS2Img" } },
+  { id: "DSlot3", content: { type: "DS3type", meal: "Cena", title: "DDinner.slot3.tittle", titleKey: "DS3tittle", time: "DDinner.slot3.time", timeKey: "DS3time", img: "DDinner.slot3.img", imgKey: "DS3Img" } },
 
 
 
@@ -564,8 +604,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+  { id: "SSlot1", content: { type: "SS1type", meal: "Snack", title: "DSnack.slot1.tittle", titleKey: "SS1tittle", time: "DSnack.slot1.time", timeKey: "SS1time", img: "DSnack.slot1.img", imgKey: "SS1Img" } },
+  { id: "SSlot2", content: { type: "SS2type", meal: "Snack", title: "DSnack.slot2.tittle", titleKey: "SS2tittle", time: "DSnack.slot2.time", timeKey: "SS2time", img: "DSnack.slot2.img", imgKey: "SS2Img" } },
+  { id: "SSlot3", content: { type: "SS3type", meal: "Snack", title: "DSnack.slot3.tittle", titleKey: "SS3tittle", time: "DSnack.slot3.time", timeKey: "SS3time", img: "DSnack.slot3.img", imgKey: "SS3Img" } },
+  // Add vegetarian options or others as needed
+];
 
-
+// Add listeners for each slot
+slots.forEach(slot => addClickListener(slot.id, slot.content));
 
 
 

@@ -49,7 +49,7 @@ body {
     gap: 1rem;
     display: flex;
     align-items: center;
-    margin: 1rem;
+    margin: 1rem 2rem;
     justify-content: center;
   }
   .MealPlanBlockTop a{
@@ -71,9 +71,9 @@ body {
   .hiddenDiv {
   
     gap: 1rem;
-    display: flex;
+    display: none;
     align-items: center;
-    margin-top: -.6rem;
+    margin-top: -.6rem 0;
     justify-content: center;
   }
   .hiddenDiv a{

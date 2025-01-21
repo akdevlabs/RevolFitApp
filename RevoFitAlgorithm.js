@@ -321,7 +321,11 @@ console.log(data)
 
 });
 
-
+  document.addEventListener('touchstart', function (event) {
+    if (event.touches.length > 1) {
+      event.preventDefault(); // Prevents zooming
+    }
+  }, { passive: false });
 
 
 
@@ -447,4 +451,8 @@ getBtnIcons().then((data) => {
 
 
 
-
+document.addEventListener('touchstart', function (event) {
+  if (event.touches.length > 1) {
+    event.preventDefault(); // Prevents zooming
+  }
+}, { passive: false });

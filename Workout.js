@@ -550,3 +550,8 @@ function setGradient(color1, color2, color3) {
 setGradient(top, center, bottom);
 
 });
+document.addEventListener('touchstart', function (event) {
+  if (event.touches.length > 1) {
+    event.preventDefault(); // Prevents zooming
+  }
+}, { passive: false });

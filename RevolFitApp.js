@@ -735,6 +735,12 @@ backgroundColor().then((data) => {
   const { Base, Prime1, Prime2, Prime3 } = UBU.Colors;
 // Function to change the background gradient dynamically
 function setGradient(color1, color2, color3) {
+
+
+  document.body.style.overflow = 'hidden';
+
+ 
+
   document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2}, ${color3})`;
 }
 
@@ -747,3 +753,4 @@ document.addEventListener('touchstart', function (event) {
     event.preventDefault(); // Prevents zooming
   }
 }, { passive: false });
+

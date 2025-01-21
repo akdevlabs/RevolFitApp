@@ -1,8 +1,9 @@
 body{
   
-
+  overflow: hidden; /* Prevents scrolling */
   height: 100vh;
-  margin: 0;
+  margin: 0; /* Removes default margin */
+  padding: 0; /* Removes default padding */
 }
 
 #forgot-password-Img img{

@@ -1,4 +1,10 @@
 @media (max-width: 700px) {
+  body {
+    overflow: hidden; /* Prevents scrolling */
+    height: 100%; /* Ensures the body takes up the full viewport height */
+    margin: 0; /* Removes default margin */
+    padding: 0; /* Removes default padding */
+  }
 .header{
   text-align: center;
 }

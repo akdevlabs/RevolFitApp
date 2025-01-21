@@ -460,3 +460,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { passive: false });
 
 
+// Lock scrolling
+function lockScroll() {
+  document.body.style.overflow = 'hidden';
+  document.body.style.position = 'fixed';
+  document.body.style.width = '100%';
+}
+
+// Unlock scrolling
+function unlockScroll() {
+  document.body.style.overflow = '';
+  document.body.style.position = '';
+  document.body.style.width = '';
+}
+
+// Example usage
+lockScroll(); // Call to lock
+// unlockScroll(); // Call to unlock

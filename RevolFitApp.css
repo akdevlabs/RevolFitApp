@@ -10,7 +10,15 @@ body {
   padding: 0; /* Removes default padding */
   -webkit-text-size-adjust: 100%; /* Prevents automatic text resizing */
 }
-
+main{
+  position: fixed; /* Keeps the container fixed in place */
+  top: 0;
+  left: 0;
+  width: 100vw; /* Full width of the viewport */
+  height: 100vh; /* Full height of the viewport */
+  
+  z-index: 9999; /* Ensure it's above other elements */
+}
 
 
 
@@ -20,13 +28,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2rem;
-  position: fixed; /* Keeps the container fixed in place */
-  top: 0;
-  left: 0;
-  width: 100vw; /* Full width of the viewport */
-  height: 100vh; /* Full height of the viewport */
-  
-  z-index: 9999; /* Ensure it's above other elements */
+ 
 
 }
 #userName h2{

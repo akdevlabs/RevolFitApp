@@ -20,7 +20,13 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2rem;
-
+  position: fixed; /* Keeps the container fixed in place */
+  top: 0;
+  left: 0;
+  width: 100vw; /* Full width of the viewport */
+  height: 100vh; /* Full height of the viewport */
+  
+  z-index: 9999; /* Ensure it's above other elements */
 
 }
 #userName h2{

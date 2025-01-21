@@ -1,15 +1,13 @@
 body {
-  font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
+  overflow: hidden;
   margin: 0;
-  overflow: hidden; /* Disables scrolling */
-  height: 100%;  /* Ensures the body height fits the viewport */
-  width: 100vw; /* Ensures the body width fits the viewport */
-  margin: 0; /* Removes default margin */
-  padding: 0; /* Removes default padding */
-  -webkit-text-size-adjust: 100%; /* Prevents automatic text resizing */
-  z-index: 9999; /* Ensure it's above other elements */
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 

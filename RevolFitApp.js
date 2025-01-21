@@ -56,87 +56,65 @@ async function checkDocumentExists(collectionName, documentId) {
   checkDocumentExists("RevoBuissnes", transferredInfo);
 
 
+// Fetch user info from the database
 async function getUserinfo() {
-    try {
-      // Reference a document in the "revoFitweb" collection with ID "landing"
-      const docRef = doc(db, 'users', transferreduserInfo);
-      const docSnap = await getDoc(docRef);
-  
-      if (docSnap.exists()) {
-        const documentData = docSnap.data(); // Store document data
-        return documentData; // Return the data for external use
-      } else {
-        console.log("No such document!");
-        return null; // Return null if no document is found
-      }
-    } catch (error) {
-      console.error("Error fetching document:", error);
+  try {
+    const docRef = doc(db, 'users', transferreduserInfo);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      console.log("No such document!");
+      return null;
     }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
 }
+// Function to dynamically create and append an element to a specified div
+function createElementInDiv1(divId, elementType, textContent = "") {
+  const div = document.getElementById(divId);
+
+  if (!div) {
+    console.error(`Div with id '${divId}' not found.`);
+    return;
+  }
+
+  const element = document.createElement(elementType);
+  if (textContent) {
+    element.textContent = textContent;
+  }
+
+  div.appendChild(element);
+}
+// Process user data and populate UI
 getUserinfo().then((data) => {
-    const nombre = data.nombre; // Retrieve nested data
-    const streakCount = data.streakCount; // Retrieve nested data
+  if (!data) return;
 
-    
-    function createUserNameHeading(userName) {
-      // Get the div by its ID
-      const userNameDiv = document.getElementById('userName');
-    
-      // Create an h1 element
-      const h1 = document.createElement('h1');
-    
-      // Set the content of the h1 element to include "Hola," followed by the user's name
-      h1.textContent = `Hola, ${userName}`;
-    
-      // Append the h1 element to the div
-      userNameDiv.appendChild(h1);
-    }
-    // Call the function with the desired username
-    createUserNameHeading(nombre);
+  const { nombre, streakCount } = data;
 
+  // Create user greeting
+  createElementInDiv1('userName', 'h1', `Hola, ${nombre}`);
 
+  // Process streak data and determine the last usage time
+  if (streakCount && streakCount.length > 0) {
+    const lastStreak = streakCount[streakCount.length - 1];
 
-
-
-    function LasttimeUsed(streaks) {
-      // Get the div by its ID
-      const userNameDiv = document.getElementById('lastTime');
-
-      // Get the last item from the array
-      const lastStreak = streaks[streaks.length - 1];
-
-      // Determine the appropriate time unit
-      let resultText;
-      if (lastStreak === 1) {
-        resultText = `${lastStreak} dia`;
-      } else if (lastStreak <= 7) {
-        resultText = `${lastStreak} dias`;
-      } else {
-        const weeks = Math.floor(lastStreak / 7);
-        if (weeks === 1) {
-          resultText = `${weeks} semana`;
-        } else {
-          resultText = `${weeks} semanas`;
-        }
-      }
-
-      // Create an h3 element
-      const h3 = document.createElement('h3');
-
-      // Set the content of the h3 element
-      h3.textContent = `Racha: ${resultText}`;
-
-      // Append the h3 element to the div
-      userNameDiv.appendChild(h3);
+    let resultText;
+    if (lastStreak === 1) {
+      resultText = `${lastStreak} día`;
+    } else if (lastStreak <= 7) {
+      resultText = `${lastStreak} días`;
+    } else {
+      const weeks = Math.floor(lastStreak / 7);
+      resultText = weeks === 1 ? `${weeks} semana` : `${weeks} semanas`;
     }
 
-    // Example usage: Call the function with an array of streak counts
-
-    LasttimeUsed(streakCount);
-
-   
+    createElementInDiv('lastTime', 'h3', `Racha: ${resultText}`);
+  }
 });
-
 
  // PENDING  NEED MORE POINTS IN THE DATABASE 
 async function getMotivationText() {
@@ -209,7 +187,6 @@ const selectedPhrase = chooseFromArray(variable, motivationText);
   
 });
 
-
  // Function to fetch document data
 async function getbUiCON() {
   try {
@@ -262,7 +239,6 @@ createfireIcon(BuLight, 'Example image');
 
 });
 
-
 // General function to fetch document data
 async function fetchDocumentData(docPath, transferredInfo) {
   try {
@@ -281,81 +257,48 @@ async function fetchDocumentData(docPath, transferredInfo) {
   }
 }
 
-
 // General function to create and append an element (image or h1) to a specified div
 function createElementInDiv(divId, elementType, attributes = {}, textContent = "") {
   const div = document.getElementById(divId);
 
   if (!div) {
-      console.error(`Div with id '${divId}' not found.`);
-      return;
+    console.error(`Div with id '${divId}' not found.`);
+    return;
   }
 
   const element = document.createElement(elementType);
 
   // Set attributes if provided
   Object.keys(attributes).forEach(attr => {
-      element[attr] = attributes[attr];
+    element[attr] = attributes[attr];
   });
 
   // Set text content if provided
   if (textContent) {
-      element.textContent = textContent;
+    element.textContent = textContent;
   }
 
   div.appendChild(element);
 }
+
 // Fetch and use the document data
-fetchDocumentData("RevoBuissnes", transferredInfo).then
-(data => {
+fetchDocumentData("RevoBuissnes", transferredInfo).then((data) => {
   if (!data) return;
 
   const appData = data.App;
-  const ResultIcons = appData.ResultIcons;
+  const { ResultIcons } = appData;
 
+  const sections = [
+    { divId: "cal", imgSrc: ResultIcons.fire, imgAlt: "Fire icon", text: "2100" },
+    { divId: "Time", imgSrc: ResultIcons.time, imgAlt: "Time icon", text: "21h" },
+    { divId: "weight", imgSrc: ResultIcons.weight, imgAlt: "Weight icon", text: "21h" },
+  ];
 
-
-
-
-
-  // Cal section
-  createElementInDiv("cal", "img", { 
-    src: ResultIcons.fire, 
-    alt: "Fire icon" });
-  createElementInDiv("cal", "h1", {}, "2100");
-
-  // Time section
-  createElementInDiv("Time", "img", { 
-    src: ResultIcons.time, 
-    alt: "Time icon" });
-  createElementInDiv("Time", "h1", {}, "21h");
-
-  // Weight section
-  createElementInDiv("weight", "img", { 
-    src: ResultIcons.weight, 
-    alt: "Weight icon" });
-  createElementInDiv("weight", "h1", {}, "21h");
+  sections.forEach(({ divId, imgSrc, imgAlt, text }) => {
+    createElementInDiv(divId, "img", { src: imgSrc, alt: imgAlt });
+    createElementInDiv(divId, "h1", {}, text);
+  });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 async function getWorkouts() {
   try {
@@ -363,8 +306,7 @@ async function getWorkouts() {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      const documentData = docSnap.data();
-      return documentData; // Return the document data
+      return docSnap.data();
     } else {
       console.error("No such document!");
       return null;
@@ -376,202 +318,141 @@ async function getWorkouts() {
 }
 
 getWorkouts().then((data) => {
-  const app = data.App;
-  const UBU = data.UBU;
+  if (!data) return;
 
-  const { Base, Prime1, Prime2 } = UBU.Colors;
-
-  const { Gym, Home } = app.workoutBtns;
-  const GymImg = Gym.backgroundImg;
-  const HImg = Home.backgroundImg;
+  const { Base, Prime1, Prime2 } = data.UBU.Colors;
+  const { Gym, Home } = data.App.workoutBtns;
 
   let previousSelectedButton = null;
 
-  // Function to create buttons
-  function createGymImageAndHeading1(ImgScr, Btext, DivId, workoutLocation) {
-    const workoutDiv = document.getElementById(DivId);
+  const styles = {
+    button: `
+      width: 10rem; height: 10rem; border: none; border-radius: 2rem;
+      background-size: cover; background-position: center; background-color: transparent;
+    `,
+    label: `
+      display: inline-block; background-color: ${Base}; color: ${Prime2};
+      padding: 5px 10px; border-radius: 5px; position: relative;
+      top: 50%; transform: translateY(-50%);
+    `,
+    link: `
+      display: block; margin-top: 10px; text-decoration: none; color: ${Base}; font-weight: bold;
+    `,
+  };
 
+  function createButton({ imgSrc, text, divId, location, redirectUrl }) {
+    const workoutDiv = document.getElementById(divId);
     if (!workoutDiv) {
-      console.error('Div with the provided ID does not exist.');
+      console.error(`Div with ID '${divId}' does not exist.`);
       return;
     }
 
-    const button = document.createElement('button');
-    button.style.backgroundImage = `url('${ImgScr}')`;
-    button.style.backgroundSize = 'cover';
-    button.style.backgroundPosition = 'center';
-    button.style.width = '10rem';
-    button.style.height = '10rem';
-    button.style.border = 'none';
-    button.style.borderRadius = '2rem';
-    button.style.backgroundColor = 'transparent';
+    const button = document.createElement("button");
+    button.style = styles.button;
+    button.style.backgroundImage = `url('${imgSrc}')`;
+    button.innerHTML = `<span style="${styles.label}">${text}</span>`;
 
-    button.innerHTML = `<span style="
-      display: inline-block;
-      background-color: ${Base}; 
-      color: ${Prime2}; 
-      padding: 5px 10px; 
-      border-radius: 5px;
-      position: relative;
-      top: 50%;
-      transform: translateY(-50%);
-    ">${Btext}</span>`;
-
-    button.addEventListener('click', () => {
-      handleButtonClick(workoutLocation, DivId);
-      highlightButton(button);
+    button.addEventListener("click", () => {
+      handleButtonClick(location, divId, redirectUrl, button);
     });
 
     workoutDiv.appendChild(button);
   }
 
-  // Handle button click
-  function handleButtonClick(workoutLocation, DivId) {
-    console.log(`Button clicked: ${workoutLocation}`);
-    addWorkoutLocation(workoutLocation);
+  function handleButtonClick(location, divId, redirectUrl, button) {
+    console.log(`Button clicked: ${location}`);
+    addWorkoutLocation(location);
 
-    if (workoutLocation === 'Gym') {
-      createSeeAllLink(DivId, 'index9.1.1.html');
-    } else if (workoutLocation === 'Home') {
-      createSeeAllLink(DivId, 'index9.1.2.html');
+    if (!document.getElementById("See")) {
+      createLink(divId, redirectUrl);
     }
+
+    highlightButton(button);
   }
 
-  // Highlight the selected button
+  function createLink(divId, redirectUrl) {
+    const workoutDiv = document.getElementById(divId);
+    if (!workoutDiv) return;
+
+    const link = document.createElement("a");
+    link.id = "See";
+    link.href = redirectUrl;
+    link.innerText = "See All";
+    link.style = styles.link;
+
+    workoutDiv.appendChild(link);
+  }
+
   function highlightButton(button) {
     if (previousSelectedButton) {
-      previousSelectedButton.style.boxShadow = 'none';
+      previousSelectedButton.style.boxShadow = "none";
     }
     button.style.boxShadow = `0 0 15px 5px ${Prime2}`;
     fillBackgroundProgressively();
     previousSelectedButton = button;
   }
 
-  // Create the "See All" link
-  function createSeeAllLink(DivId, redirectUrl) {
-    const workoutDiv = document.getElementById(DivId);
-
-    if (!workoutDiv) {
-      console.error('Div with the provided ID does not exist.');
-      return;
-    }
-
-    if (document.getElementById('See')) {
-      console.log('Link already exists.');
-      return;
-    }
-
-    const link = document.createElement('a');
-    link.id = 'See';
-    link.href = redirectUrl;
-    link.innerText = 'See All';
-    link.style.display = 'block';
-    link.style.marginTop = '10px';
-    link.style.textDecoration = 'none';
-    link.style.color = Base;
-    link.style.fontWeight = 'bold';
-
-    workoutDiv.appendChild(link);
-  }
-
-  // Fill the background of the start button progressively
   function fillBackgroundProgressively() {
-    const startBtn = document.getElementById('startBtn');
+    const startBtn = document.getElementById("startBtn");
+    if (!startBtn) return;
 
-    startBtn.style.position = 'relative';
-    startBtn.style.overflow = 'hidden';
-    startBtn.style.color = `${Prime2}`;
-    startBtn.style.zIndex = '1';
+    startBtn.style = `
+      position: relative; overflow: hidden; color: ${Prime2}; z-index: 1;
+    `;
 
-    const progressBar = document.createElement('div');
-    progressBar.style.position = 'absolute';
-    progressBar.style.top = '0';
-    progressBar.style.left = '0';
-    progressBar.style.height = '100%';
-    progressBar.style.width = '0';
-    progressBar.style.backgroundColor = `${Prime1}`;
-    progressBar.style.transition = 'width 3s linear';
-    progressBar.style.zIndex = '-1';
+    const progressBar = document.createElement("div");
+    progressBar.style = `
+      position: absolute; top: 0; left: 0; height: 100%; width: 0;
+      background-color: ${Prime1}; transition: width 3s linear; z-index: -1;
+    `;
 
     startBtn.appendChild(progressBar);
-
     setTimeout(() => {
-      progressBar.style.width = '100%';
+      progressBar.style.width = "100%";
     }, 100);
   }
 
-  // Add workout location to localStorage
-  function addWorkoutLocation(newLocation) {
-    const locations = JSON.parse(localStorage.getItem('workoutLocations')) || [];
-    locations.push(newLocation);
-    localStorage.setItem('workoutLocations', JSON.stringify(locations));
+  function addWorkoutLocation(location) {
+    const locations = JSON.parse(localStorage.getItem("workoutLocations")) || [];
+    locations.push(location);
+    localStorage.setItem("workoutLocations", JSON.stringify(locations));
   }
 
-  // Get the most recently added workout location
-  function getNewestWorkoutLocation() {
-    const locations = JSON.parse(localStorage.getItem('workoutLocations')) || [];
-    return locations.length > 0 ? locations[locations.length - 1] : null;
-  }
-
-  // Render shadow box for the start button
   function renderCalShadowBox() {
-    const calDiv = document.getElementById('startBtn');
+    const calDiv = document.getElementById("startBtn");
+    if (!calDiv) return;
 
-    if (!calDiv) {
-      console.error("Element with ID 'startBtn' not found.");
-      return;
-    }
-
-    calDiv.style.color = Prime1;
-    calDiv.style.boxShadow = `0px 4px 10px ${Prime1}`;
-    calDiv.style.backgroundColor = 'transparent';
-    calDiv.style.border = `5px solid ${Prime1}`;
-    calDiv.style.transition = 'background-color 3s ease-in-out';
+    calDiv.style = `
+      color: ${Prime1}; box-shadow: 0px 4px 10px ${Prime1};
+      background-color: transparent; border: 5px solid ${Prime1};
+      transition: background-color 3s ease-in-out;
+    `;
   }
 
   renderCalShadowBox();
-  createGymImageAndHeading1(GymImg, 'Rutina en Gym', 'Gym', 'Gym');
-  createGymImageAndHeading1(HImg, 'Rutina en Casa', 'Home', 'Home');
 
-  const newestLocation = getNewestWorkoutLocation();
+  // Create buttons dynamically
+  createButton({
+    imgSrc: Gym.backgroundImg,
+    text: "Rutina en Gym",
+    divId: "Gym",
+    location: "Gym",
+    redirectUrl: "index9.1.1.html",
+  });
+
+  createButton({
+    imgSrc: Home.backgroundImg,
+    text: "Rutina en Casa",
+    divId: "Home",
+    location: "Home",
+    redirectUrl: "index9.1.2.html",
+  });
+
+  const newestLocation = JSON.parse(localStorage.getItem("workoutLocations"))?.slice(-1)[0];
   if (newestLocation) {
     console.log(`Most recently selected: ${newestLocation}`);
   }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 async function getResultsContainerColors() {
   try {
@@ -664,8 +545,7 @@ async function getBtnIcons() {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      const documentData = docSnap.data();
-      return documentData; // Return the document data
+      return docSnap.data(); // Return the document data
     } else {
       console.log("No such document!");
       return null;
@@ -675,29 +555,31 @@ async function getBtnIcons() {
     return null;
   }
 }
-getBtnIcons().then((data) => {
-  const App = data.App;
-  const Btns = App.Btns;
 
-  function createButton(buttonType, divId, imgSrcIndex, redirectUrl, imgAlt = "Example image") {
-    const buttonGroup = Btns[buttonType];
-    const imgSrc = buttonGroup[imgSrcIndex];
-
-    const div = document.getElementById(divId);
-    if (!div) {
-      console.error(`Div with id '${divId}' not found.`);
-      return;
-    }
-
-    const img = document.createElement("img");
-    img.src = imgSrc;
-    img.alt = imgAlt;
-    img.addEventListener("click", () => {
-      window.location.href = redirectUrl;
-    });
-
-    div.appendChild(img);
+function createButton({ buttonType, divId, imgSrcIndex, redirectUrl, imgAlt = "Example image" }, Btns) {
+  const buttonGroup = Btns[buttonType];
+  const imgSrc = buttonGroup[imgSrcIndex];
+  
+  const div = document.getElementById(divId);
+  if (!div) {
+    console.error(`Div with id '${divId}' not found.`);
+    return;
   }
+
+  const img = document.createElement("img");
+  img.src = imgSrc;
+  img.alt = imgAlt;
+  img.addEventListener("click", () => {
+    window.location.href = redirectUrl;
+  });
+
+  div.appendChild(img);
+}
+
+getBtnIcons().then((data) => {
+  if (!data) return;
+
+  const { Btns } = data.App;
 
   const buttonsConfig = [
     { buttonType: "homeBtns", divId: "home", imgSrcIndex: 0, redirectUrl: "index9.html" },
@@ -707,19 +589,16 @@ getBtnIcons().then((data) => {
     { buttonType: "GearBtns", divId: "gear", imgSrcIndex: 1, redirectUrl: "index9.5.html" },
   ];
 
-  buttonsConfig.forEach(({ buttonType, divId, imgSrcIndex, redirectUrl }) => {
-    createButton(buttonType, divId, imgSrcIndex, redirectUrl);
-  });
+  buttonsConfig.forEach((config) => createButton(config, Btns));
 });
 
-async function backgroundColor() {
+async function fetchDocument(collection, documentId) {
   try {
-    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
+    const docRef = doc(db, collection, documentId); // Ensure db is initialized
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      const documentData = docSnap.data();
-      return documentData; // Return the document data
+      return docSnap.data(); // Return the document data
     } else {
       console.error("No such document!");
       return null;
@@ -729,25 +608,24 @@ async function backgroundColor() {
     return null;
   }
 }
-backgroundColor().then((data) => {
-  const UBU = data.UBU;
-  const { top, center, bottom } = UBU.BackgroundColor;
-  const { Base, Prime1, Prime2, Prime3 } = UBU.Colors;
-// Function to change the background gradient dynamically
-function setGradient(color1, color2, color3) {
 
-
-  document.body.style.overflow = 'hidden';
-
- 
-
-  document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2}, ${color3})`;
+function setGradient({ top, center, bottom }) {
+  document.body.style.background = `linear-gradient(to bottom, ${top}, ${center}, ${bottom})`;
 }
 
-// Example usage:
-setGradient(top, center, bottom);
+fetchDocument("RevoBuissnes", transferredInfo).then((data) => {
+  if (!data) return;
 
+  const { UBU } = data;
+  const { BackgroundColor, Colors } = UBU;
+
+  // Apply the background gradient
+  setGradient(BackgroundColor);
+
+  // Use Colors if needed (Base, Prime1, Prime2, Prime3)
+  console.log("Available colors:", Colors);
 });
+
 document.addEventListener('touchstart', function (event) {
   if (event.touches.length > 1) {
     event.preventDefault(); // Prevents zooming

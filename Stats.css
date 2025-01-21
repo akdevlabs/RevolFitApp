@@ -6,6 +6,9 @@ body {
   overflow: hidden; /* Disables scrolling */
   height: 100vh; /* Ensures the body height fits the viewport */
   width: 100vw; /* Ensures the body width fits the viewport */
+  touch-action: none; /* Disable gestures like zoom */
+    overscroll-behavior: none; /* Prevent overscroll bounce on mobile */
+    
 }
 
 

@@ -8,6 +8,8 @@ body{
   background-size: cover;
   height: 100vh;
   margin: 0;
+  touch-action: none; /* Disable gestures like zoom */
+  overscroll-behavior: none; /* Prevent overscroll bounce on mobile */
 }
 
 .dropdown {

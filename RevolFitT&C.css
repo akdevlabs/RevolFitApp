@@ -6,8 +6,10 @@ body {
   background: linear-gradient(180deg, #C7D8DF 0%, rgba(1,57,72,1) 100%);
   background-repeat: no-repeat;
   background-size: cover;
-  
-  margin: 0;
+  overflow: hidden; /* Prevents scrolling */
+  height: 100%; /* Ensures the body takes up the full viewport height */
+  margin: 0; /* Removes default margin */
+  padding: 0; /* Removes default padding */
 }
 h1{
  text-align: center;

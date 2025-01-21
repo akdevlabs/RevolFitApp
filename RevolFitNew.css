@@ -1,7 +1,10 @@
 body{
   
   width: 100%;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow: hidden; /* Prevents scrolling */
+  height: 100%; /* Ensures the body takes up the full viewport height */
+  margin: 0; /* Removes default margin */
+  padding: 0; /* Removes default padding */
 }
 .registerContent{
   gap: 1rem;

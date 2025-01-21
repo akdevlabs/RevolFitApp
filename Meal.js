@@ -589,98 +589,82 @@ SetMealPlan().then((data) => {
   }
 
   }
-  
+  // Function to extract ingredients and icons
+  function extractIngredientsAndIcons(ingredientsObj) {
+    const icons = [];
+    const ingredients = [];
+    
+    // Loop through the ingredients object
+    for (let key in ingredientsObj) {
+        if (ingredientsObj.hasOwnProperty(key)) {
+            const item = ingredientsObj[key];
+            if (item.Icon) icons.push(item.Icon);
+            if (item.ingredient) ingredients.push(item.ingredient);
+        }
+    }
+
+    return { icons, ingredients };
+  }
+  // Example usage: render the carousel
+  function renderCarousel1(containerId, items) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      container.innerHTML = items.map(item => `<div class="carousel-item">${item}</div>`).join("");
+  }
+
+// Example usage: render the carousel
+function renderCarousel(containerId, items) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  // Assuming each item in the array is the image URL
+  container.innerHTML = `
+      <div class="carousel-container">
+          ${items
+              .map(
+                  item => `
+              <div class="carousel-item">
+                  <img src="${item}" alt="Carousel Image" />
+              </div>`
+              )
+              .join("")}
+      </div>
+  `;
+}
+
+
 
   function getngredientBlocks(){
     const ActiveDB = savedContent.type;
 
 
-    const Ingredients = DBreakfast.slot1.Ingredients;
-    const Icount =countItemsInObject(Ingredients)
-    console.log(Ingredients);
-    console.log(Icount);
-
-    function logWithPrefix() {
-      for (let i = 1; i <= Icount; i++) {
-        console.log(`I${i}`);
-      }
-    }
+    const ObjIngredients = DBreakfast.slot1.Ingredients;
     
 
 
-    console.log(logWithPrefix());
+    // Extract icons and ingredients
+    const { icons, ingredients } = extractIngredientsAndIcons(ObjIngredients);
 
-    // Example usage
-    const items = ['Item 1', 'Item 2', 'Item 3', 'Item 4'];
-    renderCarousel('Ingblocks', items);
+    console.log("Icons:", icons);
+    console.log("Ingredients:", ingredients);
+  // Rendering both icons and ingredients
+  renderCarousel1("IngredientBlocks1", ingredients);
+  renderCarousel("IconBlocks", icons);
 
-
-
-    console.log(ActiveDB);
-    if( ActiveDB === "BS1type"){
-
-       // Output: 3
+  // Rendering both icons and ingredients
 
 
-      
-    }else if( ActiveDB === "BS2type"){
-      return(DBreakfast.slot2.Ingredients)
-    }else if( ActiveDB === "BS3type"){
-      return(DBreakfast.slot3.Ingredients)
-    
-    }else if( ActiveDB === "LS1type"){
-      return(DLunch.slot1.Ingredients)
-    }else if( ActiveDB === "LS2type"){
-      return(DLunch.slot2.Ingredients)
-    }else if( ActiveDB === "LS3type"){
-      return(DLunch.slot3.Ingredients)
-    
-    }else if( ActiveDB === "DS1type"){
-      return(DDinner.slot1.Ingredients)
-    }else if( ActiveDB === "DS2type"){
-      return(DDinner.slot2.Ingredients)
-    }else if( ActiveDB === "DS3type"){
-      return(DDinner.slot3.Ingredients)
-    
-    }else if( ActiveDB === "SS1type"){
-      return(DSnack.slot1.Ingredients)
-    }else if( ActiveDB === "SS2type"){
-      return(DSnack.slot2.Ingredients)
-    }else if( ActiveDB === "SS3type"){
-      return(DSnack.slot3.Ingredients)
-    
-    }else if( ActiveDB === "VBreakfast.slot1.img"){
-      return(VBreakfast.slot1.Ingredients)
-    }else if( ActiveDB === "VBreakfast.slot2.img"){
-      return(VBreakfast.slot2.Ingredients)
-    }else if( ActiveDB === "VBreakfast.slot3.img"){
-      return(VBreakfast.slot3.Ingredients)
-    
-    }else if( ActiveDB === "VLunch.slot1.img"){
-      return(VLunch.slot1.Ingredients)
-    }else if( ActiveDB === "VLunch.slot2.img"){
-      return(VLunch.slot2.Ingredients)
-    }else if( ActiveDB === "VLunch.slot3.img"){
-      return(VLunch.slot3.Ingredients)
-    
-    }else if( ActiveDB === "VDinner.slot1.img"){
-      return(VDinner.slot1.Ingredients)
-    }else if( ActiveDB === "VDinner.slot1.img"){
-      return(VDinner.slot2.Ingredients)
-    }else if( ActiveDB === "VDinner.slot1.img"){
-      return(VDinner.slot3.Ingredients)
-    
-    }else if( ActiveDB === "VSnack.slot1.img"){
-      return(VSnack.slot1.Ingredients)
-    }else if( ActiveDB === "VSnack.slot2.img"){
-      return(VSnack.slot2.Ingredients)
-    }else if( ActiveDB === "VSnack.slot3.img"){
-      return(VSnack.slot3.Ingredients)
+
+
+   
 
   }
 
-  }
-getngredientBlocks()
+  getngredientBlocks()
+
+
+
 
   // Use the ActiveDB content dynamically in renderPageContent
   renderPageContent({
@@ -700,7 +684,11 @@ getngredientBlocks()
 
 
 
-
+document.addEventListener('touchstart', function (event) {
+  if (event.touches.length > 1) {
+    event.preventDefault(); // Prevents zooming
+  }
+}, { passive: false });
 
 
 

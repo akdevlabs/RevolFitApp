@@ -100,8 +100,8 @@ RecipeingredientColor().then((data) => {
     const RecipeBlockTop = document.getElementById("RecipeBlockTop");
 
     if (RecipeBlockTop) {
-      RecipeBlockTop.style.backgroundColor = Base;
-      RecipeBlockTop.style.color = Prime2;
+      RecipeBlockTop.style.backgroundColor = Prime3;
+      RecipeBlockTop.style.color = Base;
     }
   }
   function blocks(){
@@ -110,8 +110,7 @@ RecipeingredientColor().then((data) => {
 
       // Iterate through the NodeList and apply the styles
       blocks.forEach(block => {
-        block.style.background = `linear-gradient(to bottom, ${Base}, ${Prime3})`;
-        block.style.color = Prime2;
+        block.style.background = Prime3;
       });
   }
   function MBBtn(){

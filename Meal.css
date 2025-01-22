@@ -12,7 +12,7 @@
   }
   main{
     height:100%;
-    margin: 2rem 1rem 0 1rem;
+    margin: 1rem ;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -29,10 +29,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    margin-top: 2rem;
   }
   #tittle{
-    font-size: 1rem;
+    font-size: .9rem;
     font-weight: bold;
   }
   #firePop{
@@ -64,7 +64,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 2rem 0;
+    margin: 4rem 0;
   }
   .MealCenter img{
     width:  20rem;
@@ -103,14 +103,14 @@
 
   }
   .blocks{
-    padding: .3rem;
+    padding: .4rem;
     border-radius: .5rem;
     background-color: aquamarine;
   }
 
   .blocks img{
-    width:  5rem;
-    height: 5rem; 
+    width:  4rem;
+    height: 4rem; 
   }
 
   .MoreBanner{

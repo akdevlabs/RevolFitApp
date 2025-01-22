@@ -90,8 +90,8 @@ RecipeingredientColor().then((data) => {
     // Set background color for the Time ID
     const timeElement = document.getElementById("Time");
     if (timeElement) {
-      timeElement.style.backgroundColor = Prime1
-      timeElement.style.color = Base;
+      timeElement.style.backgroundColor = Base
+      timeElement.style.color = Prime2;
     }
   }
   function RecipeBlockTop(){
@@ -100,7 +100,7 @@ RecipeingredientColor().then((data) => {
     const RecipeBlockTop = document.getElementById("RecipeBlockTop");
 
     if (RecipeBlockTop) {
-      RecipeBlockTop.style.backgroundColor = Prime3;
+      RecipeBlockTop.style.backgroundColor = top;
       RecipeBlockTop.style.color = Base;
     }
   }
@@ -110,7 +110,7 @@ RecipeingredientColor().then((data) => {
 
       // Iterate through the NodeList and apply the styles
       blocks.forEach(block => {
-        block.style.background = Prime3;
+        block.style.background = top;
       });
   }
   function MBBtn(){
@@ -119,7 +119,7 @@ RecipeingredientColor().then((data) => {
     const MBBtn = document.getElementById("MBBtn");
 
     if (MBBtn) {
-      MBBtn.style.backgroundColor = Prime3;
+      MBBtn.style.backgroundColor = top;
       MBBtn.style.color = Base;
     }
   }

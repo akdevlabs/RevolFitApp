@@ -21,6 +21,7 @@
 </head>
 <body>
   <main>
+
     <section class="MealHeader">
       <div class="MHTop">
         <div class="phLeft">
@@ -28,48 +29,63 @@
         </div>
 
         <div class="phCentre">
-          <h3 id="tittle"></h3>
+          <h3 id="tittle">Tostada Energizante de Aguacate</h3>
           <div class="CalCount">
-            <img id="firePop" src="">
-            <span id="calCount"></span>
+            <img id="firePop" src="images/WebApp/BU's/RevoFit/appBtns/BlueFireIcon.svg">
+            <span id="calCount">40/300</span>
           </div>
         </div>
 
         <div class="phRight">
-          <img id="Save" src="">
+          <img id="Save" src="images/WebApp/BU's/RevoFit/appBtns/blueSaveIcon.svg">
         </div>
       </div>
     </section>
 
     <section class="MealCenter">
-      <img id="platedImg">
+      <img id="platedImg" src="images\WebApp\MealPlan\images\breakfast.svg">
     </section>
 
-    <section class="RecipeBlock">
-      <div class="RecipeBlockTop">
-        <span>Receta</span>
-        <span id="Time"></span>
+    <section class="RecipeingredientBlock">
+
+      <div class="RecipeBlock">
+          <div class="RecipeBlockTop" id="RecipeBlockTop">
+            <span>Receta</span>
+            <span id="Time">40 mins</span>
+          </div>
+
+          <div id="Recipe"></div>
       </div>
 
-      <div id="Recipe"></div>
+      <div class="ingredientBlock">
+        <div class="IngList" id="IngList"></div>
 
-    </section>
-
-    <section class="ingredientBlock">
-      <div class="IngList" id="IngList"></div>
-      <div id="IconBlocks"></div>
-  <div id="IngredientBlocks"></div>
-  <div id="IngredientBlocks1"></div>     
-
+        <div class="IngredientImgBlock">
+          <div class="blocks" id="blocks">
+            <img id="Ingredient1" src="images\WebApp\MealPlan\ingredient\avocado.png">
+          </div>
+          <div class="blocks" id="blocks">
+            <img id="Ingredient2" src="images\WebApp\MealPlan\ingredient\cilantro.png">
+          </div>
+          <div class="blocks" id="blocks">
+            <img id="Ingredient3" src="images\WebApp\MealPlan\ingredient\onion.png">
+          </div>
+          <div class="blocks" id="blocks">
+            <img id="Ingredient4" src="images\WebApp\MealPlan\ingredient\tomato.png">
+          </div>
+        </div>
+        <div class="MoreBanner" id="MBBtn">
+          <h3>Show More</h3>
+          <img id="CaretDown" src="images\WebApp\BU's\RevoFit\appBtns\downarrow.png">
+        </div>
+  
+        <div id="IconBlocks"></div>
+        <div id="IngredientBlocks"></div>
+        <div id="IngredientBlocks1"></div>   
       </div>
       
-
-
-
     </section>
 
-
-   
   </main>
 
   <script type="module" src="Meal.js"></script>

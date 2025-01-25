@@ -113,6 +113,7 @@ body {
 
   .block {
     display: flex;
+    
     justify-content: space-between;
     align-items: center;
     padding: 20px;
@@ -125,13 +126,16 @@ body {
     margin-right: auto;
   }
   .text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
     flex: 1;
     padding: 10px;
   }
   .text-container h1 {
     font-size: 1.2rem;
     color: #ACE2E4; /* Matches user's color palette */
-    margin-bottom: 10px;
+
   }
   
   .text-container a {
@@ -139,7 +143,9 @@ body {
     color: #ACE2E4; /* Matches user's color palette */
     text-decoration: none;
   }
-
+  .Tweight{
+    margin: .5rem 0;
+  }
   .text-container a:hover {
     text-decoration: underline;
   }
@@ -174,8 +180,8 @@ body {
     
   }
   .MealPlanDishes img{
-    width: 10rem;
-    height: 10rem;
+    width: 7rem;
+    height: 7rem;
   }
   /* Optional: Add custom scrollbar styling */
   #MealPlanDishes::-webkit-scrollbar{

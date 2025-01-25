@@ -183,233 +183,300 @@
   
   
   
-  function calculateHeartRateZones(age, restingHR) {
-    // Estimate maximum heart rate
-    const maxHR = 220 - age;
+
   
-    if (age <= 0 || restingHR <= 0) {
-        throw new Error("Invalid inputs: Age and resting heart rate must be greater than 0.");
+  
+ 
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  function classifyBodyFat(age, gender, bodyFat) {
+    const ranges = {
+      male: {
+        "13-19": [
+          { max: 12, classification: "Excellent", scoring: 9, metabolicProtection: 1 },
+          { max: 13, classification: "Good", scoring: 8.3572, metabolicProtection: 0.928578 },
+          { max: 14, classification: "Good", scoring: 7.71439, metabolicProtection: 0.857154 }
+          // Add additional ranges
+        ],
+        "60+": [
+          { max: 21, classification: "Excellent", scoring: 9, metabolicProtection: 1 },
+          { max: 22, classification: "Good", scoring: 8.3572, metabolicProtection: 0.928578 },
+          { max: 23, classification: "Bad", scoring: 7.71439, metabolicProtection: 0.857154 }
+          // Add additional ranges
+        ]
+      },
+      female: {
+        "13-19": [
+          { max: 17, classification: "Excellent", scoring: 9, metabolicProtection: 1 },
+          { max: 18, classification: "Good", scoring: 8.4705, metabolicProtection: 0.941167 },
+          { max: 19, classification: "Bad", scoring: 7.941, metabolicProtection: 0.882333 }
+          // Add additional ranges
+        ],
+        "60+": [
+          { max: 25, classification: "Excellent", scoring: 9, metabolicProtection: 1 },
+          { max: 26, classification: "Good", scoring: 8.4705, metabolicProtection: 0.941167 },
+          { max: 27, classification: "Bad", scoring: 7.941, metabolicProtection: 0.882333 }
+          // Add additional ranges
+        ]
+      }
+    };
+  
+    // Determine the age group
+    const ageGroup = age <= 19 ? "13-19" : "60+";
+    const genderKey = gender.toLowerCase();
+  
+    // Validate ranges and inputs
+    if (!ranges[genderKey] || !ranges[genderKey][ageGroup]) {
+      return { error: "No classification found for the given inputs." };
     }
   
-    // Calculate zones as percentages of maxHR
-    const zones = {
-        Recovery: {
-            min: Math.round(0.5 * (maxHR - restingHR) + restingHR),
-            max: Math.round(0.6 * (maxHR - restingHR) + restingHR)
-        },
-        Aerobic: {
-            min: Math.round(0.6 * (maxHR - restingHR) + restingHR),
-            max: Math.round(0.7 * (maxHR - restingHR) + restingHR)
-        },
-        Anaerobic: {
-            min: Math.round(0.7 * (maxHR - restingHR) + restingHR),
-            max: Math.round(0.85 * (maxHR - restingHR) + restingHR)
-        },
-        MaxEffort: {
-            min: Math.round(0.85 * (maxHR - restingHR) + restingHR),
-            max: Math.round(maxHR)
-        }
-    };
+    // Find the classification
+    for (const range of ranges[genderKey][ageGroup]) {
+      if (bodyFat <= range.max) {
+        return {
+          classification: range.classification,
+          scoring: range.scoring,
+          metabolicProtection: range.metabolicProtection
+        };
+      }
+    }
   
-    return {
-        maxHR,
-        zones
-    };
+    return { error: "Body fat percentage out of range." };
+  }
+  // Call the function and log the result
+  const CBF = classifyBodyFat(age, gender, bodyFat)
+
+  
+  function renderImage(imageUrl, altText = "Image") {
+    // Get the div with id "scoring"
+    const scoringDiv = document.getElementById('scoring');
+    
+    if (!scoringDiv) {
+      console.error('Div with id "scoring" not found');
+      return;
+    }
+    
+    // Create an image element
+    const img = document.createElement('img');
+    img.src = imageUrl;
+    img.alt = altText;
+    img.style.margin = "10px"; // Optional: Add spacing between images
+    
+    // Append the image to the div
+    scoringDiv.appendChild(img);
   }
   
-  const Hresult = calculateHeartRateZones(age, restingHR);
+  function renderCBF() {
+   
   
-  console.log(`Max HR: ${Hresult.maxHR} bpm`);
-  console.log("Heart Rate Zones:");
-  console.log(`Recovery Zone: ${Hresult.zones.Recovery.min}–${Hresult.zones.Recovery.max} bpm`);
-  console.log(`Aerobic Zone: ${Hresult.zones.Aerobic.min}–${Hresult.zones.Aerobic.max} bpm`);
-  console.log(`Anaerobic Zone: ${Hresult.zones.Anaerobic.min}–${Hresult.zones.Anaerobic.max} bpm`);
-  console.log(`Maximum Effort Zone: ${Hresult.zones.MaxEffort.min}–${Hresult.zones.MaxEffort.max} bpm`);
-  
-  
-  
-  
-  
-  function calculateAlcoholScore(drinksPerWeek) {
-    // Define scoring ranges
-    const scoringRanges = [
-        { max: 0, score: 9, riskLevel: "None" },
-        { max: 2, score: 7, riskLevel: "Low" },
-        { max: 7, score: 5, riskLevel: "Moderate" },
-        { max: 14, score: 3, riskLevel: "High" },
-        { max: Infinity, score: 1, riskLevel: "Very High" }
-    ];
-  
-    if (drinksPerWeek < 0) {
-        throw new Error("Invalid input: Drinks per week must be a non-negative number.");
-    }
-  
-    // Determine score and risk level
-    for (const range of scoringRanges) {
-        if (drinksPerWeek <= range.max) {
-            return {
-                score: range.score,
-                riskLevel: range.riskLevel
-            };
-        }
-    }
-  
-    // Default response (shouldn't reach here)
-    return {
-        score: 0,
-        riskLevel: "Unknown"
-    };
-  }
-  
-  
-  const Dresult = calculateAlcoholScore(drinksPerWeek);
-  
-  console.log(`Score: ${Dresult.score}, Risk Level: ${Dresult.riskLevel}`);
-  
-  
-  
-  function calculateSmokingScore(cigarettesPerDay) {
-    // Define scoring ranges
-    const scoringRanges = [
-        { max: 0, score: 9, riskLevel: "None" },
-        { max: 5, score: 7, riskLevel: "Low" },
-        { max: 15, score: 5, riskLevel: "Moderate" },
-        { max: 25, score: 3, riskLevel: "High" },
-        { max: Infinity, score: 1, riskLevel: "Very High" }
-    ];
-  
-    if (cigarettesPerDay < 0) {
-        throw new Error("Invalid input: Cigarettes per day must be a non-negative number.");
-    }
-  
-    // Determine score and risk level
-    for (const range of scoringRanges) {
-        if (cigarettesPerDay <= range.max) {
-            return {
-                score: range.score,
-                riskLevel: range.riskLevel
-            };
-        }
-    }
-  
-    // Default response (shouldn't reach here)
-    return {
-        score: 0,
-        riskLevel: "Unknown"
-    };
-  }
-  
-  const Presult = calculateSmokingScore(cigarettesPerDay);
-  
-  console.log(`Score: ${Presult.score}, Risk Level: ${Presult.riskLevel}`);
-  
-  
-  function calculateSmokingScoreWithPackYears(cigarettesPerDay, smokingYears) {
-    const packYears = (cigarettesPerDay / 20) * smokingYears;
-  
-    const scoringRanges = [
-        { max: 0, score: 9, riskLevel: "None" },
-        { max: 5, score: 7, riskLevel: "Low" },
-        { max: 15, score: 5, riskLevel: "Moderate" },
-        { max: 25, score: 3, riskLevel: "High" },
-        { max: Infinity, score: 1, riskLevel: "Very High" }
-    ];
-  
-    if (cigarettesPerDay < 0 || smokingYears < 0) {
-        throw new Error("Invalid inputs: Cigarettes per day and smoking years must be non-negative numbers.");
-    }
-  
-    let scoreDetails = { score: 0, riskLevel: "Unknown" };
-    for (const range of scoringRanges) {
-        if (cigarettesPerDay <= range.max) {
-            scoreDetails = { score: range.score, riskLevel: range.riskLevel };
-            break;
-        }
-    }
-  
-    return {
-        ...scoreDetails,
-        packYears: packYears.toFixed(2)
-    };
-  }
-  const resultWithPackYears = calculateSmokingScoreWithPackYears(10, smokingYears);
-  
-  console.log(`Score: ${resultWithPackYears.score}, Risk Level: ${resultWithPackYears.riskLevel}, Pack-Years: ${resultWithPackYears.packYears}`);
-  
-  
-  
-  
-  function calculateExerciseScore(frequency, intensity) {
-    // Define scoring ranges
-    const intensityMultipliers = {
-        low: 0.5,
-        moderate: 1,
-        high: 1.5
-    };
-  
-    const scoringRanges = [
-        { max: 0, score: 1, activityLevel: "Sedentary" },
-        { max: 2, score: 3, activityLevel: "Low" },
-        { max: 4, score: 5, activityLevel: "Moderate" },
-        { max: 6, score: 7, activityLevel: "High" },
-        { max: Infinity, score: 9, activityLevel: "Very High" }
-    ];
-  
-    if (frequency < 0 || !intensityMultipliers[intensity]) {
-        throw new Error("Invalid inputs: Frequency must be non-negative, and intensity must be 'low', 'moderate', or 'high'.");
-    }
-  
-    // Adjust frequency by intensity multiplier
-    const adjustedFrequency = frequency * intensityMultipliers[intensity];
-  
-    // Determine score and activity level
-    for (const range of scoringRanges) {
-        if (adjustedFrequency <= range.max) {
-            return {
-                score: range.score,
-                activityLevel: range.activityLevel
-            };
-        }
-    }
-  
-    // Default response (shouldn't reach here)
-    return {
-        score: 0,
-        activityLevel: "Unknown"
-    };
-  }
-  
-  const ExerciseScore = calculateExerciseScore(frequency, intensity);
-  
-  console.log(`Score: ${ExerciseScore.score}, Activity Level: ${ExerciseScore.activityLevel}`);
-  
-  
-  
-  
-  function calculateMetabolicAge(weight, height, age, gender) {
-    if (weight <= 0 || height <= 0 || age <= 0) {
-        throw new Error("Invalid inputs: Weight, height, and age must be greater than 0.");
-    }
-  
-    // BMR calculation based on Harris-Benedict equations
-    let bmr;
-    if (gender.toLowerCase() === "male") {
-        bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
-    } else if (gender.toLowerCase() === "female") {
-        bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+    // Classification logic
+    const classification = CBF.classification; // Replace with your dynamic value
+    
+    if (classification === "Excellent") {
+      renderImage('images/WebApp/Evaluation/EColor.svg', 'Example Image');
+      renderImage('images/WebApp/Evaluation/BLight.svg', 'Example Image');
+      renderImage('images/WebApp/Evaluation/ProLight.svg', 'Example Image');
+      renderImage('images/WebApp/Evaluation/PLight.svg', 'Example Image');
+      renderImage('images/WebApp/Evaluation/MLight.svg', 'Example Image');
+    } else if (classification === "Good") {
+
+      renderImage('images/WebApp/Evaluation/ELight.svg', 'Example Image');
+      renderImage('images/WebApp/Evaluation/BColor.svg', 'Example Image');
+      renderImage('images/WebApp/Evaluation/ProLight.svg', 'Example Image');
+      renderImage('images/WebApp/Evaluation/PLight.svg', 'Example Image');
+      renderImage('images/WebApp/Evaluation/MLight.svg', 'Example Image');
     } else {
-        throw new Error("Invalid gender: Please specify 'male' or 'female'.");
+
+      renderImage('images/WebApp/Evaluation/ELight.svg', 'Example Image');
+      renderImage('images/WebApp/Evaluation/BLight.svg', 'Example Image');
+      renderImage('images/WebApp/Evaluation/ProLight.svg', 'Example Image');
+      renderImage('images/WebApp/Evaluation/PLight.svg', 'Example Image');
+      renderImage('images/WebApp/Evaluation/MColor.svg', 'Example Image');
     }
-  
-    // Estimate metabolic age using average BMR for the given chronological age
-    const averageBMRForAge = 1500; // Replace with an actual reference value
-    const metabolicAge = Math.round((bmr / averageBMRForAge) * age);
-  
-    return metabolicAge;
   }
   
+
+
+
+
+  function renderMPProgress() {
+      const maxScore = 9;
+      const currentScore = CBF.scoring
+  
+       // Calculate the progress percentage
+       const progressPercentage = (currentScore / maxScore) * 100;
+
+       // Get the progress-fill element
+       const progressFill = document.getElementById("metabolicProtection");
+   
+       // Set the width style based on the progress percentage
+       if (progressFill) {
+           progressFill.style.width = `${progressPercentage}%`;
+       }
+   }
+   
+   // Call the function to render the progress bar
+   renderMPProgress();
+  // Call renderCBF to execute the code
+  renderCBF();
+  
+
+
+  console.log(classifyBodyFat(age, gender, bodyFat));
   
   
-  const metabolicAge = calculateMetabolicAge(bodyWeight, height, age, gender);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
-  console.log(`Metabolic Age: ${metabolicAge} years`);
+async function getProgressBarColor() {
+  try {
+    // Reference a document in the "revoFitweb" collection with ID "landing"
+    const docRef = doc(db, 'RevoBuissnes', transferredInfo);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data(); // Store document data
+      return documentData; // Return the data for external use
+    } else {
+      console.log("No such document!");
+      return null; // Return null if no document is found
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+  }
+}
+
+getProgressBarColor().then((data) => {
+  const UBU = data.UBU;
+  const {Base, Prime1, Prime2, Prime3} = UBU.Colors;
+
+  function changeBackgroundColor(color, urlId ) {
+    const element = document.getElementById(urlId );
+    if (element) {
+        element.style.backgroundColor = color;
+    } else {
+        console.error('Element with id "metabolicProtection" not found.');
+    }
+  }
+
+// Example usage:
+changeBackgroundColor(Base, 'metabolicProtection'); 
+changeBackgroundColor(Prime2, 'progressbar');
+  
+
+
+
+})
+
+
+document.getElementById('BFB').addEventListener('click', function () {
+  const bfBlock = document.getElementById('BFBlock');
+  bfBlock.classList.toggle('visible');
+});
+
+
+// Bottom Icons
+async function getBtnIcons() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.log("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+getBtnIcons().then((data) => {
+  const App = data.App;
+  const Btns = App.Btns;
+
+  function createButton(buttonType, divId, imgSrcIndex, redirectUrl, imgAlt = "Example image") {
+    const buttonGroup = Btns[buttonType];
+    const imgSrc = buttonGroup[imgSrcIndex];
+
+    const div = document.getElementById(divId);
+    if (!div) {
+      console.error(`Div with id '${divId}' not found.`);
+      return;
+    }
+
+    const img = document.createElement("img");
+    img.src = imgSrc;
+    img.alt = imgAlt;
+    img.addEventListener("click", () => {
+      window.location.href = redirectUrl;
+    });
+
+    div.appendChild(img);
+  }
+
+  const buttonsConfig = [
+    { buttonType: "homeBtns", divId: "home", imgSrcIndex: 0, redirectUrl: "index9.html" },
+    { buttonType: "DateBtns", divId: "Date", imgSrcIndex: 1, redirectUrl: "index9.2.html" },
+    { buttonType: "GoalBtns", divId: "goals", imgSrcIndex: 1, redirectUrl: "index9.3.html" },
+    { buttonType: "StatBtns", divId: "stats", imgSrcIndex: 1, redirectUrl: "index9.4.html" },
+    { buttonType: "GearBtns", divId: "gear", imgSrcIndex: 1, redirectUrl: "index9.5.html" },
+  ];
+
+  buttonsConfig.forEach(({ buttonType, divId, imgSrcIndex, redirectUrl }) => {
+    createButton(buttonType, divId, imgSrcIndex, redirectUrl);
+  });
+});

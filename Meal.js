@@ -69,7 +69,7 @@ function renderPageContent({
   recipeTime = "",
   recipeContent = "",
   ingredientBlocks = [],
-  ingredientList = [],
+  
 }) {
   // Update the title
   const titleElement = document.getElementById("tittle");
@@ -93,16 +93,7 @@ function renderPageContent({
 
   
 
-  // Update the ingredient list
-  const ingListElement = document.getElementById("IngList");
-  if (ingListElement) {
-    ingListElement.innerHTML = ""; // Clear existing content
-    ingredientList.forEach((item) => {
-      const listItem = document.createElement("li");
-      listItem.textContent = item;
-      ingListElement.appendChild(listItem);
-    });
-  }
+ 
 }
 
 
@@ -113,6 +104,7 @@ function renderMealHeaderContent({
   platedImgSrc = "",
   recipeTime = "",
   recipeContent = "",
+  ingredientList = [],
 }) 
 {
   // Update the title
@@ -165,6 +157,8 @@ function renderMealHeaderContent({
       recipeElement.appendChild(orderedList);
     }
   }
+
+   
 }
 
 
@@ -333,6 +327,9 @@ renderHNImgs().then((data) => {
   SaveImgElement.src = Save;
 });
 
+
+
+
 async function SetMealPlan() {
   try {
     const docRef = doc(db, "RevolApp", "MealPlans"); // Ensure db and transferredInfo are initialized
@@ -372,8 +369,8 @@ SetMealPlan().then((data) => {
   // The active data to be rendered
   const ActiveDB = DBreakfast;
   
-  console.log(DBreakfast);
-  console.log(ActiveDB);
+  //console.log(DBreakfast);
+  //console.log(ActiveDB);
 
   function getTittle(){
     const ActiveDB = savedContent.title;
@@ -678,6 +675,97 @@ SetMealPlan().then((data) => {
 
   }
 
+  function getIngredients() {
+    const ActiveDB = savedContent.type;
+    console.log(ActiveDB)
+    const mealMapping = {
+        BS1type: () => DBreakfast.slot1.ingredients.Listiofingredient,
+        BS2type: () => DBreakfast.slot2.ingredients.Listiofingredient,
+        BS3type: () => DBreakfast.slot3.ingredients.Listiofingredient,
+        LS1type: () => DLunch.slot1.ingredients.Listiofingredient,
+        LS2type: () => DLunch.slot2.ingredients.Listiofingredient,
+        LS3type: () => DLunch.slot3.ingredients.Listiofingredient,
+        DS1type: () => DDinner.slot1.ingredients.Listiofingredient,
+        DS2type: () => DDinner.slot2.ingredients.Listiofingredient,
+        DS3type: () => DDinner.slot3.ingredients.Listiofingredient,
+        SS1type: () => DSnack.slot1.ingredients.Listiofingredient,
+        SS2type: () => DSnack.slot2.ingredients.Listiofingredient,
+        SS3type: () => DSnack.slot3.ingredients.Listiofingredient,
+        "VBreakfast.slot1.img": () => VBreakfast.slot1.ingredients.Listiofingredient,
+        "VBreakfast.slot2.img": () => VBreakfast.slot2.ingredients.Listiofingredient,
+        "VBreakfast.slot3.img": () => VBreakfast.slot3.ingredients.Listiofingredient,
+        "VLunch.slot1.img": () => VLunch.slot1.ingredients.Listiofingredient,
+        "VLunch.slot2.img": () => VLunch.slot2.ingredients.Listiofingredient,
+        "VLunch.slot3.img": () => VLunch.slot3.ingredients.Listiofingredient,
+        "VDinner.slot1.img": () => VDinner.slot1.ingredients.Listiofingredient,
+        "VDinner.slot2.img": () => VDinner.slot2.ingredients.Listiofingredient,
+        "VDinner.slot3.img": () => VDinner.slot3.ingredients.Listiofingredient,
+        "VSnack.slot1.img": () => VSnack.slot1.ingredients.Listiofingredient,
+        "VSnack.slot2.img": () => VSnack.slot2.ingredients.Listiofingredient,
+        "VSnack.slot3.img": () => VSnack.slot3.ingredients.Listiofingredient
+    };
+
+    const ingredients = mealMapping[ActiveDB] ? mealMapping[ActiveDB]() : null;
+    
+    console.log("Ingredients:", ingredients);  // Log the ingredients
+
+    return ingredients;
+}
+
+getIngredients()
+
+
+
+
+
+
+
+
+
+
+
+
+  // Function to extract ingredients and icons
+  function extractIngredientsAndIcons(ingredientsObj) {
+    const icons = [];
+    const ingredients = [];
+    
+    // Loop through the ingredients object
+    for (let key in ingredientsObj) {
+        if (ingredientsObj.hasOwnProperty(key)) {
+            const item = ingredientsObj[key];
+            if (item.Icon) icons.push(item.Icon);
+            if (item.ingredient) ingredients.push(item.ingredient);
+        }
+    }
+
+    return { icons, ingredients };
+  }
+
+
+
+  function getngredientBlocks(){
+    const ActiveDB = savedContent.type;
+
+
+    const ObjIngredients = DBreakfast.slot1.Ingredients;
+    
+
+
+    // Extract icons and ingredients
+    const { icons, ingredients } = extractIngredientsAndIcons(ObjIngredients);
+
+    console.log("Icons:", icons);
+    console.log("Ingredients:", ingredients);
+ 
+
+
+
+
+
+   
+
+  }
 
 
 
@@ -690,6 +778,7 @@ SetMealPlan().then((data) => {
     platedImgSrc: getplatedImg(), 
     recipeTime: getTime(),
     recipeContent: getInstrucciones(),
+    ingredientList: "",
   });
 
  
@@ -716,6 +805,21 @@ document.getElementById('RecipeBlockTop').addEventListener('click', function () 
 
   } else {
     popup.classList.add('show');
+  }
+});
+document.getElementById('MBBtn').addEventListener('click', function () {
+  const popup = document.getElementById('Ingpopup');
+  const button = this;
+  const buttonRect = button.getBoundingClientRect();
+
+  popup.style.top = `${buttonRect.top}px`;
+  popup.style.left = `${buttonRect.left + buttonRect.width / 2 - 100}px`;
+  
+  if (popup.classList.contains('ingshow')) {
+    popup.classList.remove('ingshow');
+
+  } else {
+    popup.classList.add('ingshow');
   }
 });
 
@@ -791,7 +895,15 @@ RecipeingredientColor().then((data) => {
       popup.style.color =  Prime2;
     }
   }
+  function IngpopupbackgroundColors(){
+    const popup = document.getElementById("Ingpopup");
 
+    if (popup) {
+      popup.style.backgroundColor = Base;
+      popup.style.color =  Prime2;
+    }
+  }
+  IngpopupbackgroundColors()
   
   popupbackgroundColors()
   MBBtn()

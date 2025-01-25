@@ -247,7 +247,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const titleElement = document.getElementById(DTurl);
     const timeElement = document.getElementById(DtIurl);
     const imgElement = document.getElementById(imgBlock);
-
+    
 
     // Set the content for each element
     titleElement.textContent = title;
@@ -256,24 +256,22 @@ document.addEventListener("DOMContentLoaded", function () {
     // Set the image source
     imgElement.src = imgSrc;
   }
-  // Function to render content into the h1, a elements, and the image block
-  function renderSlotContent(Dtype, type, title, DTurl, time, DtIurl, imgSrc, imgBlock) {
-    // Select the elements by their IDs
-    const typeElement = document.getElementById(Dtype);
-    const titleElement = document.getElementById(DTurl);
-    const timeElement = document.getElementById(DtIurl);
-    const imgElement = document.getElementById(imgBlock);
+// Function to render content into the h1, a elements, and the image block
+function renderSlotContent(Dtype, type, title, titleId, time, timeId, imgSrc, imgId, typeBlockId, Wtype) {
+  // Select the elements by their IDs
+  const typeElement = document.getElementById(Dtype);
+  const titleElement = document.getElementById(titleId);
+  const timeElement = document.getElementById(timeId);
+  const imgElement = document.getElementById(imgId);
+  const typeBlockElement = document.getElementById(typeBlockId);
 
-
-    // Set the content for each element
-    typeElement.textContent = type;
-    titleElement.textContent = title;
-    timeElement.textContent = time +" "+ 'minutos';
-
-    // Set the image source
-    imgElement.src = imgSrc;
-  }
- 
+  // Validate each element exists before setting the content
+  if (typeElement) typeElement.textContent = type;
+  if (titleElement) titleElement.textContent = title;
+  if (timeElement) timeElement.textContent = time + " minutos";
+  if (typeBlockElement) typeBlockElement.textContent = Wtype;
+  if (imgElement) imgElement.src = imgSrc;
+}
 
   
 
@@ -305,7 +303,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const lunch     = DLunch.slot1
         const snack     = DSnack.slot1
   
-        renderContent(breakfast.tittle, "Btittle", breakfast.time, "Btime", breakfast.img, "BImg" )
+        renderContent(breakfast.tittle, "Btittle", breakfast.time, "Btime", breakfast.img, "BImg",)
+
+
         renderContent(lunch.tittle, "Ltittle", lunch.time, "Ltime", lunch.img, "LImg" )
         renderContent(dinner.tittle, "Dtittle", dinner.time, "Dtime", dinner.img, "DImg")
         renderContent(snack.tittle, "Stittle", snack.time, "Stime", snack.img, "SImg")
@@ -324,33 +324,48 @@ document.addEventListener("DOMContentLoaded", function () {
 
       function renderDBreakfastBlock(){
   
-        renderSlotContent("BS1type", "Desayuno", DBreakfast.slot1.tittle, "BS1tittle", DBreakfast.slot1.time, "BS1time", DBreakfast.slot1.img, "BS1Img" )
-        renderSlotContent("BS2type", "Desayuno", DBreakfast.slot2.tittle, "BS2tittle", DBreakfast.slot2.time, "BS2time", DBreakfast.slot2.img, "BS2Img")
-        renderSlotContent("BS3type", "Desayuno", DBreakfast.slot3.tittle, "BS3tittle", DBreakfast.slot3.time, "BS3time", DBreakfast.slot3.img, "BS3Img")
+        renderSlotContent("BS1type", "Desayuno", DBreakfast.slot1.tittle, "BS1tittle", DBreakfast.slot1.time, "BS1time", DBreakfast.slot1.img, "BS1Img", "BS1WC", DBreakfast.slot1.WeightClass)
+
+
+        renderSlotContent("BS2type", "Desayuno", DBreakfast.slot2.tittle, "BS2tittle", DBreakfast.slot2.time, "BS2time", DBreakfast.slot2.img, "BS2Img", "BS2WC", DBreakfast.slot2.WeightClass)
+
+
+        renderSlotContent("BS3type", "Desayuno", DBreakfast.slot3.tittle, "BS3tittle", DBreakfast.slot3.time, "BS3time", DBreakfast.slot3.img, "BS3Img", "BS3WC", DBreakfast.slot3.WeightClass)
 
       }
 
       function renderDLunchBlock(){
   
-        renderSlotContent("LS1type", "Almuerzo", DLunch.slot1.tittle, "LS1tittle", DLunch.slot1.time, "LS1time", DLunch.slot1.img, "LS1Img" )
-        renderSlotContent("LS2type", "Almuerzo", DLunch.slot2.tittle, "LS2tittle", DLunch.slot2.time, "LS2time", DLunch.slot2.img, "LS2Img")
-        renderSlotContent("LS3type", "Almuerzo", DLunch.slot3.tittle, "LS3tittle", DLunch.slot3.time, "LS3time", DLunch.slot3.img, "LS3Img")
+        renderSlotContent("LS1type", "Almuerzo", DLunch.slot1.tittle, "LS1tittle", DLunch.slot1.time, "LS1time", DLunch.slot1.img, "LS1Img", "LS1WC", DLunch.slot1.WeightClass)
+
+
+        renderSlotContent("LS2type", "Almuerzo", DLunch.slot2.tittle, "LS2tittle", DLunch.slot2.time, "LS2time", DLunch.slot2.img, "LS2Img", "LS2WC", DLunch.slot2.WeightClass)
+
+
+        renderSlotContent("LS3type", "Almuerzo", DLunch.slot3.tittle, "LS3tittle", DLunch.slot3.time, "LS3time", DLunch.slot3.img, "LS3Img", "LS3WC", DLunch.slot3.WeightClass)
 
       }
 
       function renderDinnerBlock(){
   
-        renderSlotContent("DS1type", "Cena", DDinner.slot1.tittle, "DS1tittle", DDinner.slot1.time, "DS1time", DDinner.slot1.img, "DS1Img" )
-        renderSlotContent("DS2type", "Cena", DDinner.slot2.tittle, "DS2tittle", DDinner.slot2.time, "DS2time", DDinner.slot2.img, "DS2Img")
-        renderSlotContent("DS3type", "Cena", DDinner.slot3.tittle, "DS3tittle", DDinner.slot3.time, "DS3time", DDinner.slot3.img, "DS3Img")
+        renderSlotContent("DS1type", "Cena", DDinner.slot1.tittle, "DS1tittle", DDinner.slot1.time, "DS1time", DDinner.slot1.img, "DS1Img" , "DS1WC", DDinner.slot1.WeightClass)
+
+
+        renderSlotContent("DS2type", "Cena", DDinner.slot2.tittle, "DS2tittle", DDinner.slot2.time, "DS2time", DDinner.slot2.img, "DS2Img", "DS2WC", DDinner.slot1.WeightClass)
+
+
+        renderSlotContent("DS3type", "Cena", DDinner.slot3.tittle, "DS3tittle", DDinner.slot3.time, "DS3time", DDinner.slot3.img, "DS3Img", "DS3WC", DDinner.slot1.WeightClass)
+
 
       }
 
       function renderDSnackBlock(){
   
-        renderSlotContent("SS1type", "Snack", DSnack.slot1.tittle, "SS1tittle", DSnack.slot1.time, "SS1time", DSnack.slot1.img, "SS1Img" )
-        renderSlotContent("SS2type", "Snack", DSnack.slot2.tittle, "SS2tittle", DSnack.slot2.time, "SS2time", DSnack.slot2.img, "SS2Img")
-        renderSlotContent("SS3type", "Snack", DSnack.slot3.tittle, "SS3tittle", DSnack.slot3.time, "SS3time", DSnack.slot3.img, "SS3Img")
+        renderSlotContent("SS1type", "Snack", DSnack.slot1.tittle, "SS1tittle", DSnack.slot1.time, "SS1time", DSnack.slot1.img, "SS1Img", "SS1WC", DDinner.slot1.WeightClass)
+
+        renderSlotContent("SS2type", "Snack", DSnack.slot2.tittle, "SS2tittle", DSnack.slot2.time, "SS2time", DSnack.slot2.img, "SS2Img", "SS2WC", DSnack.slot1.WeightClass)
+
+        renderSlotContent("SS3type", "Snack", DSnack.slot3.tittle, "SS3tittle", DSnack.slot3.time, "SS3time", DSnack.slot3.img, "SS3Img", "SS3WC", DSnack.slot1.WeightClass)
 
       }
 
@@ -358,9 +373,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
       function renderVBreakfastBlock(){
   
-        renderSlotContent("BS1type", "Desayuno", VBreakfast.slot1.tittle, "VBS1tittle", VBreakfast.slot1.time, "VBS1time", VBreakfast.slot1.img, "VBS1Img" )
-        renderSlotContent("BS2type", "Desayuno", VBreakfast.slot2.tittle, "VBS2tittle", VBreakfast.slot2.time, "VBS2time", VBreakfast.slot2.img, "VBS2Img")
-        renderSlotContent("BS3type", "Desayuno", VBreakfast.slot3.tittle, "VBS3tittle", VBreakfast.slot3.time, "VBS3time", VBreakfast.slot3.img, "VBS3Img")
+        renderSlotContent("BS1type", "Desayuno", VBreakfast.slot1.tittle, "VBS1tittle", VBreakfast.slot1.time, "VBS1time", VBreakfast.slot1.img, "VBS1Img" , "VBS1WC", VBreakfast.slot1.WeightClass)
+
+        renderSlotContent("BS2type", "Desayuno", VBreakfast.slot2.tittle, "VBS2tittle", VBreakfast.slot2.time, "VBS2time", VBreakfast.slot2.img, "VBS2Img", "VBS2WC", VBreakfast.slot1.WeightClass)
+
+        renderSlotContent("BS3type", "Desayuno", VBreakfast.slot3.tittle, "VBS3tittle", VBreakfast.slot3.time, "VBS3time", VBreakfast.slot3.img, "VBS3Img", "VBS3WC", VBreakfast.slot1.WeightClass)
 
       }
       function renderVLunchBlock(){

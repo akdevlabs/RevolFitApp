@@ -716,3 +716,64 @@ function renderCarousel(containerId, items) {
 
 
 }
+
+
+
+if( ActiveDB === "BS1type"){
+    console.log(DBreakfast.slot1.ingredients)
+    return(DBreakfast.slot1.ingredients)
+  }else if( ActiveDB === "BS2type"){
+    return(DBreakfast.slot2.ingredients)
+  }else if( ActiveDB === "BS3type"){
+    return(DBreakfast.slot3.ingredients)
+  
+  }else if( ActiveDB === "LS1type"){
+    console.log(DLunch.slot1.ingredients)
+    return(DLunch.slot1.ingredients)
+  }else if( ActiveDB === "LS2type"){
+    return(DLunch.slot2.ingredients.Listiofingredient)
+  }else if( ActiveDB === "LS3type"){
+    return(DLunch.slot3.ingredients.Listiofingredient)
+  
+  }else if( ActiveDB === "DS1type"){
+    return(DDinner.slot1.Instrucciones)
+  }else if( ActiveDB === "DS2type"){
+    return(DDinner.slot2.Instrucciones)
+  }else if( ActiveDB === "DS3type"){
+    return(DDinner.slot3.Instrucciones)
+  
+  }else if( ActiveDB === "SS1type"){
+    return(DSnack.slot1.Instrucciones)
+  }else if( ActiveDB === "SS2type"){
+    return(DSnack.slot2.Instrucciones)
+  }else if( ActiveDB === "SS3type"){
+    return(DSnack.slot3.Instrucciones)
+  
+  }else if( ActiveDB === "VBreakfast.slot1.img"){
+    return(VBreakfast.slot1.Instrucciones)
+  }else if( ActiveDB === "VBreakfast.slot2.img"){
+    return(VBreakfast.slot2.Instrucciones)
+  }else if( ActiveDB === "VBreakfast.slot3.img"){
+    return(VBreakfast.slot3.Instrucciones)
+  
+  }else if( ActiveDB === "VLunch.slot1.img"){
+    return(VLunch.slot1.Instrucciones)
+  }else if( ActiveDB === "VLunch.slot2.img"){
+    return(VLunch.slot2.Instrucciones)
+  }else if( ActiveDB === "VLunch.slot3.img"){
+    return(VLunch.slot3.Instrucciones)
+  
+  }else if( ActiveDB === "VDinner.slot1.img"){
+    return(VDinner.slot1.Instrucciones)
+  }else if( ActiveDB === "VDinner.slot1.img"){
+    return(VDinner.slot2.Instrucciones)
+  }else if( ActiveDB === "VDinner.slot1.img"){
+    return(VDinner.slot3.Instrucciones)
+  
+  }else if( ActiveDB === "VSnack.slot1.img"){
+    return(VSnack.slot1.Instrucciones)
+  }else if( ActiveDB === "VSnack.slot2.img"){
+    return(VSnack.slot2.Instrucciones)
+  }else if( ActiveDB === "VSnack.slot3.img"){
+    return(VSnack.slot3.Instrucciones)
+  }

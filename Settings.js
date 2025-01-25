@@ -170,6 +170,7 @@ function BtnColor(color,Tcolor) {
     document.getElementById('btn1'),
     document.getElementById('btn2'),
     document.getElementById('btn3'),
+    document.getElementById('btn4'),
     document.getElementById('logoutBtn'),
   ];
 

@@ -5,74 +5,74 @@
     margin: 0; /* Removes default margin */
     padding: 0; /* Removes default padding */
   }
-.header{
-  text-align: center;
-}
-.block{
-  display: flex;
-  justify-content: space-between;
- 
-
-}
-.basicInfo{
-  display: flex;
-  flex-direction: column;
-}
-
-
-span{
-  font-weight: bold;
-}
-#scoring{
-  display: flex;
-  align-items: center;
-}
-#scoring img {
-  width: 3rem;
-}
-
-.blockBtn{
-  text-align: center;
-}
-
-.hiddenBlock{
-  display: none;
-}
-.visible {
-  display: block;
-  margin: 0 2rem;
-}
-.progress-bar {
-  width: 100%;
-  border-radius: 10px;
-  overflow: hidden;
-  height: 20px;
-  
-}
-
-.progress-fill {
-  height: 100%;
-  width: 0%; /* Dynamic width based on results */
-  transition: width 0.3s ease-in-out;
-}
-
-
-
-
-
-
-
-
-
-  .navBtns{
-    gap: 2rem;
+  .ReportResults{
+    margin: 0 1.5rem;
+  }
+  .header{
+    text-align: center;
+  }
+  .block{
     display: flex;
-    margin: 2rem 0;
-    justify-content: center;
+    justify-content: space-between;
+  }
+  .basicInfo{
+    display: flex;
+    flex-direction: column;
+  }
+  span{
+    font-weight: bold;
   }
 
-  .navBtns div img{
-    width:  2rem;
-    height: 2rem;
+  .btns{
+    font-size: 1.8rem;
+    text-align: center;
+    background-color: aqua;
+    border-radius:  0 .8rem .8rem 0;
+    padding: .3rem ;
   }
+  .progress {
+    background-color: #e9e8e8;
+    height: 1.5rem;
+    border-radius: 10px;
+    width: 100%;
+    position: relative;
+  }
+  .progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    border-radius: 10px;
+
+
+    color: #fff; 
+    line-height: 20px; /* Align text vertically */
+    transition: width 0.5s ease-in-out; /* Smooth transition for width change */
+  }
+  .hiddendiv{
+    gap: .5rem;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

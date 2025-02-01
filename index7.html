@@ -46,6 +46,7 @@
                   <div class="inputs">
                     <label for="peso">Peso kg.</label>
                     <input type="text" id="peso" placeholder="En kilogramos" required>
+                    <span id="error-msg" style="color: red; display: none;">Peso esta fuera del rango permitido</span>
                   </div>
                 </div>
     
@@ -54,6 +55,7 @@
                   <div class="inputs">
                     <label for="altura">Altura</label>
                     <input type="text" id="altura" placeholder="En centímetros" required>
+                    <span id="error-msg-height" style="color: red; display: none;">Altura esta fuera del rango permitido</span>
                   </div>
                   
                 </div>
@@ -63,6 +65,7 @@
                   <div class="inputs">
                     <label for="muneca">Perímetro de muñeca</label>
                     <input type="text" id="muneca" placeholder="En centímetros" required>
+                    <span id="error-msg-wrist" style="color: red; display: none;">Perímetro de muñeca esta fuera del rango permitido</span>
                   </div>
                   
                 </div>
@@ -73,6 +76,7 @@
                     <label for="rodilla">Perímetro de rodilla</label>
                     <input type="text" id="rodilla" placeholder="En centímetros" required>
                   </div>
+                  <span id="error-msg-Knee" style="color: red; display: none;">Perímetro de rodilla esta fuera del rango permitido</span>
                 </div>
     
                 <div class="form-group">
@@ -80,7 +84,9 @@
                   <div class="inputs">
                     <label for="cintura">Perímetro cintura</label>
                     <input type="text" id="cintura" placeholder="En centímetros" required>
+                    <span id="error-msg-waist" style="color: red; display: none;">Perímetro de rodilla esta fuera del rango permitido</span>
                   </div>
+
                 </div>
     
                 <div class="form-group">
@@ -88,6 +94,7 @@
                   <div class="inputs">
                     <label for="cadera">Perímetro cadera</label>
                     <input type="text" id="cadera" placeholder="En centímetros" required>
+                    <span id="error-msg-hips" style="color: red; display: none;">Perímetro de rodilla esta fuera del rango permitido</span>
                   </div>
                   
                 </div>
@@ -103,14 +110,16 @@
                   <div class="inputs">
                     <label for="brazo-derecho">Perímetro brazo derecho</label>
                     <input type="text" id="brazo-derecho" placeholder="En centímetros" required>
+                    <span id="error-msg-arm" style="color: red; display: none;">Perímetro de rodilla esta fuera del rango permitido</span>
                   </div>
                 </div>
     
                 <div class="form-group">
                   <div class="qIcon"  id="lIcon"></div>
                   <div class="inputs">
-                    <label for="pierna-derecha">Perímetro pierna derecha</label>
+                    <label for="pierna-derecha">Perímetro de la pierna derecha</label>
                     <input type="text" id="pierna-derecha" placeholder="En centímetros" required>
+                    <span id="error-msg-leg" style="color: red; display: none;">Perímetro de la pierna derecha esta fuera del rango permitido</span>
                   </div>
                   
                 </div>
@@ -118,14 +127,26 @@
                 <div class="form-group">
                   <div class="qIcon" id="nIcon"></div>
                   <div class="inputs">
-                    <label for="cuello">Perímetro cuello</label>
+                    <label for="cuello">Perímetro de cuello</label>
                     <input type="text" id="cuello" placeholder="En centímetros" required>
+                    <span id="error-msg-neck" style="color: red; display: none;">Perímetro de cuello esta fuera del rango permitido</span>
                   </div>
-                  
+                </div>
+
+                <div class="form-group">
+                  <div class="qIcon" id="hrIcon"></div>
+                  <div class="inputs">
+                    <label for="heartRate">Frecuencia Cardíaca en Reposo</label>
+                    <input type="text" id="heartRate" placeholder="Latidos por minuto OPCIONAL">
+                    <span id="error-msg-heartRate" style="color: red; display: none;">
+                      Frecuencia cardíaca fuera del rango permitido
+                    </span>
+                  </div>
                 </div>
     
+
                 <div class="form-group-dropdown">
-                  <div class="main-question">
+                  <div class="main-question" id="main-question-ejercicio">
                     <a>¿Haces ejercicio?</a>
                     <select id="ejercicio-select" name="ejercicio" required>
                       <option value=""selected disabled>Seleccione una opción</option>
@@ -163,8 +184,14 @@
                   </div>
     
                 </div>
+
+
+
+
+
                 <div class="form-group-dropdown">
-                  <div class="main-question">
+
+                  <div class="main-question" id="main-question-drink">
                     <a>¿Bebes alcohol?</a>
                     <select id="drink-select" name="drink" required>
                       <option value="" selected disabled>Seleccione una opción</option>
@@ -172,7 +199,35 @@
                       <option value="false">No</option>
                     </select>
                   </div>
-                
+
+                  <div id="drink-consumption" class="drink-category">
+                    <h3 class="drink-tittle">Cantidad de vasos (100 cc) consumidos</h3>
+                  </div>
+
+                  <div class="extra-question" id="ChooseDrink">
+                      <label for="Drink">Bebidad</label>
+                      <select id="Drink" name="Drink">
+                        <option value="" selected disabled>Seleccione una opción</option>
+                        <option value="Cerveza">Cerveza</option>
+                        <option value="Vino">Vino y Espumante</option>
+                        <option value="Destilados">Destilados</option>
+                      </select>
+                  </div>
+                  
+                  <div class="extra-question" id="drink-category-amount">
+                      <label for="amount">Cantidad</label>
+                      <select id="amount" name="amount">
+                        <option value="" selected disabled>Seleccione una opción</option>
+                        <option value="1-3">1 a 3</option>
+                        <option value="4-6">4 a 6</option>
+                        <option value="7-10">7 a 10</option>
+                        <option value="10-14">10 a 14</option>
+                        <option value="more-than-14">Más de 14</option>
+                        <option value="never">Nunca</option>
+                      </select>
+                  </div>
+                  
+
                   <div id="yes-extra-question-drink" class="extra-question">
                     <label for="drink-frequency">¿Con qué frecuencia consumes alcohol en una semana?</label>
                     <select id="drink-frequency" name="drink-frequency">
@@ -188,7 +243,7 @@
                   </div>
                 
                   <div id="no-extra-question-drink" class="extra-question">
-                    <label for="quit-drinking-time">¿Hace cuánto tiempo dejaste de consumir alcohol?</label>
+                    <label for="quit-drinking-time">¿Hace cuánto tiempo dejaste de consumir alcohol o nunca?</label>
                     <select id="quit-drinking-time" name="quit-drinking-time">
                       <option value="" selected disabled>Seleccione una opción</option>
                       <option value="never">Nunca</option>
@@ -200,10 +255,17 @@
                       <option value="more-than-1-year">Más de 1 año</option>
                     </select>
                   </div>
+
                 </div>
+
+                
+                
+                
+                
+                
     
                 <div class="form-group-dropdown">
-                  <div class="main-question">
+                  <div class="main-question" id="main-question-smoking">
                     <a>¿Fumas?</a>
                     <select id="smoking-select" name="smoking" required>
                       <option value="" selected disabled>Seleccione una opción</option>
@@ -237,16 +299,15 @@
                     </select>
                   </div>
                 </div>
-                
-                
-                
-                </div>
-    
-                
-    
                 <button type="button" class="Btn" id="BtnThree">Next</button>
+                
+                
               </div>
     
+                
+            </div>
+
+            <div class="form-grid">
               <div class="Block" id="three">
                 <a class="bTittle">¿Presenta alguna de estas Enfermedades  No Transmisibles (ENT)?</a>
     
@@ -452,8 +513,8 @@
                 <button type="submit" class="Btn" id="rSendBtn">Submit</button>
     
               </div>
-    
             </div>
+          
           </form>
   
       </div>

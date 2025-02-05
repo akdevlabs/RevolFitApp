@@ -63,6 +63,7 @@ document.getElementById("userForm").addEventListener("submit", async (event) => 
     pais: document.getElementById("pais").value,
     Zip: document.getElementById("Zip").value,
     Cuidad: document.getElementById("Cuidad").value,
+    Bu:transferredInfo,
    
     isBusiness: document.getElementById("isBusiness").checked,
     isCensus: document.getElementById("isCensus").checked,
@@ -101,16 +102,12 @@ document.getElementById("userForm").addEventListener("submit", async (event) => 
     // Optionally save data in localStorage
     localStorage.setItem(userInfo, JSON.stringify(formData));
 
-    // Check if the census checkbox is checked
-    const isCensusChecked = document.getElementById("isCensus").checked;
+
 
     alert("Form submitted successfully!");
     // Redirect based on checkbox status
-    if (isCensusChecked) {
-        window.location.href = "index7.1.html";
-    } else {
-        window.location.href = "index7.html";
-    }
+    window.location.href = "index7.html";
+   
 } catch (error) {
     console.error("Error updating document:", error);
     alert("Error submitting the form. Please try again.");

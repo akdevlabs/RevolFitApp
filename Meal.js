@@ -712,10 +712,126 @@ SetMealPlan().then((data) => {
     return ingredients;
 }
 
-getIngredients()
 
 
 
+
+
+function renderIngredientsList(items) {
+  const container = document.getElementById("IngList");
+  if (!container) {
+      console.error("Container with ID 'IngList' not found.");
+      return;
+  }
+  
+  container.innerHTML = ""; // Clear previous content
+  
+  items.forEach(item => {
+      const itemElement = document.createElement("div");
+      itemElement.classList.add("ingredient-item");
+      itemElement.textContent = item;
+      container.appendChild(itemElement);
+  });
+}
+// Example usage
+const ingredients = getIngredients();
+renderIngredientsList(ingredients);
+
+
+function getIconIngredients() {
+  const ActiveDB = savedContent.type;
+  console.log(ActiveDB)
+  const mealMapping = {
+      BS1type: () => DBreakfast.slot1.ingredients.Icon,
+      BS2type: () => DBreakfast.slot2.ingredients.Icon,
+      BS3type: () => DBreakfast.slot3.ingredients.Icon,
+      LS1type: () => DLunch.slot1.ingredients.Icon,
+      LS2type: () => DLunch.slot2.ingredients.Icon,
+      LS3type: () => DLunch.slot3.ingredients.Icon,
+      DS1type: () => DDinner.slot1.ingredients.Icon,
+      DS2type: () => DDinner.slot2.ingredients.Icon,
+      DS3type: () => DDinner.slot3.ingredients.Icon,
+      SS1type: () => DSnack.slot1.ingredients.Icon,
+      SS2type: () => DSnack.slot2.ingredients.Icon,
+      SS3type: () => DSnack.slot3.ingredients.Icon,
+      "VBreakfast.slot1.img": () => VBreakfast.slot1.ingredients.Icon,
+      "VBreakfast.slot2.img": () => VBreakfast.slot2.ingredients.Icon,
+      "VBreakfast.slot3.img": () => VBreakfast.slot3.ingredients.Icon,
+      "VLunch.slot1.img": () => VLunch.slot1.ingredients.Icon,
+      "VLunch.slot2.img": () => VLunch.slot2.ingredients.Icon,
+      "VLunch.slot3.img": () => VLunch.slot3.ingredients.Icon,
+      "VDinner.slot1.img": () => VDinner.slot1.ingredients.Icon,
+      "VDinner.slot2.img": () => VDinner.slot2.ingredients.Icon,
+      "VDinner.slot3.img": () => VDinner.slot3.ingredients.Icon,
+      "VSnack.slot1.img": () => VSnack.slot1.ingredients.Icon,
+      "VSnack.slot2.img": () => VSnack.slot2.ingredients.Icon,
+      "VSnack.slot3.img": () => VSnack.slot3.ingredients.Icon
+  };
+
+  const ingredients = mealMapping[ActiveDB] ? mealMapping[ActiveDB]() : null;
+  
+  console.log("Icons:", ingredients);  // Log the ingredients
+
+  return ingredients;
+}
+
+function renderImageList(images) {
+  const container = document.getElementById("IconBlocks");
+  if (!container) {
+      console.error("Container with ID 'IconBlocks' not found.");
+      return;
+  }
+  
+  container.innerHTML = ""; // Clear previous content
+  
+  images.forEach(src => {
+      const imgElement = document.createElement("img");
+      imgElement.classList.add("icon-image");
+      imgElement.src = src;
+      imgElement.alt = "Icon";
+      container.appendChild(imgElement);
+  });
+}
+
+const imageSources = getIconIngredients();
+renderImageList(imageSources);
+
+
+
+
+function renderFirstFourImages(images) {
+  const container = document.querySelector(".IngredientImgBlock");
+  if (!container) {
+      console.error("Container with class 'IngredientImgBlock' not found.");
+      return;
+  }
+  
+  const blocks = container.querySelectorAll(".blocks img");
+  images.slice(0, 4).forEach((src, index) => {
+      if (blocks[index]) {
+          blocks[index].src = src;
+      }
+  });
+}
+
+renderFirstFourImages(imageSources);
+
+
+
+function toggleRender() {
+  const ingList = document.getElementById("IngList");
+  const iconBlocks = document.getElementById("IconBlocks");
+  
+  if (ingList.style.display === "none") {
+      ingList.style.display = "block";
+      iconBlocks.style.display = "none";
+  } else {
+      ingList.style.display = "none";
+      iconBlocks.style.display = "block";
+  }
+}
+
+document.getElementById("toggleButton").addEventListener("click", toggleRender);
 
 
 
@@ -741,6 +857,16 @@ getIngredients()
 
     return { icons, ingredients };
   }
+
+
+
+
+
+
+
+
+
+
 
 
 

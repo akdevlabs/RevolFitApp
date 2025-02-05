@@ -47,6 +47,23 @@ async function checkDocumentExists(collectionName, documentId) {
 checkDocumentExists("RevoBusiness", transferredInfo);
 
 
+// Fetch census info
+async function getCensoInfo() {
+  try {
+    const docRef = doc(db, 'users', transferreduserInfo);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      console.log("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
 
 // Submission logic
 document.getElementById("EvaluationQuestions").addEventListener("submit", async (event) => {
@@ -64,63 +81,51 @@ document.getElementById("EvaluationQuestions").addEventListener("submit", async 
     cuello: document.getElementById("cuello")?.value || null,
     ejercicio: document.getElementById("ejercicio-select")?.value || null,
     RHR: document.getElementById("heartRate")?.value || null,
-    frecuenciaEjercicio:
-      document.getElementById("ejercicio-select")?.value === "true"
-        ? document.getElementById("frequency")?.value
-        : null,
-    tiempoSinEjercicio:
-      document.getElementById("ejercicio-select")?.value === "false"
-        ? document.getElementById("exercise-time")?.value
-        : null,
+    frecuenciaEjercicio: document.getElementById("ejercicio-select")?.value === "true" ? document.getElementById("frequency")?.value : null,
+    tiempoSinEjercicio: document.getElementById("ejercicio-select")?.value === "false" ? document.getElementById("exercise-time")?.value : null,
     fuma: document.getElementById("smoking-select")?.value || null,
-    añosFumando:
-      document.getElementById("smoking-select")?.value === "true"
-        ? document.getElementById("smoking-years-select")?.value
-        : null,
-    tiempoSinFumar:
-      document.getElementById("smoking-select")?.value === "false"
-        ? document.getElementById("quit-smoking-time")?.value
-        : null,
-  
-    // New drink consumption fields
+    añosFumando: document.getElementById("smoking-select")?.value === "true" ? document.getElementById("smoking-years-select")?.value : null,
+    tiempoSinFumar: document.getElementById("smoking-select")?.value === "false" ? document.getElementById("quit-smoking-time")?.value : null,
     cerveza: document.getElementById("beer")?.value || null,
     vinoEspumante: document.getElementById("wine")?.value || null,
     destilados: document.getElementById("spirits")?.value || null,
-  
     timestamp: new Date().toISOString(),
   };
-  
+
   try {
-    const userId = transferreduserInfo; // Retrieved from localStorage
+    const userId = transferreduserInfo;
     if (!userId) {
       throw new Error("User ID is not set in localStorage.");
     }
 
     const userRef = doc(db, "users", userId);
-
-    // Add the evaluation data to a sub-collection within the user document
     const evaluationsRef = collection(userRef, "evaluation");
     const newDocRef = await addDoc(evaluationsRef, formData);
 
     console.log(`New evaluation added with ID: ${newDocRef.id}`);
 
-    // Update the user's main document with a reference or summary of the evaluation
     await updateDoc(userRef, {
-      lastEvaluation: formData, // Save a summary of the latest evaluation
-      lastEvaluationId: newDocRef.id, // Save the document ID
+      lastEvaluation: formData,
+      lastEvaluationId: newDocRef.id,
+      evaluation: true,
     });
-
-    // Update the evaluation field in the user's main document
-    await updateDoc(userRef, { evaluation: true });
+    
     console.log("Evaluation field updated to true in the user's document.");
+    localStorage.setItem("userInfo", JSON.stringify(formData));
 
-    alert("Evaluation submitted and saved successfully!");
-    window.location.href = "index9.html";
+    // Fetch census information and redirect accordingly
+    const data = await getCensoInfo();
+    if (data) {
+      const isCensusChecked = data.isCensus;
+      alert("Form submitted successfully!");
+      window.location.href = isCensusChecked ? "index.html" : "index9.html";
+    }
   } catch (error) {
     console.error("Error submitting the evaluation:", error);
     alert("Error submitting the evaluation. Please try again.");
   }
 });
+
 
 // Block initialization logic
 const blocks = document.querySelectorAll('.Block');

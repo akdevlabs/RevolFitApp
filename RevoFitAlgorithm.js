@@ -232,16 +232,16 @@ getUserResults().then((data) => {
   // lastEvaluation
   
 
-  const waist  = lastEvaluation.cintura;
-  const neck   = lastEvaluation.cuello; 
-  const weight = lastEvaluation.peso; 
-  const height = lastEvaluation.altura;
-  const rist   = lastEvaluation.muneca;
-  const hip    = lastEvaluation.cadera;  
-  const knee   = lastEvaluation.rodilla;  
+  const waist  = Number(lastEvaluation.cintura);
+  const neck   = Number(lastEvaluation.cuello); 
+  const weight = Number(lastEvaluation.peso); 
+  const height = Number(lastEvaluation.altura);
+  const rist   = Number(lastEvaluation.muneca);
+  const hip    = Number(lastEvaluation.cadera);  
+  const knee   = Number(lastEvaluation.rodilla);  
 
 
- 
+
   const restingHR = 60; // bpm
 
 
@@ -586,8 +586,8 @@ getUserResults().then((data) => {
 
     // Calculate residual mass in kilograms
     const residualMassKg = (weightKg * CONSTANT1) / CONSTANT2;
-
-    console.log(residualMassKg)
+  
+    console.log("1"+residualMassKg)
     // Calculate residual mass as a percentage
     const residualMassPercentage = (residualMassKg * CONSTANT2) / weightKg;
     console.log(residualMassPercentage)
@@ -597,6 +597,10 @@ getUserResults().then((data) => {
         residualMassPercentage: residualMassPercentage // Rounded to 1 decimal place
     };
   }
+
+
+
+
   function calculateResidualMassMale(weight) {
     const constantMass = 24.21; // CONSTANTE 1 MASA RESIDUAL HOMBRE
     const constantPercentage = 100; // CONSTANTE 1 MASA RESIDUAL HOMBRE
@@ -801,137 +805,184 @@ function calculateMetabolicAge(weight, height, age, gender) {
 
 
  // Function to update the progress bar
-  function updateProgressBar(value, bar, low, high) {
-    const progressBar = document.getElementById(bar);
+ function updateProgressBar(value, bar, low, high) {
+  const progressBar = document.getElementById(bar);
 
-    // Ensure the value is between low and high
-    const clampedValue = Math.max(low, Math.min(value, high));
+  // Ensure the value is between low and high
+  const clampedValue = Math.max(low, Math.min(value, high));
 
-    // Calculate the percentage between low and high
-    const percentage = ((clampedValue - low) / (high - low)) * 100;
+  // Calculate the percentage between low and high
+  const percentage = ((clampedValue - low) / (high - low)) * 100;
 
-    // Update the width and aria-valuenow attributes
-    progressBar.style.width = `${percentage}%`;
-    progressBar.setAttribute('aria-valuenow', percentage);
+  // Update the width and aria-valuenow attributes
+  progressBar.style.width = `${percentage}%`;
+  progressBar.setAttribute('aria-valuenow', percentage);
 
-    // Update the displayed percentage
-    progressBar.textContent = `${Math.round(percentage)}%`;
+  // Update the displayed percentage
+  progressBar.textContent = `${Math.round(percentage)}%`;
 
-    // Apply styling
-    styleProgressBar(progressBar, percentage);
-  }
-  function renderTextKg(bodyFatValue, Bfurl) {
-    // Select the span element by its ID
-    const bodyFatElement = document.getElementById(Bfurl);
-  
-    // Set the content of the span element to the body fat value
-    bodyFatElement.textContent = bodyFatValue;
-  }
-  
+  // Apply styling
+  styleProgressBar(progressBar, percentage);
+}
 
-  
-  
-
-  function renderBodyFat(){
-    if(gender === "Male"){
-
-
-      const fat = calculateBodyFatForMen(waist, neck, height, weight)
-      const Residual = calculateResidualMassWomen(weight)
-      const Scoring = getScoring(age, gender, height, fat)
-      const BoneMass = calculateBoneMass(weight, height, rist, knee)
-      const SkinMass = calculateSkinMassMale(height, weight)
+function updatefatProgressBar(value) {
+  var progressBar = document.getElementById("progressbarGC");
+  if (progressBar) {
+      // Ensure value is within valid range (0-100)
+      value = Math.max(0, Math.min(100, value));
       
-      const MetabolicAge = calculateMetabolicAge(weight, height, age, gender)
+      progressBar.style.width = value + "%";
+      progressBar.innerText = value + "%";
+      progressBar.setAttribute("aria-valuenow", value);
+  }
+}
 
-      const Nweight   = Number(weight)
-      const Nfat      = Number(fat.fatWeightKg)
-      const NResidual = Number(Residual.residualMassKg)
-      const NBoneMass = Number(BoneMass.boneMassKg)
-      const NSkinMass = Number(SkinMass.skinMassKg)
-      const muscleMass = calculateBodyMetricsForGender( Nweight,  Nfat ,  NResidual, NBoneMass,  NSkinMass)
-    
+function renderTextKg(bodyFatValue, Bfurl) {
+  // Select the span element by its ID
+  const bodyFatElement = document.getElementById(Bfurl);
 
-
-    console.log("MetabolicAge"+" "+MetabolicAge )
-
-
-      updateProgressBar(Number(fat.bodyFatPercentage) , "progressbarGC", 12, 25)
-      updateProgressBar(Residual.residualMassPercentage , "progressbarMR", 12, 25)
-      updateProgressBar(BoneMass.boneMassPercentage , "progressbarBM", 0, 100)
-      updateProgressBar(SkinMass.skinMassPercentage, "progressbarSM", 0, 100)
-
-
-
-      console.log("bodyfat"+" "+fat.bodyFatPercentage)
-      console.log("residualMass"+" "+Residual.residualMassPercentage)
-      console.log("BoneMass"+" "+BoneMass.boneMassPercentage )
-      console.log("SkinMass"+" "+SkinMass.skinMassPercentage)
-
-
-
-      renderTextKg(fat.fatWeightKg +" "+"kg", "bodyfatKg");
-      renderTextKg(Residual.residualMassKg +" "+"kg", "residualMassKg");
-      renderTextKg(BoneMass.boneMassKg +" "+"kg", "boneMassKg");
-      renderTextKg(SkinMass.skinMassKg+" "+"kg", "skinMassKg");
-
-
-
-      return(fat)
-    }else if (gender === "Female"){
+  // Set the content of the span element to the body fat value
+  bodyFatElement.textContent = bodyFatValue;
+}
 
 
 
 
-      const fat = calculateBodyFatForWomen(waist, neck, height, hip , weight)
-      const Residual = calculateResidualMassWomen(weight)
-      const Scoring = getScoring(age, gender, height, fat)
-      const BoneMass = calculateBoneMass(weight, height, rist, knee)
-      const SkinMass = calculateSkinMassForWomen(height, weight)
-      const MetabolicAge = calculateMetabolicAge(weight, height, age, gender)
+async function renderBodyFat() {
+  if (!transferreduserInfo) {
+    console.error("User ID is not set in localStorage.");
+    return;
+  }
 
-      const Nweight   = Number(weight)
-      const Nfat      = Number(fat.fatWeightKg)
-      const NResidual = Number(Residual.residualMassKg)
-      const NBoneMass = Number(BoneMass.boneMassKg)
-      const NSkinMass = Number(SkinMass.skinMassKg)
+  const userId = transferreduserInfo;
 
-      const muscleMass = calculateBodyMetricsForGender(Nweight,  Nfat ,  NResidual, NBoneMass,  NSkinMass)
-  
+  if (!gender || !waist || !neck || !height || !weight || !age || !rist || !knee) {
+    console.error("One or more required user parameters are missing.");
+    return;
+  }
 
+  let fat, Residual, BoneMass, SkinMass, muscleMass;
 
+  if (gender === "Male") {
+    fat = calculateBodyFatForMen(waist, neck, height, weight);
+    Residual = calculateResidualMassMale(weight);
+    BoneMass = calculateBoneMass(weight, height, rist, knee);
+    SkinMass = calculateSkinMassMale(height, weight);
+  } else {
+    if (!hip) {
+      console.error("Hip measurement is required for female calculations.");
+      return;
+    }
+    fat = calculateBodyFatForWomen(waist, neck, height, hip, weight);
+    Residual = calculateResidualMassWomen(weight);
+    BoneMass = calculateBoneMass(weight, height, rist, knee);
+    SkinMass = calculateSkinMassForWomen(height, weight);
+  }
 
+  const MetabolicAge = calculateMetabolicAge(weight, height, age, gender);
+  muscleMass = calculateBodyMetricsForGender(
+    Number(weight),
+    Number(fat.fatWeightKg),
+    Number(Residual.residualMassKg),
+    Number(BoneMass.boneMassKg),
+    Number(SkinMass.skinMassKg)
+  );
 
+  console.log(`Metabolic Age: ${MetabolicAge}`);
+  console.log(`Body Fat: ${fat.bodyFatPercentage}`);
+  console.log(`Residual Mass: ${Residual.residualMassPercentage}`);
+  console.log(`Bone Mass: ${BoneMass.boneMassPercentage}`);
+  console.log(`Skin Mass: ${SkinMass.skinMassPercentage}`);
+  console.log(`Muscle Mass: ${muscleMass.musclePercentage}`);
 
+  updatefatProgressBar(fat.bodyFatPercentage);
+  updateProgressBar(Residual.residualMassPercentage, "progressbarMR", 12, 25);
+  updateProgressBar(BoneMass.boneMassPercentage, "progressbarBM", 0, 100);
+  updateProgressBar(SkinMass.skinMassPercentage, "progressbarSM", 0, 100);
+  updateProgressBar(muscleMass.musclePercentage, "progressbarMS", 0, 100);
 
- 
+  renderTextKg(`${fat.fatWeightKg} kg`, "bodyfatKg");
+  renderTextKg(`${Residual.residualMassKg} kg`, "residualMassKg");
+  renderTextKg(`${BoneMass.boneMassKg} kg`, "boneMassKg");
+  renderTextKg(`${SkinMass.skinMassKg} kg`, "skinMassKg");
+  renderTextKg(`${muscleMass.muscleWeight} kg`, "muscleMassKg");
 
-      updateProgressBar(Number(fat.bodyFatPercentage) , "progressbarGC", 12, 25)
-      updateProgressBar(Residual.residualMassPercentage , "progressbarMR", 12, 25)
-      updateProgressBar(BoneMass.boneMassPercentage , "progressbarBM", 0, 100)
-      updateProgressBar(SkinMass.skinMassPercentage, "progressbarSM", 0, 100)
-      updateProgressBar(muscleMass.musclePercentage, "progressbarMS", 0, 100)
+  async function shouldUpdateDatabase() {
+    try {
+      const userRef = doc(db, "users", userId);
+      const userSnap = await getDoc(userRef);
 
+      if (!userSnap.exists()) {
+        console.error("User document does not exist.");
+        return true; // If no user record exists, create one
+      }
 
-      console.log("bodyfat"+" "+fat.bodyFatPercentage)
-      console.log("residualMass"+" "+Residual.residualMassPercentage)
-      console.log("BoneMass"+" "+BoneMass.boneMassPercentage )
-      console.log("SkinMass"+" "+SkinMass.skinMassPercentage)
-      console.log("muscleMass"+" "+muscleMass.musclePercentage)
+      const userData = userSnap.data();
+      const lastTimestamp = userData?.lastBodyFatEvaluation?.createdAt;
 
+      if (!lastTimestamp) {
+        console.log("No previous evaluation found, creating a new one.");
+        return true;
+      }
 
+      const now = new Date();
+      const lastUpdate = new Date(lastTimestamp.seconds * 1000); // Convert Firestore timestamp
+      const diffInDays = (now - lastUpdate) / (1000 * 3600 * 24);
 
-      renderTextKg(fat.fatWeightKg +" "+"kg", "bodyfatKg");
-      renderTextKg(Residual.residualMassKg +" "+"kg", "residualMassKg");
-      renderTextKg(BoneMass.boneMassKg +" "+"kg", "boneMassKg");
-      renderTextKg(SkinMass.skinMassKg+" "+"kg", "skinMassKg");
-      renderTextKg(muscleMass.muscleWeight+" "+"kg", "muscleMassKg");
-
-
-      return(fat)
+      return diffInDays >= 30; // Returns true only if 30+ days have passed
+    } catch (error) {
+      console.error("Error checking last update timestamp:", error);
+      return false;
     }
   }
-  renderBodyFat()
+
+  async function updateDatabase() {
+    try {
+      const userRef = doc(db, "users", userId);
+      const evaluationsRef = collection(userRef, "bodyFatEvaluations");
+
+      const fatEvaluationData = {
+        bodyFatPercentage: fat.bodyFatPercentage,
+        residualMassPercentage: Residual.residualMassPercentage,
+        boneMassPercentage: BoneMass.boneMassPercentage,
+        skinMassPercentage: SkinMass.skinMassPercentage,
+        fatWeightKg: fat.fatWeightKg,
+        residualMassKg: Residual.residualMassKg,
+        boneMassKg: BoneMass.boneMassKg,
+        skinMassKg: SkinMass.skinMassKg,
+        muscleMassPercentage: muscleMass.musclePercentage,
+        muscleMassKg: muscleMass.muscleWeight,
+        createdAt: new Date(),
+      };
+
+      // Add new evaluation
+      const newDocRef = await addDoc(evaluationsRef, fatEvaluationData);
+      console.log(`New body fat evaluation added with ID: ${newDocRef.id}`);
+
+      // Update user's main document
+      await updateDoc(userRef, {
+        lastBodyFatEvaluation: fatEvaluationData,
+        lastBodyFatEvaluationId: newDocRef.id,
+      });
+
+      console.log("User document updated with latest evaluation.");
+    } catch (error) {
+      console.error("Error saving body fat evaluation:", error);
+    }
+  }
+
+  if (await shouldUpdateDatabase()) {
+    await updateDatabase();
+  } else {
+    console.log("Skipping database update: Last update was less than 30 days ago.");
+  }
+
+  return fat;
+}
+
+renderBodyFat();
+
+
 
 
 

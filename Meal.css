@@ -78,8 +78,21 @@
     
   }
 
-
-
+  .iconBlocks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Spacing between images */
+    justify-content: center; /* Align images in center */
+  }
+  
+  .iconBlocks img {
+    width: 5rem;  /* Adjust size as needed */
+    height: 5rem;
+    object-fit: contain;
+  }
+  .iconBlocks{
+    display: none;
+  }
 
 
 

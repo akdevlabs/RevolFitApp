@@ -373,18 +373,18 @@ function renderSlotContent(Dtype, type, title, titleId, time, timeId, imgSrc, im
 
       function renderVBreakfastBlock(){
   
-        renderSlotContent("BS1type", "Desayuno", VBreakfast.slot1.tittle, "VBS1tittle", VBreakfast.slot1.time, "VBS1time", VBreakfast.slot1.img, "VBS1Img" , "VBS1WC", VBreakfast.slot1.WeightClass)
+        renderSlotContent("VBS1type", "Desayuno", VBreakfast.slot1.tittle, "VBS1tittle", VBreakfast.slot1.time, "VBS1time", VBreakfast.slot1.img, "VBS1Img" , "VBS1WC", VBreakfast.slot1.WeightClass)
 
-        renderSlotContent("BS2type", "Desayuno", VBreakfast.slot2.tittle, "VBS2tittle", VBreakfast.slot2.time, "VBS2time", VBreakfast.slot2.img, "VBS2Img", "VBS2WC", VBreakfast.slot1.WeightClass)
+        renderSlotContent("VBS2type", "Desayuno", VBreakfast.slot2.tittle, "VBS2tittle", VBreakfast.slot2.time, "VBS2time", VBreakfast.slot2.img, "VBS2Img", "VBS2WC", VBreakfast.slot1.WeightClass)
 
-        renderSlotContent("BS3type", "Desayuno", VBreakfast.slot3.tittle, "VBS3tittle", VBreakfast.slot3.time, "VBS3time", VBreakfast.slot3.img, "VBS3Img", "VBS3WC", VBreakfast.slot1.WeightClass)
+        renderSlotContent("VBS3type", "Desayuno", VBreakfast.slot3.tittle, "VBS3tittle", VBreakfast.slot3.time, "VBS3time", VBreakfast.slot3.img, "VBS3Img", "VBS3WC", VBreakfast.slot1.WeightClass)
 
       }
       function renderVLunchBlock(){
   
-        renderSlotContent("LS1type", "Almuerzo", VLunch.slot1.tittle, "VLS1tittle", VLunch.slot1.time, "VLS1time", VLunch.slot1.img, "VLS1Img" )
-        renderSlotContent("LS2type", "Almuerzo", VLunch.slot2.tittle, "VLS2tittle", VLunch.slot2.time, "VLS2time", VLunch.slot2.img, "VLS2Img")
-        renderSlotContent("LS3type", "Almuerzo", VLunch.slot3.tittle, "VLS3tittle", VLunch.slot3.time, "VLS3time", VLunch.slot3.img, "VLS3Img")
+        renderSlotContent("VLS1type", "Almuerzo", VLunch.slot1.tittle, "VLS1tittle", VLunch.slot1.time, "VLS1time", VLunch.slot1.img, "VLS1Img" )
+        renderSlotContent("VLS2type", "Almuerzo", VLunch.slot2.tittle, "VLS2tittle", VLunch.slot2.time, "VLS2time", VLunch.slot2.img, "VLS2Img")
+        renderSlotContent("VLS3type", "Almuerzo", VLunch.slot3.tittle, "VLS3tittle", VLunch.slot3.time, "VLS3time", VLunch.slot3.img, "VLS3Img")
 
       }
       function renderVDinnerBlock(){
@@ -572,12 +572,11 @@ function renderSlotContent(Dtype, type, title, titleId, time, timeId, imgSrc, im
 
 });
 
-
 // Define the function to save to localStorage
 function saveToLocalStorage(key, value) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
-    console.log(`Saved to localStorage: ${key}`, value); // Debugging log
+    console.log(`Saved to localStorage: ${key}`, value);
   } catch (e) {
     console.error("Error saving to localStorage", e);
   }
@@ -590,7 +589,7 @@ function addClickListener(buttonId, slotContent) {
     if (button) {
       button.addEventListener("click", () => {
         saveToLocalStorage('sContent', slotContent);
-        console.log(`Navigating to index9.2.2.html for ${buttonId}...`); // Debugging log
+        console.log(`Navigating to index9.2.2.html for ${buttonId}...`);
         window.location.href = "index9.2.2.html";
       });
     } else {
@@ -599,8 +598,10 @@ function addClickListener(buttonId, slotContent) {
   });
 }
 
+
 // Slot configurations
 const slots = [
+
   { id: "BSlot1", content: { type: "BS1type", meal: "Desayuno", title: "DBreakfast.slot1.tittle", titleKey: "BS1tittle", time: "DBreakfast.slot1.time", timeKey: "BS1time", img: "DBreakfast.slot1.img", imgKey: "BS1Img" } },
   { id: "BSlot2", content: { type: "BS2type", meal: "Desayuno", title: "DBreakfast.slot2.tittle", titleKey: "BS2tittle", time: "DBreakfast.slot2.time", timeKey: "BS2time", img: "DBreakfast.slot2.img", imgKey: "BS2Img" } },
   { id: "BSlot3", content: { type: "BS3type", meal: "Desayuno", title: "DBreakfast.slot3.tittle", titleKey: "BS3tittle", time: "DBreakfast.slot3.time", timeKey: "BS3time", img: "DBreakfast.slot3.img", imgKey: "BS3Img" } },
@@ -616,15 +617,43 @@ const slots = [
   { id: "DSlot3", content: { type: "DS3type", meal: "Cena", title: "DDinner.slot3.tittle", titleKey: "DS3tittle", time: "DDinner.slot3.time", timeKey: "DS3time", img: "DDinner.slot3.img", imgKey: "DS3Img" } },
 
 
-
-
-
-
-
   { id: "SSlot1", content: { type: "SS1type", meal: "Snack", title: "DSnack.slot1.tittle", titleKey: "SS1tittle", time: "DSnack.slot1.time", timeKey: "SS1time", img: "DSnack.slot1.img", imgKey: "SS1Img" } },
   { id: "SSlot2", content: { type: "SS2type", meal: "Snack", title: "DSnack.slot2.tittle", titleKey: "SS2tittle", time: "DSnack.slot2.time", timeKey: "SS2time", img: "DSnack.slot2.img", imgKey: "SS2Img" } },
   { id: "SSlot3", content: { type: "SS3type", meal: "Snack", title: "DSnack.slot3.tittle", titleKey: "SS3tittle", time: "DSnack.slot3.time", timeKey: "SS3time", img: "DSnack.slot3.img", imgKey: "SS3Img" } },
   // Add vegetarian options or others as needed
+
+
+
+  { id: "VBSlot1", content: { type: "VBS1type", meal: "Desayuno", title: "VBreakfast.slot1.tittle", titleKey: "VBS1tittle", time: "VBreakfast.slot1.time", timeKey: "VBS1time", img: "VBreakfast.slot1.img", imgKey: "VBS1Img" } },
+  { id: "VBSlot2", content: { type: "VBS2type", meal: "Desayuno", title: "VBreakfast.slot2.tittle", titleKey: "VBS2tittle", time: "VBreakfast.slot2.time", timeKey: "VBS2time", img: "VBreakfast.slot2.img", imgKey: "VBS2Img" } },
+  { id: "VBSlot3", content: { type: "VBS3type", meal: "Desayuno", title: "VBreakfast.slot3.tittle", titleKey: "VBS3tittle", time: "VBreakfast.slot3.time", timeKey: "VBS3time", img: "VBreakfast.slot3.img", imgKey: "VBS3Img" } },
+  
+
+
+  { id: "VLSlot1", content: { type: "VLS1type", meal: "Almuerzo", title: "VLunch.slot1.tittle", titleKey: "VLS1tittle", time: "VLunch.slot1.time", timeKey: "VLS1time", img: "VLunch.slot1.img", imgKey: "VLS1Img" } },
+  { id: "VLSlot2", content: { type: "VLS2type", meal: "Almuerzo", title: "VLunch.slot2.tittle", titleKey: "VLS2tittle", time: "VLunch.slot2.time", timeKey: "VLS2time", img: "VLunch.slot2.img", imgKey: "VLS2Img" } },
+  { id: "VLSlot3", content: { type: "VLS3type", meal: "Almuerzo", title: "VLunch.slot3.tittle", titleKey: "VLS3tittle", time: "VLunch.slot3.time", timeKey: "VLS3time", img: "VLunch.slot3.img", imgKey: "VLS3Img" } },
+
+
+
+  { id: "VDSlot1", content: { type: "VDS1type", meal: "Cena", title: "VDinner.slot1.tittle", titleKey: "VDS1tittle", time: "VDinner.slot1.time", timeKey: "VDS1time", img: "VDinner.slot1.img", imgKey: "VDS1Img" } },
+  { id: "VDSlot2", content: { type: "VDS2type", meal: "Cena", title: "VDinner.slot2.tittle", titleKey: "VDS2tittle", time: "VDinner.slot2.time", timeKey: "VDS2time", img: "VDinner.slot2.img", imgKey: "VDS2Img" } },
+  { id: "VDSlot3", content: { type: "VDS3type", meal: "Cena", title: "VDinner.slot3.tittle", titleKey: "VDS3tittle", time: "VDinner.slot3.time", timeKey: "VDS3time", img: "VDinner.slot3.img", imgKey: "VDS3Img" } },
+
+
+
+
+
+  { id: "VSSlot1", content: { type: "VSS1type", meal: "Snack", title: "VSnack.slot1.tittle", titleKey: "VSS1tittle", time: "VSnack.slot1.time", timeKey: "VSS1time", img: "VSnack.slot1.img", imgKey: "VSS1Img" } },
+  { id: "VSSlot2", content: { type: "VSS2type", meal: "Snack", title: "VSnack.slot2.tittle", titleKey: "VSS2tittle", time: "VSnack.slot2.time", timeKey: "VSS2time", img: "VSnack.slot2.img", imgKey: "VSS2Img" } },
+  { id: "VSSlot3", content: { type: "VSS3type", meal: "Snack", title: "VSnack.slot3.tittle", titleKey: "VSS3tittle", time: "VSnack.slot3.time", timeKey: "VSS3time", img: "VSnack.slot3.img", imgKey: "VSS3Img" } },
+
+
+
+
+
+
+
 ];
 
 // Add listeners for each slot

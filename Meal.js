@@ -366,9 +366,15 @@ SetMealPlan().then((data) => {
   const VLunch = Vegetariano.Lunch;
   const VSnack = Vegetariano.Snack;
 
-  // The active data to be rendered
-  const ActiveDB = DBreakfast;
+
   
+
+  console.log(VBreakfast)
+
+
+
+
+
   //console.log(DBreakfast);
   //console.log(ActiveDB);
 
@@ -413,9 +419,9 @@ SetMealPlan().then((data) => {
       return(VLunch.slot3.tittle)
     }else if( ActiveDB === "VDinner.slot1.tittle"){
       return(VDinner.slot1.tittle)
-    }else if( ActiveDB === "VDinner.slot1.tittle"){
+    }else if( ActiveDB === "VDinner.slot2.tittle"){
       return(VDinner.slot2.tittle)
-    }else if( ActiveDB === "VDinner.slot1.tittle"){
+    }else if( ActiveDB === "VDinner.slot3.tittle"){
       return(VDinner.slot3.tittle)
     }else if( ActiveDB === "VSnack.slot1.tittle"){
       return(VSnack.slot1.tittle)
@@ -426,10 +432,10 @@ SetMealPlan().then((data) => {
     }
 
   }
-  
+
   function getCal(){
     const ActiveDB = savedContent.type;
-
+   
     if( ActiveDB === "BS1type"){
       return(DBreakfast.slot1.Cal)
     }else if( ActiveDB === "BS2type"){
@@ -458,37 +464,37 @@ SetMealPlan().then((data) => {
     }else if( ActiveDB === "SS3type"){
       return(DSnack.slot3.Cal)
     
-    }else if( ActiveDB === "VBreakfast.slot1.img"){
+    }else if( ActiveDB === "VBS1type"){
       return(VBreakfast.slot1.Cal)
-    }else if( ActiveDB === "VBreakfast.slot2.img"){
+    }else if( ActiveDB === "VBS2type"){
       return(VBreakfast.slot2.Cal)
-    }else if( ActiveDB === "VBreakfast.slot3.img"){
+    }else if( ActiveDB === "VBS3type"){
       return(VBreakfast.slot3.Cal)
     
-    }else if( ActiveDB === "VLunch.slot1.img"){
+    }else if( ActiveDB === "VLS1type"){
       return(VLunch.slot1.Cal)
-    }else if( ActiveDB === "VLunch.slot2.img"){
+    }else if( ActiveDB === "VLS2type"){
       return(VLunch.slot2.Cal)
-    }else if( ActiveDB === "VLunch.slot3.img"){
+    }else if( ActiveDB === "VLS3type"){
       return(VLunch.slot3.Cal)
     
-    }else if( ActiveDB === "VDinner.slot1.img"){
+    }else if( ActiveDB === "VDS1type"){
       return(VDinner.slot1.Cal)
-    }else if( ActiveDB === "VDinner.slot1.img"){
+    }else if( ActiveDB === "VDS2type"){
       return(VDinner.slot2.Cal)
-    }else if( ActiveDB === "VDinner.slot1.img"){
+    }else if( ActiveDB === "VDS3type"){
       return(VDinner.slot3.Cal)
     
-    }else if( ActiveDB === "VSnack.slot1.img"){
+    }else if( ActiveDB === "VSS1type"){
       return(VSnack.slot1.Cal)
-    }else if( ActiveDB === "VSnack.slot2.img"){
+    }else if( ActiveDB === "VSS2type"){
       return(VSnack.slot2.Cal)
-    }else if( ActiveDB === "VSnack.slot3.img"){
+    }else if( ActiveDB === "VSS3type"){
       return(VSnack.slot3.Cal)
     }
 
   }
-  
+
   function getplatedImg(){
     const ActiveDB = savedContent.img;
 
@@ -536,9 +542,9 @@ SetMealPlan().then((data) => {
     
     }else if( ActiveDB === "VDinner.slot1.img"){
       return(VDinner.slot1.img)
-    }else if( ActiveDB === "VDinner.slot1.img"){
+    }else if( ActiveDB === "VDinner.slot2.img"){
       return(VDinner.slot2.img)
-    }else if( ActiveDB === "VDinner.slot1.img"){
+    }else if( ActiveDB === "VDinner.slot3.img"){
       return(VDinner.slot3.img)
     
     }else if( ActiveDB === "VSnack.slot1.img"){
@@ -550,7 +556,7 @@ SetMealPlan().then((data) => {
     }
 
   }
-
+  
   function getTime(){
     const ActiveDB = savedContent.time;
 
@@ -599,9 +605,9 @@ SetMealPlan().then((data) => {
     
     }else if( ActiveDB === "VDinner.slot1.time"){
       return(VDinner.slot1.time +" "+ "Minutos")
-    }else if( ActiveDB === "VDinner.slot1.time"){
+    }else if( ActiveDB === "VDinner.slot2.time"){
       return(VDinner.slot2.time +" "+ "Minutos")
-    }else if( ActiveDB === "VDinner.slot1.time"){
+    }else if( ActiveDB === "VDinner.slot.time"){
       return(VDinner.slot3.time +" "+ "Minutos")
     
     }else if( ActiveDB === "VSnack.slot1.time"){
@@ -613,6 +619,7 @@ SetMealPlan().then((data) => {
     }
 
   }
+ 
   function getInstrucciones(){
     const ActiveDB = savedContent.type;
 
@@ -644,32 +651,32 @@ SetMealPlan().then((data) => {
     }else if( ActiveDB === "SS3type"){
       return(DSnack.slot3.Instrucciones)
     
-    }else if( ActiveDB === "VBreakfast.slot1.img"){
+    }else if( ActiveDB === "VBS1type"){
       return(VBreakfast.slot1.Instrucciones)
-    }else if( ActiveDB === "VBreakfast.slot2.img"){
+    }else if( ActiveDB === "VBS2type"){
       return(VBreakfast.slot2.Instrucciones)
-    }else if( ActiveDB === "VBreakfast.slot3.img"){
+    }else if( ActiveDB === "VBS3type"){
       return(VBreakfast.slot3.Instrucciones)
     
-    }else if( ActiveDB === "VLunch.slot1.img"){
+    }else if( ActiveDB === "VLS1type"){
       return(VLunch.slot1.Instrucciones)
-    }else if( ActiveDB === "VLunch.slot2.img"){
+    }else if( ActiveDB === "VLS2type"){
       return(VLunch.slot2.Instrucciones)
-    }else if( ActiveDB === "VLunch.slot3.img"){
+    }else if( ActiveDB === "VLS3type"){
       return(VLunch.slot3.Instrucciones)
     
-    }else if( ActiveDB === "VDinner.slot1.img"){
+    }else if( ActiveDB === "VDS1type"){
       return(VDinner.slot1.Instrucciones)
-    }else if( ActiveDB === "VDinner.slot1.img"){
+    }else if( ActiveDB === "VDS2type"){
       return(VDinner.slot2.Instrucciones)
-    }else if( ActiveDB === "VDinner.slot1.img"){
+    }else if( ActiveDB === "VDS3type"){
       return(VDinner.slot3.Instrucciones)
     
-    }else if( ActiveDB === "VSnack.slot1.img"){
+    }else if( ActiveDB === "VSS1type"){
       return(VSnack.slot1.Instrucciones)
-    }else if( ActiveDB === "VSnack.slot2.img"){
+    }else if( ActiveDB === "VSS2type"){
       return(VSnack.slot2.Instrucciones)
-    }else if( ActiveDB === "VSnack.slot3.img"){
+    }else if( ActiveDB === "VSS3type"){
       return(VSnack.slot3.Instrucciones)
     }
 
@@ -679,30 +686,30 @@ SetMealPlan().then((data) => {
     const ActiveDB = savedContent.type;
     console.log(ActiveDB)
     const mealMapping = {
-        BS1type: () => DBreakfast.slot1.ingredients.Listiofingredient,
-        BS2type: () => DBreakfast.slot2.ingredients.Listiofingredient,
-        BS3type: () => DBreakfast.slot3.ingredients.Listiofingredient,
-        LS1type: () => DLunch.slot1.ingredients.Listiofingredient,
-        LS2type: () => DLunch.slot2.ingredients.Listiofingredient,
-        LS3type: () => DLunch.slot3.ingredients.Listiofingredient,
-        DS1type: () => DDinner.slot1.ingredients.Listiofingredient,
-        DS2type: () => DDinner.slot2.ingredients.Listiofingredient,
-        DS3type: () => DDinner.slot3.ingredients.Listiofingredient,
-        SS1type: () => DSnack.slot1.ingredients.Listiofingredient,
-        SS2type: () => DSnack.slot2.ingredients.Listiofingredient,
-        SS3type: () => DSnack.slot3.ingredients.Listiofingredient,
-        "VBreakfast.slot1.img": () => VBreakfast.slot1.ingredients.Listiofingredient,
-        "VBreakfast.slot2.img": () => VBreakfast.slot2.ingredients.Listiofingredient,
-        "VBreakfast.slot3.img": () => VBreakfast.slot3.ingredients.Listiofingredient,
-        "VLunch.slot1.img": () => VLunch.slot1.ingredients.Listiofingredient,
-        "VLunch.slot2.img": () => VLunch.slot2.ingredients.Listiofingredient,
-        "VLunch.slot3.img": () => VLunch.slot3.ingredients.Listiofingredient,
-        "VDinner.slot1.img": () => VDinner.slot1.ingredients.Listiofingredient,
-        "VDinner.slot2.img": () => VDinner.slot2.ingredients.Listiofingredient,
-        "VDinner.slot3.img": () => VDinner.slot3.ingredients.Listiofingredient,
-        "VSnack.slot1.img": () => VSnack.slot1.ingredients.Listiofingredient,
-        "VSnack.slot2.img": () => VSnack.slot2.ingredients.Listiofingredient,
-        "VSnack.slot3.img": () => VSnack.slot3.ingredients.Listiofingredient
+        BS1type:  () => DBreakfast.slot1.ingredients.Listiofingredient,
+        BS2type:  () => DBreakfast.slot2.ingredients.Listiofingredient,
+        BS3type:  () => DBreakfast.slot3.ingredients.Listiofingredient,
+        LS1type:  () => DLunch.slot1.ingredients.Listiofingredient,
+        LS2type:  () => DLunch.slot2.ingredients.Listiofingredient,
+        LS3type:  () => DLunch.slot3.ingredients.Listiofingredient,
+        DS1type:  () => DDinner.slot1.ingredients.Listiofingredient,
+        DS2type:  () => DDinner.slot2.ingredients.Listiofingredient,
+        DS3type:  () => DDinner.slot3.ingredients.Listiofingredient,
+        SS1type:  () => DSnack.slot1.ingredients.Listiofingredient,
+        SS2type:  () => DSnack.slot2.ingredients.Listiofingredient,
+        SS3type:  () => DSnack.slot3.ingredients.Listiofingredient,
+        VBS1type: () => VBreakfast.slot1.ingredients.Listiofingredient,
+        VBS2type: () => VBreakfast.slot2.ingredients.Listiofingredient,
+        VBS3type: () => VBreakfast.slot3.ingredients.Listiofingredient,
+        VLS1type: () => VLunch.slot1.ingredients.Listiofingredient,
+        VLS2type: () => VLunch.slot2.ingredients.Listiofingredient,
+        VLS3type: () => VLunch.slot3.ingredients.Listiofingredient,
+        VDS1type: () => VDinner.slot1.ingredients.Listiofingredient,
+        VDS2type: () => VDinner.slot2.ingredients.Listiofingredient,
+        VDS3type: () => VDinner.slot3.ingredients.Listiofingredient,
+        VSS1type: () => VSnack.slot1.ingredients.Listiofingredient,
+        VSS2type: () => VSnack.slot2.ingredients.Listiofingredient,
+        VSS3type: () => VSnack.slot3.ingredients.Listiofingredient
     };
 
     const ingredients = mealMapping[ActiveDB] ? mealMapping[ActiveDB]() : null;
@@ -742,30 +749,30 @@ function getIconIngredients() {
   const ActiveDB = savedContent.type;
   console.log(ActiveDB)
   const mealMapping = {
-      BS1type: () => DBreakfast.slot1.ingredients.Icon,
-      BS2type: () => DBreakfast.slot2.ingredients.Icon,
-      BS3type: () => DBreakfast.slot3.ingredients.Icon,
-      LS1type: () => DLunch.slot1.ingredients.Icon,
-      LS2type: () => DLunch.slot2.ingredients.Icon,
-      LS3type: () => DLunch.slot3.ingredients.Icon,
-      DS1type: () => DDinner.slot1.ingredients.Icon,
-      DS2type: () => DDinner.slot2.ingredients.Icon,
-      DS3type: () => DDinner.slot3.ingredients.Icon,
-      SS1type: () => DSnack.slot1.ingredients.Icon,
-      SS2type: () => DSnack.slot2.ingredients.Icon,
-      SS3type: () => DSnack.slot3.ingredients.Icon,
-      "VBreakfast.slot1.img": () => VBreakfast.slot1.ingredients.Icon,
-      "VBreakfast.slot2.img": () => VBreakfast.slot2.ingredients.Icon,
-      "VBreakfast.slot3.img": () => VBreakfast.slot3.ingredients.Icon,
-      "VLunch.slot1.img": () => VLunch.slot1.ingredients.Icon,
-      "VLunch.slot2.img": () => VLunch.slot2.ingredients.Icon,
-      "VLunch.slot3.img": () => VLunch.slot3.ingredients.Icon,
-      "VDinner.slot1.img": () => VDinner.slot1.ingredients.Icon,
-      "VDinner.slot2.img": () => VDinner.slot2.ingredients.Icon,
-      "VDinner.slot3.img": () => VDinner.slot3.ingredients.Icon,
-      "VSnack.slot1.img": () => VSnack.slot1.ingredients.Icon,
-      "VSnack.slot2.img": () => VSnack.slot2.ingredients.Icon,
-      "VSnack.slot3.img": () => VSnack.slot3.ingredients.Icon
+      BS1type:  () => DBreakfast.slot1.ingredients.Icon,
+      BS2type:  () => DBreakfast.slot2.ingredients.Icon,
+      BS3type:  () => DBreakfast.slot3.ingredients.Icon,
+      LS1type:  () => DLunch.slot1.ingredients.Icon,
+      LS2type:  () => DLunch.slot2.ingredients.Icon,
+      LS3type:  () => DLunch.slot3.ingredients.Icon,
+      DS1type:  () => DDinner.slot1.ingredients.Icon,
+      DS2type:  () => DDinner.slot2.ingredients.Icon,
+      DS3type:  () => DDinner.slot3.ingredients.Icon,
+      SS1type:  () => DSnack.slot1.ingredients.Icon,
+      SS2type:  () => DSnack.slot2.ingredients.Icon,
+      SS3type:  () => DSnack.slot3.ingredients.Icon,
+      VBS1type: () => VBreakfast.slot1.ingredients.Icon,
+      VBS2type: () => VBreakfast.slot2.ingredients.Icon,
+      VBS3type: () => VBreakfast.slot3.ingredients.Icon,
+      VLS1type: () => VLunch.slot1.ingredients.Icon,
+      VLS2type: () => VLunch.slot2.ingredients.Icon,
+      VLS3type: () => VLunch.slot3.ingredients.Icon,
+      VDS1type: () => VDinner.slot1.ingredients.Icon,
+      VDS2type: () => VDinner.slot2.ingredients.Icon,
+      VDS3type: () => VDinner.slot3.ingredients.Icon,
+      VSS1type: () => VSnack.slot1.ingredients.Icon,
+      VSS2type: () => VSnack.slot2.ingredients.Icon,
+      VSS3type: () => VSnack.slot3.ingredients.Icon
   };
 
   const ingredients = mealMapping[ActiveDB] ? mealMapping[ActiveDB]() : null;

@@ -1,0 +1,54 @@
+body{
+  
+  width: 100%;
+  overflow: hidden; /* Prevents scrolling */
+  height: 100%; /* Ensures the body takes up the full viewport height */
+  margin: 0; /* Removes default margin */
+  padding: 0; /* Removes default padding */
+}
+.registerContent{
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -10rem;
+  padding: 2rem 0;
+}
+#registerForm{
+  gap: .1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+
+
+}
+.inputSec{
+ 
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+  padding: .3rem 0;
+}
+.inputSec input{
+  color: black;
+  width: 18rem;
+}
+.terms-and-conditions{
+  padding: .8rem;
+}
+.form-links{
+  padding: .3rem 0 0 0;
+}
+#registerBtn{
+ 
+  padding: .3rem 1rem;
+}
+#registerImg img{
+  width: 100%;
+  height: 80%;
+}
+#registerIcon img{
+  width: 8rem;
+}
+

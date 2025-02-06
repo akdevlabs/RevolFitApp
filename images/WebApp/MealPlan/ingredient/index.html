@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHS/RevolFit/login</title>
+  <link rel="stylesheet" href="RevolFit.css">
+
+  <link rel="shortcut icon" href="images/Logos/flower_DB.webp">
+</head>
+<body>
+  <header>
+   
+  </header>
+
+  <main>
+    
+    <section class="popUp" id="backgroundImg">
+      <div id="pop-upImg"></div>
+      <div id="pop-upText">
+        <h3 id="Subtittle"></h3>
+        <h1 id="tittle"></h1>
+        <a id="pop-upBtn">Empezar</a>
+        <div id="pop-upIcon"></div>
+      </div>
+    </section>
+
+    <section class="login" id="login">
+      <div id="loginImg"></div>
+
+
+      <div class="loginContent" id="loginContent">
+        <form id="loginForm">
+          <div class="input-block">
+              <div class="inputSec">
+                <img for="username"  id="userImage" src=""></img>
+                <input type="text" id="username" placeholder="Ingrese su correo" required>
+              </div> 
+              
+              <div class="line"></div>
+          </div>
+          <div class="input-block">
+            <div class="inputSec">
+              <img for="password" id="passwordImage" src=""></img>
+              <input type="password" id="password" placeholder="Ingrese su contraseña" required>
+            </div> 
+              
+              <div class="line"></div>
+          </div>
+          <div class="remember-me">
+              <input type="checkbox" id="remember-me">
+              <label for="remember-me">Recordarme</label>
+          </div>
+
+     
+          <button type="button" id="ISbtn" >INICIAR SESIÓN</button>
+          <div class="form-links" id="form-links">
+              <a id="newA" href="index2.html">¿No tienes una cuenta?</a>
+              <a href="index3.html" class="forgot-password">¿Olvidaste tu contraseña?</a>
+          </div>
+      </form>
+      <div id="loginIcon"></div>
+      </div>
+      
+    </section>
+  </main>
+
+  <script type="module" src="RevolFit.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js')
+        .then(() => console.log('Service Worker Registered'))
+        .catch(err => console.error('Service Worker Registration Failed:', err));
+    }
+  </script>
+  <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+body{
+
+  height: 100vh;
+  margin: 0;
+}
+
+
+.BuyPortalMobile{
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+
+  padding: 0 1.5rem;
+}
+.tittle h1{
+  font-size: 1.5rem;
+  margin: -1rem 0;
+}
+
+.Tier-Clasic, .Tier-Gold, .Tier-Platinum  {
+  padding: 1rem;
+
+  border-radius: 1rem;
+}
+
+.RMBTN{
+  color: #ffff;
+  float: right;
+  background-color: transparent;
+
+}
+#render-more-btnTC{
+  color: black;
+}
+#TClist{
+  color: black;
+  
+}
+.list{
+  color: #ffff;
+  font-size: .8rem;
+  padding: .5rem 0;
+}
+.TH-top{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.IconImg{
+  width: 3rem;
+}
+.TH-Bottom{
+  gap: 3rem;
+  display: flex;
+  align-items: center;
+  
+  margin: 1rem 0 -1rem 0;
+  justify-content: space-between;
+}
+.TH-pirce{
+  gap: .2rem;
+  display: flex;
+  align-items: center;
+  margin: 1rem;
+
+}
+.TH-pirce h2{
+  margin: 0 0 1rem 0;
+}

@@ -1,0 +1,154 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Block initialization logic
+const blocks = document.querySelectorAll('.Block');
+let currentBlockIndex = 0;
+
+function initializeBlocks() {
+  blocks.forEach((block, index) => {
+    block.classList.toggle('active', index === 0);
+  });
+}
+
+function validateBlock(blockIndex) {
+  const block = blocks[blockIndex];
+  const requiredFields = block.querySelectorAll("[required]");
+  let isValid = true;
+
+  requiredFields.forEach((field) => {
+    if (!field.value.trim()) {
+      isValid = false;
+      field.classList.add("error");
+    } else {
+      field.classList.remove("error");
+    }
+  });
+
+  if (!isValid) {
+    alert(`Please fill in all required fields in Block ${blockIndex + 1} before proceeding.`);
+  }
+  return isValid;
+}
+
+function showBlock(index) {
+  blocks.forEach((block, i) => {
+    block.classList.toggle('active', i === index);
+  });
+}
+
+initializeBlocks();
+
+document.getElementById('BtnTwo').addEventListener('click', () => {
+  if (validateBlock(0)) {
+    currentBlockIndex = 1;
+    showBlock(currentBlockIndex);
+  }
+});
+
+document.getElementById('BtnThree').addEventListener('click', () => {
+  if (validateBlock(1)) {
+    currentBlockIndex = 2;
+    showBlock(currentBlockIndex);
+  }
+});
+
+document.getElementById('BtnFour').addEventListener('click', () => {
+  if (validateBlock(2)) {
+    currentBlockIndex = 3;
+    showBlock(currentBlockIndex);
+  }
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Generalized function for toggle logic
+  function handleSelectChange(selectId, yesBlockId, noBlockId) {
+    const selectElement = document.getElementById(selectId);
+    const yesBlock = document.getElementById(yesBlockId);
+    const noBlock = document.getElementById(noBlockId);
+
+    if (selectElement && yesBlock && noBlock) {
+      yesBlock.style.display = "none";
+      noBlock.style.display = "none";
+
+      selectElement.addEventListener("change", function () {
+        const selectedValue = selectElement.value;
+        if (selectedValue === "true") {
+          yesBlock.style.display = "flex";
+          noBlock.style.display = "none";
+        } else if (selectedValue === "false") {
+          yesBlock.style.display = "none";
+          noBlock.style.display = "flex";
+        } else {
+          yesBlock.style.display = "none";
+          noBlock.style.display = "none";
+        }
+      });
+    }
+  }
+
+  // Apply the toggle logic for "Ejercicio", "Alcohol", and "Fumar" sections
+  handleSelectChange("ejercicio-select", "yes-extra-question", "no-extra-question");
+  handleSelectChange("drink-select", "yes-extra-question-drink", "no-extra-question-drink");
+  handleSelectChange("smoking-select", "yes-smoking-extra", "no-smoking-extra");
+
+  // Generalized function for checkbox logic
+  function handleCheckboxToggle(checkboxId, blockId) {
+    const checkbox = document.getElementById(checkboxId);
+    const block = document.getElementById(blockId);
+
+    if (checkbox && block) {
+      block.style.display = "none";
+
+      checkbox.addEventListener("change", function () {
+        block.style.display = checkbox.checked ? "flex" : "none";
+      });
+    }
+  }
+
+  // Apply checkbox logic for conditions
+  const conditions = [
+    { checkboxId: "Hipercolesteremia", blockId: "HipercolesteremiaTratadoBlock" },
+    { checkboxId: "Diabetes", blockId: "DiabeteTratadoBlock" },
+    { checkboxId: "Obesidad", blockId: "ObesidadTratadoBlock" },
+    { checkboxId: "HígadoGraso", blockId: "HígadoGrasoTratadoBlock" },
+    { checkboxId: "OtraECNT", blockId: "OtraECNTTratadoBlock" },
+    { checkboxId: "Lupus", blockId: "LupusTratadoBlock" },
+    { checkboxId: "Celíaca", blockId: "CelíacaTratadoBlock" },
+    { checkboxId: "Cáncer", blockId: "CáncerTratadoBlock" },
+    { checkboxId: "VIH", blockId: "VIHTratadoBlock" },
+    { checkboxId: "Artritis", blockId: "ArtritisTratadoBlock" },
+    { checkboxId: "OEA", blockId: "OEATratadoBlock" },
+  ];
+
+  conditions.forEach(({ checkboxId, blockId }) => handleCheckboxToggle(checkboxId, blockId));
+});
+
+
+
+
+

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHS/RevoFitApp/Workout</title>
+  <link rel="stylesheet" href="Workout.css">
+
+  <link rel="shortcut icon" href="images/Logos/flower_DB.webp">
+</head>
+<body>
+  <main>
+    <section class="TimerBlock">
+      <div id="Logo"></div>
+      <div id="Ttittle">Tiempo restante en la serie:</div>
+      <div id="Timer"></div>
+    </section>
+
+    <section class="InfoBlock">
+      <div id="Info"></div>
+    </section>
+    
+    <section class="videoBlock">
+      <div class="video-container">
+          <video id="customVideo" controls>
+              <source id="videoSource" src="" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+          <button id="playButton">▶</button>
+      </div>
+    </section>
+
+
+    <section class="descriptionBlock">
+      <div id="description"></div>
+    </section>
+
+    <section class="btnBlock">
+      <button id="actionBtn">Start</button>
+    </section>
+
+   
+    <section>
+      <div class="navBtns">
+        <div id="home"></div>
+        <div id="Date"></div>
+        <div id="goals"></div>
+        <div id="stats"></div>
+        <div id="gear" ></div>
+      </div>
+    </section>
+   
+   
+  </main>
+
+  <script type="module" src="Workout.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js')
+        .then(() => console.log('Service Worker Registered'))
+        .catch(err => console.error('Service Worker Registration Failed:', err));
+    }
+  </script>
+  
+</body>
+</html>

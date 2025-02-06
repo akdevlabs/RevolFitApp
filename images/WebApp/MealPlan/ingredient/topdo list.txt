@@ -1,0 +1,18 @@
+add the amout of coigerts smokeced 
+
+
+  calculateBodyMetricsForGender(88, 21.58, 21.3, 9.41, 4.55)
+  console.log(calculateBodyMetricsForGender(88, 21.58, 21.3, 9.41, 4.55))
+
+
+kg 6.92
+p 8.99
+
+
+
+musclePercentage
+: 
+"29.36"
+muscleWeight
+: 
+"22.61"

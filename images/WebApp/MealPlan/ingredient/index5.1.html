@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHS/RevolFit/ReporteCenso</title>
+  <link rel="stylesheet" href="RevoFitAlgorithmCenso.css">
+
+  <link rel="shortcut icon" href="images/Logos/flower_DB.webp">
+</head>
+<body>
+  <section class="ReportResults">
+    <div class="header">
+      <h2>Resultados de Evaluacion de Censo</h2>
+    </div>
+
+    <div class="basicInfo">
+      
+      <div class="block">
+        <span>Nombre Completo:</span>
+        <a id="FullName"></a>
+      </div>
+
+      <div class="block">
+        <span>Fecha de Nacimiento:</span>
+        <a id="DateB"></a>
+      </div>
+      
+      <div class="block">
+        <span>Género:</span>
+        <a id="Sex"></a>
+      </div>
+
+      <div class="block">
+        <span>Edad:</span>
+        <a id="Age"></a>
+      </div>
+
+      <div class="block">
+        <span>Correo:</span>
+        <a id="Email"></a>
+      </div>
+
+      <div class="block">
+        <span>Telefono:</span>
+        <a id="Phone"></a>
+      </div>
+
+      <div class="block">
+        <span>Pais:</span>
+        <a id="Country"></a>
+      </div>
+      <div class="block">
+        <span>Región:</span>
+        <a id="Region"></a>
+      </div>
+
+      <div class="block">
+        <span>Cuidad:</span>
+        <a id="City"></a>
+      </div>
+      <div class="block">
+        <span>Dirección:</span>
+        <a id="Adress"></a>
+      </div>
+      <div class="block">
+        <span>Enfermedades E.N.T:</span>
+        <a id="ENT"></a>
+      </div>
+      <div class="block">
+        <span>Enfermedades Autoinmunes:</span>
+        <a id="EA"></a>
+      </div>
+    </div>
+
+    <div class="Datos-de-Entrada" id="DDE">
+
+      <div class="block">
+        <span>Edad Metabólica:</span>
+        <a id="MAge"></a>
+      </div>
+
+      <div class="block">
+        <span>Estatura:</span>
+        <a id="Hight"></a>
+      </div>
+
+      <div class="block">
+        <span>Peso:</span>
+        <a id="Weight"></a>
+      </div>
+
+      <div class="block">
+        <span>Alcohol:</span>
+        <a id="Alcohol"></a>
+      </div>
+
+      <div class="block">
+        <span>Fuma:</span>
+        <a id="Smoking"></a>
+      </div>
+
+      <div class="block">
+        <span>Perímetro Cuello:</span>
+        <a id="Neck"></a>
+      </div>
+
+      <div class="block">
+        <span>Perímetro Cintura:</span>
+        <a id="Waist"></a>
+      </div>
+
+      <div class="block">
+        <span>Perímetro Cadera:</span>
+        <a id="Hips"></a>
+      </div>
+
+      <div class="block">
+        <span>Perímetro muñeca (biestiloideo):</span>
+        <a id="Rist"></a>
+      </div>
+
+      <div class="block">
+        <span>Perimetro rodilla (bipicondilear del femur):</span>
+        <a id="knee"></a>
+      </div>
+
+      <div class="block">
+        <span>Perimetro del brazo derecho:</span>
+        <a id="Arm"></a>
+      </div>
+      <div class="block">
+        <span>Perimetro de la pierna derecha:</span>
+        <a id="Leg"></a>
+      </div>
+
+      <div class="block">
+        <span>Presión Sistólica:</span>
+        <a id="SPresure"></a>
+      </div>
+
+      <div class="block">
+        <span>Presión Diastólica:</span>
+        <a id="DPresure"></a>
+      </div>
+
+    </div>
+
+    <div class="Análisis-Composición-Corporal" id="ACC">
+      <div class="block">
+        <span>Porcentaje de Grasa:</span>
+        <a id="Pfat"></a>
+      </div>
+
+      <div class="block">
+        <span>Porcentaje Masa Muscular:</span>
+        <a id="PMMuscle"></a>
+      </div>
+
+      <div class="block">
+        <span>Porcentaje Masa Residual:</span>
+        <a id="PMResidual"></a>
+      </div>
+
+      <div class="block">
+        <span>Porcentaje Masa Osea:</span>
+        <a id="PMBone"></a>
+      </div>
+
+      <div class="block">
+        <span>Porcentaje Masa Piel:</span>
+        <a id="PMSkin"></a>
+      </div>
+
+      <div class="block">
+        <span>Peso Graso kg:</span>
+        <a id="FWeight"></a>
+      </div>
+
+      <div class="block">
+        <span>Peso Masa Muscular Kg:</span>
+        <a id="WMMuscle"></a>
+      </div>
+
+      <div class="block">
+        <span>Peso Masa Residual kg:</span>
+        <a id="WMResidual"></a>
+      </div>
+
+      <div class="block">
+        <span>Peso Masa Osea Kg:</span>
+        <a id="WMBone"></a>
+      </div>
+      <div class="block">
+        <span>Peso Masa Piel Kg:</span>
+        <a id="WMBone"></a>
+      </div>
+   
+
+
+
+
+
+
+
+    </div>
+
+    <div class="Parametros-de-condicion-Antropometrica" id="PDCA">
+      <div class="block">
+        <span>Relacion Cintura cadera:</span>
+        <a id="RCC"></a>
+      </div>
+
+      <div class="block">
+        <span>Relacion Cintura Altura:</span>
+        <a id="RCA"></a>
+      </div>
+
+      <div class="block">
+        <span>Masa Corporal:</span>
+        <a id="MC"></a>
+      </div>
+
+      <div class="block">
+        <span>Perimetro de cintura:</span>
+        <a id="PDC"></a>
+      </div>
+
+      <div class="block">
+        <span>% Grasa Subcutanea:</span>
+        <a id="PGS"></a>
+      </div>
+
+      <div class="block">
+        <span>Masa Muscular Kg:</span>
+        <a id="MMK"></a>
+      </div>
+    </div>
+
+    <div class="Frecuencia-Cardiaca-de-Entrenamiento" id="FCDE">
+      <div class="block">
+        <span>Nivel de esfuerzo:</span>
+        <a id="RCC"></a>
+      </div>
+
+      <div class="block">
+        <span>Calentamiento:</span>
+        <a id="WarmUp"></a>
+      </div>
+
+      <div class="block">
+        <span>Aerobico:</span>
+        <a id="Aerobic"></a>
+      </div>
+
+      <div class="block">
+        <span>Anaerobico:</span>
+        <a id="Anaerobic"></a>
+      </div>
+
+      <div class="block">
+        <span>Tensión Sistólica:</span>
+        <a id="SystolicPressure"></a>
+      </div>
+
+      <div class="block">
+        <span>Tesión Diastólica:</span>
+        <a id="DiastolicPressure"></a>
+      </div>
+    </div>
+
+
+      
+  
+
+    <div id="Report">
+
+      <div class="BodyFatblock">
+        <h1 class="blockBtn" id="BFB">Niveles De Grasa</h1>
+  
+        <div class="hiddenBlock" id="BFBlock">
+          <div id="scoring"></div>
+          <h2></h2>
+          <div class="progress-bar" id="progressbar">
+            <div class="progress-fill" id="metabolicProtection"></div>
+          </div>
+        </div>
+      
+      </div>
+
+
+
+
+
+
+
+
+      
+    </div>
+
+
+
+
+    
+
+  </section>
+    <div class="navBtns">
+      <div id="home"></div>
+      <div id="Date"></div>
+      <div id="goals"></div>
+      <div id="stats"></div>
+      <div id="gear" ></div>
+    </div>
+ 
+
+  <script type="module" src="RevoFitAlgorithmCenso.js"></script>
+  <script>
+
+  </script>
+</body>
+</html>

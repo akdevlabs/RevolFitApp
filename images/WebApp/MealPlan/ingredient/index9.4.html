@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHS/RevoFitApp/Stats</title>
+  <link rel="stylesheet" href="Stats.css">
+
+  <link rel="shortcut icon" href="images/Logos/flower_DB.webp">
+</head>
+<body>
+  <main>
+
+
+
+    <section>
+      <div class="dashboard">
+
+        <div class="dashboardHeader">
+          <div class="top">
+            <h1>PROGRESO</h1>
+            <img id="logo" src=""></img>  
+          </div>
+          <div class="Line"></div>
+          <div class="bottom">
+            <h2 id="ActiveCount">15,160</h2>
+            <div>
+              <p>OBJETIVO DE HOY:</p>
+              <a id="Target">6,000</a>
+            </div>
+            
+          </div>
+          <div class="Line"></div>
+        </div>
+
+
+
+        <div class="bar-chart">
+          <div>
+            <div class="bar">
+              <div style="height: 90%;"></div>
+              <div class="goal-marker" style="top: 30%;"></div>
+            </div>
+            <div class="bar-label">Lun</div>
+          </div>
+          <div>
+            <div class="bar">
+              <div style="height: 80%;"></div>
+              <div class="goal-marker" style="top: 20%;"></div>
+            </div>
+            <div class="bar-label">Mar</div>
+          </div>
+          <div>
+            <div class="bar">
+              <div style="height: 50%;"></div>
+              <div class="goal-marker" style="top: 50%;"></div>
+            </div>
+            <div class="bar-label">Mié</div>
+          </div>
+          <div>
+            <div class="bar">
+              <div style="height: 40%;"></div>
+              <div class="goal-marker" style="top: 60%;"></div>
+            </div>
+            <div class="bar-label">Jue</div>
+          </div>
+          <div>
+            <div class="bar">
+              <div style="height: 70%;"></div>
+              <div class="goal-marker" style="top: 30%;"></div>
+            </div>
+            <div class="bar-label">Vie</div>
+          </div>
+          <div>
+            <div class="bar">
+              <div style="height: 30%;"></div>
+              <div class="goal-marker" style="top: 70%;"></div>
+            </div>
+            <div class="bar-label">Sáb</div>
+          </div>
+          <div>
+            <div class="bar">
+              <div style="height: 20%;"></div>
+              <div class="goal-marker" style="top: 80%;"></div>
+            </div>
+            <div class="bar-label">Dom</div>
+          </div>
+        </div>
+
+
+
+        <div class="Line"></div>
+
+        <div class="mainPoints">
+          <div>
+            <h3>Pasos</h3>
+            <a>5,440</a>
+          </div>
+
+          <div>
+            <h3>Calorías</h3>
+            <a>402</a>
+          </div>
+
+          <div>
+            <h3>Ejercicios</h3>
+            <a>40 Min</a>
+          </div>
+        </div>
+
+        <div class="Line"></div>
+        <section>
+          <div class="progress-bar">
+          <p>Calorías Restantes</p>
+          <div>
+            <div class="filled" style="width: 80%;"></div>
+          </div>
+          </div>
+    
+        <div class="progress-bar">
+          <p>Progreso</p>
+          <div>
+            <div class="filled" style="width: 67%;"></div>
+          </div>
+        </div>
+        </section>
+    
+        
+      </div>
+    </section>
+    <section>
+      <div class="navBtns">
+        <div id="home"></div>
+        <div id="Date"></div>
+        <div id="goals"></div>
+        <div id="stats"></div>
+        <div id="gear" ></div>
+      </div>
+    </section>
+   
+  </main>
+
+  <script type="module" src="Stat.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js')
+        .then(() => console.log('Service Worker Registered'))
+        .catch(err => console.error('Service Worker Registration Failed:', err));
+    }
+  </script>
+</body>
+</html>

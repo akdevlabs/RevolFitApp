@@ -1,0 +1,771 @@
+{\rtf1}
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  async function SetMealPlan() {
+    try {
+      const docRef = doc(db, "RevolApp", "MealPlans"); // Ensure db and transferredInfo are initialized
+      const docSnap = await getDoc(docRef);
+  
+      if (docSnap.exists()) {
+        const documentData = docSnap.data();
+        return documentData; // Return the document data
+      } else {
+        console.error("No such document!");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching document:", error);
+      return null;
+    }
+  }
+  SetMealPlan().then((data) => {
+    const App = data.App;
+    
+  
+  
+    function selectOption(){
+      if(Coption === 'Clasic'){
+        const imgBlock = Clasic
+  
+        
+        return(imgBlock)
+      }else if(Coption === 'Vegetariano'){
+  
+        const imgBlock = Vegetariano
+        
+        return(imgBlock)
+      }else{
+  
+        const imgBlock = vegan
+        
+        return(imgBlock)
+        
+      }
+    }
+  
+  
+    function createMealPlanDishes(MealN, MealT, MealI, mealId) {
+      // Get the parent section
+      const mealPlanSection = document.getElementById("MealPlanDishes");
+    
+      // Create the main div
+      const mainDiv = document.createElement("div");
+      mainDiv.classList.add("meal-plan-container");
+      mainDiv.id = mealId; // Add the unique id to the main div
+    
+      // Create the first inner div
+      const textDiv = document.createElement("div");
+      textDiv.classList.add("text-container");
+    
+      // Create and append h1
+      const title = document.createElement("h1");
+      title.textContent = MealN;
+      textDiv.appendChild(title);
+    
+      // Create and append a tag
+      const link = document.createElement("a");
+      link.href = '#';
+      link.textContent = MealT;
+      textDiv.appendChild(link);
+    
+      // Create the second inner div
+      const imgDiv = document.createElement("div");
+      imgDiv.classList.add("image-container");
+    
+      // Create and append img
+      const img = document.createElement("img");
+      img.src = MealI; // Placeholder image
+      img.alt = "Meal Plan Dish";
+      imgDiv.appendChild(img);
+    
+      // Append inner divs to main div
+      mainDiv.appendChild(textDiv);
+      mainDiv.appendChild(imgDiv);
+    
+      // Append the main div to the section
+      mealPlanSection.appendChild(mainDiv);
+    }
+    
+
+
+    function renderMealPlan(){
+      const {Breakfast, Dinner, Lunch, Snack} = selectOption()
+
+
+
+      function renderStartMeals(){
+       const breakfast = Breakfast.slot1
+       const dinner  = Dinner.slot1
+       const lunch  = Lunch.slot1
+       const snack  = Snack.slot1
+
+      createMealPlanDishes(Cat[0], breakfast.time, breakfast.img)
+      createMealPlanDishes(Cat[1], dinner.time, dinner.img)
+      createMealPlanDishes(Cat[2], lunch.time, lunch.img)
+      createMealPlanDishes(Cat[3], snack.time, snack.img)
+      }
+      
+      function renderBreakfastoptions(){
+        const {slot1, slot2, slot3} = Breakfast
+      createMealPlanDishes(slot1.tittle, slot1.tittle, slot1.img )
+      createMealPlanDishes(slot2.tittle, slot2.tittle, slot2.img )
+      createMealPlanDishes(slot3.tittle, slot3.tittle, slot3.img )
+      }
+
+      function renderDinneroptions(){
+        const {slot1, slot2, slot3} = Dinner
+      createMealPlanDishes(slot1.tittle, slot1.tittle, slot1.img )
+      createMealPlanDishes(slot2.tittle, slot2.tittle, slot2.img )
+      createMealPlanDishes(slot3.tittle, slot3.tittle, slot3.img )
+      }
+
+      function renderLunchoptions(){
+        const {slot1, slot2, slot3} = Lunch
+      createMealPlanDishes(slot1.tittle, slot1.tittle, slot1.img )
+      createMealPlanDishes(slot2.tittle, slot2.tittle, slot2.img )
+      createMealPlanDishes(slot3.tittle, slot3.tittle, slot3.img )
+      }
+
+      function renderSnackoptions(){
+        const {slot1, slot2, slot3} = Snack
+      createMealPlanDishes(slot1.tittle, slot1.tittle, slot1.img )
+      createMealPlanDishes(slot2.tittle, slot2.tittle, slot2.img )
+      createMealPlanDishes(slot3.tittle, slot3.tittle, slot3.img )
+      }
+      
+
+      // Add a click event listener to the div with ID "HMO"
+      const hiddenDiv = document.querySelector("#HMO");
+      let myArray = [0];
+      console.log(myArray)
+
+
+      
+      function addToArray(array, value) {
+        /**
+         * Adds a value to the array.
+         * 
+         * @param {Array} array - The array to which the value will be added.
+         * @param {*} value - The value to add to the array.
+         * @return {Array} - The updated array.
+         */
+        array.push(value);
+        return array;
+      }
+
+   
+      document.addEventListener('click', function (event) {
+          const clickedItem = event.target;
+          
+          // Check if the clicked element is an <a> tag
+          if (clickedItem && clickedItem.tagName === "A") {
+              event.preventDefault(); // Prevent default link behavior
+              console.log(`Clicked item: ${clickedItem.tagName}, Value: "${clickedItem.getAttribute('value')}", Text: "${clickedItem.textContent.trim()}"`);
+
+              const activeBtn = clickedItem.textContent.trim();
+              
+              if (activeBtn === "clasico") {
+                  let newValue = 4;
+                  addToArray(myArray, newValue);
+              } else if (activeBtn === "vegetarian") {
+                  let newValue = 5;
+                  addToArray(myArray, newValue);
+              } else if (activeBtn === "vegan") {
+                  let newValue = 6;
+                  addToArray(myArray, newValue);
+              }
+
+              console.log(myArray); // Log the updated array
+          }
+      });
+
+
+
+
+    
+      if (hiddenDiv) {
+          hiddenDiv.addEventListener("click", function (event) {
+              // Log "blue" on click of any child element
+              console.log("blue");
+
+              // Get the clicked element
+              const clickedItem = event.target;
+
+            
+
+          });
+      }
+
+
+      function getNewestValue(array) {
+        // Check if the array is not empty
+        if (array && array.length > 0) {
+            // Return the last element in the array
+            return array[array.length - 1];
+        } else {
+            // Handle the case where the array is empty or undefined
+            return null; // Or any fallback value you'd prefer
+        }
+    }
+    
+
+       const car = getNewestValue(myArray)
+
+      function choser(){
+
+        if(car === 0){
+          
+          console.log("black")
+        }else if(car === 1){
+    
+          console.log("blue")
+        }else if(car === 2){
+       
+          console.log("green")
+        }
+      }
+      choser()
+      
+
+    
+
+
+
+
+
+    }
+
+    renderMealPlan()
+  
+  
+   // Add a click event listener to the parent section
+const mealPlanBtnsSection = document.querySelector("#MealPlanDishes");
+const popupOverlay = document.getElementById("popupOverlay");
+
+
+
+
+
+
+
+
+
+
+if (mealPlanBtnsSection) {
+    mealPlanBtnsSection.addEventListener("click", function (event) {
+        // Get the clicked element
+        const clickedItem = event.target;
+
+        // Check if the clicked element is part of a meal-plan-container
+        const mealContainer = clickedItem.closest(".meal-plan-container");
+
+        if (mealContainer) {
+
+            // Log the clicked meal's details
+            const mealName = mealContainer.querySelector("h1")?.textContent.trim() || "Unknown Meal";
+            console.log(`Clicked meal: ${mealName}`);
+
+            // Show the popup
+            showPopup();
+        }
+    });
+}
+
+// Function to show the popup
+function showPopup() {
+    if (popupOverlay) {
+        popupOverlay.style.display = "flex"; // Show the popup
+    }
+}
+
+ // Close the popup when the close button is clicked
+ popupclosebtn.addEventListener('click', () => {
+  popupOverlay.style.display = 'none';
+});
+
+
+
+
+  
+    
+  
+  
+  
+  
+  });
+  
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      function getNewestValue(arr) {
+        if (!Array.isArray(arr)) {
+            throw new Error("Input must be an array");
+        }
+        return arr[arr.length - 1];
+      }
+
+    
+      console.log(getNewestValue(myArray)); // Output: 4
+
+
+      const Meal = getNewestValue(myArray)
+
+      console.log( Meal)
+      function MealOptions(){
+  
+          if(Meal === 0){
+            renderDiversidadStartMeals()
+            console.log("black")
+          }else if(Meal === 1){
+            renderVegetarianoStartMeals()
+            console.log("blue")
+          }else if(Meal === 2){
+            
+            renderVeganStartMeals()
+            console.log("green")
+          }
+      }
+      MealOptions()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// PENDING  NEED MORE POINTS IN THE DATABASE 
+async function getMotivationText() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.log("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+
+getMotivationText().then((data) => {
+  const App      = data.App;
+  const MealPlan = App.MealPlan;
+
+
+  const motivationText   = MealPlan.Mtext;
+
+  function chooseFromArray(value, array) {
+    /**
+     * Chooses an element from the array based on the provided value.
+     *
+     * @param {number} value - The value to determine the index.
+     * @param {Array} array - The array to choose from.
+     * @returns {*} The selected element from the array, or null if the value is out of range.
+     */
+    if (value >= 0 && value < array.length) {
+        return array[value];
+    } else {
+        return null;
+    }
+}
+
+
+// Example usage with App.motFrases PENDING  
+
+const variable = 0; // This can be any integer
+const selectedPhrase = chooseFromArray(variable, motivationText);
+
+
+
+  function creatMotivation(textContent) {
+    // Find the div with id 'cal'
+    const div = document.getElementById('motivation');
+  
+    // Check if the div exists
+    if (!div) {
+        console.error("Div with id 'cal' not found.");
+        return;
+    }
+  
+    // Create an h1 element
+    const h1 = document.createElement('h4');
+  
+    // Set the text content of the h1 element
+    h1.textContent = textContent;
+  
+    // Append the h1 to the div
+    div.appendChild(h1);
+  }
+  
+  creatMotivation(selectedPhrase)
+  
+  
+});\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      function addToArray(array, value) {
+        array.push(value);
+        return array;
+      }
+
+      document.getElementById('HMO').addEventListener('click', function(event) {
+        // Check if the clicked element is an anchor tag (a)
+        if (event.target.tagName.toLowerCase() === 'a') {
+          let myArray = [0];
+          console.log(myArray)
+          const val = event.target.getAttribute('value')
+     
+          const num = parseInt(val); // The second parameter is the 
+          console.log(num); // 123
+          
+          
+          addToArray(myArray, num)
+          
+          console.log(`Value: ${event.target.getAttribute('value')}`);
+        }
+      });
+
+
+
+
+
+
+
+
+  function renderDiversidadStartMeals(){
+        const breakfast = DBreakfast.slot1
+        const dinner    = DDinner.slot1
+        const lunch     = DLunch.slot1
+        const snack     = DSnack.slot1
+  
+       createMealPlanDishes("Desayuno", breakfast.time, breakfast.img, "DMealPlanDishes")
+       createMealPlanDishes("Cena", dinner.time, dinner.img, "DMealPlanDishes")
+       createMealPlanDishes("Almuerzo", lunch.time, lunch.img, "DMealPlanDishes")
+       createMealPlanDishes("Snack", snack.time, snack.img, "DMealPlanDishes")
+      }
+   
+ 
+      renderDiversidadStartMeals()
+
+
+
+
+
+
+
+
+   function renderVeganStartMeals(){
+        const breakfast = DBreakfast.slot1
+        const dinner    = DDinner.slot1
+        const lunch     = DLunch.slot1
+        const snack     = DSnack.slot1
+  
+       createMealPlanDishes("Desayuno", breakfast.time, breakfast.img)
+       createMealPlanDishes("Cena", dinner.time, dinner.img)
+       createMealPlanDishes("Almuerzo", lunch.time, lunch.img)
+       createMealPlanDishes("Snack", snack.time, snack.img)
+      }
+      function renderVegetarianoStartMeals(){
+        const breakfast = VBreakfast.slot1
+        const dinner    = VDinner.slot1
+        const lunch     = VLunch.slot1
+        const snack     = VSnack.slot1
+  
+       createMealPlanDishes("Desayuno", breakfast.time, breakfast.img)
+       createMealPlanDishes("Cena", dinner.time, dinner.img)
+       createMealPlanDishes("Almuerzo", lunch.time, lunch.img)
+       createMealPlanDishes("Snack", snack.time, snack.img)
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+      
+
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.close-btn {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #ff5555;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  background-color: #ff4444;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+
+  border-radius: 8px;
+  background-color: #013C4C;
+  margin: 10px 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-container {
+  flex: 1;
+  padding: 10px;
+}
+
+.text-container h1 {
+  font-size: 1.5rem;
+  color: #ACE2E4; /* Matches user's color palette */
+  margin-bottom: 10px;
+}
+
+.text-container a {
+  font-size: 1rem;
+  color: #ACE2E4; /* Matches user's color palette */
+  text-decoration: none;
+}
+
+.text-container a:hover {
+  text-decoration: underline;
+}
+
+.image-container {
+  flex: 0 0 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #DMealPlanDishes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .meal-plan-container {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    width: 300px;
+    text-align: center;
+    background-color: #f9f9f9;
+  }
+  
+  .text-container h1 {
+    font-size: 18px;
+    margin: 0 0 8px;
+  }
+  
+  .text-container a {
+    color: #007BFF;
+    text-decoration: none;
+  }
+  
+  .image-container img {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+  
+
+  
+
+
+  
+  
+  
+
+  
+
+
+
+
+
+
+
+
+

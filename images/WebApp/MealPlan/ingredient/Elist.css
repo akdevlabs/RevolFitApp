@@ -1,0 +1,39 @@
+.Header{
+  gap: 5rem;
+  display: flex;
+  align-items: center;
+ margin: 0 2rem;
+}
+
+#GymList {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.workout-container {
+  border: 4px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.workout-background {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.sets-list, .instructions-list {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+#logo{
+  width: 10rem;
+  margin: 1rem 0;
+}
+
+.Reutrn{
+  display: flex;
+  align-items: flex-start;
+}
+

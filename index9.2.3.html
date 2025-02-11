@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHS/RevoFitApp/Calendar/Partnerships</title>
+  <link rel="stylesheet" href="Partnerships.css">
+
+  <link rel="shortcut icon" href="images/Logos/flower_DB.webp">
+</head>
+<body>
+  <main>
+   <section>
+    <div class="logoBlock">
+      <a href="index9.html"><img id="logo" src=""></a>
+    </div> 
+
+    <h2 id="tittle">Partnerships</h2> 
+   </section> 
+   
+    
+   <section class="BtnBlock" id="BtnBlock">
+
+    <div class="blocks" id="Gym">
+      <a id="gyms">Gyms</a> 
+      <div class="blocksImgs">
+        <img id="GymImg" src=""> 
+      </div>
+    </div>
+    
+    <div class="blocks" id="Product">
+      <a id="products">Products</a>
+      <div class="blocksImgs">
+        <img id="ProductImg" src=""> 
+      </div>
+    </div>
+
+    <div class="blocks" id="Supliment">
+      <a id="Supliments">Supliments</a>
+      <div class="blocksImgs">
+        <img id="SuplimentImg" src="">  
+      </div>
+    </div>
+
+    <div class="blocks" id="Nutricion">
+      <a id="Nutricionistas">Nutricionistas</a> 
+      <div class="blocksImgs">
+        <img id="NutricionistaImg" src="">   
+      </div>
+    </div>
+
+   </section>
+   
+   <section class="hiddenBlock">
+    <div id="GymBlock"></div>
+    <div id="ProductBlock"></div>
+    <div id="SuplimentBlock"></div>
+    <div id="NutricionistaBlock"></div>   
+   </section>
+     
+    
+   <section class="NavBtns" id="NavBtns">
+
+    <img class="Incentive" id="Incentive" src="">
+    <img class="home" id="home" src="">
+    <img class="Events" id="Events" src="">
+
+   </section>
+
+
+
+
+   
+  </main>
+
+  <script type="module" src="Partnerships.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js')
+        .then(() => console.log('Service Worker Registered'))
+        .catch(err => console.error('Service Worker Registration Failed:', err));
+    }
+  </script>
+</body>
+</html>

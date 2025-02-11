@@ -1,0 +1,110 @@
+
+@media (max-width: 700px) {
+  body {
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+   
+    align-items: center;
+    touch-action: none; /* Disable gestures like zoom */
+    overscroll-behavior: none; /* Prevent overscroll bounce on mobile */
+  }
+
+
+
+main{
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+  .logoBlock{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  #logo{
+    width: 15rem;
+   
+  }
+  #tittle{
+    text-align: center;
+  }
+
+  .BtnBlock{
+    gap: 1.5rem;
+    display: flex;
+    margin: 2rem 1rem;
+    flex-direction: column;
+    justify-content: center;
+    
+    
+  }
+
+  .BtnBlock a{
+    display: flex;
+    align-items: center;
+    font-size: 1.7rem;
+    padding: 1rem;
+
+ 
+      width:70%;
+      height: 3rem;
+      clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+   
+  
+  }
+  .blocksImgs{
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    width: 90%;
+    margin-left: -5rem;
+    padding: .5rem 0;
+
+  }
+  .blocksImgs img{
+ 
+   width: 4rem;
+
+   height:4rem;
+
+
+  }
+  .blocks{
+    display: flex;
+    align-items: center;
+  }
+
+
+
+
+
+
+
+  .NavBtns {
+    gap: 1rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem 0;
+   
+}
+
+.NavBtns img{
+  width: 4rem;
+  cursor: pointer;
+}
+#home{
+  width: 6rem;
+}
+
+
+}

@@ -78,7 +78,38 @@ main{
     display: flex;
     align-items: center;
   }
+  .hiddenBlock{
+    display: none;
+  }
+  .hidden{
+    display: none;
+    flex-direction: column;
+  }
 
+
+
+ 
+.RBlocks{
+ display: flex;
+ justify-content: space-between;
+ padding: 0 4rem;
+ margin: 1.5rem 0;
+}
+.RBlocks img{
+  width: 6rem;
+  height: 6rem;
+}
+.right{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.right h1{
+  font-size:1.5rem;
+}
+.right span{
+  margin: -.5rem 0 1rem 0;
+}
 
 
 

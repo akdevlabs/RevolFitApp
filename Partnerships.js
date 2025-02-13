@@ -251,7 +251,8 @@ GetpartnerInfo().then((data) => {
     if (data.link) {
         container.style.cursor = "pointer";
         container.addEventListener("click", () => {
-            window.location.href = data.link;
+            
+            window.open(data.link, "_blank");
         });
     }
   }

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHS/RevoFitApp/Calendar/Events</title>
+  <link rel="stylesheet" href="Events.css">
+
+  <link rel="shortcut icon" href="images/Logos/flower_DB.webp">
+</head>
+<body>
+  <main>
+
+    <div class="logoBlock">
+      <a href="index9.html"><img id="logo" src=""></a>
+    </div> 
+
+  
+
+
+
+
+   <section >
+    
+    <div class="EventTopBlock">
+      <a class="block" id="BackBtn"><</a>
+      <h1 id="Toptittle">Próximos Eventos</h1>
+      <img id="Calander" src="">
+    </div>
+
+    <div id="weekly">
+      <div id="days-container"></div>
+    </div>
+
+    <div id="eventBlock">
+
+      <div class="slot" id="slot1">
+        <div class="top">
+          <div class="DateTimeBlock">
+            <div class="dateBlock">
+              <span class="SDate" id="S1Date"></span>
+              <span class="SMonth" id="S1Month"></span>
+            </div>
+            <a class="STime" id="S1Time"></a>
+          </div>
+          <img class="like" id="S1like" src="">
+        </div>
+
+        <div class="center">
+          <h1 class="Stittle" id="S1tittle"></h1>
+          <h2 class="SLocation" id="S1Location"></h2>
+        </div>
+
+        <div class="bottom">
+          <img class="SImg" id="S1Img" src="">
+        </div>
+        
+        
+        
+
+      </div>
+
+      <div class="slot" id="slot2">
+        <div class="top">
+          <div class="DateTimeBlock">
+            <div class="dateBlock">
+              <span class="SDate" id="S2Date"></span>
+              <span class="SMonth" id="S2Month"></span>
+            </div>
+            <a class="STime" id="S1Time"></a>
+          </div>
+          <img class="like" id="S2like" src="">
+        </div>
+
+        <div class="center">
+          <h1 class="Stittle" id="S2tittle"></h1>
+          <h2 class="SLocation" id="S2Location"></h2>
+        </div>
+
+        <div class="bottom">
+          <img class="SImg" id="S2Img" src="">
+        </div>
+        
+        
+        
+
+      </div>
+
+      <div class="slot" id="slot3">
+        <div class="top">
+          <div class="DateTimeBlock">
+            <div class="dateBlock">
+              <span class="SDate" id="S3Date"></span>
+              <span class="SMonth" id="S3Month"></span>
+            </div>
+            <a class="STime" id="S3Time"></a>
+          </div>
+          <img class="like" id="S3like" src="">
+        </div>
+
+        <div class="center">
+          <h1 class="Stittle" id="S3tittle"></h1>
+          <h2 class="SLocation" id="S3Location"></h2>
+        </div>
+
+        <div class="bottom">
+          <img class="SImg" id="S3Img" src="">
+        </div>
+        
+
+            
+            
+    
+      </div>
+
+      <div class="slot" id="slot4">
+        <div class="top">
+          <div class="DateTimeBlock">
+            <div class="dateBlock">
+              <span class="SDate" id="S4Date"></span>
+              <span class="SMonth" id="S4Month"></span>
+            </div>
+            <a class="STime" id="S4Time"></a>
+          </div>
+          <img class="like" id="S4like" src="">
+        </div>
+
+        <div class="center">
+          <h1 class="Stittle" id="S4tittle"></h1>
+          <h2 class="SLocation" id="S4Location"></h2>
+        </div>
+
+        <div class="bottom">
+          <img class="SImg" id="S4Img" src="">
+        </div>
+        
+
+            
+            
+    
+      </div>
+
+      <div class="slot" id="slot5">
+        <div class="top">
+          <div class="DateTimeBlock">
+            <div class="dateBlock">
+              <span class="SDate" id="S5Date"></span>
+              <span class="SMonth" id="S5Month"></span>
+            </div>
+            <a class="STime" id="S5Time"></a>
+          </div>
+          <img class="like" id="S5like" src="">
+        </div>
+
+        <div class="center">
+          <h1 class="Stittle" id="S5tittle"></h1>
+          <h2 class="SLocation" id="S5Location"></h2>
+        </div>
+
+        <div class="bottom">
+          <img class="SImg" id="S5Img" src="">
+        </div>
+        
+
+            
+            
+    
+      </div>
+
+
+      
+          
+          
+  
+        
+        
+
+
+
+
+
+
+    </div>
+
+   </section>
+     
+    
+  
+
+
+
+   
+  </main>
+
+  <script type="module" src="Events.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js')
+        .then(() => console.log('Service Worker Registered'))
+        .catch(err => console.error('Service Worker Registration Failed:', err));
+    }
+  </script>
+</body>
+</html>

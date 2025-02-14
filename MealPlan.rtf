@@ -769,3 +769,76 @@ const selectedPhrase = chooseFromArray(variable, motivationText);
 
 
 
+
+
+
+
+
+
+
+
+  function checkEventTimestamps(data) {
+    const Events = data.Events;
+    const now = Date.now();
+
+    for (const key in Events) {
+        if (Events.hasOwnProperty(key)) {
+            const eventTimestamp = new Date(Events[key]).getTime();
+            
+            if (eventTimestamp < now) {
+                console.log("Bad");
+            } else {
+                console.log("Good");
+            }
+        }
+    }
+}
+
+
+
+
+  function convertToDate(timestamp) {
+    if (!timestamp || typeof timestamp.seconds !== "number" || typeof timestamp.nanoseconds !== "number") {
+        throw new Error("Invalid timestamp format");
+    }
+    
+    // Convert seconds to milliseconds
+    let milliseconds = timestamp.seconds * 1000;
+    
+    // Convert nanoseconds to milliseconds and add it
+    milliseconds += Math.floor(timestamp.nanoseconds / 1e6);
+    
+    // Create and return the Date object
+    return new Date(milliseconds);
+}
+
+// Example usage:
+const timestamp1 = slot1.Tstamp;
+console.log(timestamp);
+
+const convertedDate = convertToDate(timestamp1);
+console.log(convertedDate);
+
+
+
+
+  const today = new Date();
+
+  Events.forEach((event, index) => {
+      const eventDate = new Date(event.date); // Assuming event.date is in 'YYYY-MM-DD' format
+      const slotId = `slot${index + 1}`;
+      const slot = document.getElementById(slotId);
+
+      if (eventDate >= today) {
+          document.getElementById(`S${index + 1}Date`).textContent = eventDate.getDate();
+          document.getElementById(`S${index + 1}Month`).textContent = eventDate.toLocaleString('default', { month: 'short' });
+          document.getElementById(`S${index + 1}Time`).textContent = event.time;
+          document.getElementById(`S${index + 1}like`).src = event.likeIcon;
+          document.getElementById(`S${index + 1}tittle`).textContent = event.title;
+          document.getElementById(`S${index + 1}Location`).textContent = event.location;
+          document.getElementById(`S${index + 1}Img`).src = event.image;
+          slot.style.display = "block";
+      } else {
+          slot.style.display = "none";
+      }
+  });

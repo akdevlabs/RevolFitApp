@@ -123,9 +123,8 @@ body {
 
 
 
-
-
 .BtnBlocks{
+
   gap: 1rem;
   display: flex;
   flex-direction: row;
@@ -141,27 +140,39 @@ body {
 
 }
 
+.BtnStack a{
+
+  padding: -1rem 0;
+}
+
 
 
 #mPlan{
   width: 5rem;
 }
+#MPartnerships{
+  width: 5rem;
+ 
+}
+#MEvents{
+  width: 3rem;
+}
 
 
 #mealplan{
-  padding: 10% 15%;
+  padding: 11% 15%;
   border-radius: 1rem;
   text-decoration: none;
 }
 #Partnerships{
   border-radius: 1rem;
   text-decoration: none;
-  padding: 1.8rem 1.5rem;
+  padding: .4rem 1.6rem;
 }
 #Events{
   border-radius: 1rem;
   text-decoration: none;
-  padding: 1.5rem 2.7rem;
+  padding: .8rem 2.7rem;
 }
 
 
@@ -179,27 +190,13 @@ body {
 
 
 
-
-
-  .planBlocktittle{
-    color: #fff;
-    display: flex;
-    align-items: center;
-    margin: 0 2rem;
-    justify-content: space-between;
-  }
+  
   .Btnblock{
     display: flex;
     justify-content: center;
-    margin: 1rem 0;
+   
   }
-  .Btnblock a{
-    font-size: 2rem;
-    font-weight: 500;
-    padding: .6rem 3rem;
-    border-radius: 1rem;
-    text-decoration: none;
-  }
+
 
   .navBtns{
     gap: 2rem;

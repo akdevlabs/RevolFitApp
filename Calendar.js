@@ -517,13 +517,16 @@ async function SetMealPlanBtn() {
 SetMealPlanBtn().then((data) => {
   const App = data.App;
   const MealPlanBtn = App.MealPlanBtn;
+  const EventBtn = App.Btns;
   const Icon = MealPlanBtn.Icon;
+  const EventIcon = EventBtn.EventBtns;
+  const IncentiveIcon = EventBtn.IncentiveBtns;
 
 
-  console.log(Icon)
-  function setBuIcon(imgSrc, imgAlt) {
+
+  function setBuIcon(imgSrc, imgAlt, urlImg)  {
       // Find the img element with id 'logo-img'
-      const img = document.getElementById('mPlan');
+      const img = document.getElementById(urlImg);
   
       // Check if the img element exists
       if (img) {
@@ -535,7 +538,10 @@ SetMealPlanBtn().then((data) => {
       }
   }
   
-  setBuIcon(Icon, 'Example image');  
+  setBuIcon(Icon, 'Example image', 'mPlan');  
+  setBuIcon(IncentiveIcon[0], 'Example image', 'MPartnerships'); 
+  setBuIcon(EventIcon[0], 'Example image', 'MEvents'); 
+
 });
 
 async function setBtnColor() {

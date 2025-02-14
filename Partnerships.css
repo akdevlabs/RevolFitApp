@@ -115,6 +115,39 @@ main{
 
 
 
+#ThirdBlock{
+
+  flex-direction: column;
+}
+
+.EventTopBlock{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   .NavBtns {
     gap: 1rem;

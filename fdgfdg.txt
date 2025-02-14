@@ -1,60 +1,90 @@
+async function CalanderColors() {
+  try {
+      const docRef = doc(db, "RevoBuissnes", transferredInfo);
+      const docSnap = await getDoc(docRef);
 
-  function renderGymList(workout) {
-    if (!workout) return; // Skip if the workout is undefined
+      if (docSnap.exists()) {
+          return docSnap.data();
+      } else {
+          console.error("No such document!");
+          return null;
+      }
+  } catch (error) {
+      console.error("Error fetching document:", error);
+      return null;
+  }
+}
 
-    // Target the GymList section in the DOM
-    const gymListSection = document.getElementById("GymList");
+async function renderWeeklyCalendar() {
+  const data = await CalanderColors();
+  if (!data) return;
 
-    // Create a container for the workout
-    const workoutContainer = document.createElement("div");
-    workoutContainer.className = "workout-container";
+  const UBU = data.UBU;
+  const { top, bottom } = UBU.BackgroundColor;
+  const { Base, Prime1 } = UBU.Colors;
 
-    // Add the workout title
-    const title = document.createElement("h2");
-    title.textContent = workout.Tittle; // Updated property name
-    workoutContainer.appendChild(title);
+  const weeklyContainer = document.getElementById("weekly");
+  let currentDate = new Date();
+  const today = new Date().setHours(0, 0, 0, 0);
 
-    // Add reps and time
-    const reps = document.createElement("p");
-    reps.textContent = `Reps: ${workout.Reps}`;
-    workoutContainer.appendChild(reps);
-
-    const time = document.createElement("p");
-    time.textContent = `Time: ${workout.time}`;
-    workoutContainer.appendChild(time);
-
-    // Add the sets list
-    const setsList = document.createElement("ul");
-    setsList.className = "sets-list";
-    workout.Sets.forEach((set) => {
-      const listItem = document.createElement("li");
-      listItem.textContent = set;
-      setsList.appendChild(listItem);
-    });
-    workoutContainer.appendChild(setsList);
-
-    // Add the instructions
-    const instructionsTitle = document.createElement("h3");
-    instructionsTitle.textContent = "Instructions";
-    workoutContainer.appendChild(instructionsTitle);
-
-    const instructionsList = document.createElement("ul");
-    instructionsList.className = "instructions-list";
-    workout.instructions.forEach((instruction) => {
-      const listItem = document.createElement("li");
-      listItem.textContent = instruction;
-      instructionsList.appendChild(listItem);
-    });
-    workoutContainer.appendChild(instructionsList);
-
-    // Append the workout container to the GymList section
-    gymListSection.appendChild(workoutContainer);
+  function getWeekDates(date) {
+      const startOfWeek = new Date(date);
+      startOfWeek.setDate(date.getDate() - date.getDay()); // Start from Sunday
+      return Array.from({ length: 7 }, (_, i) => { // Full week Sunday to Saturday
+          const day = new Date(startOfWeek);
+          day.setDate(startOfWeek.getDate() + i);
+          return day;
+      });
   }
 
-  // Iterate over all workouts in the Exersiseses object and render them
-  Object.values(Exersiseses).forEach((workout) => {
-    renderGymList(workout);
-  });
+  function updateCalendar() {
+      weeklyContainer.innerHTML = "";
+      
+      const header = document.createElement("div");
+      header.id = "calendar-header";
+      header.innerHTML = `<button id='prevWeek'>&lt;</button>
+                          
+                          <button id='nextWeek'>&gt;</button>`;
+      weeklyContainer.appendChild(header);
+      
+      const daysContainer = document.createElement("div");
+      daysContainer.id = "days-container";
+
+      const weekDates = getWeekDates(currentDate);
+      weekDates.forEach(date => {
+          const isActive = date.setHours(0, 0, 0, 0) === today;
+          const dayElement = document.createElement("div");
+          dayElement.className = "day";
+          dayElement.id = `day-${date.getDate()}`;
+          //dayElement.style.backgroundColor = isActive ? bottom : "transparent";
+          dayElement.innerHTML = 
+          
+          `<span style="font-size: ${isActive ? '1.6rem' : '1.2rem'}; 
+           color: ${top}; font-weight: ${isActive ? 'bold' : 'normal'};">
+                                      ${date.toLocaleString('es-ES', { weekday: 'short' })}
+                                  </span>
+                                  <span style="font-size: ${isActive ? '3.5rem' : '1.5rem'}; color: ${isActive ? Base : Prime1}; font-weight: bold;">
+                                      ${date.getDate()}
+                                  </span>`;
+          daysContainer.appendChild(dayElement);
+      });
+
+      weeklyContainer.appendChild(daysContainer);
+      
+      document.getElementById("prevWeek").addEventListener("click", () => {
+          currentDate.setDate(currentDate.getDate() - 7);
+          updateCalendar();
+      });
+      document.getElementById("nextWeek").addEventListener("click", () => {
+          currentDate.setDate(currentDate.getDate() + 7);
+          updateCalendar();
+      });
+  }
+
+  updateCalendar();
+}
+
+document.addEventListener("DOMContentLoaded", renderWeeklyCalendar);
 
 
 
@@ -67,45 +97,45 @@
 
 
 
+  #weekly {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    padding: 10px;
+}
+#calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-
-
-
-
+ 
+}
+#calendar-header button {
+    padding: 5px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #555555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin: 0 1rem 0 -.2rem;
+}
+#calendar-header button:hover {
+    background-color: #333333;
+}
+#days-container {
+    display: flex;
+     margin: 0 1rem 0 -.2rem;
+   
+}
+.day {
+    padding: 1px;
+    border-radius: 5px;
+    min-width: 50px;
+}
   
-    // Mocked checkTierValue function
-    function checkBlockValue() {
-      // Logic to determine which block to select
-      // Replace this with your actual implementation
-      return "Block1"; // Example return value
-    }
-
-    // Function to choose a block
-    function chooseBlock(blockName) {
-      if (gym[blockName]) {
-        return gym[blockName];
-      } else {
-        console.error(`Block "${blockName}" does not exist in the gym object.`);
-        return null;
-      }
-    }
-
-    // Example usage
-    const TierValue = checkTierValue(); // Retrieve the block name dynamically
-    const selectedBlock = chooseBlock(TierValue);
-
-    if (selectedBlock) {
-      console.log(`Selected Block (${TierValue}):`, selectedBlock);
-    }
 
 
-
-
-
-
-  
-  createMealPlanDishes(Cat[1], mealTime)
-  
-  createMealPlanDishes(Cat[2], mealTime)
-  
-  createMealPlanDishes(Cat[3], mealTime)

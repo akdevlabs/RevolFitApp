@@ -106,8 +106,7 @@ SetBuBtns().then((data) => {
   const nutritionBtns = Btns.nutritionBtns;
   const ProductBtns = Btns.ProductBtns;
   const HomeBtns = Btns.homeBtns;
-  const Incentive = Btns.IncentiveBtns;
-  const Event = Btns.EventBtns;
+
 
 
 
@@ -131,9 +130,8 @@ SetBuBtns().then((data) => {
   setBuIcon(nutritionBtns[0], 'Example image', "NutricionistaImg");
 
 
-  setBuIcon(Incentive[0], 'Example image', "Incentive"); 
+
   setBuIcon(HomeBtns[0], 'Example image', "home"); 
-  setBuIcon(Event[0], 'Example image', "Events"); 
 
 });
 
@@ -158,69 +156,7 @@ async function GetpartnerInfo() {
 GetpartnerInfo().then((data) => {
   const Partnerships = data.Partnerships;
 
-  function createContBlock(UrlId, Ch1, Lcont, ImgSrc, color1) {
-    // Get the existing GymBlock div
-    let gymBlock = document.getElementById(UrlId);
-    
-    // Create a new div inside GymBlock
-    let newDiv = document.createElement("div");
-    newDiv.id = "newGymContent";
-    newDiv.style.backgroundColor = color1; // Apply the dynamic background color
-    gymBlock.appendChild(newDiv);
-    
-    let link = document.createElement("a");
-    link.innerText = Lcont;
-    link.href = "#";
-    link.classList.add("gym-link");
-    
-    // Create an h1 element
-    let heading = document.createElement("h1");
-    heading.innerText = Ch1;
-    heading.classList.add("gym-heading");
-    
-    // Create an img element
-    let image = document.createElement("img");
-    image.src = ImgSrc;
-    image.alt = "Gym Image";
-    image.classList.add("gym-image");
-    
-    // Append elements to the new div
-    newDiv.appendChild(heading);
-    newDiv.appendChild(image);
-    newDiv.appendChild(link);
-    
-    // Add CSS styles
-    let style = document.createElement("style");
-    style.innerHTML = `
-      #newGymContent {
-        padding: 20px;
-        border-radius: 8px;
-        text-align: center;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
-      .gym-heading {
-        font-size: 24px;
-        color: #333;
-        margin-bottom: 10px;
-      }
-      .gym-link {
-        font-size: 16px;
-        color: #007BFF;
-        text-decoration: none;
-      }
-      .gym-link:hover {
-        text-decoration: underline;
-      }
-      .gym-image {
-        width: 100%;
-        max-width: 300px;
-        height: auto;
-        margin-bottom: 10px;
-        border-radius: 8px;
-      }
-    `;
-    document.head.appendChild(style);
-  }
+  
 
   function rendercontent(data) {
     const container = document.getElementById(data.urlBlock);
@@ -617,8 +553,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
   function showBlock(showId) {
       document.getElementById("BtnBlock").style.display = "none";
-      document.getElementById("SecondBlock").style.display = "none";
-      document.getElementById("ThirdBlock").style.display = "none";
+      
       
       document.getElementById(showId).style.display = "flex";
   }
@@ -661,26 +596,6 @@ document.addEventListener("DOMContentLoaded", function () {
     
 
   
-  document.getElementById("Incentive").addEventListener("click", function () {
-      changeTitle("Incentive");
-      showBlock("SecondBlock");
-      document.getElementById("GymBlock").style.display = "none";
-      document.getElementById("ProductBlock").style.display = "none";
-      document.getElementById("SuplimentBlock").style.display = "none";
-      document.getElementById("NutricionistaBlock").style.display = "none";
-      btnBlock.style.display = "none"; 
-  });
-  
-  document.getElementById("Events").addEventListener("click", function () {
-      changeTitle("Events");
-      showBlock("ThirdBlock");
-      document.getElementById("GymBlock").style.display = "none";
-      document.getElementById("ProductBlock").style.display = "none";
-      document.getElementById("SuplimentBlock").style.display = "none";
-      document.getElementById("NutricionistaBlock").style.display = "none";
-      btnBlock.style.display = "none"; 
-  });
-  
   document.getElementById("home").addEventListener("click", function () {
       changeTitle("Colaboraciones");
       showBlock("BtnBlock");
@@ -701,7 +616,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 
 

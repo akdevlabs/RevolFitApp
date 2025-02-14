@@ -238,6 +238,7 @@ document.addEventListener("DOMContentLoaded", renderWeeklyCalendar);
 
 
 
+// Assuming db and transferredInfo are initialized somewhere above
 async function RenderSlots() {
   try {
     const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
@@ -256,75 +257,114 @@ async function RenderSlots() {
   }
 }
 
+// The RenderSlots function will fetch the data and then process it
 RenderSlots().then((data) => {
+  if (!data) return; // Exit if no data is returned
+
   const Events = data.Events;
 
+  // Function to count the items in an object
   function countItems(obj) {
     return Object.keys(obj).length;
   }
 
-  function logSlots(obj) {
-    const itemCount = countItems(obj);
-
-    for (let i = 1; i <= itemCount; i++) {}
+  // Function to check the timestamp validity
+  function checkTstamp(tstamp) {
+    const eventTime = tstamp instanceof Timestamp ? tstamp.toDate() : new Date(tstamp);
+    const readableTime = formatTimestamp(eventTime);
+    console.log(`Formatted Tstamp: ${readableTime}`);
+    const currentTime = new Date();
+    
+    // Check if the event time is today or in the future
+    return eventTime.toDateString() === currentTime.toDateString() || eventTime > currentTime;
   }
 
-  function getTstampForSlots(obj) {
+  // Function to format the timestamp
+  function formatTimestamp(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;  // Month is 0-indexed, so add 1
+    const day = date.getDate();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    return `${month}/${day}/${year} ${hours}:${minutes}:${seconds}`;
+  }
+   // Function to format the timestamp
+   function formatTimestampDay() {
+    const day = date.getDate();
+    return `${day}`;
+  }
+
+
+  
+  // Function to get valid slots
+  function getGoodSlots(obj) {
     const itemCount = countItems(obj);
-    const goodSlots = []; // Array to store slots with future or present Tstamp
+    const goodSlots = [];
 
     for (let i = 1; i <= itemCount; i++) {
       const slotKey = `slot${i}`;
       if (obj[slotKey] && obj[slotKey].Tstamp) {
         const tstamp = obj[slotKey].Tstamp;
-        console.log(`${slotKey} Tstamp: ${tstamp}`);
-        const isGood = checkTstamp(tstamp);
-        if (isGood) {
-          goodSlots.push(slotKey); // Add to goodSlots if the Tstamp is good
+        if (checkTstamp(tstamp)) {
+          goodSlots.push({
+            ...obj[slotKey],
+            day: new Date(tstamp).getDate(), // Extract day from timestamp
+            month: new Date(tstamp).getMonth() + 1 // Extract month from timestamp (1-indexed)
+          });
         }
-      } else {
-        console.log(`${slotKey} does not have a Tstamp`);
       }
     }
 
-    console.log("Good Slots:", goodSlots); // Log the good slots
-    return goodSlots; // Return the array of good slots
+    return goodSlots;
   }
 
-  function checkTstamp(tstamp) {
-    // If the Tstamp is a Firebase Timestamp object, we convert it to a JavaScript Date
-    const eventTime = tstamp instanceof Timestamp ? tstamp.toDate() : new Date(tstamp);
+  // Function to render the slots
+  function createSlots(data) {
+    const container = document.getElementById("slotsContainer");
+    container.innerHTML = "";  // Clear any existing slots
 
-    const readableTime = formatTimestamp(eventTime); // Convert to readable format
-    console.log(`Formatted Tstamp: ${readableTime}`);
-
-    const currentTime = new Date();
-
-    if (eventTime < currentTime) {
-      console.log("bad"); // Tstamp is in the past
-      return false; // Return false if the Tstamp is in the past
-    } else {
-      console.log("good"); // Tstamp is now or in the future
-      return true; // Return true if the Tstamp is in the future or now
-    }
+    data.forEach((event, index) => {
+      const slotId = index + 1;
+      
+      const slot = document.createElement("div");
+      slot.className = "slot";
+      slot.id = `slot${slotId}`;
+      
+      slot.innerHTML = `
+        <div class="top">
+          <div class="DateTimeBlock">
+            <div class="dateBlock">
+              <span class="SDate" id="S${slotId}Date">${event.Day}</span> <!-- Day of the event -->
+              <span class="SMonth" id="S${slotId}Month">${event.Month}</span> <!-- Month of the event -->
+            </div>
+            <a class="STime" id="S${slotId}Time">${event.Time}</a>
+          </div>
+          <img class="like" id="S${slotId}like" src="${event.likeIcon}" alt="Like">
+        </div>
+        
+        <div class="center">
+          <h1 class="Stittle" id="S${slotId}tittle">${event.Tittle}</h1>
+          <h2 class="SLocation" id="S${slotId}Location">${event.Location}</h2>
+        </div>
+        
+        <div class="bottom">
+          <img class="SImg" id="S${slotId}Img" src="${event.Img}" alt="Event Image">
+        </div>
+      `;
+      
+      container.appendChild(slot);
+    });
   }
-
-  function formatTimestamp(date) {
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1; // Months are 0-indexed
-    const day = date.getDate();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-
-    // Format into a readable string
-    return `${month}/${day}/${year} ${hours}:${minutes}:${seconds}`;
+  function scrollToBottom() {
+    const container = document.getElementById("slotsContainer");
+    container.scrollTop = container.scrollHeight; // Scroll to the bottom
   }
-
-  logSlots(Events); // Output: slot1, slot2, slot3
-  const goodSlots = getTstampForSlots(Events); // Get and log all the "good" slots
+  // Get only the good slots and render them
+  const goodSlots = getGoodSlots(Events);
+  createSlots(goodSlots);
+  scrollToBottom();
 });
-
 
 
 

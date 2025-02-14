@@ -126,4 +126,108 @@
  
 }
 
+
+
+
+#slotsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  max-height: 500px; /* You can adjust this value as needed */
+  overflow-y: auto;  /* Enables vertical scrolling */
+
+}
+
+.slot {
+  width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+  margin: 1rem;
+}
+
+.slot:hover {
+  transform: translateY(-5px);
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #013948;
+  color: #ACE2E4;
+}
+
+.DateTimeBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+}
+
+.dateBlock {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+ 
+}
+
+.SDate {
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+.SMonth {
+  font-size: 1rem;
+  margin-top: -1rem;
+  text-transform: uppercase;
+}
+
+.STime {
+  font-size: 14px;
+  color: #E9E8E8;
+  text-decoration: none;
+}
+
+.STime:hover {
+  text-decoration: underline;
+}
+
+.like {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.center {
+  text-align: center;
+  padding: 15px;
+}
+
+.Stittle {
+  font-size: 20px;
+  color: #013948;
+  margin: 5px 0;
+}
+
+.SLocation {
+  font-size: 16px;
+  color: #555555;
+}
+
+.bottom {
+  text-align: center;
+  padding: 10px;
+}
+
+.SImg {
+  width: 100%;
+  height: auto;
+  border-radius: 0 0 12px 12px;
+}
+
 }

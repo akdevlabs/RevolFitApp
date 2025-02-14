@@ -14,8 +14,8 @@
   <link rel="manifest" href="/site.webmanifest">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SHS/RevoFitApp/Calendar/Events</title>
-  <link rel="stylesheet" href="Events.css">
+  <title>SHS/RevoFitApp/Calendar/Event</title>
+  <link rel="stylesheet" href="Event.css">
 
   <link rel="shortcut icon" href="images/Logos/flower_DB.webp">
 </head>
@@ -31,25 +31,17 @@
 
 
 
-   <section >
+
     
     <div class="EventTopBlock">
-      <a class="block" id="BackBtn" ><</a>
+      <a class="block" id="BackBtn" href="index9.2.html"><</a>
       <h1 id="Toptittle">Próximos Eventos</h1>
       <img id="Calander" src="">
     </div>
 
-    <div id="weekly">
-      <div id="days-container"></div>
-    </div>
-
-
-    <div id="slotsContainer" class="slots-container"></div>
-
-    
    
+    
 
-   </section>
      
     
   
@@ -59,7 +51,7 @@
    
   </main>
 
-  <script type="module" src="Events.js"></script>
+  <script type="module" src="Event.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./service-worker.js')

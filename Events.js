@@ -241,12 +241,12 @@ document.addEventListener("DOMContentLoaded", renderWeeklyCalendar);
 // Assuming db and transferredInfo are initialized somewhere above
 async function RenderSlots() {
   try {
-    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
+    const docRef = doc(db, "RevoBuissnes", transferredInfo);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
       const documentData = docSnap.data();
-      return documentData; // Return the document data
+      return documentData;
     } else {
       console.error("No such document!");
       return null;
@@ -257,110 +257,87 @@ async function RenderSlots() {
   }
 }
 
-// The RenderSlots function will fetch the data and then process it
 RenderSlots().then((data) => {
-  if (!data) return; // Exit if no data is returned
+  if (!data) return;
 
   const Events = data.Events;
 
-  // Function to count the items in an object
   function countItems(obj) {
     return Object.keys(obj).length;
   }
 
-  // Function to check the timestamp validity
   function checkTstamp(tstamp) {
     const eventTime = tstamp instanceof Timestamp ? tstamp.toDate() : new Date(tstamp);
-    const readableTime = formatTimestamp(eventTime);
-    console.log(`Formatted Tstamp: ${readableTime}`);
     const currentTime = new Date();
-    
-    // Check if the event time is today or in the future
     return eventTime.toDateString() === currentTime.toDateString() || eventTime > currentTime;
   }
 
-  // Function to format the timestamp
   function formatTimestamp(date) {
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;  // Month is 0-indexed, so add 1
-    const day = date.getDate();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-    return `${month}/${day}/${year} ${hours}:${minutes}:${seconds}`;
-  }
-   // Function to format the timestamp
-   function formatTimestampDay() {
-    const day = date.getDate();
-    return `${day}`;
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
   }
 
-
-  
-  // Function to get valid slots
   function getGoodSlots(obj) {
-    const itemCount = countItems(obj);
     const goodSlots = [];
-
-    for (let i = 1; i <= itemCount; i++) {
+    for (let i = 1; i <= countItems(obj); i++) {
       const slotKey = `slot${i}`;
       if (obj[slotKey] && obj[slotKey].Tstamp) {
         const tstamp = obj[slotKey].Tstamp;
         if (checkTstamp(tstamp)) {
           goodSlots.push({
             ...obj[slotKey],
-            day: new Date(tstamp).getDate(), // Extract day from timestamp
-            month: new Date(tstamp).getMonth() + 1 // Extract month from timestamp (1-indexed)
+            dateObject: new Date(tstamp),
+            day: new Date(tstamp).getDate(),
+            month: new Date(tstamp).getMonth() + 1,
+            slotId: slotKey
           });
         }
       }
     }
-
-    return goodSlots;
+    return goodSlots.sort((a, b) => a.dateObject - b.dateObject); // Sort by date ascending
   }
 
-  // Function to render the slots
   function createSlots(data) {
     const container = document.getElementById("slotsContainer");
-    container.innerHTML = "";  // Clear any existing slots
-
+    container.innerHTML = "";
     data.forEach((event, index) => {
       const slotId = index + 1;
-      
       const slot = document.createElement("div");
       slot.className = "slot";
       slot.id = `slot${slotId}`;
-      
       slot.innerHTML = `
         <div class="top">
           <div class="DateTimeBlock">
             <div class="dateBlock">
-              <span class="SDate" id="S${slotId}Date">${event.Day}</span> <!-- Day of the event -->
-              <span class="SMonth" id="S${slotId}Month">${event.Month}</span> <!-- Month of the event -->
+              <span class="SDate" id="S${slotId}Date">${event.Day}</span>
+              <span class="SMonth" id="S${slotId}Month">${event.Month}</span>
             </div>
             <a class="STime" id="S${slotId}Time">${event.Time}</a>
           </div>
           <img class="like" id="S${slotId}like" src="${event.likeIcon}" alt="Like">
         </div>
-        
         <div class="center">
           <h1 class="Stittle" id="S${slotId}tittle">${event.Tittle}</h1>
           <h2 class="SLocation" id="S${slotId}Location">${event.Location}</h2>
         </div>
-        
         <div class="bottom">
           <img class="SImg" id="S${slotId}Img" src="${event.Img}" alt="Event Image">
         </div>
       `;
       
+      slot.addEventListener("click", () => {
+        localStorage.setItem("selectedSlot", JSON.stringify(event));
+        window.location.href = "index9.2.5.html";
+      });
+      
       container.appendChild(slot);
     });
   }
+
   function scrollToBottom() {
     const container = document.getElementById("slotsContainer");
-    container.scrollTop = container.scrollHeight; // Scroll to the bottom
+    container.scrollTop = container.scrollHeight;
   }
-  // Get only the good slots and render them
+
   const goodSlots = getGoodSlots(Events);
   createSlots(goodSlots);
   scrollToBottom();
@@ -441,19 +418,12 @@ function changeBackgroundImg(color, Tcolor, SBtn) {
 function setGradient(color1, color2) {
   document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2})`;
 }
-function changeBackgroundImg(color, SBtn) {
-  const Btn = document.getElementById(SBtn);
-  if (Btn) {
-    Btn.style.backgroundColor = color;
-  } else {
-    console.error("Element not found:", SBtn);
-  }
-}
+
 
 
 
 changeBackgroundImg(Prime1, Base, 'BackBtn'); // Example color change
-changeBackgroundImg(Base, 'Calander')
+
 setGradient(top, bottom); 
  
 

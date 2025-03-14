@@ -5,6 +5,18 @@
     margin: 0; /* Removes default margin */
     padding: 0; /* Removes default padding */
   }
+
+  #UserImg{
+    width: 5rem;
+  }
+  #header{
+   padding: 1rem 0;
+  }
+
+
+
+
+
   .ReportResults{
     margin: 0 1.5rem;
   }

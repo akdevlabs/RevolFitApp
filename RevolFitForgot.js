@@ -19,8 +19,11 @@ const app = initializeApp(firebaseConfig);
 // Initialize Firestore
 const db = getFirestore(app);
 
-const user =    "DefaultUser"            //1000000001
-const buissnes = "RevolFit"
+const transferredInfo = localStorage.getItem("transferredInfo");
+console.log(transferredInfo)
+
+
+
 
 
 
@@ -44,7 +47,7 @@ async function checkDocumentExists(collectionName, documentId) {
 }
 
 // Call the function with the correct string arguments
-checkDocumentExists("RevoBuissnes", buissnes);
+checkDocumentExists("RevoBuissnes", transferredInfo);
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -71,52 +74,22 @@ document.addEventListener("DOMContentLoaded", () => {
         return null;
       }
     }
-
     // Function to apply branding based on the document (RevoFit, MetaV, SHS)
     async function applyBranding(documentId) {
       const data = await fetchFirestoreData("RevoBuissnes", documentId);
-      const {UBU, Forgot} = data;
-     
-      const BuIcon = UBU.BuLogos
-      const BuLogo = BuIcon.LightLogo
-
-      const LogoText = UBU.LogoText
-      const Logodescription = LogoText.description
-      const Logoname = LogoText.name
-      
-      const {Base, Prime1, Prime2}= UBU.Colors
-
-      const fontAc = UBU.font
-     
-      const {EIcon, backgroundImg}= Forgot.FImg
-
-
+      const App = await fetchFirestoreData("RevolApp", "Content");
+      const {Base, Prime1, Prime2}= data.UBU.Colors
+      const {top, bottom}= data.UBU.BackgroundColor
+      const BuLogo = data.UBU.BuLogos.LightLogo
 
       if (!data) {
         console.error("No data retrieved from Firestore.");
         return;
       }
-
-      function setFontFamily(element, fontFamily) {
-        element.style.fontFamily = fontFamily; // Set the font family on the given element
-      }
-
-      // Example usage
-      const element = document.querySelector("body"); // Select the target element
- 
-      setFontFamily(element, fontAc); // Apply the font family to the selected element
-
-    
-
-      if (!Forgot) {
-        console.error("The 'register' field is missing in the document.");
-        return;
-      }
-
-
+      function GetBuFont(fontFamily) {
+        document.body.style.fontFamily = fontFamily;
+       }
       // Function to render images into containers
-    
-
       function renderImages(imgId, imgAlt, imgName, imageUrl){
         const imgContainer = document.getElementById(imgId);
         if (!imgContainer) {
@@ -131,10 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
         imgContainer.innerHTML = ""; // Clear previous content
         imgContainer.appendChild(img); // Add new image
       }
-      
-
-
-
       // Function to set background color
       function setBtnColors(Bcolor, color, textColor) {
         const button = document.getElementById("getPassword");
@@ -146,7 +115,6 @@ document.addEventListener("DOMContentLoaded", () => {
         button.style.color = textColor;
         }
       }
-   
       function setButtonBorderColor(color) {
         const button = document.getElementById("getPassword");
         if (button) {
@@ -156,9 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
       // Apply branding
-      
       setButtonBorderColor(Prime1, Prime1)
-
       // Function to set text color
       function setTextColors(color) {
         const tittle = document.getElementById("FP");
@@ -168,13 +134,13 @@ document.addEventListener("DOMContentLoaded", () => {
         text.style.color = color;
       }
       // Function to set background color
-      function setBackgroundColor(color) {
-        const button = document.getElementById("FPC");
+      function setBackgroundGradient(color1, color2) {
+        const button = document.getElementById("FPCB");
         if (!button) {
-          console.warn("Element with ID 'registerContent' not found.");
+          console.warn("Element with ID 'FPCB' not found.");
           return;
         }
-        button.style.backgroundColor = color; // Set the background color dynamically
+        button.style.background = `linear-gradient(to bottom, ${color1}, ${color2})`; // Apply gradient
       }
       function setAColor(color, btnColor) {
         const button = document.getElementById(color);
@@ -189,18 +155,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       // render background Img
-      renderImages("forgot-password-Img", "Email Icon", "Email Icon", backgroundImg)
+      renderImages("forgot-password-Img", "Girl on a pc", "backgroundImg", App.Images.PasswordImg)
+      console.log(App.Images.PasswordImg)
       // render Logo
-      renderImages("logoBlock", Logodescription, Logoname, BuLogo)
+      renderImages("logoBlock", data.UBU.LogoText.description, data.UBU.LogoText.name, BuLogo)
       // render Icons
-      renderImages("emailIcon", "Email Icon", "Email Icon", EIcon)
+      renderImages("emailIcon", "Email Icon", "Email Icon", data.AppIcons.userIcon)
        // Set Background color
       setAColor("loginPortal", Prime1)
       // Set Background color
-      setBackgroundColor(Base);
+      setBackgroundGradient(top, bottom);
       // Set Text color
       setTextColors(Prime2)
-      
+      GetBuFont(data.UBU.font);
     }
 
     // Dynamically select the document based on your needs

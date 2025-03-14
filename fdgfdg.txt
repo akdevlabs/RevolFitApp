@@ -1,141 +1,584 @@
-async function CalanderColors() {
-  try {
-      const docRef = doc(db, "RevoBuissnes", transferredInfo);
-      const docSnap = await getDoc(docRef);
 
-      if (docSnap.exists()) {
-          return docSnap.data();
-      } else {
-          console.error("No such document!");
-          return null;
-      }
-  } catch (error) {
-      console.error("Error fetching document:", error);
-      return null;
+function renderText(Text, UrlText){
+  const tierElement = document.getElementById(UrlText);
+  if (tierElement) {
+      tierElement.textContent = Text;
+  } else {
+      console.error("Element with ID 'Tier' not found.");
   }
 }
+function renderMonthlyBanner(discount){
+  // Get or create the main container div
+  let discountBlock = document.getElementById("ADiscount");
+  if (!discountBlock) {
+      discountBlock = document.createElement("Span");
+      discountBlock.className = "DiscountBlock";
+      document.body.appendChild(discountBlock); // Append to body or a specific 
+      discountBlock.style.width = "20rem"
+      discountBlock.style.display = "flex"
 
-async function renderWeeklyCalendar() {
-  const data = await CalanderColors();
-  if (!data) return;
-
-  const UBU = data.UBU;
-  const { top, bottom } = UBU.BackgroundColor;
-  const { Base, Prime1 } = UBU.Colors;
-
-  const weeklyContainer = document.getElementById("weekly");
-  let currentDate = new Date();
-  const today = new Date().setHours(0, 0, 0, 0);
-
-  function getWeekDates(date) {
-      const startOfWeek = new Date(date);
-      startOfWeek.setDate(date.getDate() - date.getDay()); // Start from Sunday
-      return Array.from({ length: 7 }, (_, i) => { // Full week Sunday to Saturday
-          const day = new Date(startOfWeek);
-          day.setDate(startOfWeek.getDate() + i);
-          return day;
-      });
   }
 
-  function updateCalendar() {
-      weeklyContainer.innerHTML = "";
-      
-      const header = document.createElement("div");
-      header.id = "calendar-header";
-      header.innerHTML = `<button id='prevWeek'>&lt;</button>
-                          
-                          <button id='nextWeek'>&gt;</button>`;
-      weeklyContainer.appendChild(header);
-      
-      const daysContainer = document.createElement("div");
-      daysContainer.id = "days-container";
-
-      const weekDates = getWeekDates(currentDate);
-      weekDates.forEach(date => {
-          const isActive = date.setHours(0, 0, 0, 0) === today;
-          const dayElement = document.createElement("div");
-          dayElement.className = "day";
-          dayElement.id = `day-${date.getDate()}`;
-          //dayElement.style.backgroundColor = isActive ? bottom : "transparent";
-          dayElement.innerHTML = 
-          
-          `<span style="font-size: ${isActive ? '1.6rem' : '1.2rem'}; 
-           color: ${top}; font-weight: ${isActive ? 'bold' : 'normal'};">
-                                      ${date.toLocaleString('es-ES', { weekday: 'short' })}
-                                  </span>
-                                  <span style="font-size: ${isActive ? '3.5rem' : '1.5rem'}; color: ${isActive ? Base : Prime1}; font-weight: bold;">
-                                      ${date.getDate()}
-                                  </span>`;
-          daysContainer.appendChild(dayElement);
-      });
-
-      weeklyContainer.appendChild(daysContainer);
-      
-      document.getElementById("prevWeek").addEventListener("click", () => {
-          currentDate.setDate(currentDate.getDate() - 7);
-          updateCalendar();
-      });
-      document.getElementById("nextWeek").addEventListener("click", () => {
-          currentDate.setDate(currentDate.getDate() + 7);
-          updateCalendar();
-      });
+  function createSpan(id, text) {
+    let span = document.getElementById(id);
+    if (!span) {
+      span = document.createElement("span");
+      span.id = id;
+      discountBlock.appendChild(span);
+    }
+    span.textContent = text;
   }
+  createSpan("ADiscount", discount);
 
-  updateCalendar();
+  
 }
 
-document.addEventListener("DOMContentLoaded", renderWeeklyCalendar);
 
-
-
-
-
-
-
-
-
-
-
-
-  #weekly {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    text-align: center;
-    font-family: Arial, sans-serif;
-    padding: 10px;
+function renderDiscountBlock(discount, price, coin) {
+// Get or create the main container div
+let discountBlock = document.getElementById("Discount");
+if (!discountBlock) {
+  discountBlock = document.createElement("div");
+  discountBlock.id = "Discount";
+  discountBlock.className = "DiscountBlock";
+  document.body.appendChild(discountBlock); // Append to body or a specific container
 }
-#calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 
- 
+// Function to create a span with text content
+function createSpan(id, text) {
+  let span = document.getElementById(id);
+  if (!span) {
+    span = document.createElement("span");
+    span.id = id;
+    discountBlock.appendChild(span);
+  }
+  span.textContent = text;
 }
-#calendar-header button {
-    padding: 5px 10px;
-    font-size: 1rem;
-    cursor: pointer;
-    background-color: #555555;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin: 0 1rem 0 -.2rem;
+
+// Create/update spans
+createSpan("ADiscount", discount);
+createSpan("OldPrice", price);
+createSpan("Coin", coin);
 }
-#calendar-header button:hover {
-    background-color: #333333;
-}
-#days-container {
-    display: flex;
-     margin: 0 1rem 0 -.2rem;
-   
-}
-.day {
-    padding: 1px;
-    border-radius: 5px;
-    min-width: 50px;
-}
+const getSelectedSlot = () => {
+const selectedSlot = JSON.parse(localStorage.getItem('TierSlot')); // Get the slot ID from localStorage
+
+if (selectedSlot) {
+  // If a slot is selected, you can use this ID to modify the content or highlight the slot
+  return(selectedSlot);
   
 
+} else {
+  console.log('No slot selected');
+}
+};
 
+
+async function getSlotInfo() {
+try {
+  const docRef = doc(db, "RevolApp", "RevofitTiers"); // Ensure db and transferredInfo are initialized
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    console.error("No such document!");
+    return null;
+  }
+} catch (error) {
+  console.error("Error fetching document:", error);
+  return null;
+}
+}
+
+
+function renderPrice(cost, currency, url) {
+// Ensure exchangeRates is defined globally or fetched
+if (typeof exchangeRates === "undefined") {
+    console.error("exchangeRates is not defined.");
+    return;
+}
+
+// Default to USD if currency is empty or undefined
+if (!currency || currency.trim() === "") {
+    currency = "USD";
+}
+
+function convert() {
+    const rate = exchangeRates[currency]; // Lookup rate dynamically
+    if (rate) {
+        return cost * rate;
+    } else {
+        console.error(`Exchange rate for '${currency}' not found.`);
+        return cost; // Return original cost if rate is missing
+    }
+}
+
+const convertedCost = convert();
+
+const tierElement = document.getElementById(url);
+if (tierElement) {
+    tierElement.textContent = convertedCost.toFixed(2); // Ensure two decimal places
+} else {
+    console.error(`Element with ID '${url}' not found.`);
+}
+}
+
+// Exchange rates stored as variables
+const exchangeRates = {
+"USD": 1,
+"CAD": 1.4215,
+"MXN": 21.4363,
+"ARS": 1060.0000,
+"BRL": 5.7457,
+"CLP": 943.9600,
+"COP": 4115.1200,
+"PEN": 3.7457
+};
+
+function renderSlot(UrlListBlock, features) {
+const listBlock = document.getElementById(UrlListBlock);
+listBlock.innerHTML = "";
+features.forEach(feature => {
+    const item = document.createElement("p");
+    item.textContent = `✔  ${feature}`;
+    listBlock.appendChild(item);
+});
+}
+
+
+
+getSlotInfo().then((data) => {
+const tiers = {
+  Slot2: data.Tier2,
+  Slot3: data.Tier3,
+  Slot4: data.Tier4
+};
+
+
+function renderSlotDetails(period) {
+  const slot = getSelectedSlot();
+  const tier = tiers[slot];
+
+  if (!tier) return; // Prevent errors if the slot is invalid
+
+  renderText(tier.Title, "Tier");
+  renderMonthlyBanner("🔥 ¡El Plan Anual = Los Mayores Ahorros!");
+  renderText(SelectedCurrency || tier.Coin, "Currency");
+ 
+
+  if (period === "yearly") {
+    renderDiscountBlock(`-${tier.Discount}%`, `$${tier.MonthlyCost}`, SelectedCurrency || tier.Coin);
+    renderPrice(tier.YearlyCost, SelectedCurrency || tier.Coin, "Price");
+  } else {
+    removeDiscountBlock(); // Ensure the discount block is removed when switching back to monthly
+    renderPrice(tier.MonthlyCost, SelectedCurrency || tier.Coin, "Price");
+  }
+
+  renderSlot("Features", tier.Points);
+}
+
+// Initial Render
+renderSlotDetails("monthly");
+
+document.getElementById("Monthly").addEventListener("click", function (event) {
+  event.preventDefault();
+  renderSlotDetails("monthly");
+});
+
+document.getElementById("Yearly").addEventListener("click", function (event) {
+  event.preventDefault();
+  renderSlotDetails("yearly");
+});
+
+function removeDiscountBlock() {
+  const discountElement = document.getElementById("discount-block"); // Assuming you have an element with this ID
+  if (discountElement) discountElement.remove(); // Remove the discount block if it exists
+}
+});
+
+
+
+
+
+
+
+// Function to retrieve the selected slot from localStorage
+
+
+// Call the function to get the selected slot when the page loads
+console.log(getSelectedSlot())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+async function backgroundColor() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.error("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+backgroundColor().then((data) => {
+  const UBU = data.UBU;
+  const { top, bottom } = UBU.BackgroundColor;
+  const { Base, Prime1, Prime2, Prime3, Prime4 } = UBU.Colors;
+
+
+
+function changeBackgroundImg(color, Tcolor, SBtn) {
+  const Btn = document.getElementById(SBtn);
+  if (Btn) {
+    Btn.style.backgroundColor = color;
+    Btn.style.color = Tcolor;
+  } else {
+    console.error("Element not found:", SBtn);
+  }
+}
+function setGradient(color1, color2) {
+  document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2})`;
+}
+function setLikeBackgroundColor(color, SBtn){
+  const Btn = ocument.querySelector(SBtn);
+  if (Btn) {
+    Btn.style.backgroundColor = color;
+    
+  } else {
+    console.error("Element not found:", SBtn);
+  }
+}
+
+
+
+
+
+changeBackgroundImg(Prime1, Base, 'BackBtn'); // Example color change
+
+setGradient(top, bottom); 
+ 
+
+});
+
+
+
+
+
+
+
+
+
+async function getBtnColors() {
+try {
+  const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    console.error("No such document!");
+    return null;
+  }
+} catch (error) {
+  console.error("Error fetching document:", error);
+  return null;
+}
+}
+
+getBtnColors().then((data) => {
+if (!data) return;
+
+const { Base, Prime1, Prime2 } = data.UBU.Colors;
+const { Gym, Home } = data.App.workoutBtns;
+
+
+function changeTierBackgroundColor(color, Tcolor) {
+  const tierElement = document.getElementById("Tier");
+  if (tierElement) {
+      tierElement.style.backgroundColor = color;
+      tierElement.style.color = Tcolor;
+  } else {
+      console.error("Element with ID 'Tier' not found.");
+  }
+}
+function toggleSubscription(activeId) {
+  const monthlyBtn = document.getElementById("Monthly");
+  const yearlyBtn = document.getElementById("Yearly");
+
+  if (monthlyBtn && yearlyBtn) {
+      if (activeId === "Monthly") {
+          monthlyBtn.style.backgroundColor = Base;
+          yearlyBtn.style.backgroundColor = Prime2;
+          monthlyBtn.style.color = Prime2 ;
+          yearlyBtn.style.color = Base;
+          monthlyBtn.style.boxShadow = `0px 4px 10px ${Prime2}`; // Green shadow  
+          yearlyBtn.style.boxShadow = "none";
+          monthlyBtn.style.borderRadius = "8px 0 0 8px";
+          yearlyBtn.style.borderRadius = "0 8px   8px 0";
+
+      } else if (activeId === "Yearly") {
+          yearlyBtn.style.backgroundColor = Base;
+          monthlyBtn.style.backgroundColor = Prime2;
+          monthlyBtn.style.color = Base;
+          yearlyBtn.style.color = Prime2;
+          yearlyBtn.style.boxShadow = `0px 4px 10px ${Prime2}`; // Green shadow
+          monthlyBtn.style.boxShadow = "none";
+      }
+  } else {
+      console.error("Buttons not found.");
+  }
+}
+
+// Add event listeners to toggle when clicked
+document.getElementById("Monthly").addEventListener("click", () => toggleSubscription("Monthly"));
+document.getElementById("Yearly").addEventListener("click", () => toggleSubscription("Yearly"));
+
+// Set default active button
+toggleSubscription("Monthly"); // Change if you want "Yearly" as default
+
+// Example usage
+changeTierBackgroundColor(Prime1, Base); // Change to your desired color
+
+
+
+
+
+
+ 
+
+});
+
+
+
+
+
+
+
+document.getElementById("SBtn").addEventListener("click", function() {
+  const Tittle = document.getElementById("STittle");
+  const price = document.getElementById("Sprice");
+  const Time = document.getElementById("Stime");
+  const Scurrency = document.getElementById("Scurrency");
+  
+console.log(price)
+
+  function extractNumber(text) {
+    return parseFloat(text.replace(/[^0-9.]/g, "")) || 0;
+  }
+  function extractText(text) {
+    return text ? text.textContent.trim() : null;
+  }
+
+
+  function updateBasePrices() {
+    return {
+      Tittle:   extractText(Tittle),
+      Price:    extractNumber(price.textContent),
+      Cuttemcy: extractText(Scurrency),
+      Time:     extractText(Time)
+    };
+  }
+  function GetTierInfo() {
+    const basePrices = updateBasePrices(); // Get latest prices 
+    const storedBasePrices = JSON.parse(localStorage.getItem("basePrices"));
+    console.log(basePrices)
+  }
+  GetTierInfo()
+  console.log("Get Started button clicked!");
+   // window.location.href = "index4.1.html"; // Change to your actual page URL
+ 
+});
+
+
+
+.SubSection{
+
+    margin: 3rem 0;
+  }
+  .SubSection h1{
+    display: flex;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: normal;
+  }
+  .Tier{
+    width: 4rem;
+    display: flex;
+    justify-content: center;
+    padding: .2rem .5rem;
+    margin:  auto;
+    border-radius: .5rem;
+    font-size: 1.2rem;
+  }
+  .SelectBlock{
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+  }
+  .SelectBtn{
+    padding: .7rem 4rem;
+    font-size: 1rem;
+  }
+  .DiscountBlock {
+    gap: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 2rem 0 0 ;
+    margin: 0  auto;
+    border-radius: .5rem;
+    font-size: 1rem;
+  }
+  .Pricingblock{
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #Price{
+    font-size: 2.2rem;
+    font-weight: bold;
+  }
+
+
+
+  .Currency{
+    font-size: .8rem;
+  }
+
+
+
+
+
+
+
+
+async function GetFeatures() {
+  try {
+    const docRef = doc(db, "RevolApp", "Tiers"); // Ensure db and transferredInfo are initialized
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.error("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+async function SetColors() {
+  try {
+    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.error("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+SetColors().then((data) => {
+  const UBU = data.UBU;
+  const { top, bottom } = UBU.BackgroundColor;
+  const { Base, Prime1, Prime2, Prime3, Prime4 } = UBU.Colors;
+ 
+  
+  function setGradient(color1, color2) {
+    document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2})`;
+  }
+  function setBackgroundColor(color,Tcolor, Url) {
+    const Bg = document.getElementById(Url)
+    Bg.style.background = color
+    Bg.style.color = Tcolor
+    Bg.style.border = `1px solid ${Prime2}`
+  }
+  function setBackground(color, Url) {
+    const Bg = document.getElementById(Url)
+    Bg.style.background = color
+    
+    Bg.style.border = `1px solid ${Prime2}`
+  }
+
+
+
+
+
+
+
+  function RenderDiscount(Title, Time, elementId,color, Url){
+    let element = document.getElementById(elementId);
+    const Bg = document.getElementById(Url)
+    if(Title === "Supera"){
+       if(Time === "/Mensual"){
+        const h1 = document.createElement("h1");
+        h1.textContent = "🔥 ¡El Plan Anual = Los Mayores Ahorros!";
+        Bg.style.background = ' '
+        Bg.style.fontSize = '.4rem'
+        Bg.style.margin = '.5rem 0'
+        element.appendChild(h1);
+      
+       }else{
+        const h1 = document.createElement("h1");
+        h1.textContent = "-10%";
+        Bg.style.background = color
+        Bg.style.width = '4rem'
+        Bg.style.height = '1.8rem'
+        Bg.style.fontSize = '.4rem'
+        element.appendChild(h1);
+       }
+    }
+  }
+
+
+  RenderDiscount(tierInfo.Tittle, tierInfo.Time,"Discount","#E01E1E", "Discount")
+
+
+  setGradient(top, bottom); 
+  setBackgroundColor(Base,Prime2, "Tier")
+  setBackground(Prime2, "CBlock")
+
+});

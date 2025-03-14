@@ -55,6 +55,116 @@ async function checkDocumentExists(collectionName, documentId) {
 checkDocumentExists("RevoBuissnes", transferredInfo);
 
 
+const level = "Unusable"
+
+
+
+async function fetchData() {
+  try {
+    const ReportRef = doc(db, "RevolApp", "Report");
+    const businessRef = doc(db, "RevoBuissnes", transferredInfo);
+
+    const [ReportSnap, businessSnap] = await Promise.all([
+      getDoc(ReportRef),
+      getDoc(businessRef)
+    ]);
+
+    if (!ReportSnap.exists() || !businessSnap.exists()) {
+      console.error("One or more documents do not exist!");
+      return null;
+    }
+
+    return {
+      Report: ReportSnap.data(),
+      business: businessSnap.data()
+    };
+  } catch (error) {
+    console.error("Error fetching documents:", error);
+    return null;
+  }
+}
+
+fetchData().then((data) => {
+  if (!data) return;
+  const business = data.business
+  const Report = data.Report
+  console.log(business)
+  console.log(Report)
+ 
+  const UBU = business.UBU
+
+  
+
+
+
+  function setImgs(imgSrc, imgAlt, url) {
+    // Find the img element with id 'logo-img'
+    const img = document.getElementById(url);
+
+    // Check if the img element exists
+    if (img) {
+        // Set the image source and alternative text
+        img.src = imgSrc;
+        img.alt = imgAlt;
+    } else {
+        console.error("Image element with id 'logo-img' not found.");
+    }
+  }
+
+
+  function setBackgroundColor(color, url) {
+    const Background = document.getElementById(url);
+
+    if (Background) {
+      Background.style.background = color;
+    }
+  }
+
+
+
+
+  function checkStatusLevel(){
+
+    if(level === "Unusable"){
+      setImgs(Report.Unusable, "A Fresh Start!", "UserImg")
+      setBackgroundColor('#A0A0A0', "header")
+
+    }else if(level === "Poor"){
+      setImgs(Report.Poor, "First Steps Taken!", "UserImg")
+      setBackgroundColor('#FF6961', "header")
+
+    }else if(level === "Average"){
+      setImgs(Report.Average, "Momentum Building!" , "UserImg")
+      setBackgroundColor('#FFA500', "header")
+
+    }else if(level === "Good"){
+      setImgs(Report.Good, "Stronger Every Day!", "UserImg")
+      setBackgroundColor('#FFD700', "header")
+
+     
+    }else if(level === "VeryGood"){
+      setImgs(Report.VeryGood, "Sky’s the Limit!", "UserImg")
+      setBackgroundColor('#32CD32', "header")
+
+    }else if(level === "Excellent"){
+      setImgs(Report.Excellent, "You Did It!", "UserImg")
+      setBackgroundColor('#007BFF', "header")
+      setBackgroundColor('#007BFF', "ImgBlock")
+    }
+    
+  }
+
+  checkStatusLevel()
+
+
+});
+
+
+
+
+
+
+
 
 
 

@@ -1,7 +1,18 @@
 // Import necessary Firebase modules
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { 
+  getAuth, 
+  signInWithEmailAndPassword, 
+  onAuthStateChanged, 
+  signOut 
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { 
+  getFirestore, 
+  doc, 
+  getDoc, 
+  updateDoc, 
+  serverTimestamp 
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -23,6 +34,12 @@ const auth = getAuth(app);
 const loginPage = "/index.html"; // Adjust path if necessary
 const protectedPage = "/index1.html";
 
+// Dynamically select the document based on your needs
+const documentId = "RevolFit"; // Example: "RevolFit", "MetaV", "SHS"
+
+
+
+
 
 
 
@@ -30,7 +47,6 @@ const protectedPage = "/index1.html";
 function redirectTo(page) {
   window.location.href = page;
 }
-
 // Function: Log in the user
 async function loginUser(email, password) {
   try {
@@ -50,14 +66,6 @@ async function loginUser(email, password) {
     alert("Error: " + error.message);
   }
 }
-
-
-
-
-
-
-
-
 // Function: Save user UID to localStorage
 function saveUserUIDToLocalStorage(uid) {
   try {
@@ -67,27 +75,6 @@ function saveUserUIDToLocalStorage(uid) {
     console.error("Error saving UID to localStorage:", error);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Function: Update user streak in Firestore  Error: Firebase: Error (auth/invalid-login-credentials).
 async function updateUserStreak(userId) {
   const userDocRef = doc(db, "users", userId);
@@ -110,11 +97,6 @@ async function updateUserStreak(userId) {
   }
 
 }
-
-
-
-
-
 // Function: Log out user once on initial load
 async function logoutUserOnce() {
   const hasLoggedOut = sessionStorage.getItem("hasLoggedOut");
@@ -128,7 +110,6 @@ async function logoutUserOnce() {
     }
   }
 }
-
 // Function: Handle authentication state
 function handleAuthState() {
   onAuthStateChanged(auth, async (user) => {
@@ -147,7 +128,6 @@ function handleAuthState() {
     }
   });
 }
-
 // Event Listener: Attach login button listener
 function attachLoginListener() {
   document.getElementById("ISbtn").addEventListener("click", () => {
@@ -161,7 +141,6 @@ function attachLoginListener() {
     }
   });
 }
-
 // Function: Fetch Firestore document data
 async function fetchFirestoreData(collection, documentId) {
   try {
@@ -178,103 +157,44 @@ async function fetchFirestoreData(collection, documentId) {
     console.error(`Error fetching document from ${collection}:`, error);
   }
 }
-
 // Initialize App
 document.addEventListener("DOMContentLoaded", () => {
   logoutUserOnce(); // Log out on first load
   handleAuthState(); // Monitor authentication state
   attachLoginListener(); // Attach event listener for login button
 });
+// Function to apply branding based on the document (RevolFit, MetaV, SHS)
+async function applyBranding(documentId) {
+  const data = await fetchFirestoreData("RevoBuissnes", documentId);
+  const App = await fetchFirestoreData("RevolApp", "Content");
+  const {LoginImg ,PopUpImg}= App.Images
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // Function to apply branding based on the document (RevolFit, MetaV, SHS)
-  async function applyBranding(documentId) {
-    const data = await fetchFirestoreData("RevoBuissnes", documentId);
-
-
-
-    if (data) {
-      const {login, webSite, UBU, Portal} = data;
+  if (data) {
+         
+     const {Base, Prime1, Prime2}= data.UBU.Colors
+     const Popup = data.Portal.popup
+ 
+     const { lockIcon, userIcon } = data.AppIcons
      
-      const BuIcon = UBU.BuLogos
-      const BuLogo = BuIcon.LightLogo
-      
-      const {Base, Prime1, Prime2}= UBU.Colors
-
-      const font  = UBU.font
-     
-      const Popup = Portal.popup
-      const Login = Portal.login
-      
-    
 
 
-      if (webSite) {
-        
-        function setFontFamily(element, fontFamily) {
-          element.style.fontFamily = fontFamily; // Set the font family on the given element
-        }
-        
-        // Example usage
-        const element = document.querySelector('body'); // Select the target element
-        const setFont = font; // Define the font family
-        setFontFamily(element, font); // Apply the font family to the selected element
-      }
-      // Render Popup Data
-      if (Popup) {
-        const {PImgs, PopupText} = Popup;
-
-        const tittle    = PopupText.tittle
-        const Subtittle    = PopupText.Subtittle
-        const BackImg = PImgs.backgroundImg
-
-
-    
-        // Dynamic rendering functions
-        function setButtonBorderColor(color) {
+    function GetBuFont(fontFamily) {
+     document.body.style.fontFamily = fontFamily;
+    }
+    GetBuFont(data.UBU.font);
+    // Render Popup Data
+    if (Popup) {
+      const  PopupText = Popup.PopupText;
+      // Dynamic rendering functions
+      function setButtonBorderColor(color) {
           const button = document.getElementById("pop-upBtn");
           if (button) {
             button.style.border = `5px solid ${color}`;
             button.style.borderRadius = "5px";
             button.style.color = Prime2;
           }
-        }
-        function renderImage(imageUrl, containerId) {
+      }
+      function renderImage(imageUrl, containerId) {
           const container = document.getElementById(containerId);
           if (container) {
             const img = document.createElement("img");
@@ -284,147 +204,92 @@ document.addEventListener("DOMContentLoaded", () => {
             container.innerHTML = "";
             container.appendChild(img);
           }
-        }
-        function renderText(title, subtitle, color, color2 ) {
+      }
+      function renderText(title, subtitle, color, color2 ) {
           document.getElementById("tittle").textContent = title;
           document.getElementById("Subtittle").textContent = subtitle;
           document.getElementById("tittle").style.color = color;
           document.getElementById("Subtittle").style.color = color2;
 
-        }
-        function setBackgroundColorT(color) {
-          const container = document.getElementById("pop-upText");
+      }
+      function setBackgroundColorT(color) {
+          const container = document.getElementById("backgroundImg");
           if (container) {
             container.style.backgroundColor = color;
           }
-        }
+      }
      
         // Populate UI elements
-        setBackgroundColorT(Base)
-        setButtonBorderColor(Prime1);
-        renderImage(BackImg, "pop-upImg");
-        renderImage(BuLogo, "pop-upIcon");
-        renderText(tittle, Subtittle, Prime2, Prime2);
+      setBackgroundColorT(Base)
+      setButtonBorderColor(Prime1);
+      renderImage(PopUpImg, "pop-upImg");
+      renderImage(data.UBU.BuLogos.LightLogo, "pop-upIcon");
+      renderText(PopupText.tittle, PopupText.Subtittle, Prime2, Prime2);
+    }
+    // Render Login DataLogin
+  
+ 
+      
+      
+      function updateElementStyle(id, styles) {
+          const element = document.getElementById(id);
+          if (element) {
+              Object.assign(element.style, styles);
+          }
       }
-
-      // Render Login DataLogin
-      if (Login) {
-        const {Icons, LImgs} = Login;
-        const lockIcon = Icons.lockIcon
-        const userIcon = Icons.userIcon
-        const BackImg = LImgs.backgroundimg
-
-
-        function setButtonBorderColor(color,Tcolor) {
-          const button = document.getElementById("ISbtn");
-          if (button) {
-            button.style.border = `5px solid ${color}`;
-            button.style.borderRadius = "5px";
-            button.style.color = Tcolor;
-          }
-        }
-        function setBackgroundColor(color) {
-          const container = document.getElementById("loginContent");
-          if (container) {
-            container.style.backgroundColor = color;
-          }
-        }
-        function renderImage(imageUrl, containerId) {
+      
+      function renderImage(imageUrl, containerId) {
           const container = document.getElementById(containerId);
           if (container) {
-            const img = document.createElement("img");
-            img.src = imageUrl;
-            img.alt = "Image";
-            img.style.height = "auto";
-            container.innerHTML = "";
-            container.appendChild(img);
+              container.innerHTML = `<img src="${imageUrl}" alt="Image" style="height:auto;">`;
           }
-        }
-        function changeLinkColors(color) {
-          const links = document.querySelectorAll("#form-links a");
-          links.forEach((link) => {
-            link.style.color = color;
-          });
-        }
-        function renderImageIcon(imgId, imgSrc) {
-          // Select the <img> element by its ID
-          const imgElement = document.getElementById(imgId);
-
-          // Check if the element exists
-          if (imgElement) {
-              // Update the src attribute
-              imgElement.src = imgSrc;
-          } else {
-              console.error(`No element found with ID: ${imgId}`);
-          }
-        }
-        function loginTextColor(colors) {
-          const login = document.getElementById("login");
-          
-          login.style.color = colors;
-    
-        }
-        function changeTextColorInput(color){
-          const usernameInput = document.getElementById('username');
-          const passwordInput = document.getElementById('password');
-          
-
-          // Add an event listener for the "input" event
-          usernameInput.addEventListener('input', () => {
-            usernameInput.style.color = color;
-          });
-          passwordInput.addEventListener('input', () => {
-            passwordInput.style.color = color;
-          });
-
-        }
-        
-
-        // Populate UI elements
-        renderImageIcon("passwordImage", lockIcon);
-        renderImageIcon("userImage", userIcon)
-        changeTextColorInput(Prime2)
-        loginTextColor(Prime2)
-        setButtonBorderColor(Prime1,Prime2);
-        setBackgroundColor(Base);
-        renderImage(BackImg, "loginImg");
-        renderImage(BuLogo, "loginIcon");
-        changeLinkColors(Prime2);
       }
+      
+      function updateImageSrc(imgId, imgSrc) {
+          const imgElement = document.getElementById(imgId);
+          if (imgElement) imgElement.src = imgSrc;
+      }
+      
+      function addInputEventListener(ids, color) {
+          ids.forEach(id => {
+              const input = document.getElementById(id);
+              if (input) {
+                  input.addEventListener('input', () => input.style.color = color);
+              }
+          });
+      }
+      
+      function updateLinkColors(color) {
+          document.querySelectorAll("#form-links a").forEach(link => link.style.color = color);
+      }
+      
+      // Apply styles and updates
+
+      updateImageSrc("passwordImage", lockIcon);
+      updateImageSrc("userImage", userIcon);
+      addInputEventListener(["username", "password"], Prime2);
+      updateElementStyle("login", { color: Prime2 });
+      updateElementStyle("ISbtn", { border: `5px solid ${Prime1}`, borderRadius: "5px", color: Prime2 });
+      updateElementStyle("login", { backgroundColor: Base });
+      renderImage(LoginImg, "loginImg");
+      renderImage(data.UBU.BuLogos.LightLogo, "loginIcon");
+      updateLinkColors(Prime2);
     }
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   
-  // Dynamically select the document based on your needs
-  const documentId = "RevolFit"; // Example: "RevolFit", "MetaV", "SHS"
-  applyBranding(documentId);
   
-  function transferInfo() {
-    const info = documentId
+}
+
+
+
+applyBranding(documentId);  
+
+
+
+
+ 
+  
+function transferInfo() {
+  const info = documentId
 
     if (info) {
       localStorage.setItem("transferredInfo", info); // Save data in localStorage
@@ -433,32 +298,28 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       alert("Please enter some text before proceeding!");
     }
+}
+transferInfo()
+
+
+// Add Event Listener for pop-up button to toggle background image visibility
+const popupBtn = document.getElementById("pop-upBtn");
+const backgroundImg = document.getElementById("backgroundImg");
+
+if (popupBtn && backgroundImg) {
+  popupBtn.addEventListener("click", () => {
+    backgroundImg.style.display =
+    backgroundImg.style.display === "none" || backgroundImg.style.display === ""
+    ? "block"
+    : "none";
+  });
+}
+
+document.addEventListener('touchstart', function (event) {
+  if (event.touches.length > 1) {
+    event.preventDefault(); // Prevents zooming
   }
-  transferInfo()
-
-
-  // Add Event Listener for pop-up button to toggle background image visibility
-  const popupBtn = document.getElementById("pop-upBtn");
-  const backgroundImg = document.getElementById("backgroundImg");
-
-  if (popupBtn && backgroundImg) {
-    popupBtn.addEventListener("click", () => {
-      backgroundImg.style.display =
-        backgroundImg.style.display === "none" || backgroundImg.style.display === ""
-          ? "block"
-          : "none";
-    });
-  }
-
-
-
-
-  document.addEventListener('touchstart', function (event) {
-    if (event.touches.length > 1) {
-      event.preventDefault(); // Prevents zooming
-    }
-  }, { passive: false });
-
+}, { passive: false });
 
 // Lock scrolling
 function lockScroll() {

@@ -756,7 +756,10 @@ getItemsFromDB().then((data) => {
 
   const {Base, Prime1, Prime2, Prime3} = UBU.Colors;
 
-
+  function GetBuFont(fontFamily) {
+    document.body.style.fontFamily = fontFamily;
+   }
+   GetBuFont(data.UBU.font);
 
   function renderLeft(){
 

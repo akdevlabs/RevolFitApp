@@ -113,45 +113,28 @@ document.addEventListener("DOMContentLoaded", () => {
     // Function to apply branding based on the document (RevoFit, MetaV, SHS)
     async function applyBranding(documentId) {
       const data = await fetchFirestoreData("RevoBuissnes", documentId);
-      const { UBU, Register} = data;
-     
-      const BuIcon = UBU.BuLogos
-      const BuLogo = BuIcon.LightLogo
-      
-      const {Base, Prime1, Prime2, Prime3}= UBU.Colors
+      const App = await fetchFirestoreData("RevolApp", "Content");
+      const LoginImg = App.Images.LoginImg
+ 
+      const {Base, Prime1, Prime2}= data.UBU.Colors
 
-      const fontAc = UBU.font
+      const {lockIcon, userIcon } = data.AppIcons
+
+      const BuLogo = data.UBU.BuLogos.LightLogo
+      
+
+
+
       if (!data) {
         console.error("No data retrieved from Firestore.");
         return;
       }
 
-      function setFontFamily(element, fontFamily) {
-        element.style.fontFamily = fontFamily; // Set the font family on the given element
+      function GetBuFont(fontFamily) {
+        document.body.style.fontFamily = fontFamily;
       }
-
-      // Example usage
-      const element = document.querySelector("body"); // Select the target element
-      setFontFamily(element, fontAc); // Apply the font family to the selected element
-
-      if (!Register) {
-        console.error("The 'register' field is missing in the document.");
-        return;
-      }
-
-      const {
-        CPIcon,
-        EIcon,
-        PIcon,
-        UIcon
-      } = Register.Icons;
-
-      
-      const BgdImg = Register.Imgs;
-      const backgroundImg = BgdImg. backgroundImg;
-    
       // Function to render images into containers
-      function renderImage(imgId, imageUrl) {
+      function renderImage(imgId, imageUrl, altText) {
         const imgContainer = document.getElementById(imgId);
         if (!imgContainer) {
           console.warn(`Container with ID '${imgId}' not found.`);
@@ -159,28 +142,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         const img = document.createElement("img");
         img.src = imageUrl;
-        img.alt = "What We Offer Image";
+        img.alt = altText;
         img.style.height = "auto";
         img.id = "userIm"; // Optional ID for img element
         imgContainer.innerHTML = ""; // Clear previous content
         imgContainer.appendChild(img); // Add new image
       }
-
-      function renderLogoImage(imgId, imageUrl) {
-        const imgContainer = document.getElementById(imgId);
-        if (!imgContainer) {
-          console.warn(`Container with ID '${imgId}' not found.`);
-          return;
-        }
-        const img = document.createElement("img");
-        img.src = imageUrl;
-        img.alt = "What We Offer Image";
-        img.style.height = "auto";
-        img.id = "logo"; // Optional ID for img element
-        imgContainer.innerHTML = ""; // Clear previous content
-        imgContainer.appendChild(img); // Add new image
-      }
-
       // Function to render icons
       function renderIcons(imgId, imageUrl) {
         const imgElement = document.getElementById(imgId);
@@ -190,65 +157,62 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         imgElement.src = imageUrl;
       }
-
       // Function to set background color
       function setBackgroundColor(color) {
-        const button = document.getElementById("registerContent");
-        if (!button) {
-          console.warn("Element with ID 'registerContent' not found.");
-          return;
-        }
-        button.style.backgroundColor = color; // Set the background color dynamically
-      }
-
-      function setTextColor(color, excludeId) {
-        const container = document.getElementById("registerForm");
-        if (!container) {
-          console.warn("Element with ID 'registerForm' not found.");
-          return;
-        }
-
-        // Change the color of all child elements except the one with the specified ID
-        const elements = container.querySelectorAll("*:not(#" + excludeId + ")");
-        elements.forEach((element) => {
-          if (element.tagName !== "INPUT") {
-            element.style.color = color; // Set color for non-input elements
+          const button = document.getElementById("register");
+          if (!button) {
+            console.warn("Element with ID 'registerContent' not found.");
+            return;
           }
-        });
-
-        // Ensure input fields have black text
-        const inputs = container.querySelectorAll("input");
-        inputs.forEach((input) => {
-          input.style.color = "black"; // Set input text color to black
-        });
+          button.style.backgroundColor = color; // Set the background color dynamically
       }
-
+      function setTextColor(color, excludeId) {
+          const container = document.getElementById("registerForm");
+          if (!container) {
+            console.warn("Element with ID 'registerForm' not found.");
+            return;
+          }
+  
+          // Change the color of all child elements except the one with the specified ID
+          const elements = container.querySelectorAll("*:not(#" + excludeId + ")");
+          elements.forEach((element) => {
+            if (element.tagName !== "INPUT") {
+              element.style.color = color; // Set color for non-input elements
+            }
+          });
+  
+          // Ensure input fields have black text
+          const inputs = container.querySelectorAll("input");
+          inputs.forEach((input) => {
+            input.style.color = "black"; // Set input text color to black
+          });
+      }
       function setBtnColor(color, textColor) {
-        const button = document.getElementById("registerBtn");
-        if (!button) {
-          console.warn("Element with ID 'registerBtn' not found.");
-          return;
-        }
-
-        button.style.color = textColor; // Set the button text color
-        button.style.backgroundColor = color; // Set the button background color
+          const button = document.getElementById("registerBtn");
+          if (!button) {
+            console.warn("Element with ID 'registerBtn' not found.");
+            return;
+          }
+  
+          button.style.color = textColor; // Set the button text color
+          button.style.backgroundColor = color; // Set the button background color
       }
+  
 
-      // Combined function for setting colors
-      function updateColors(btnBgColor, btnTextColor, textColor) {
-        setBtnColor(btnBgColor, btnTextColor); // Set button colors
-        setTextColor(textColor, "registerBtn"); // Set other text colors, excluding the button
-      }
 
+      
+      
       // Apply branding
+      GetBuFont(data.UBU.font);
       setTextColor(Prime2);
       setBtnColor(Prime1, Base);
       setBackgroundColor(Base);
-      renderLogoImage("registerIcon", BuLogo);
-      renderImage("registerImg", backgroundImg);
-      renderIcons("confirmPasswordImage", CPIcon);
-      renderIcons("passwordImage", PIcon);
-      renderIcons("emailImage", EIcon);
+      renderImage("registerImg", LoginImg, "girl on a pc");
+      renderImage("registerIcon", BuLogo, " " );
+      renderIcons("confirmPasswordImage", lockIcon);
+      renderIcons("passwordImage", lockIcon);
+      renderIcons("emailImage", userIcon);
+
     }
 
     // Dynamically select the document based on your needs

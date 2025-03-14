@@ -20,66 +20,141 @@
   <link rel="shortcut icon" href="images/Logos/flower_DB.webp">
 </head>
 <body>
+  <header>
+    <img class="hImg" id="hImg" src="">
+    <div class="hearderBlock" id="hearderBlock">
+      <img id="buLogo" src="">
+      <div class="hearderText" id="hearderText">
+        <h2 class="title" id="title">Elige tu plan</h2>
+        <p class="subtitle" id="subtitle">Selecciona el plan perfecto para tus necesidades</p>
+      </div>
+      
+    </div>
+  </header>
+
+  <main>
+
+    
+
+   
+
+    <section class="YearlyBlock">
+      <label class="toggle-container" id="toggle-container">
+        <input type="checkbox" class="toggle-input" id="toggleBtn">
+        <div class="toggle-switch">
+          <div class="toggle-bg" id="toggle-bg"></div>
+          <span class="toggle-option monthly">Mensual</span>
+          <span class="toggle-option yearly">Anual</span>
+        </div>
+      </label>
+    </section>
+    
+    <section class="currencyBlock">
+      <div class="currency-selector">
+        <img id="currency-flag" src="https://flagcdn.com/w40/us.png" alt="Flag" width="25">
+
+        <select id="currency">
+          <option value="USD" data-flag="us" data-symbol="$">USD (United States Dollar)</option>
+          <option value="CAD" data-flag="ca" data-symbol="C$">CAD (Canadian Dollar)</option>
+          <option value="MXN" data-flag="mx" data-symbol="MX$">MXN (Mexican Peso)</option>
+          <option value="ARS" data-flag="ar" data-symbol="ARS$">ARS (Argentine Peso)</option>
+          <option value="BRL" data-flag="br" data-symbol="R$">BRL (Brazilian Real)</option>
+          <option value="CLP" data-flag="cl" data-symbol="CLP$">CLP (Chilean Peso)</option>
+          <option value="COP" data-flag="co" data-symbol="COP$">COP (Colombian Peso)</option>
+          <option value="PEN" data-flag="pe" data-symbol="S/">PEN (Peruvian Sol)</option>
+        </select>
+      </div>
+      <button id="convert">Convert</button>
+    </section>
+    
+    
+
+
+    
+
+    <div class="pricing-grid" id="pricing-grid">
+      <!-- Pricing Plans -->
+      <div class="plan" id="Slot0" data-index="0">
+
+        <div class="block" id="Sblock">
+          <h3 class="Ptittle" id="STittle">Free</h3>
+          <div class="BlockCost" id="SBlockCost">
+            <p class="price" id="Sprice">$0 </p>
+          </div>
+        </div>
+
+        <div class="hidden" id="SHidden">
+          <ul id="SfeatureList"></ul>
+          <button class="pBtn" id="SBtn">Start Free</button>
+
+        </div>
+      </div>
+
+      <div class="plan" id="Slot1" data-index="1">
+        
+        <div class="block" id="S1block">
+          <h3 class="Ptittle" id="S1Tittle"></h3>
+          <div class="BlockCost" id="S1BlockCost">
+            <p class="price" id="S1price"></p>
+            <div class="PriceBlock">
+              <a class="Scurrency" id="S1currency"></a>
+              <span id="S1time"></span>
+            </div>
+            
+          </div>
+        </div>
+
+        <div class="hidden" id="S1Hidden">
+            <ul class="featureList" id="S1featureList"></ul>
+            <button class="pBtn" id="S1Btn">Get Started</button>
+        </div>
+      </div>
+
+      <div class="plan" id="Slot2" data-index="2">
+        <span class="popular-badge" id="popular-badge">Opción Popular</span>
+
+        <div class="block" id="S2block">
+          <h3 class="Ptittle" id="S2Tittle"></h3>
+          <div class="BlockCost" id="S2BlockCost">
+            <p class="price" id="S2price"></p>
+            <div class="PriceBlock">
+              <a class="Scurrency" id="S2currency"></a>
+              <span id="S2time"></span>
+            </div>
+            
+          </div>
+        </div>
+
+        <div class="hidden" id="S2Hidden">
+            <ul class="featureList" id="S2featureList"></ul>
+            <button class="pBtn" id="S2Btn">Go Pro</button>
+        </div>
+      </div>
+
+      <div class="plan" id="Slot3" data-index="3">
+
+        <div class="block" id="S3block">
+          <h3 class="Ptittle" id="S3Tittle"></h3>
+          <div class="BlockCost" id="S3BlockCost">
+            <p class="price" id="S3price"></p>
+            <div class="PriceBlock">
+              <a class="Scurrency" id="S3currency"></a>
+              <span id="S3time"></span>
+            </div>
+            
+          </div>
+        </div>
+
+        <div class="hidden" id="S3Hidden">
+            <ul class="featureList" id="S3featureList"></ul>
+            <button class="pBtn" id="S3Btn">Contact Sales</button>
+        </div>
+      </div>
+
+    </div>
+    
+  </main>
  
-  <section class="BuyPortalMobile" id="BuyPortal">
-
-    <div class="Tier-Clasic">
-      <div class="Tier-Head">
-        <div class="TH-top">
-          <img class="IconImg" id="TCicon">
-          <span id="alertC">Active</span>
-        </div>
-        <div class="TH-Center">
-          <div class="tittle" id="TCTittle"></div>
-          <div class="list" id="TClist"></div>
-          <button class="RMBTN" id="render-more-btnTC" style="display: none;">Mostrar más</button>
-        </div>
-        <div class="TH-Bottom">
-          <div class="TH-pirce" id="TCpirce"></div>
-          <div id="TCBuyBtn">Suscribirse</div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="Tier-Gold">
-      <div class="Tier-Head">
-        <div class="TH-top">
-          <img class="IconImg" id="TOicon">
-          <span id="alertO">Active</span>
-        </div>
-        <div class="TH-Center">
-          <div class="tittle" id="TOTittle"></div>
-          <div class="list"   id="TOlist"></div>
-          <button class="RMBTN" id="render-more-btnTO" style="display: none;">Mostrar más</button>
-        </div>
-        <div class="TH-Bottom">
-          <div class="TH-pirce" id="TOpirce"></div>
-          <div id="TOBuyBtn">Suscribirse</div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="Tier-Platinum">
-      <div class="Tier-Head">
-        <div class="TH-top">
-          <img class="IconImg" id="TPicon">
-          <span id="alertP">Active</span>
-        </div>
-        <div class="TH-Center">
-          <div class="tittle" id="TPTittle"></div>
-          <div class="list"   id="TPlist"></div>
-          <button class="RMBTN" id="render-more-btnTP" style="display: none;">Mostrar más</button>
-        </div>
-        <div class="TH-Bottom">
-          <div class="TH-pirce" id="TPpirce"></div>
-          <div id="TPBuyBtn">Suscribirse</div>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  
-
   
  
 
@@ -90,6 +165,8 @@
         .then(() => console.log('Service Worker Registered'))
         .catch(err => console.error('Service Worker Registration Failed:', err));
     }
+   
+  
   </script>
 </body>
 </html>

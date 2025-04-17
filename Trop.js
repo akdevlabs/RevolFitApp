@@ -29,7 +29,7 @@ function getNewestWorkoutLocation() {
 
 // Retrieve data from localStorage
 const transferreduserInfo = localStorage.getItem("transferreduserInfo");
-const transferredInfo = localStorage.getItem("transferredInfo");
+const transferredInfo = localStorage.getItem("transferredBu");
 const workoutLocation = getNewestWorkoutLocation();
 
 

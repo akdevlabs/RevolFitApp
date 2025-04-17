@@ -1,107 +1,305 @@
 body{
-  font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-  background: #C7D8DF;
-  background: linear-gradient(180deg, #C7D8DF 0%, rgba(1,57,72,1) 100%);
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100vh;
-  margin: 0;
-  touch-action: none; /* Disable gestures like zoom */
-  overscroll-behavior: none; /* Prevent overscroll bounce on mobile */
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-.dropdown-content {
   display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
-}
-.dropdown:hover .dropdown-content {
-  display: block;
 }
 
-#Icon img{
-  width: 3rem;
-}
-#userImg{
-  width: 4rem;
-}
 
 @media (max-width: 700px) {
-
-  body {
-    width: 100%;
-  
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-    margin: 0; /* Ensure no default body margin causes issues */
+  body{
+    display: block;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    min-height: 100dvh; /* use dynamic viewport height */
+    overflow-x: hidden;
+    overflow-y: auto; /* allow vertical scroll */
+    -webkit-overflow-scrolling: touch;
+    display: block;
   }
+
+  main{
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .MainSettings{
+    gap: 1rem;
+     display: flex;
+     flex-direction: column;
+   
+ 
+   }
   .Settings{
     margin: 1rem 2rem;
   }
-
-  .settingBanner{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    
-
-  }
-
-
-  #BuIcon img{
-    width: 8rem;
-
-  }
-
-  .MainSettings{
-   gap: 1rem;
+  .Profile-Img-block{
+    gap: 2rem;
     display: flex;
     flex-direction: column;
-  
-
-  }
-   button{
-    width: 100%;
-    text-align: left;
-    padding: .5rem .7rem;
-    border-radius: 1rem;
+    align-items: center;
+    margin:2rem 0;
   }
 
-
-  .planBlocktittle{
-    color: #fff;
+  #User-Name{
+    max-width: 20rem;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  #User-Img{
+    padding: 6rem;
+    border-radius: 100%;
+  }
+  .Btn-Block{
+    display: flex;
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    padding:.4rem 1rem;
+    border-radius: .4rem;
+  }
+  .Text-Block{
+    gap: 1rem;
     display: flex;
     align-items: center;
-    margin: 0 2rem;
+  }
+  .Text-Block span{
+    font-size: 1.2rem;
+  }
+  .Icons{
+    width: 1.7rem;       /* Or any desired fixed width */
+    height: 1.7rem;      /* Or any desired fixed height */
+    object-fit: contain; /* shows the whole image, even if there’s extra space */
+  display: block;
+  }
+  
+ 
+  
+
+
+  .Panel {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 93%;
+    height: 100vh;
+
+    
+    transition: right 0.3s ease;
+    z-index: 1000;
+    padding: 1rem ;
+  }
+  .Panel.active {
+    right: 0;
+  }
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    
+  }
+  #Close-Panel {
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  .panel-content{
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
+  }
+  .panel-content-Block{
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+  }
+  .Text-result{
+    font-weight: bold;
+    
+  }
+  .panel-content-Block{
+    display: flex;
+    align-items:center;
+    margin: 1.5rem 0 0 0;
+
+  }
+  .checkInput{
+    gap: .2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  }
+
+
+  .CheckBlock{
+    display:flex;
     justify-content: space-between;
   }
-  .Btnblock{
+  .CheckBlock-sections{
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    margin: 4rem 0  0 0;
+    padding: 2rem;
+    border-radius: 2rem;
+  }
+  .Check-Block-option{
+    font-weight: 1rem;
+    font-weight: bold;
+  }
+  .CheckBlock-sections-text p{
+    text-align: center;
+    margin:1rem 0 -2rem 0;
+  }
+ 
+
+
+
+
+
+  .Model-Content-Block{
+    gap: 3rem;
+    display: flex;
+    flex-direction: column;
+    margin-top: -1.5rem;
+  }
+  .Img-Model-Block{
     display: flex;
     justify-content: center;
   }
-  .Btnblock a{
-    font-size: 2rem;
-    font-weight: 500;
-    padding: .6rem 3rem;
-    border-radius: 1rem;
+  #model-preview-image{
+    position: absolute;
+    width: 25rem;
+
   }
+  .CheckBlock-modelo-sections{
+    gap: .5rem;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border-radius: 2rem;
+  }
+
+
+
+  .Membership-Content{
+    height:70vh; /* Or any fixed height you want */
+  overflow-y: auto;
+  padding:3rem 0;
+}
+
+  .M-tittle{
+    padding: .5rem;
+    text-align: center;
+  }
+  .hidden-Membership-Content{
+    gap: 1rem;
+    display: none;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+  }
+  .price{
+    margin: 0 1rem;
+  }
+  .bTN-Block{
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem 0;
+  }
+  .left-ActiveTier{
+    display: flex;
+    align-items: center;
+
+  }
+  .ActiveTier{
+    width: 1.5rem;
+    margin: 0 .5rem;
+  }
+  ul{
+    width: 19rem;
+    display: flex;
+    flex-direction: column;
+    align-items: right;
+    
+    font-size: .9rem;
+   
+    margin: 0 0 0 -1.7rem;
+  }
+  .Action-Btn{
+    margin: 0;
+    width: 10rem;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1rem;
+    display: flex;
+    padding: .2rem 1rem;
+    align-items: center;
+    justify-content: center;
+
+  }
+
+
+
+
+  .toggle-sections{
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    margin: 4rem 0  0 0;
+    padding: 1rem;
+    border-radius: 2rem;
+  }
+  .ToggleBlock{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .toggle-btn {
+    position: relative;
+    display: flex;
+    width: 120px;
+    height: 40px;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    font-family: sans-serif;
+  }
+  .toggle-option {
+    flex: 1;
+    text-align: center;
+    line-height: 40px;
+    z-index: 1;
+    font-weight: bold;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-radius: 20px;
+  }
+  .toggle-indicator {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    border-radius: 20px;
+    transition: transform 0.3s ease;
+    z-index: 0;
+  }
+
+
+
+  .Alert-Day{
+    font-size: 1rem;
+    font-weight: bold;
+  }
+ 
+
+  
+
+
 
   .navBtns{
     gap: 2rem;
@@ -114,4 +312,13 @@ body{
     height: 2rem;
   }
 
+
+  
 }
+
+
+
+
+
+
+

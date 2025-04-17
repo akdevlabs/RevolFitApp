@@ -29,7 +29,14 @@ const documentId = "RevolFit"; // Example: "RevolFit", "MetaV", "SHS"
 async function fetchFirebaseConfig() {
   try {
     console.log("Fetching Firebase config...");
-    const response = await fetch("http://localhost:3000/firebase-config"); // Change when deploying
+
+    const isLocalhost = window.location.hostname === "localhost";
+    const baseUrl = isLocalhost
+      ? "http://localhost:3000"
+      : "https://revofitpro.netlify.app";
+
+    const response = await fetch(`${baseUrl}/firebase-config.json`);
+
     if (!response.ok) throw new Error("Failed to fetch Firebase config");
     return await response.json();
   } catch (error) {
@@ -257,8 +264,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 // Function: Apply branding
 async function applyBranding(DId) {
   const data = await checkDocumentExists('RevoBuissnes', DId);
+  const content = await checkDocumentExists('RevolApp', 'Content');
   const App = await fetchFirestoreAppData()
-  
+  console.log(content)
   console.log(App.Images.LoginImg)
 
   if (data) {
@@ -311,7 +319,7 @@ async function applyBranding(DId) {
         // Populate UI elements
       setBackgroundColorT(Base)
       setButtonBorderColor(Prime1);
-      renderImage(App.Images.PopUpImg, "pop-upImg");
+      renderImage(content.Images.PopUpImg, "pop-upImg");
 
 
       renderImage(data.UBU.BuLogos.LightLogo, "pop-upIcon");

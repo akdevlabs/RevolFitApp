@@ -1,48 +1,98 @@
-// Import necessary Firebase modules
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { getFirestore, doc, getDoc, collection, addDoc,  updateDoc, setDoc  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+import { 
+  initializeApp 
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+import { 
+  getAuth, 
+  signInWithEmailAndPassword, 
+  onAuthStateChanged, 
+  signOut 
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+import { 
+  getFirestore, 
+  doc, 
+  getDoc, 
+  updateDoc, 
+  serverTimestamp 
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBc3B7SM_Itr9LRCv8N3_tbl9BglxHKo-M",
-  authDomain: "revofit-ad7c3.firebaseapp.com",
-  projectId: "revofit-ad7c3",
-  storageBucket: "revofit-ad7c3.appspot.com", // Note: Added '.appspot.com' for storage URL
-  messagingSenderId: "643801118133",
-  appId: "1:643801118133:web:d679abc998a18f7077d5fc",
-  measurementId: "G-E6P96D0M6Z"
-};
+let db, auth; // Declare Firestore and Auth globally
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-// Initialize Firestore
-const db = getFirestore(app);
-
-
-// Retrieve data from localStorage
-const transferreduserInfo = localStorage.getItem("transferreduserInfo");
-const transferredInfo = localStorage.getItem("transferredInfo");
-
-console.log("Transferred User Info:", transferreduserInfo);
-console.log("Transferred Info:", transferredInfo);
-
-// Function to check if a document exists
-async function checkDocumentExists(collectionName, documentId) {
+// Fetch Firebase configuration
+async function fetchFirebaseConfig() {
   try {
-    const docRef = doc(db, collectionName, documentId);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      console.log(`Document found:`, docSnap.data());
-    } else {
-      console.log(`No document found with ID: ${documentId}`);
-    }
+    console.log("Fetching Firebase config...");
+    const response = await fetch("http://localhost:3000/firebase-config"); // Change when deploying
+    if (!response.ok) throw new Error("Failed to fetch Firebase config");
+    return await response.json();
   } catch (error) {
-    console.error("Error checking document:", error);
+    console.error("Error fetching Firebase config:", error);
+    return null;
   }
 }
 
+// Initialize Firestore and Auth
+async function initializeFirebase() {
+  if (db && auth) return; // Prevent duplicate initialization
+
+  try {
+    const firebaseConfig = await fetchFirebaseConfig();
+    if (!firebaseConfig) throw new Error("Firebase config is undefined");
+
+    const app = initializeApp(firebaseConfig);
+    db = getFirestore(app);
+    auth = getAuth(app);
+
+    console.log("Firestore and Auth initialized");
+
+    await initializeFirestoreFunctions();
+  } catch (error) {
+    console.error("Error initializing Firebase:", error);
+  }
+}
+// Wait for Firebase initialization
+await initializeFirebase();
+
+async function initializeFirestoreFunctions() {
+  console.log("Initializing Firestore-related functions...");
+  // Add any Firestore setup code here if needed.
+}
+ // Retrieve data from localStorage
+ const transferreduserInfo = localStorage.getItem("transferreduserInfo");
+ const transferredInfo = localStorage.getItem("transferredBu");
+ 
+console.log("Transferred User Info:", transferreduserInfo);
+console.log("Transferred Info:", transferredInfo);
+
+
+// Check if a document exists in Firestore
+async function checkDocumentExists(collectionName, documentId) {
+  if (!collectionName || !documentId) {
+    console.error("Collection name or document ID is missing.");
+    return null;
+  }
+
+  if (!db) {
+    console.error("Firestore instance is not initialized.");
+    return null;
+  }
+
+  try {
+    const docRef = doc(db, collectionName, documentId);
+    console.log(`Checking document: ${collectionName}/${documentId}`);
+
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log("Document found:", docSnap.data());
+      return docSnap.data();
+    } else {
+      console.log(`No document found with ID: ${documentId}`);
+      return null;
+    }
+  } catch (error) {
+    console.error("Error checking document:", error);
+    return null;
+  }
+}
 // Check if a business-related document exists
 checkDocumentExists("RevoBusiness", transferredInfo);
 
@@ -117,7 +167,6 @@ document.getElementById("userForm").addEventListener("submit", async (event) => 
 
 });
 
-
 document.addEventListener('DOMContentLoaded', () => {
   const isBusinessCheckbox = document.getElementById('isBusiness');
   const businessContent = document.getElementById('BusinessContent');
@@ -133,54 +182,20 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-  const isCensusCheckbox = document.getElementById('isCensusCheckbox');
-  const censusContent = document.getElementById('CensusContent');
-
-  isCensusCheckbox.addEventListener('change', () => {
-    if (isCensusCheckbox.checked) {
-      censusContent.classList.remove('hiddenCensusContent');
-      censusContent.classList.add('visibleCensusContent');
-    } else {
-      censusContent.classList.remove('visibleCensusContent');
-      censusContent.classList.add('hiddenCensusContent');
-    }
-  });
-});
+async function applyBranding() {
+  const Content = await checkDocumentExists("RevolApp", "Content");
+  const Tiers = await checkDocumentExists("RevolApp", "Tiers");
+  const Buissnes = await checkDocumentExists("RevoBuissnes", transferredInfo);
 
 
-async function getItemsFromDB() {
-  try {
-    // Reference a document in the "revoFitweb" collection with ID "landing"
-    const docRef = doc(db, 'RevoBuissnes', transferredInfo);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const documentData = docSnap.data(); // Store document data
-      return documentData; // Return the data for external use
-    } else {
-      console.log("No such document!");
-      return null; // Return null if no document is found
-    }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-  }
-}
-getItemsFromDB().then((data) => {
-  const UBU = data.UBU;
-  
+  const UBU = Buissnes.UBU;
   const BuIcon = UBU.BuIcon;
   const{BuDark, BuLight} = BuIcon
 
-  const Evaluation = data.Evaluation;
+  const Evaluation =  Buissnes.Evaluation;
   const {TextCon, tittle} = Evaluation.EtextContent;
 
-
-
-
   const {Base, Prime1, Prime2, Prime3} = UBU.Colors;
-
-
 
   function renderLeft(){
 
@@ -218,10 +233,6 @@ getItemsFromDB().then((data) => {
     renderBackgroundColors(Base, Prime2, 'TextContent')
 
   }
- 
-  renderLeft()
-
-
 
   function renderRight(){
 
@@ -272,23 +283,15 @@ getItemsFromDB().then((data) => {
 
 
   }
+
   renderRight()
+  renderLeft()
+}
 
-
-
-
-
-
-})
-
-
+applyBranding()
 
 document.addEventListener('touchstart', function (event) {
   if (event.touches.length > 1) {
     event.preventDefault(); // Prevents zooming
   }
 }, { passive: false });
-
-
-
-

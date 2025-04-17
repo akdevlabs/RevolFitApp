@@ -1,27 +1,55 @@
-// Import necessary Firebase modules
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+import { 
+  initializeApp 
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
 
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBc3B7SM_Itr9LRCv8N3_tbl9BglxHKo-M",
-  authDomain: "revofit-ad7c3.firebaseapp.com",
-  projectId: "revofit-ad7c3",
-  storageBucket: "revofit-ad7c3.appspot.com",
-  messagingSenderId: "643801118133",
-  appId: "1:643801118133:web:d679abc998a18f7077d5fc",
-  measurementId: "G-E6P96D0M6Z",
-};
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  onAuthStateChanged, 
+  signOut 
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+
+import { 
+  getFirestore, 
+  doc, 
+  getDoc, 
+  setDoc, 
+  updateDoc, 
+  serverTimestamp 
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+
+let db, auth; // Declare Firestore and Auth globally
+
+// Fetch Firebase configuration
+async function fetchFirebaseConfig() {
+  try {
+    console.log("Fetching Firebase config...");
+    const response = await fetch("http://localhost:3000/firebase-config"); // Change when deploying
+    if (!response.ok) throw new Error("Failed to fetch Firebase config");
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching Firebase config:", error);
+    return null;
+  }
+}
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+async function initializeFirebase() {
+  if (db && auth) return; // Prevent duplicate initialization
 
-function clearInfo() {
-  localStorage.removeItem("transferredInfo"); // Clear the saved data
-  window.location.href = "page1.html"; // Redirect back to the first page
+  try {
+    const firebaseConfig = await fetchFirebaseConfig();
+    if (!firebaseConfig) throw new Error("Firebase config is undefined");
+
+    const app = initializeApp(firebaseConfig);
+    db = getFirestore(app);
+    auth = getAuth(app);
+
+    console.log("Firestore and Auth initialized");
+  } catch (error) {
+    console.error("Error initializing Firebase:", error);
+  }
 }
 
 // Function to handle account creation
@@ -64,9 +92,9 @@ async function registerAccount() {
       email: user.email,
       uid: user.uid,
       createdAt: new Date().toISOString(),
-      Registration: false, // Add Registration field
-      evaluation: false,    // Add evaluation field
-      TermsAndConditions: termsAccepted, // Save terms acceptance status
+      Registration: false,
+      evaluation: false,
+      TermsAndConditions: termsAccepted,
     };
 
     // Save user data in Firestore
@@ -77,166 +105,128 @@ async function registerAccount() {
     alert("Cuenta creada con éxito.");
     window.location.href = "index.html"; // Redirect to a success page
   } catch (error) {
-    console.error("Error updating document:", error); // Log the error
+    console.error("Error creating user:", error);
     alert(`Error al crear la cuenta: ${error.message}`);
   }
 }
 
+// Function to fetch Firestore document data
+async function fetchFirestoreData(collection, documentId) {
+  try {
+    if (!db) throw new Error("Firestore is not initialized yet");
 
+    const docRef = doc(db, collection, documentId);
+    const docSnap = await getDoc(docRef);
 
-// Ensure the DOM is loaded before attaching event listeners
-document.addEventListener("DOMContentLoaded", () => {
-  window.onload = function () {
-    const info = localStorage.getItem("transferredInfo");
-
-    console.log("Document ID retrieved from localStorage:", info);
-
-    // Function to fetch Firestore document data
-    async function fetchFirestoreData(collection, document) {
-      try {
-        const docRef = doc(db, collection, document);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          console.log("Document data:", docSnap.data());
-          return docSnap.data();
-        } else {
-          console.error(`No such document in collection ${collection}`);
-          return null;
-        }
-      } catch (error) {
-        console.error(`Error fetching document from ${collection}:`, error);
-        return null;
-      }
-    }
-
-    // Function to apply branding based on the document (RevoFit, MetaV, SHS)
-    async function applyBranding(documentId) {
-      const data = await fetchFirestoreData("RevoBuissnes", documentId);
-      const App = await fetchFirestoreData("RevolApp", "Content");
-      const LoginImg = App.Images.LoginImg
- 
-      const {Base, Prime1, Prime2}= data.UBU.Colors
-
-      const {lockIcon, userIcon } = data.AppIcons
-
-      const BuLogo = data.UBU.BuLogos.LightLogo
-      
-
-
-
-      if (!data) {
-        console.error("No data retrieved from Firestore.");
-        return;
-      }
-
-      function GetBuFont(fontFamily) {
-        document.body.style.fontFamily = fontFamily;
-      }
-      // Function to render images into containers
-      function renderImage(imgId, imageUrl, altText) {
-        const imgContainer = document.getElementById(imgId);
-        if (!imgContainer) {
-          console.warn(`Container with ID '${imgId}' not found.`);
-          return;
-        }
-        const img = document.createElement("img");
-        img.src = imageUrl;
-        img.alt = altText;
-        img.style.height = "auto";
-        img.id = "userIm"; // Optional ID for img element
-        imgContainer.innerHTML = ""; // Clear previous content
-        imgContainer.appendChild(img); // Add new image
-      }
-      // Function to render icons
-      function renderIcons(imgId, imageUrl) {
-        const imgElement = document.getElementById(imgId);
-        if (!imgElement) {
-          console.warn(`Element with ID '${imgId}' not found.`);
-          return;
-        }
-        imgElement.src = imageUrl;
-      }
-      // Function to set background color
-      function setBackgroundColor(color) {
-          const button = document.getElementById("register");
-          if (!button) {
-            console.warn("Element with ID 'registerContent' not found.");
-            return;
-          }
-          button.style.backgroundColor = color; // Set the background color dynamically
-      }
-      function setTextColor(color, excludeId) {
-          const container = document.getElementById("registerForm");
-          if (!container) {
-            console.warn("Element with ID 'registerForm' not found.");
-            return;
-          }
-  
-          // Change the color of all child elements except the one with the specified ID
-          const elements = container.querySelectorAll("*:not(#" + excludeId + ")");
-          elements.forEach((element) => {
-            if (element.tagName !== "INPUT") {
-              element.style.color = color; // Set color for non-input elements
-            }
-          });
-  
-          // Ensure input fields have black text
-          const inputs = container.querySelectorAll("input");
-          inputs.forEach((input) => {
-            input.style.color = "black"; // Set input text color to black
-          });
-      }
-      function setBtnColor(color, textColor) {
-          const button = document.getElementById("registerBtn");
-          if (!button) {
-            console.warn("Element with ID 'registerBtn' not found.");
-            return;
-          }
-  
-          button.style.color = textColor; // Set the button text color
-          button.style.backgroundColor = color; // Set the button background color
-      }
-  
-
-
-      
-      
-      // Apply branding
-      GetBuFont(data.UBU.font);
-      setTextColor(Prime2);
-      setBtnColor(Prime1, Base);
-      setBackgroundColor(Base);
-      renderImage("registerImg", LoginImg, "girl on a pc");
-      renderImage("registerIcon", BuLogo, " " );
-      renderIcons("confirmPasswordImage", lockIcon);
-      renderIcons("passwordImage", lockIcon);
-      renderIcons("emailImage", userIcon);
-
-    }
-
-    // Dynamically select the document based on your needs
-    if (info) {
-      const documentId = info.trim(); // Example: "RevoFit", "MetaV", "SHS"
-      applyBranding(documentId);
+    if (docSnap.exists()) {
+      console.log(`Document data from ${collection}:`, docSnap.data());
+      return docSnap.data();
     } else {
-      console.error("No document ID found in localStorage.");
+      console.error(`No document found in collection ${collection}`);
+      return null;
     }
-  };
+  } catch (error) {
+    console.error(`Error fetching document from ${collection}:`, error);
+    return null;
+  }
+}
 
-  // Attach the register function to the button
-  document.getElementById("registerBtn").addEventListener("click", registerAccount);
+// Function to apply branding based on the document (RevoFit, MetaV, SHS)
+async function applyBranding(documentId) {
+  const data = await fetchFirestoreData("RevoBuissnes", documentId);
+  const App = await fetchFirestoreData("RevolApp", "Content");
+
+  if (!data || !App) {
+    console.error("Branding data missing.");
+    return;
+  }
+
+  const { Base, Prime1, Prime2 } = data.UBU.Colors;
+  const { lockIcon, userIcon } = data.AppIcons;
+  const BuLogo = data.UBU.BuLogos.LightLogo;
+  const LoginImg = App.Images.LoginImg;
+
+  // Apply styles
+  document.body.style.fontFamily = data.UBU.font;
+
+  function renderImage(imgId, imageUrl, altText) {
+    const imgContainer = document.getElementById(imgId);
+    if (!imgContainer) return;
+    imgContainer.innerHTML = `<img src="${imageUrl}" alt="${altText}" style="height: auto;" id="userIm">`;
+  }
+
+  function renderIcons(imgId, imageUrl) {
+    const imgElement = document.getElementById(imgId);
+    if (imgElement) imgElement.src = imageUrl;
+  }
+
+  function setElementStyle(id, style) {
+    const element = document.getElementById(id);
+    if (element) Object.assign(element.style, style);
+  }
+  function atagColor() {
+    
+      let style = document.createElement("style");
+      style.innerHTML = `
+        a {
+          background-color: transparent;
+          text-decoration: none;
+        }
+        a:link {
+          color: ${Prime2};
+        }
+        a:visited {
+          color: ${Prime2};
+        }
+        a:hover {
+          color: ${Prime2};
+          text-decoration: underline;
+        }
+        a:active {
+          color: ${Prime2};
+          text-decoration: underline;
+        }
+      `;
+      document.head.appendChild(style);
+
+  
+  };
+  
+  atagColor()
+  // Apply branding styles
+  setElementStyle("register", { backgroundColor: Base });
+  setElementStyle("registerBtn", { backgroundColor: Prime1, color: Base });
+  setElementStyle("registerForm", { color: Prime2 });
+
+  renderImage("registerImg", LoginImg, "Branding image");
+  renderImage("registerIcon", BuLogo, "Brand logo");
+  renderIcons("confirmPasswordImage", lockIcon);
+  renderIcons("passwordImage", lockIcon);
+  renderIcons("emailImage", userIcon);
+}
+
+// Load branding dynamically when the page loads
+document.addEventListener("DOMContentLoaded", async () => {
+  await initializeFirebase();
+
+  const info = localStorage.getItem("transferredBu");
+  if (info) {
+    applyBranding(info.trim());
+  } else {
+    console.error("No document ID found in localStorage.");
+  }
+
+  const registerBtn = document.getElementById("registerBtn");
+  if (registerBtn) {
+    registerBtn.addEventListener("click", registerAccount);
+  }
 });
 
-
-
-
-document.addEventListener('touchstart', function (event) {
-  if (event.touches.length > 1) {
-    event.preventDefault(); // Prevents zooming
-  }
-}, { passive: false });
-
-
-
-
+// Prevent zooming on touchscreens
+document.addEventListener(
+  "touchstart",
+  (event) => {
+    if (event.touches.length > 1) event.preventDefault();
+  },
+  { passive: false }
+);

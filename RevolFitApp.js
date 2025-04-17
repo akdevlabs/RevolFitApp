@@ -1,59 +1,104 @@
-// Import necessary Firebase modules
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { getFirestore, doc, getDoc, collection, addDoc, setDoc  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+import { 
+  initializeApp 
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+import { 
+  getAuth, 
+  signInWithEmailAndPassword, 
+  onAuthStateChanged, 
+  signOut 
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+import { 
+  getFirestore, 
+  doc, 
+  getDoc, 
+  updateDoc, 
+  serverTimestamp,
+  collection, 
+  addDoc  
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBc3B7SM_Itr9LRCv8N3_tbl9BglxHKo-M",
-  authDomain: "revofit-ad7c3.firebaseapp.com",
-  projectId: "revofit-ad7c3",
-  storageBucket: "revofit-ad7c3.appspot.com", // Note: Added '.appspot.com' for storage URL
-  messagingSenderId: "643801118133",
-  appId: "1:643801118133:web:d679abc998a18f7077d5fc",
-  measurementId: "G-E6P96D0M6Z"
-};
+let db, auth; // Declare Firestore and Auth globally
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Fetch Firebase configuration
+async function fetchFirebaseConfig() {
+  try {
+    console.log("Fetching Firebase config...");
+    const response = await fetch("http://localhost:3000/firebase-config"); // Change when deploying
+    if (!response.ok) throw new Error("Failed to fetch Firebase config");
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching Firebase config:", error);
+    return null;
+  }
+}
 
-// Initialize Firestore
-const db = getFirestore(app);
+// Initialize Firestore and Auth
+async function initializeFirebase() {
+  if (db && auth) return; // Prevent duplicate initialization
 
+  try {
+    const firebaseConfig = await fetchFirebaseConfig();
+    if (!firebaseConfig) throw new Error("Firebase config is undefined");
 
+    const app = initializeApp(firebaseConfig);
+    db = getFirestore(app);
+    auth = getAuth(app);
+
+   
+
+    await initializeFirestoreFunctions();
+  } catch (error) {
+    console.error("Error initializing Firebase:", error);
+  }
+}
+
+console.log("collection function:", collection);
+// Wait for Firebase initialization
+await initializeFirebase();
+
+async function initializeFirestoreFunctions() {
+  console.log("Initializing Firestore-related functions...");
+  // Add any Firestore setup code here if needed.
+}
 
 // Retrieve data from localStorage
-const transferreduserInfo = localStorage.getItem("transferreduserInfo");
-const transferredInfo = localStorage.getItem("transferredInfo");
-// list of tiers (Beginner, Intermediate, Advance)
-
-
-
+ const transferreduserInfo = localStorage.getItem("transferreduserInfo");
+ const transferredInfo = localStorage.getItem("transferredBu");
 
 console.log("Transferred User Info:", transferreduserInfo);
 console.log("Transferred Info:", transferredInfo);
 
 
+// Check if a document exists in Firestore
 async function checkDocumentExists(collectionName, documentId) {
+  if (!collectionName || !documentId) {
+    console.error("Collection name or document ID is missing.");
+    return null;
+  }
+
+  if (!db) {
+    console.error("Firestore instance is not initialized.");
+    return null;
+  }
+
   try {
-    // Use `doc` to get a document reference
     const docRef = doc(db, collectionName, documentId);
-
-    // Fetch the document snapshot
+   
     const docSnap = await getDoc(docRef);
-
-    // Check if the document exists and log the result
     if (docSnap.exists()) {
-      console.log(`Document found:`, docSnap.data());
+      
+      return docSnap.data();
     } else {
       console.log(`No document found with ID: ${documentId}`);
+      return null;
     }
   } catch (error) {
     console.error("Error checking document:", error);
+    return null;
   }
 }
-
-  // Call the function with the correct string arguments
-  checkDocumentExists("RevoBuissnes", transferredInfo);
+// Check if a business-related document exists
+checkDocumentExists("RevoBusiness", transferredInfo);
 
 
 // Fetch user info from the database

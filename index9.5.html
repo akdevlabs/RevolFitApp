@@ -17,88 +17,626 @@
   <title>SHS/RevoFitApp/Settings</title>
   <link rel="stylesheet" href="Settings.css">
 
-  <link rel="shortcut icon" href="images/Logos/flower_DB.webp">
+ 
 </head>
 <body>
   <main>
     <section class="Settings" id="Settings">
+
       <div class="SettingsTop">
         <div class="settingBanner">
-          <h1>Settings</h1>
+          <h1 id="Mtittle">Settings</h1>
           <div id="BuIcon"></div>
 
         </div>
 
         <div class="MainSettings">
+
+
        
-          <div class="dropdown" id="Profile">
-            <button id="btn1">Mi Perfil</button>
-              <div class="dropdown-content">
-                <a href="#option1">Option 1</a>
-                <a href="#option2">Option 2</a>
-                <a href="#option3">Option 3</a>
+          <div class="Btn-Block" id="Profile-Btn">
+            <div class="Text-Block">
+              <img class="Icons" id="User-Icon" src="">
+              <span>Mi Perfil</span>
+            </div>
+            <div class="carrot-block">
+              <span class="carrot">></span>
+            </div>
+          </div>
+          <!-- Slide-out Panel -->
+          <div id="Profile-Panel" class="Panel">
+            <div class="panel-header">
+              <span id="Close-Panel">&times;</span>
+              <h2 class="panel-tittle">Mi Perfil</h2>
+            </div>
+
+            <div class="Profile-Img-block">
+              <img id="User-Img" src="">
+              <span id="User-Name"></span>
+            </div>
+            
+            <div class="panel-content">
+
+              <div class="panel-content-Block" id="gender-btn">
+                <a class="Text-Info">Gender</a>
+                <span class="Text-result"  id="R-gender"></span>
               </div>
+
+              <div class="panel-content-Block" id="Age-btn">
+                <a>Age</a>
+                <span class="Text-result" id="R-Age"></span>
+              </div>
+
+              <div class="panel-content-Block" id="Age-btn">
+                <a>Weight</a>
+                <span class="Text-result" id="R-Weight"></span>
+              </div>
+
+              <div class="panel-content-Block" id="Age-btn">
+                <a>Hight</a>
+                <span class="Text-result" id="R-Hight"></span>
+              </div>
+
+              <div class="panel-content-Block" id="Age-btn">
+                <a>Email</a>
+                <span class="Text-result" id="R-Email"></span>
+              </div>
+
+              <div class="panel-content-Block" id="Age-btn">
+                <a>Plan</a>
+                <span class="Text-result" id="R-Plan"></span>
+              </div>
+
+
+           
+            </div>
           </div>
 
+          <div class="Btn-Block" id="M-Unites-Btn">
+            <div class="Text-Block">
+              <img class="Icons" id="units-Icon" src="">
+              <span>Unidades de Medida</span>
+            </div>
+            <div class="carrot-block">
+              <span class="carrot">></span>
+            </div>
+          </div>
+          <!-- Slide-out Panel -->
+          <div id="Mesurment-panel" class="Panel">
+            <div class="panel-header">
+              <span id="M-Close-Panel">&times;</span>
+              <h2 class="panel-tittle">Mesurment</h2>
+            </div>
+            <div class="panel-content">
+              <div class="panel-content-Block">
+                <a class="Text-Info">Weight & Muscle Size</a><br>
+              
+                <div class="checkInput" id="lb-in">
+                  <input type="checkbox" id="checkbox-lb-in" name="option1">
+                  <span>lb / in</span>
+                </div>
+
+                <div class="checkInput" id="kg-cm">
+                  <input type="checkbox" id="checkbox-kg-cm" name="option2">
+                  <span>kg / cm</span>
+                </div>
+
+              </div>
+              
+            </div>
+          </div>
+
+
+          <div class="Btn-Block" id="Sounds-Btn">
+            <div class="Text-Block">
+              <img class="Icons" id="Sounds-Icon" src="">
+              <span >Sounds</span>
+            </div>
+            <div class="carrot-block">
+              <span class="carrot">></span>
+            </div>
+          </div>
+           <!-- Slide-out Panel -->
+           <div id="Sound-panel" class="Panel">
+            <div class="panel-header">
+              <span id="S-Close-Panel">&times;</span>
+              <h2 class="panel-tittle">Sound</h2>
+            </div>
+            <div class="panel-content">
+
+              <section class="CheckBlock-sections-text">
+                <p>Elige un sonido para avisarte del siguiente ejercicio</p>
+              </section>
+
+              <section class="CheckBlock-sections" id="CB">
+
+                <div class="CheckBlock">
+                  <div class="Check-Block-option">Beep</div>
+                  <div class="check-btn">
+                    <input type="checkbox" id="Beep-Alert" class="checkbox-options">
+                  </div>
+                </div>
+                <div class="CheckBlock">
+                  <div class="Check-Block-option">Bell</div>
+                  <div class="check-btn">
+                    <input type="checkbox" id="Bell-Alert" class="checkbox-options">
+                  </div>
+                </div>
+                <div class="CheckBlock">
+                  <div class="Check-Block-option">Pop</div>
+                  <div class="check-btn">
+                    <input type="checkbox" id="Pop-Alert" class="checkbox-options">
+                  </div>
+                </div>
+                <div class="CheckBlock">
+                  <div class="Check-Block-option">Click</div>
+                  <div class="check-btn">
+                    <input type="checkbox" id="Click-Alert" class="checkbox-options">
+                  </div>
+                </div>
+                <div class="CheckBlock">
+                  <div class="Check-Block-option">Pager Beep</div>
+                  <div class="check-btn">
+                    <input type="checkbox" id="Pager-Beep-Alert" class="checkbox-options">
+                  </div>
+                </div>
+                <div class="CheckBlock">
+                  <div class="Check-Block-option">Siren</div>
+                  <div class="check-btn">
+                    <input type="checkbox" id="Siren-Alert" class="checkbox-options">
+                  </div>
+                </div>
+                <div class="CheckBlock">
+                  <div class="Check-Block-option">Buzz</div>
+                  <div class="check-btn">
+                    <input type="checkbox" id="Buzz-Alert" class="checkbox-options">
+                  </div>
+                </div>
+                <div class="CheckBlock">
+                  <div class="Check-Block-option">Chirp</div>
+                  <div class="check-btn">
+                    <input type="checkbox" id="Chirp-Alert" class="checkbox-options">
+                  </div>
+                </div>
+            
+              </section>
+             
+            </div>
+          </div>
+
+
+
+          <div class="Btn-Block" id="Reminder-Btn">
+            <div class="Text-Block">
+              <img class="Icons" id="Reminder-Icon" src="">
+              <span>Recordatorios</span>
+            </div>
+            <div class="carrot-block">
+              <span class="carrot">></span>
+            </div>
+          </div>
+           <!-- Slide-out Panel -->
+           <div id="Reminder-panel" class="Panel">
+            <div class="panel-header">
+              <span id="R-Close-Panel">&times;</span>
+              <h2 class="panel-tittle">Recordatorios</h2>
+            </div>
+            <div class="panel-content">
+
+              <section class="toggle-sections" id="TS">
+
+                <div class="ToggleBlock">
+
+                  <div class="toggle-btn">
+                    <div id="yes-monday-btn" class="toggle-option">Sí</div>
+                    <div id="no-monday-btn" class="toggle-option">No</div>
+                    <div class="toggle-indicator"></div>
+                  </div>
+            
+                  <div class="Alert-Day" id="Monday-Alert">Lunes</div>
+                </div>
+                <div class="ToggleBlock">
+
+                  <div class="toggle-btn" id="toggle-btn-Tuesday">
+                    <div id="yes-Tuesday-btn" class="toggle-option">Sí</div>
+                    <div id="no-Tuesday-btn" class="toggle-option">No</div>
+                    <div class="toggle-indicator" id="toggle-indicator-Tuesday"></div>
+                  </div>
+            
+                  <div class="Alert-Day" id="Tuesday-Alert">Martes</div>
+                </div>
+                <div class="ToggleBlock">
+
+                  <div class="toggle-btn" id="toggle-btn-Wensday">
+                    <div id="yes-Wensday-btn" class="toggle-option">Sí</div>
+                    <div id="no-Wensday-btn" class="toggle-option">No</div>
+                    <div class="toggle-indicator" id="toggle-indicator-Wensday"></div>
+                  </div>
+            
+                  <div class="Alert-Day" id="Wensday-Alert">Miércoles</div>
+                </div>
+                <div class="ToggleBlock">
+
+                  <div class="toggle-btn" id="toggle-btn-Thursday">
+                    <div id="yes-Thursday-btn" class="toggle-option">Sí</div>
+                    <div id="no-Thursday-btn" class="toggle-option">No</div>
+                    <div class="toggle-indicator" id="toggle-indicator-Thursday"></div>
+                  </div>
+            
+                  <div class="Alert-Day" id="Thursday-Alert">Jueves</div>
+                </div>
+                <div class="ToggleBlock">
+
+                  <div class="toggle-btn" id="toggle-btn-Friday">
+                    <div id="yes-Friday-btn" class="toggle-option">Sí</div>
+                    <div id="no-Friday-btn" class="toggle-option">No</div>
+                    <div class="toggle-indicator" id="toggle-indicator-Friday"></div>
+                  </div>
+            
+                  <div class="Alert-Day" id="Friday-Alert">Viernes</div>
+                </div>
+                <div class="ToggleBlock">
+
+                  <div class="toggle-btn" id="toggle-btn-Saturday">
+                    <div id="yes-Saturday-btn" class="toggle-option">Sí</div>
+                    <div id="no-Saturday-btn" class="toggle-option">No</div>
+                    <div class="toggle-indicator" id="toggle-indicator-Saturday"></div>
+                  </div>
+            
+                  <div class="Alert-Day" id="Saturday-Alert">Sábado</div>
+                </div>
+                <div class="ToggleBlock">
+
+                  <div class="toggle-btn" id="toggle-btn-Sunday">
+                    <div id="yes-Sunday-btn" class="toggle-option">Sí</div>
+                    <div id="no-Sunday-btn" class="toggle-option">No</div>
+                    <div class="toggle-indicator" id="toggle-indicator-Sunday"></div>
+                  </div>
+            
+                  <div class="Alert-Day" id="Sunday-Alert">Domingo</div>
+                </div>
+
+              </section>
+
+              
+
+            </div>
+          </div>
+
+
+
+
+
+          <div class="Btn-Block" id="Alert-Btn">
+            <div class="Text-Block">
+              <img class="Icons" id="Alert-Icon" src="">
+              <span>Alerts</span>
+            </div>
+            <div class="carrot-block">
+              <span class="carrot">></span>
+            </div>
+          </div>
+
+           <!-- Slide-out Panel -->
+           <div id="Alert-panel" class="Panel">
+            <div class="panel-header">
+              <span id="A-Close-Panel">&times;</span>
+              <h2 class="panel-tittle">Alert</h2>
+            </div>
+            <div class="panel-content">
+
+              <span></span>
+
+              <div class="panel-content-Block">
+                <a class="sound-Text-Info">Sonido</a><br>
+              
+                <div class="checkInput" id="5-sec">
+                  <input type="checkbox" id="checkbox-5-sec" name="option1">
+                  <span>5 sec</span>
+                </div>
+
+                <div class="checkInput" id="0-sec">
+                  <input type="checkbox" id="checkbox-0-sec" name="option2">
+                  <span>0 sec</span>
+                </div>
+
+                <div class="checkInput" id="off">
+                  <input type="checkbox" id="checkbox-off" name="option2">
+                  <span>off</span>
+                </div>
+
+              </div>
+
+              <div class="panel-content-Block">
+                <a class="sound-Text-Info">Vibración</a><br>
+              
+                <div class="checkInput" id="5-sec">
+                  <input type="checkbox" id="checkbox-5-sec" name="option1">
+                  <span>5 sec</span>
+                </div>
+
+                <div class="checkInput" id="0-sec">
+                  <input type="checkbox" id="checkbox-0-sec" name="option2">
+                  <span>0 sec</span>
+                </div>
+
+                <div class="checkInput" id="off">
+                  <input type="checkbox" id="checkbox-off" name="option2">
+                  <span>off</span>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+
+
+
+          <div class="Btn-Block" id="Message-Btn">
+            <div class="Text-Block">
+              <img class="Icons" id="Message-Icon" src="">
+              <span>Messages</span>
+            </div>
+            <div class="carrot-block">
+              <span class="carrot">></span>
+            </div>
+          </div>
+           <!-- Slide-out Panel -->
+           <div id="Message-panel" class="Panel">
+            <div class="panel-header">
+              <span id="MS-Close-Panel">&times;</span>
+              <h2 class="panel-tittle">Message</h2>
+            </div>
+            <div class="panel-content">
+              <!-- Add your profile info here -->
+              <p>Nombre: Juan Pérez</p>
+              <p>Email: juan@example.com</p>
+              <p>Plan: Conquista</p>
+              <!-- etc -->
+            </div>
+          </div>
+
+
+
+
+          <div class="Btn-Block" id="Model-Btn">
+            <div class="Text-Block">
+              <img class="Icons" id="Model-Icon" src="">
+              <span>Elegir Modelo</span>
+            </div>
+            <div class="carrot-block">
+              <span class="carrot">></span>
+            </div>
+          </div>
+          <!-- Slide-out Panel -->
+          <div id="Model-panel" class="Panel">
+
+            <section class="panel-header">
+              <span id="MO-Close-Panel">&times;</span>
+              <h2 class="panel-tittle">Model</h2>
+            </section>
+
+            <section class="Model-Content-Block">
+              <div class="CheckBlock-sections-text">
+                <p>Elige un modelo</p>
+              </div>
+
+              <div class="CheckBlock-modelo-sections" id="CBM">
+
+                  <div class="CheckBlock">
+                    <div class="modelo-Block-option">Male</div>
+                    <div class="check-btn">
+                      <input type="checkbox" id="Male-Model" class="model-checkbox-options">
+                    </div>
+                  </div>
+                  <div class="CheckBlock">
+                    <div class="modelo-Block-option">Female</div>
+                    <div class="check-btn">
+                      <input type="checkbox" id="Female-Model" class="model-checkbox-options">
+                    </div>
+                  </div>
+                  <div class="CheckBlock">
+                    <div class="modelo-Block-option">Male+</div>
+                    <div class="check-btn">
+                      <input type="checkbox" id="Male-Plus-Model" class="model-checkbox-options">
+                    </div>
+                  </div>
+                  <div class="CheckBlock">
+                    <div class="modelo-Block-option">Female+</div>
+                    <div class="check-btn">
+                      <input type="checkbox" id="Female-Plus-Model" class="model-checkbox-options">
+                    </div>
+                  </div>
+                  
+              
+              </div>
+
+              <div class="Img-Model-Block" id="Img-Model-Block">
+                  <div id="Background-color-block"></div>
+                  <img id="model-preview-image" src="" alt="Selected Model Preview">
+              </div>
+            </section>
           
-          <div class="dropdown" id="MesumentsUnits">
-            <button id="btn2">Unidades de Medida</button>
-              <div class="dropdown-content">
-                <a href="#option1">Option 1</a>
-                <a href="#option2">Option 2</a>
-                <a href="#option3">Option 3</a>
-              </div>
-          </div>
-
-
-
-          <div id="Alerts"></div>
-
-          <div id="Messages"></div>
-        
-
-          <div class="dropdown" id="Model">
-            <button id="btn3">Elegir Modelo</button>
-              <div class="dropdown-content">
-                <a href="#option1">Option 1</a>
-                <a href="#option2">Option 2</a>
-                <a href="#option3">Option 3</a>
-              </div>
-          </div>
-        
-
-          <div class="dropdown" id="Profile">
-            <button id="btn4">Report Info</button>
-              <div class="dropdown-content">
-                <a href="index5.html">View Report</a>
-                <a href="#option2">Option 2</a>
-                <a href="#option3">Option 3</a>
-              </div>
-          </div>
+            
          
-          <div id="Membership"></div>
-          
-          <div id="Logout">
-            <button id="logoutBtn">Logout</button>
           </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="Btn-Block" id="Report-Btn">
+            <div class="Text-Block">
+              <img class="Icons" id="Report-Icon" src="">
+              <span>Report Info</span>
+            </div>
+            <div class="carrot-block">
+              <span class="carrot">></span>
+            </div>
+          </div>
+           <!-- Slide-out Panel -->
+           <div id="Report-panel" class="Panel">
+            <div class="panel-header">
+              <span id="RP-Close-Panel">&times;</span>
+              <h2 class="panel-tittle">Report</h2>
+            </div>
+            <div class="panel-content">
+              <!-- Add your profile info here -->
+              <a href="index5.html">View Report</a>
+              <p>Email: juan@example.com</p>
+              <p>Plan: Conquista</p>
+              <!-- etc -->
+            </div>
+          </div>
+
+          <div class="Btn-Block" id="Membership-Btn">
+            <div class="Text-Block">
+              <img class="Icons" id="Membership-Icon" src="">
+              <span>Membership</span>
+            </div>
+            <div class="carrot-block">
+              <span class="carrot">></span>
+            </div>
+          </div>
+           <!-- Slide-out Panel -->
+           <div id="Membership-panel" class="Panel">
+            <div class="panel-header">
+              <span id="ME-Close-Panel">&times;</span>
+              <h2 class="panel-tittle">Membership</h2>
+            </div>
+
+            <div class="panel-content">
+
+              <div class="Membership-tittle-Block">
+                <h1 id="MB-tittle"></h1>
+              </div>
+
+              <div class="Membership-Content">
+
+                <div class="Tier" id="tier-btn-0">
+                  <div class="bTN-Block" id="Btn-0">
+                    <div class="left-ActiveTier">
+                      <img class="ActiveTier" id="ActiveTier-0" src="">
+                      <h2 class="M-tittle" id="Membership-tittle-0"></h2>
+                    </div>
+                    <span class="price" id="price-0"></span>
+                  </div>
+                  
+                  <div class="hidden-Membership-Content" id="visable-tier-0">
+                    <ul  class="M-points" id="points-0"></ul>
+                    <a class="Action-Btn" id="Action-Btn-0">Plan actual</a>
+
+                  </div>
+                </div>
+
+                <div class="Tier" id="tier-btn-1">
+
+                  <div class="bTN-Block" id="Btn-1">
+                    <div class="left-ActiveTier">
+                      <img class="ActiveTier" id="ActiveTier-1" src="">
+                      <h2 class="M-tittle" id="Membership-tittle-1"></h2>
+                    </div>
+                    <span class="price" id="price-1"></span>
+                  </div>
+
+                
+                  
+                  <div class="hidden-Membership-Content" id="visable-tier-1">
+                    <ul  class="M-points" id="points-1"></ul>
+                    <a class="Action-Btn" id="Action-Btn-1"></a>
+                  </div>
+                </div>
+
+                <div class="Tier" id="tier-btn-2">
+
+                  <div class="bTN-Block" id="Btn-2">
+                    <div class="left-ActiveTier">
+                      <img class="ActiveTier" id="ActiveTier-2" src="">
+                      <h2 class="M-tittle" id="Membership-tittle-2"></h2>
+                    </div>
+                    <span class="price" id="price-2"></span>
+                  </div>
+
+                 
+                  
+                  <div class="hidden-Membership-Content" id="visable-tier-2">
+                    <ul  class="M-points" id="points-2"></ul>
+                    <a class="Action-Btn" id="Action-Btn-2"></a>
+                  </div>
+                </div>
+
+                <div class="Tier" id="tier-btn-3">
+
+                  <div class="bTN-Block" id="Btn-3">
+                    <div class="left-ActiveTier">
+                      <img class="ActiveTier" id="ActiveTier-3" src="">
+                      <h2 class="M-tittle" id="Membership-tittle-3"></h2>
+                    </div>
+                    <span class="price" id="price-3"></span>
+                  </div>
+
+                  
+                  <div class="hidden-Membership-Content" id="visable-tier-3">
+                    <ul  class="M-points" id="points-3"></ul>
+                    <a class="Action-Btn" id="Action-Btn-3"></a>
+                  </div>
+                </div>
+
+              </div>
+
+              
+            </div>
+          </div>
+
+
+
+
+          <div class="Btn-Block" id="Logout-Btn">
+            <div class="Text-Block">
+              <img class="Icons" id="Logout-Icon" src="">
+              <span>Logout</span>
+            </div>
+            <div class="carrot-block">
+              <span class="carrot">></span>
+            </div>
+          </div>
+       
+       
+
+          
+
+
+        
+        
+
+      
+          
+     
         </div>
        
       </div>
+    </section>
 
-      
-    
-
-
-
-
-      <div class="navBtns">
-        <div id="home"></div>
-        <div id="Date"></div>
-        <div id="goals"></div>
-        <div id="stats"></div>
-        <div id="gear" ></div>
-      </div>
-
+    <section class="navBtns">
+      <div id="home"></div>
+      <div id="Date"></div>
+      <div id="goals"></div>
+      <div id="stats"></div>
+      <div id="gear" ></div>
     </section>
    
   </main>

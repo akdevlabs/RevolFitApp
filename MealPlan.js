@@ -42,7 +42,7 @@ const Routine = 'Routine1'
 
 
 console.log("Transferred User Info:", transferreduserInfo);
-console.log("Transferred Info:", transferredInfo);
+console.log("Transferred Info:", transferredBu);
 console.log(workoutLocation)
 
 

@@ -1,146 +1,215 @@
-// Import necessary Firebase modules
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { 
+  initializeApp 
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+import("https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js").then(({ initializeApp }) => {
+  // Initialize Firebase here
+});
 import { 
   getAuth, 
   signInWithEmailAndPassword, 
   onAuthStateChanged, 
   signOut 
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+
 import { 
   getFirestore, 
   doc, 
   getDoc, 
   updateDoc, 
   serverTimestamp 
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBc3B7SM_Itr9LRCv8N3_tbl9BglxHKo-M",
-  authDomain: "revofit-ad7c3.firebaseapp.com",
-  projectId: "revofit-ad7c3",
-  storageBucket: "revofit-ad7c3.appspot.com",
-  messagingSenderId: "643801118133",
-  appId: "1:643801118133:web:d679abc998a18f7077d5fc",
-  measurementId: "G-E6P96D0M6Z"
-};
+let db, auth; // Declare Firestore and Auth globally
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
 
-// Constants
-const loginPage = "/index.html"; // Adjust path if necessary
-const protectedPage = "/index1.html";
 
 // Dynamically select the document based on your needs
 const documentId = "RevolFit"; // Example: "RevolFit", "MetaV", "SHS"
-
-
-
-
-
-
-
-// Utility: Redirect to a specific page
-function redirectTo(page) {
-  window.location.href = page;
+// Fetch Firebase configuration
+async function fetchFirebaseConfig() {
+  try {
+    console.log("Fetching Firebase config...");
+    const response = await fetch("http://localhost:3000/firebase-config"); // Change when deploying
+    if (!response.ok) throw new Error("Failed to fetch Firebase config");
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching Firebase config:", error);
+    return null;
+  }
 }
+
+// Initialize Firestore and Auth
+async function initializeFirebase() {
+  if (db && auth) return; // Prevent duplicate initialization
+
+  try {
+    const firebaseConfig = await fetchFirebaseConfig();
+    if (!firebaseConfig) throw new Error("Firebase config is undefined");
+
+    const app = initializeApp(firebaseConfig);
+    db = getFirestore(app);
+    auth = getAuth(app);
+
+    console.log("Firestore and Auth initialized");
+
+    await initializeFirestoreFunctions();
+  } catch (error) {
+    console.error("Error initializing Firebase:", error);
+  }
+}
+
+
+
+async function initializeFirestoreFunctions() {
+  console.log("Initializing Firestore-related functions...");
+  // Add any Firestore setup code here if needed.
+}
+// Check if document exists
+async function checkDocumentExists(collectionName, documentId) {
+  try {
+    if (!db) throw new Error("Firestore is not initialized yet");
+
+    const docRef = doc(db, collectionName, documentId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log("Document found:", docSnap.data());
+      return docSnap.data();
+    } else {
+      console.log("No document found with ID:", documentId);
+      return null;
+    }
+  } catch (error) {
+    console.error("Error checking document:", error);
+  }
+}
+
 // Function: Log in the user
 async function loginUser(email, password) {
   try {
+    if (!auth) {
+      console.error("Auth is not initialized yet.");
+      return;
+    }
+
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
+
     console.log("User logged in:", user);
-
-    // Save UID to localStorage
     saveUserUIDToLocalStorage(user.uid);
-
-    // Update streak in Firestore
     await updateUserStreak(user.uid);
-    
-    redirectTo(protectedPage);
+    localStorage.setItem("transferredBu", documentId);
+    // Redirect user to index1.html
+    window.location.href = "/index1.html";
   } catch (error) {
     console.error("Error logging in:", error.message);
     alert("Error: " + error.message);
   }
 }
+
+
 // Function: Save user UID to localStorage
 function saveUserUIDToLocalStorage(uid) {
   try {
     localStorage.setItem("transferreduserInfo", uid);
-    console.log("User UID saved to localStorage:", uid);
+   
+    console.log("User UID saved:", uid);
   } catch (error) {
-    console.error("Error saving UID to localStorage:", error);
+    console.error("Error saving UID:", error);
   }
 }
-// Function: Update user streak in Firestore  Error: Firebase: Error (auth/invalid-login-credentials).
+
+// Function: Update user streak in Firestore
 async function updateUserStreak(userId) {
-  const userDocRef = doc(db, "users", userId);
-  const userDocSnap = await getDoc(userDocRef);
+  try {
+    const userDocRef = doc(db, "users", userId);
+    const userDocSnap = await getDoc(userDocRef);
 
-  if (userDocSnap.exists()) {
-    const userData = userDocSnap.data();
-    const newStreakCount = (userData.currentStreak || 0) + 1; // Increment streak
-    const updatedStreakArray = [...(userData.streakCount || []), newStreakCount]; // Add streak to array
+    if (userDocSnap.exists()) {
+      const userData = userDocSnap.data();
+      const newStreakCount = (userData.currentStreak || 0) + 1;
+      const updatedStreakArray = [...(userData.streakCount || []), newStreakCount];
 
-    await updateDoc(userDocRef, {
-      currentStreak: newStreakCount,
-      streakCount: updatedStreakArray,
-      lastLogin: serverTimestamp()
-    });
-    
-    console.log("Streak updated. Current streak:", newStreakCount);
-  } else {
-    console.error("User document does not exist.");
+      await updateDoc(userDocRef, {
+        currentStreak: newStreakCount,
+        streakCount: updatedStreakArray,
+        lastLogin: serverTimestamp(),
+      });
+
+      console.log("Streak updated:", newStreakCount);
+    } else {
+      console.error("User document does not exist.");
+    }
+  } catch (error) {
+    console.error("Error updating streak:", error);
   }
-
 }
-// Function: Log out user once on initial load
+
+// Function: Log out user on first load
 async function logoutUserOnce() {
+  if (!auth) return;
+
   const hasLoggedOut = sessionStorage.getItem("hasLoggedOut");
   if (!hasLoggedOut) {
     try {
       await signOut(auth);
       console.log("User logged out on first load.");
-      sessionStorage.setItem("hasLoggedOut", "true"); // Prevent repeat logout
+      sessionStorage.setItem("hasLoggedOut", "true");
     } catch (error) {
       console.error("Error logging out:", error.message);
     }
   }
 }
-// Function: Handle authentication state
+
+// Handle authentication state
 function handleAuthState() {
+  if (!auth) {
+    console.error("Auth is not initialized yet. Retrying...");
+    setTimeout(handleAuthState, 1000);
+    return;
+  }
+
   onAuthStateChanged(auth, async (user) => {
     const currentPage = window.location.pathname;
+    if (currentPage === "/index.html" && user) {
+      console.log("User already logged in:", user.email);
 
-    if (currentPage === loginPage && user) {
-      console.log("User is already logged in:", user.email);
-
-      // Force sign out for re-authentication
       try {
         await signOut(auth);
-       
       } catch (error) {
         console.error("Error during forced sign out:", error.message);
       }
     }
   });
 }
-// Event Listener: Attach login button listener
-function attachLoginListener() {
-  document.getElementById("ISbtn").addEventListener("click", () => {
-    const email = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
 
-    if (email && password) {
-      loginUser(email, password);
-    } else {
-      alert("Por favor, complete todos los campos.");
-    }
-  });
+// Attach login button listener
+document.addEventListener("DOMContentLoaded", () => {
+  attachLoginListener();
+});
+
+function attachLoginListener() {
+  const loginButton = document.getElementById("ISbtn");
+  if (loginButton) {
+      loginButton.addEventListener("click", async () => {
+          const email = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          if (email && password) {
+              try {
+                  await loginUser(email, password);
+              } catch (error) {
+                  console.error("Login failed:", error);
+                  alert("Login failed: " + error.message);
+              }
+          } else {
+              alert("Please enter email and password.");
+          }
+      });
+  }
 }
+
+
 // Function: Fetch Firestore document data
 async function fetchFirestoreData(collection, documentId) {
   try {
@@ -150,36 +219,57 @@ async function fetchFirestoreData(collection, documentId) {
     if (docSnap.exists()) {
       return docSnap.data();
     } else {
-      console.log(`No such document in collection ${collection}`);
+      console.log(`No document found in ${collection}`);
       return null;
     }
   } catch (error) {
     console.error(`Error fetching document from ${collection}:`, error);
   }
 }
-// Initialize App
-document.addEventListener("DOMContentLoaded", () => {
-  logoutUserOnce(); // Log out on first load
-  handleAuthState(); // Monitor authentication state
-  attachLoginListener(); // Attach event listener for login button
+
+async function fetchFirestoreAppData() {
+  try {
+    const docRef = doc(db, "RevolApp", "Content"); // Ensure 'AppData' is the correct document ID
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      console.log("No document found in 'RevolApp/AppData'");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document from 'RevolApp/AppData':", error);
+  }
+}
+
+
+
+
+// Initialize everything on page load
+document.addEventListener("DOMContentLoaded", async () => {
+  await initializeFirebase();
+  handleAuthState();
+  attachLoginListener();
+  applyBranding(documentId);
 });
-// Function to apply branding based on the document (RevolFit, MetaV, SHS)
-async function applyBranding(documentId) {
-  const data = await fetchFirestoreData("RevoBuissnes", documentId);
-  const App = await fetchFirestoreData("RevolApp", "Content");
-  const {LoginImg ,PopUpImg}= App.Images
+
+// Function: Apply branding
+async function applyBranding(DId) {
+  const data = await checkDocumentExists('RevoBuissnes', DId);
+  const App = await fetchFirestoreAppData()
+  
+  console.log(App.Images.LoginImg)
 
   if (data) {
-         
-     const {Base, Prime1, Prime2}= data.UBU.Colors
-     const Popup = data.Portal.popup
- 
-     const { lockIcon, userIcon } = data.AppIcons
-     
-
+    console.log("Branding data:", data);
+    // Apply branding logic here
+    const {Base, Prime1, Prime2}= data.UBU.Colors
+    const Popup = data.Portal.popup
+    const { lockIcon, userIcon } = data.AppIcons
 
     function GetBuFont(fontFamily) {
-     document.body.style.fontFamily = fontFamily;
+      document.body.style.fontFamily = fontFamily;
     }
     GetBuFont(data.UBU.font);
     // Render Popup Data
@@ -210,7 +300,6 @@ async function applyBranding(documentId) {
           document.getElementById("Subtittle").textContent = subtitle;
           document.getElementById("tittle").style.color = color;
           document.getElementById("Subtittle").style.color = color2;
-
       }
       function setBackgroundColorT(color) {
           const container = document.getElementById("backgroundImg");
@@ -222,84 +311,70 @@ async function applyBranding(documentId) {
         // Populate UI elements
       setBackgroundColorT(Base)
       setButtonBorderColor(Prime1);
-      renderImage(PopUpImg, "pop-upImg");
+      renderImage(App.Images.PopUpImg, "pop-upImg");
+
+
       renderImage(data.UBU.BuLogos.LightLogo, "pop-upIcon");
       renderText(PopupText.tittle, PopupText.Subtittle, Prime2, Prime2);
     }
     // Render Login DataLogin
-  
- 
-      
-      
-      function updateElementStyle(id, styles) {
-          const element = document.getElementById(id);
-          if (element) {
-              Object.assign(element.style, styles);
-          }
+    function updateElementStyle(id, styles) {
+      const element = document.getElementById(id);
+      if (element) {
+          Object.assign(element.style, styles);
       }
-      
-      function renderImage(imageUrl, containerId) {
-          const container = document.getElementById(containerId);
-          if (container) {
-              container.innerHTML = `<img src="${imageUrl}" alt="Image" style="height:auto;">`;
-          }
-      }
-      
-      function updateImageSrc(imgId, imgSrc) {
-          const imgElement = document.getElementById(imgId);
-          if (imgElement) imgElement.src = imgSrc;
-      }
-      
-      function addInputEventListener(ids, color) {
-          ids.forEach(id => {
-              const input = document.getElementById(id);
-              if (input) {
-                  input.addEventListener('input', () => input.style.color = color);
-              }
-          });
-      }
-      
-      function updateLinkColors(color) {
-          document.querySelectorAll("#form-links a").forEach(link => link.style.color = color);
-      }
-      
-      // Apply styles and updates
-
-      updateImageSrc("passwordImage", lockIcon);
-      updateImageSrc("userImage", userIcon);
-      addInputEventListener(["username", "password"], Prime2);
-      updateElementStyle("login", { color: Prime2 });
-      updateElementStyle("ISbtn", { border: `5px solid ${Prime1}`, borderRadius: "5px", color: Prime2 });
-      updateElementStyle("login", { backgroundColor: Base });
-      renderImage(LoginImg, "loginImg");
-      renderImage(data.UBU.BuLogos.LightLogo, "loginIcon");
-      updateLinkColors(Prime2);
     }
   
+    function renderImage(imageUrl, containerId) {
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.innerHTML = `<img src="${imageUrl}" alt="Image" style="height:auto;">`;
+        }
+    }
   
+    function updateImageSrc(imgId, imgSrc) {
+        const imgElement = document.getElementById(imgId);
+        if (imgElement) imgElement.src = imgSrc;
+    }
+  
+
+    
+    function addInputEventListener(ids, color) {
+      ids.forEach(id => {
+          const input = document.getElementById(id);
+          if (input) {
+              input.addEventListener('input', () => {
+                  input.style.color = color; 
+                  input.removeAttribute("disabled"); // Ensure input is enabled
+              });
+          }
+      });
+  }
+    
+    function updateLinkColors(color) {
+        document.querySelectorAll("#form-links a").forEach(link => link.style.color = color);
+    }
+    
+    // Apply styles and updates
+    updateImageSrc("passwordImage", lockIcon);
+    updateImageSrc("userImage", userIcon);
+    addInputEventListener(["username", "password"], Base);
+    updateElementStyle("login", { color: Prime2 });
+    updateElementStyle("ISbtn", { border: `5px solid ${Prime1}`, borderRadius: "5px", color: Prime2 });
+    updateElementStyle("login", { backgroundColor: Base });
+    renderImage(App.Images.LoginImg, "loginImg");
+    renderImage(data.UBU.BuLogos.LightLogo, "loginIcon");
+    updateLinkColors(Prime2);
+  }
 }
 
 
 
-applyBranding(documentId);  
 
 
 
 
  
-  
-function transferInfo() {
-  const info = documentId
-
-    if (info) {
-      localStorage.setItem("transferredInfo", info); // Save data in localStorage
-      
-
-    } else {
-      alert("Please enter some text before proceeding!");
-    }
-}
-transferInfo()
 
 
 // Add Event Listener for pop-up button to toggle background image visibility

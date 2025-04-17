@@ -22,7 +22,7 @@ const db = getFirestore(app);
 
 // Retrieve data from localStorage
 const transferreduserInfo = localStorage.getItem("transferreduserInfo");
-const transferredInfo = localStorage.getItem("transferredInfo");
+const transferredInfo = localStorage.getItem("transferredBu");
 
 console.log("Transferred User Info:", transferreduserInfo);
 console.log("Transferred Info:", transferredInfo);

@@ -1,584 +1,275 @@
 
-function renderText(Text, UrlText){
-  const tierElement = document.getElementById(UrlText);
-  if (tierElement) {
-      tierElement.textContent = Text;
-  } else {
-      console.error("Element with ID 'Tier' not found.");
-  }
-}
-function renderMonthlyBanner(discount){
-  // Get or create the main container div
-  let discountBlock = document.getElementById("ADiscount");
-  if (!discountBlock) {
-      discountBlock = document.createElement("Span");
-      discountBlock.className = "DiscountBlock";
-      document.body.appendChild(discountBlock); // Append to body or a specific 
-      discountBlock.style.width = "20rem"
-      discountBlock.style.display = "flex"
-
-  }
-
-  function createSpan(id, text) {
-    let span = document.getElementById(id);
-    if (!span) {
-      span = document.createElement("span");
-      span.id = id;
-      discountBlock.appendChild(span);
-    }
-    span.textContent = text;
-  }
-  createSpan("ADiscount", discount);
-
-  
-}
-
-
-function renderDiscountBlock(discount, price, coin) {
-// Get or create the main container div
-let discountBlock = document.getElementById("Discount");
-if (!discountBlock) {
-  discountBlock = document.createElement("div");
-  discountBlock.id = "Discount";
-  discountBlock.className = "DiscountBlock";
-  document.body.appendChild(discountBlock); // Append to body or a specific container
-}
-
-// Function to create a span with text content
-function createSpan(id, text) {
-  let span = document.getElementById(id);
-  if (!span) {
-    span = document.createElement("span");
-    span.id = id;
-    discountBlock.appendChild(span);
-  }
-  span.textContent = text;
-}
-
-// Create/update spans
-createSpan("ADiscount", discount);
-createSpan("OldPrice", price);
-createSpan("Coin", coin);
-}
-const getSelectedSlot = () => {
-const selectedSlot = JSON.parse(localStorage.getItem('TierSlot')); // Get the slot ID from localStorage
-
-if (selectedSlot) {
-  // If a slot is selected, you can use this ID to modify the content or highlight the slot
-  return(selectedSlot);
-  
-
-} else {
-  console.log('No slot selected');
-}
-};
-
-
-async function getSlotInfo() {
-try {
-  const docRef = doc(db, "RevolApp", "RevofitTiers"); // Ensure db and transferredInfo are initialized
-  const docSnap = await getDoc(docRef);
-
-  if (docSnap.exists()) {
-    return docSnap.data();
-  } else {
-    console.error("No such document!");
-    return null;
-  }
-} catch (error) {
-  console.error("Error fetching document:", error);
-  return null;
-}
-}
-
-
-function renderPrice(cost, currency, url) {
-// Ensure exchangeRates is defined globally or fetched
-if (typeof exchangeRates === "undefined") {
-    console.error("exchangeRates is not defined.");
-    return;
-}
-
-// Default to USD if currency is empty or undefined
-if (!currency || currency.trim() === "") {
-    currency = "USD";
-}
-
-function convert() {
-    const rate = exchangeRates[currency]; // Lookup rate dynamically
-    if (rate) {
-        return cost * rate;
-    } else {
-        console.error(`Exchange rate for '${currency}' not found.`);
-        return cost; // Return original cost if rate is missing
-    }
-}
-
-const convertedCost = convert();
-
-const tierElement = document.getElementById(url);
-if (tierElement) {
-    tierElement.textContent = convertedCost.toFixed(2); // Ensure two decimal places
-} else {
-    console.error(`Element with ID '${url}' not found.`);
-}
-}
-
-// Exchange rates stored as variables
-const exchangeRates = {
-"USD": 1,
-"CAD": 1.4215,
-"MXN": 21.4363,
-"ARS": 1060.0000,
-"BRL": 5.7457,
-"CLP": 943.9600,
-"COP": 4115.1200,
-"PEN": 3.7457
-};
-
-function renderSlot(UrlListBlock, features) {
-const listBlock = document.getElementById(UrlListBlock);
-listBlock.innerHTML = "";
-features.forEach(feature => {
-    const item = document.createElement("p");
-    item.textContent = `✔  ${feature}`;
-    listBlock.appendChild(item);
-});
-}
-
-
-
-getSlotInfo().then((data) => {
-const tiers = {
-  Slot2: data.Tier2,
-  Slot3: data.Tier3,
-  Slot4: data.Tier4
-};
-
-
-function renderSlotDetails(period) {
-  const slot = getSelectedSlot();
-  const tier = tiers[slot];
-
-  if (!tier) return; // Prevent errors if the slot is invalid
-
-  renderText(tier.Title, "Tier");
-  renderMonthlyBanner("🔥 ¡El Plan Anual = Los Mayores Ahorros!");
-  renderText(SelectedCurrency || tier.Coin, "Currency");
- 
-
-  if (period === "yearly") {
-    renderDiscountBlock(`-${tier.Discount}%`, `$${tier.MonthlyCost}`, SelectedCurrency || tier.Coin);
-    renderPrice(tier.YearlyCost, SelectedCurrency || tier.Coin, "Price");
-  } else {
-    removeDiscountBlock(); // Ensure the discount block is removed when switching back to monthly
-    renderPrice(tier.MonthlyCost, SelectedCurrency || tier.Coin, "Price");
-  }
-
-  renderSlot("Features", tier.Points);
-}
-
-// Initial Render
-renderSlotDetails("monthly");
-
-document.getElementById("Monthly").addEventListener("click", function (event) {
-  event.preventDefault();
-  renderSlotDetails("monthly");
-});
-
-document.getElementById("Yearly").addEventListener("click", function (event) {
-  event.preventDefault();
-  renderSlotDetails("yearly");
-});
-
-function removeDiscountBlock() {
-  const discountElement = document.getElementById("discount-block"); // Assuming you have an element with this ID
-  if (discountElement) discountElement.remove(); // Remove the discount block if it exists
-}
-});
-
-
-
-
-
-
-
-// Function to retrieve the selected slot from localStorage
-
-
-// Call the function to get the selected slot when the page loads
-console.log(getSelectedSlot())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-async function backgroundColor() {
+// Function: Save user UID to localStorage
+function saveUserUIDToLocalStorage(uid) {
   try {
-    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
+    localStorage.setItem("transferreduserInfo", uid);
+    console.log("User UID saved to localStorage:", uid);
+  } catch (error) {
+    console.error("Error saving UID to localStorage:", error);
+  }
+}
+// Function: Update user streak in Firestore  Error: Firebase: Error (auth/invalid-login-credentials).
+async function updateUserStreak(userId) {
+  const userDocRef = doc(db, "users", userId);
+  const userDocSnap = await getDoc(userDocRef);
+
+  if (userDocSnap.exists()) {
+    const userData = userDocSnap.data();
+    const newStreakCount = (userData.currentStreak || 0) + 1; // Increment streak
+    const updatedStreakArray = [...(userData.streakCount || []), newStreakCount]; // Add streak to array
+
+    await updateDoc(userDocRef, {
+      currentStreak: newStreakCount,
+      streakCount: updatedStreakArray,
+      lastLogin: serverTimestamp()
+    });
+    
+    console.log("Streak updated. Current streak:", newStreakCount);
+  } else {
+    console.error("User document does not exist.");
+  }
+
+}
+
+
+
+// Function: Log out user once on initial load
+async function logoutUserOnce() {
+  const hasLoggedOut = sessionStorage.getItem("hasLoggedOut");
+  if (!hasLoggedOut) {
+    try {
+      await signOut(auth);
+      console.log("User logged out on first load.");
+      sessionStorage.setItem("hasLoggedOut", "true"); // Prevent repeat logout
+    } catch (error) {
+      console.error("Error logging out:", error.message);
+    }
+  }
+}
+// Function: Handle authentication state
+function handleAuthState() {
+  onAuthStateChanged(auth, async (user) => {
+    const currentPage = window.location.pathname;
+
+    if (currentPage === loginPage && user) {
+      console.log("User is already logged in:", user.email);
+
+      // Force sign out for re-authentication
+      try {
+        await signOut(auth);
+       
+      } catch (error) {
+        console.error("Error during forced sign out:", error.message);
+      }
+    }
+  });
+}
+// Event Listener: Attach login button listener
+function attachLoginListener() {
+  document.getElementById("ISbtn").addEventListener("click", () => {
+    const email = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    if (email && password) {
+      loginUser(email, password);
+    } else {
+      alert("Por favor, complete todos los campos.");
+    }
+  });
+}
+// Function: Fetch Firestore document data
+async function fetchFirestoreData(collection, documentId) {
+  try {
+    const docRef = doc(db, collection, documentId);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      const documentData = docSnap.data();
-      return documentData; // Return the document data
+      return docSnap.data();
     } else {
-      console.error("No such document!");
+      console.log(`No such document in collection ${collection}`);
       return null;
     }
   } catch (error) {
-    console.error("Error fetching document:", error);
-    return null;
+    console.error(`Error fetching document from ${collection}:`, error);
   }
 }
-backgroundColor().then((data) => {
-  const UBU = data.UBU;
-  const { top, bottom } = UBU.BackgroundColor;
-  const { Base, Prime1, Prime2, Prime3, Prime4 } = UBU.Colors;
-
-
-
-function changeBackgroundImg(color, Tcolor, SBtn) {
-  const Btn = document.getElementById(SBtn);
-  if (Btn) {
-    Btn.style.backgroundColor = color;
-    Btn.style.color = Tcolor;
-  } else {
-    console.error("Element not found:", SBtn);
-  }
-}
-function setGradient(color1, color2) {
-  document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2})`;
-}
-function setLikeBackgroundColor(color, SBtn){
-  const Btn = ocument.querySelector(SBtn);
-  if (Btn) {
-    Btn.style.backgroundColor = color;
-    
-  } else {
-    console.error("Element not found:", SBtn);
-  }
-}
-
-
-
-
-
-changeBackgroundImg(Prime1, Base, 'BackBtn'); // Example color change
-
-setGradient(top, bottom); 
- 
-
+// Initialize App
+document.addEventListener("DOMContentLoaded", () => {
+  logoutUserOnce(); // Log out on first load
+  handleAuthState(); // Monitor authentication state
+  attachLoginListener(); // Attach event listener for login button
 });
+// Function to apply branding based on the document (RevolFit, MetaV, SHS)
+async function applyBranding(documentId) {
+  const data = await fetchFirestoreData("RevoBuissnes", documentId);
+  const App = await fetchFirestoreData("RevolApp", "Content");
+  const {LoginImg ,PopUpImg}= App.Images
+
+  if (data) {
+         
+     const {Base, Prime1, Prime2}= data.UBU.Colors
+     const Popup = data.Portal.popup
+ 
+     const { lockIcon, userIcon } = data.AppIcons
+     
 
 
-
-
-
-
-
-
-
-async function getBtnColors() {
-try {
-  const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
-  const docSnap = await getDoc(docRef);
-
-  if (docSnap.exists()) {
-    return docSnap.data();
-  } else {
-    console.error("No such document!");
-    return null;
-  }
-} catch (error) {
-  console.error("Error fetching document:", error);
-  return null;
-}
-}
-
-getBtnColors().then((data) => {
-if (!data) return;
-
-const { Base, Prime1, Prime2 } = data.UBU.Colors;
-const { Gym, Home } = data.App.workoutBtns;
-
-
-function changeTierBackgroundColor(color, Tcolor) {
-  const tierElement = document.getElementById("Tier");
-  if (tierElement) {
-      tierElement.style.backgroundColor = color;
-      tierElement.style.color = Tcolor;
-  } else {
-      console.error("Element with ID 'Tier' not found.");
-  }
-}
-function toggleSubscription(activeId) {
-  const monthlyBtn = document.getElementById("Monthly");
-  const yearlyBtn = document.getElementById("Yearly");
-
-  if (monthlyBtn && yearlyBtn) {
-      if (activeId === "Monthly") {
-          monthlyBtn.style.backgroundColor = Base;
-          yearlyBtn.style.backgroundColor = Prime2;
-          monthlyBtn.style.color = Prime2 ;
-          yearlyBtn.style.color = Base;
-          monthlyBtn.style.boxShadow = `0px 4px 10px ${Prime2}`; // Green shadow  
-          yearlyBtn.style.boxShadow = "none";
-          monthlyBtn.style.borderRadius = "8px 0 0 8px";
-          yearlyBtn.style.borderRadius = "0 8px   8px 0";
-
-      } else if (activeId === "Yearly") {
-          yearlyBtn.style.backgroundColor = Base;
-          monthlyBtn.style.backgroundColor = Prime2;
-          monthlyBtn.style.color = Base;
-          yearlyBtn.style.color = Prime2;
-          yearlyBtn.style.boxShadow = `0px 4px 10px ${Prime2}`; // Green shadow
-          monthlyBtn.style.boxShadow = "none";
+    function GetBuFont(fontFamily) {
+     document.body.style.fontFamily = fontFamily;
+    }
+    GetBuFont(data.UBU.font);
+    // Render Popup Data
+    if (Popup) {
+      const  PopupText = Popup.PopupText;
+      // Dynamic rendering functions
+      function setButtonBorderColor(color) {
+          const button = document.getElementById("pop-upBtn");
+          if (button) {
+            button.style.border = `5px solid ${color}`;
+            button.style.borderRadius = "5px";
+            button.style.color = Prime2;
+          }
       }
-  } else {
-      console.error("Buttons not found.");
-  }
+      function renderImage(imageUrl, containerId) {
+          const container = document.getElementById(containerId);
+          if (container) {
+            const img = document.createElement("img");
+            img.src = imageUrl;
+            img.alt = "Image";
+            img.style.height = "auto";
+            container.innerHTML = "";
+            container.appendChild(img);
+          }
+      }
+      function renderText(title, subtitle, color, color2 ) {
+          document.getElementById("tittle").textContent = title;
+          document.getElementById("Subtittle").textContent = subtitle;
+          document.getElementById("tittle").style.color = color;
+          document.getElementById("Subtittle").style.color = color2;
+      }
+      function setBackgroundColorT(color) {
+          const container = document.getElementById("backgroundImg");
+          if (container) {
+            container.style.backgroundColor = color;
+          }
+      }
+     
+        // Populate UI elements
+      setBackgroundColorT(Base)
+      setButtonBorderColor(Prime1);
+      renderImage(PopUpImg, "pop-upImg");
+      renderImage(data.UBU.BuLogos.LightLogo, "pop-upIcon");
+      renderText(PopupText.tittle, PopupText.Subtittle, Prime2, Prime2);
+    }
+    // Render Login DataLogin
+  
+ 
+      
+      
+      function updateElementStyle(id, styles) {
+          const element = document.getElementById(id);
+          if (element) {
+              Object.assign(element.style, styles);
+          }
+      }
+      
+      function renderImage(imageUrl, containerId) {
+          const container = document.getElementById(containerId);
+          if (container) {
+              container.innerHTML = `<img src="${imageUrl}" alt="Image" style="height:auto;">`;
+          }
+      }
+      
+      function updateImageSrc(imgId, imgSrc) {
+          const imgElement = document.getElementById(imgId);
+          if (imgElement) imgElement.src = imgSrc;
+      }
+      
+      function addInputEventListener(ids, color) {
+          ids.forEach(id => {
+              const input = document.getElementById(id);
+              if (input) {
+                  input.addEventListener('input', () => input.style.color = color);
+              }
+          });
+      }
+      
+      function updateLinkColors(color) {
+          document.querySelectorAll("#form-links a").forEach(link => link.style.color = color);
+      }
+      
+      // Apply styles and updates
+
+      updateImageSrc("passwordImage", lockIcon);
+      updateImageSrc("userImage", userIcon);
+      addInputEventListener(["username", "password"], Prime2);
+      updateElementStyle("login", { color: Prime2 });
+      updateElementStyle("ISbtn", { border: `5px solid ${Prime1}`, borderRadius: "5px", color: Prime2 });
+      updateElementStyle("login", { backgroundColor: Base });
+      renderImage(LoginImg, "loginImg");
+      renderImage(data.UBU.BuLogos.LightLogo, "loginIcon");
+      updateLinkColors(Prime2);
+    }
+  
+  
 }
 
-// Add event listeners to toggle when clicked
-document.getElementById("Monthly").addEventListener("click", () => toggleSubscription("Monthly"));
-document.getElementById("Yearly").addEventListener("click", () => toggleSubscription("Yearly"));
 
-// Set default active button
-toggleSubscription("Monthly"); // Change if you want "Yearly" as default
+
+applyBranding(documentId);  
+
+
+
+
+ 
+  
+function transferInfo() {
+  const info = documentId
+
+    if (info) {
+      localStorage.setItem("transferredInfo", info); // Save data in localStorage
+      
+
+    } else {
+      alert("Please enter some text before proceeding!");
+    }
+}
+transferInfo()
+
+
+// Add Event Listener for pop-up button to toggle background image visibility
+const popupBtn = document.getElementById("pop-upBtn");
+const backgroundImg = document.getElementById("backgroundImg");
+
+if (popupBtn && backgroundImg) {
+  popupBtn.addEventListener("click", () => {
+    backgroundImg.style.display =
+    backgroundImg.style.display === "none" || backgroundImg.style.display === ""
+    ? "block"
+    : "none";
+  });
+}
+
+document.addEventListener('touchstart', function (event) {
+  if (event.touches.length > 1) {
+    event.preventDefault(); // Prevents zooming
+  }
+}, { passive: false });
+
+// Lock scrolling
+function lockScroll() {
+  document.body.style.overflow = 'hidden';
+  document.body.style.position = 'fixed';
+  document.body.style.width = '100%';
+}
+
+// Unlock scrolling
+function unlockScroll() {
+  document.body.style.overflow = '';
+  document.body.style.position = '';
+  document.body.style.width = '';
+}
 
 // Example usage
-changeTierBackgroundColor(Prime1, Base); // Change to your desired color
-
-
-
-
-
-
- 
-
-});
-
-
-
-
-
-
-
-document.getElementById("SBtn").addEventListener("click", function() {
-  const Tittle = document.getElementById("STittle");
-  const price = document.getElementById("Sprice");
-  const Time = document.getElementById("Stime");
-  const Scurrency = document.getElementById("Scurrency");
-  
-console.log(price)
-
-  function extractNumber(text) {
-    return parseFloat(text.replace(/[^0-9.]/g, "")) || 0;
-  }
-  function extractText(text) {
-    return text ? text.textContent.trim() : null;
-  }
-
-
-  function updateBasePrices() {
-    return {
-      Tittle:   extractText(Tittle),
-      Price:    extractNumber(price.textContent),
-      Cuttemcy: extractText(Scurrency),
-      Time:     extractText(Time)
-    };
-  }
-  function GetTierInfo() {
-    const basePrices = updateBasePrices(); // Get latest prices 
-    const storedBasePrices = JSON.parse(localStorage.getItem("basePrices"));
-    console.log(basePrices)
-  }
-  GetTierInfo()
-  console.log("Get Started button clicked!");
-   // window.location.href = "index4.1.html"; // Change to your actual page URL
- 
-});
-
-
-
-.SubSection{
-
-    margin: 3rem 0;
-  }
-  .SubSection h1{
-    display: flex;
-    justify-content: center;
-    font-size: 1.4rem;
-    font-weight: normal;
-  }
-  .Tier{
-    width: 4rem;
-    display: flex;
-    justify-content: center;
-    padding: .2rem .5rem;
-    margin:  auto;
-    border-radius: .5rem;
-    font-size: 1.2rem;
-  }
-  .SelectBlock{
-    display: flex;
-    justify-content: center;
-    margin: 2rem 0;
-  }
-  .SelectBtn{
-    padding: .7rem 4rem;
-    font-size: 1rem;
-  }
-  .DiscountBlock {
-    gap: 1.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 2rem 0 0 ;
-    margin: 0  auto;
-    border-radius: .5rem;
-    font-size: 1rem;
-  }
-  .Pricingblock{
-    gap: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  #Price{
-    font-size: 2.2rem;
-    font-weight: bold;
-  }
-
-
-
-  .Currency{
-    font-size: .8rem;
-  }
-
-
-
-
-
-
-
-
-async function GetFeatures() {
-  try {
-    const docRef = doc(db, "RevolApp", "Tiers"); // Ensure db and transferredInfo are initialized
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const documentData = docSnap.data();
-      return documentData; // Return the document data
-    } else {
-      console.error("No such document!");
-      return null;
-    }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-    return null;
-  }
-}
-async function SetColors() {
-  try {
-    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const documentData = docSnap.data();
-      return documentData; // Return the document data
-    } else {
-      console.error("No such document!");
-      return null;
-    }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-    return null;
-  }
-}
-SetColors().then((data) => {
-  const UBU = data.UBU;
-  const { top, bottom } = UBU.BackgroundColor;
-  const { Base, Prime1, Prime2, Prime3, Prime4 } = UBU.Colors;
- 
-  
-  function setGradient(color1, color2) {
-    document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2})`;
-  }
-  function setBackgroundColor(color,Tcolor, Url) {
-    const Bg = document.getElementById(Url)
-    Bg.style.background = color
-    Bg.style.color = Tcolor
-    Bg.style.border = `1px solid ${Prime2}`
-  }
-  function setBackground(color, Url) {
-    const Bg = document.getElementById(Url)
-    Bg.style.background = color
-    
-    Bg.style.border = `1px solid ${Prime2}`
-  }
-
-
-
-
-
-
-
-  function RenderDiscount(Title, Time, elementId,color, Url){
-    let element = document.getElementById(elementId);
-    const Bg = document.getElementById(Url)
-    if(Title === "Supera"){
-       if(Time === "/Mensual"){
-        const h1 = document.createElement("h1");
-        h1.textContent = "🔥 ¡El Plan Anual = Los Mayores Ahorros!";
-        Bg.style.background = ' '
-        Bg.style.fontSize = '.4rem'
-        Bg.style.margin = '.5rem 0'
-        element.appendChild(h1);
-      
-       }else{
-        const h1 = document.createElement("h1");
-        h1.textContent = "-10%";
-        Bg.style.background = color
-        Bg.style.width = '4rem'
-        Bg.style.height = '1.8rem'
-        Bg.style.fontSize = '.4rem'
-        element.appendChild(h1);
-       }
-    }
-  }
-
-
-  RenderDiscount(tierInfo.Tittle, tierInfo.Time,"Discount","#E01E1E", "Discount")
-
-
-  setGradient(top, bottom); 
-  setBackgroundColor(Base,Prime2, "Tier")
-  setBackground(Prime2, "CBlock")
-
-});
+lockScroll(); // Call to lock
+// unlockScroll(); // Call to unlock

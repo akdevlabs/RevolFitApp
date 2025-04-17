@@ -1,0 +1,251 @@
+
+.EvaluationQuestions{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+/* ----------------- Start Block -------------- */
+
+.startContent{
+  display: flex;
+  text-align:center; 
+  position: absolute;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+
+ /* ----------------- Ruler ------------------------ */
+
+
+
+
+.EqBlock {
+    height: 100%;
+    display: flex;
+    padding: 2rem 0;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+  }
+  /* ----------------- Start ------------------------ */
+  #Start{
+    display: block;
+  }
+  .startContent{
+    gap: 18rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin: 6rem 0 0 0;
+  }
+  .logoBlock{
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+  }
+  #LogoImg{
+    opacity: 0.5;
+  }
+
+  .TextStart{
+    display: flex;
+    padding:70% 1rem;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    margin: -47rem 0 -18rem 0;
+
+  }
+  #instructions{
+    
+    font-weight: bold;
+    font-size: 1.3rem;
+  }
+
+  /* ----------------- Weight ------------------------ */
+  #zero{
+    display: none;
+  }
+ 
+  
+  /* ----------------- Hight ------------------------ */
+  .ruler-container {
+    width: 200px;
+    height: 41.5rem;
+    overflow-y: hidden;
+    padding:  1rem 0 0 0;
+    margin-left: -13.9rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .ruler {
+    position: relative;
+    height: 20rem;
+  }
+  .ToggleBlock{
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .toggle-btn div {
+    flex: 1;
+    text-align: center;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 9999px;
+    transition: background 0.3s;
+  }
+  .toggle-active {
+    font-weight: bold;
+  }
+  .ruler-container-text{
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+  }
+  .Blocktext{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+  .HightResult{
+    font-weight: bold;
+    font-size: 3rem;
+  }
+  /* Basic styling for the range input */
+  #height-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20rem;
+    height: 15px; /* Controls thickness */ 
+    border-radius: 5px;
+    outline: none;
+    transition: 0.3s;
+  }
+  #height-slider::-moz-range-track {
+    height: 10px;
+    border-radius: 5px;
+  }
+  #height-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .NextBtn{
+    width: 90%;
+    margin: -5rem 1.2rem 1rem 1.2rem;
+    padding:.3rem 2rem;
+  }
+  .Result{
+    font-weight: bold;
+    font-size: 3.5rem;
+
+  }
+  .NextBtn{
+    margin-top: -1rem;
+    font-weight: bolder;
+    position: relative;
+    padding: .5rem 0;
+  }
+  #one{
+    display: none;
+  }
+
+  /* ----------------- Arm Block ------------------------ */
+  #two{
+    height: 100vh;
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .BlockCont{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+
+   
+  }
+  .measurementBlock {
+    width: 150px;
+    height: 200px; /* Adjusted for 5 items */
+    margin:5rem 0 -10rem 0 ;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    position: relative;
+    scroll-behavior: smooth; /* Smooth scrolling */
+  }
+  .measurementBlock ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  .measurementBlock li {
+    padding: 15px 10px;
+    text-align: center;
+    font-size: 16px;
+    transition: opacity 0.3s ease-in-out, font-size 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    opacity: 0.2;
+    cursor: pointer; /* Makes the list item clickable */
+    height: 24px; /* Adjust this to match the size of each item */
+  }
+  /* Fully visible selected item */
+  .measurementBlock li.active {
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    opacity: 1;
+  }
+  /* ----------------- cintura Block ------------------------ */
+  .CImgBlock{
+    overflow: hidden;
+    position: relative;
+  }
+  #cinturaImg{
+    object-fit: cover; /* Crops the image to fit the box */
+    object-position: center; /* Adjusts which part is visible */
+  }
+  #three{
+    display: none;
+  }
+  /* ----------------- Cadera Block ---------------------- */
+  #four{
+    display: none;
+  } 
+  /* ----------------- Pierna Block ---------------------- */
+  #five{
+    display: none;
+    
+
+  }
+  .PImgBlock{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  } 
+  #PBtn{
+    margin-top: 3rem ;
+  }
+
+

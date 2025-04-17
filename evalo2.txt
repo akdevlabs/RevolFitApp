@@ -1,0 +1,257 @@
+    <section class="Evaluation" id="Evaluation" >
+
+      <div class="E-left">
+        <div id="mobileImg"></div>
+        <img id="IconLogo">
+        <div class="TextContent" id="TextContent"></div>
+      </div>
+  
+      <div class="E-right" id="RegistroBlock">
+          <div class="Basic-Reg-mobile">
+            <h1>Evaluación Física</h1>
+            <div class="line" id="lines"></div>
+          </div>
+  
+          <form class="EvaluationQuestions" id="EvaluationQuestions">
+           
+
+            <div class="form-grid">
+              <div class="Block" id="three">
+                <a class="bTittle">¿Presenta alguna de estas Enfermedades  No Transmisibles (ENT)?</a>
+    
+                <div class="form-group-check">
+                  <!-- Hipercolesteremia -->
+                  <div class="checkBoxBlock">
+                    <label for="Hipercolesteremia">Hipercolesteremia</label>
+                    <input class="box" type="checkbox" id="Hipercolesteremia" name="Hipercolesteremia" value="true" />
+                  </div>
+
+                  <div class="hiddenQuestion" id="HipercolesteremiaTratadoBlock" style="display: none;">
+                    <a>Marque si está en tratamiento</a>
+                    <select id="HipercolesteremiaTratado-select" name="HipercolesteremiaTratado">
+                      <option value="" selected disabled>Seleccione una opción</option>
+                      <option value="true">Sí</option>
+                      <option value="false">No</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="form-group-checkbox">
+                  <!-- Diabetes -->
+                  <div class="checkBoxBlock">
+                    <label for="Diabetes">Diabetes</label>
+                    <input class="box" type="checkbox" id="Diabetes" name="Diabetes" value="true" />
+                  </div>
+
+
+
+                  <div class="hiddenQuestion" id="DiabeteTratadoBlock" style="display: none;">
+                    <a class="hiddentittle">Marque si está en tratamiento</a>
+
+                    <select id="DiabeteTratado-select" name="DiabeteTratado">
+                      <option value="" selected disabled>Seleccione una opción</option>
+                      <option value="true">Sí</option>
+                      <option value="false">No</option>
+                    </select>
+                  </div>
+
+
+
+                </div>
+                
+
+
+
+
+                <div class="form-group-check">
+                  <!-- Obesidad -->
+                  <div class="checkBoxBlock">
+                    <label for="Obesidad">Obesidad</label>
+                    <input class="box" type="checkbox" id="Obesidad" name="Obesidad" value="true" />
+                  </div>
+                  <div class="hiddenQuestion" id="ObesidadTratadoBlock" style="display: none;">
+                    <a>Marque si está en tratamiento</a>
+                    <select id="ObesidadTratado-select" name="ObesidadTratado">
+                      <option value="" selected disabled>Seleccione una opción</option>
+                      <option value="true">Sí</option>
+                      <option value="false">No</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="form-group-check">
+                  <!-- Hígado Graso -->
+                  <div class="checkBoxBlock">
+                    <label for="HígadoGraso">Hígado Graso</label>
+                    <input class="box" type="checkbox" id="HígadoGraso" name="HígadoGraso" value="true" />
+                  </div>
+                  <div class="hiddenQuestion" id="HígadoGrasoTratadoBlock" style="display: none;">
+                    <a>Marque si está en tratamiento</a>
+                    <select id="HígadoGrasoTratado-select" name="HígadoGrasoTratado">
+                      <option value="" selected disabled>Seleccione una opción</option>
+                      <option value="true">Sí</option>
+                      <option value="false">No</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="form-group-check">
+                  <!-- Otra ENT -->
+                  <div class="checkBoxBlock">
+                    <label for="OtraECNT">Otra ENT</label>
+                    <input class="box" type="checkbox" id="OtraECNT" name="OtraECNT" value="true" />
+                  </div>
+                  <div class="hiddenQuestion" id="OtraECNTTratadoBlock" style="display: none;">
+                    <a>Marque si está en tratamiento</a>
+                    <select id="OtraECNTTratado-select" name="OtraECNTTratado">
+                      <option value="" selected disabled>Seleccione una opción</option>
+                      <option value="true">Sí</option>
+                      <option value="false">No</option>
+                    </select>
+                  </div>
+                </div>
+    
+
+                <button type="button" class="Btn" id="BtnFour">Next</button>
+              </div>
+    
+              <div class="Block" id="four">
+                <a class="bTittle">¿Presenta alguna enfermedad Autoinmune?</a>
+    
+                <div class="form-group-check">
+                  <!-- Lupus -->
+                  <div class="checkBoxBlock">
+                    <label for="Lupus">Lupus</label>
+                    <input class="box" type="checkbox" id="Lupus" name="Lupus" />
+                  </div>
+                  <div class="hiddenQuestion" id="LupusTratadoBlock" style="display: none;">
+                    <a>Marque si está en tratamiento</a>
+                    <select id="LupusTratado-select" name="LupusTratado">
+                      <option value="" selected disabled>Seleccione una opción</option>
+                      <option value="true">Sí</option>
+                      <option value="false">No</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="form-group-check">
+                  <!-- Celíaca -->
+                  <div class="checkBoxBlock">
+                    <label for="Celíaca">Celíaca</label>
+                    <input class="box" type="checkbox" id="Celíaca" name="Celíaca" value="true" />
+                  </div>
+                  <div class="hiddenQuestion" id="CelíacaTratadoBlock" style="display: none;">
+                    <a>Marque si está en tratamiento</a>
+                    <select id="CelíacaTratado-select" name="CelíacaTratado">
+                      <option value="" selected disabled>Seleccione una opción</option>
+                      <option value="true">Sí</option>
+                      <option value="false">No</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="form-group-check">
+                  <!-- Cáncer -->
+                  <div class="checkBoxBlock">
+                    <label for="Cáncer">Cáncer</label>
+                    <input class="box" type="checkbox" id="Cáncer" name="Cáncer" value="true" />
+                  </div>
+                  <div class="hiddenQuestion" id="CáncerTratadoBlock" style="display: none;">
+                    <a>Marque si está en tratamiento</a>
+                    <select id="CáncerTratado-select" name="CáncerTratado">
+                      <option value="" selected disabled>Seleccione una opción</option>
+                      <option value="true">Sí</option>
+                      <option value="false">No</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="form-group-check">
+                  <!-- VIH -->
+                  <div class="checkBoxBlock">
+                    <label for="VIH">VIH</label>
+                    <input class="box" type="checkbox" id="VIH" name="VIH" value="true" />
+                  </div>
+                  <div class="hiddenQuestion" id="VIHTratadoBlock" style="display: none;">
+                    <a>Marque si está en tratamiento</a>
+                    <select id="VIHTratado-select" name="VIHTratado">
+                      <option value="" selected disabled>Seleccione una opción</option>
+                      <option value="true">Sí</option>
+                      <option value="false">No</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="form-group-check">
+                  <!-- Artritis -->
+                  <div class="checkBoxBlock">
+                    <label for="Artritis">Artritis</label>
+                    <input class="box" type="checkbox" id="Artritis" name="Artritis" value="true" />
+                  </div>
+                  <div class="hiddenQuestion" id="ArtritisTratadoBlock" style="display: none;">
+                    <a>Marque si está en tratamiento</a>
+                    <select id="ArtritisTratado-select" name="ArtritisTratado">
+                      <option value="" selected disabled>Seleccione una opción</option>
+                      <option value="true">Sí</option>
+                      <option value="false">No</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="form-group-check">
+                  <!-- Otra enfermedad autoinmune -->
+                  <div class="checkBoxBlock">
+                    <label for="OEA">Otra enfermedad </label>
+                    <input class="box" type="checkbox" id="OEA" name="OEA" value="true" />
+                  </div>
+                  <div class="hiddenQuestion" id="OEATratadoBlock" style="display: none;">
+                  
+                    
+
+                    <a>Marque si está en tratamiento</a>
+                    <select id="OEATratado-select" name="OEATratado">
+                      <option value="" selected disabled>Seleccione una opción</option>
+                      <option value="true">Sí</option>
+                      <option value="false">No</option>
+                    </select>
+                  </div>
+                </div>
+    
+    
+                <button type="submit" class="Btn" id="rSendBtn">Submit</button>
+    
+              </div>
+            </div>
+          
+          </form>
+  
+      </div>
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

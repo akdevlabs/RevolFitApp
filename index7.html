@@ -17,519 +17,1488 @@
   <title>SHS/RevoFit/Evaluation</title>
   <link rel="stylesheet" href="RevolFitActiveQuestions.css">
 
-  <link rel="shortcut icon" href="images/Logos/flower_DB.webp">
+
 </head>
-<body>
-  <main>
-  
-    <section class="Evaluation" id="Evaluation" >
+  <body>
+    <main>
+      <section class="EvaluationQuestions">
 
-      <div class="E-left">
-        <div id="mobileImg"></div>
-        <img id="IconLogo">
-        <div class="TextContent" id="TextContent"></div>
-      </div>
-  
-      <div class="E-right" id="RegistroBlock">
-          <div class="Basic-Reg-mobile">
-            <h1>Evaluación Física</h1>
-            <div class="line" id="lines"></div>
-          </div>
-  
-          <form class="EvaluationQuestions" id="EvaluationQuestions">
-            <div class="form-grid">
-    
-              <div class="Block" id="one">
-    
-                <div class="form-group">
-                  <div class="qIcon" id="pIcon"></div>
-                  <div class="inputs">
-                    <label for="peso">Peso kg.</label>
-                    <input type="text" id="peso" placeholder="En kilogramos" required>
-                    <span id="error-msg" style="color: red; display: none;">Peso esta fuera del rango permitido</span>
-                  </div>
-                </div>
-    
-                <div class="form-group">
-                  <div class="qIcon" id="aIcon"></div>
-                  <div class="inputs">
-                    <label for="altura">Altura</label>
-                    <input type="text" id="altura" placeholder="En centímetros" required>
-                    <span id="error-msg-height" style="color: red; display: none;">Altura esta fuera del rango permitido</span>
-                  </div>
-                  
-                </div>
-    
-                <div class="form-group">
-                  <div class="qIcon" id="rIcon"></div>
-                  <div class="inputs">
-                    <label for="muneca">Perímetro de muñeca</label>
-                    <input type="text" id="muneca" placeholder="En centímetros" required>
-                    <span id="error-msg-wrist" style="color: red; display: none;">Perímetro de muñeca esta fuera del rango permitido</span>
-                  </div>
-                  
-                </div>
-    
-                <div class="form-group">
-                  <div class="qIcon" id="kIcon"></div>
-                  <div class="inputs">
-                    <label for="rodilla">Perímetro de rodilla</label>
-                    <input type="text" id="rodilla" placeholder="En centímetros" required>
-                  </div>
-                  <span id="error-msg-Knee" style="color: red; display: none;">Perímetro de rodilla esta fuera del rango permitido</span>
-                </div>
-    
-                <div class="form-group">
-                  <div class="qIcon" id="wIcon"></div>
-                  <div class="inputs">
-                    <label for="cintura">Perímetro cintura</label>
-                    <input type="text" id="cintura" placeholder="En centímetros" required>
-                    <span id="error-msg-waist" style="color: red; display: none;">Perímetro de rodilla esta fuera del rango permitido</span>
-                  </div>
+        <div class="Block" id="Start">
+          
+          <img class="image-layer" src="" id="LogoImg">
 
-                </div>
-    
-                <div class="form-group">
-                  <div class="qIcon" id="hIcon"></div>
-                  <div class="inputs">
-                    <label for="cadera">Perímetro cadera</label>
-                    <input type="text" id="cadera" placeholder="En centímetros" required>
-                    <span id="error-msg-hips" style="color: red; display: none;">Perímetro de rodilla esta fuera del rango permitido</span>
-                  </div>
-                  
-                </div>
-    
-                <button type="button" class="Btn" id="BtnTwo">Next</button>
-    
-              </div>
+          <div class="container" id="Startblock">
+          
+              <h1 class="Qtittle" id="EvaluaciónHeader"></h1>
+              <p id="instructions"></p>
               
-              <div class="Block" id="two">
-    
-                <div class="form-group">
-                  <div class="qIcon" id="tIcon"></div>
-                  <div class="inputs">
-                    <label for="brazo-derecho">Perímetro brazo derecho</label>
-                    <input type="text" id="brazo-derecho" placeholder="En centímetros" required>
-                    <span id="error-msg-arm" style="color: red; display: none;">Perímetro de rodilla esta fuera del rango permitido</span>
-                  </div>
+        
+            <button class="NextBtn" id="Btn">SIGUIENTE</button>
+          </div>
+        
+        </div>
+
+        <div class="Block" id="zero">
+          
+          <div class="ruler-container" id="Wruler-container">
+            <div class="ruler" id="Wruler"></div>
+          </div>
+
+          <div class="container" id="WeightBlock">
+          
+        
+            <div class="Blocktext"  id="WBlocktext">
+                <div class="Tittle">
+                    <h1 class="Qtittle" id="Wtittle">¿Cuál es tu peso?</h1>
                 </div>
-    
-                <div class="form-group">
-                  <div class="qIcon"  id="lIcon"></div>
-                  <div class="inputs">
-                    <label for="pierna-derecha">Perímetro de la pierna derecha</label>
-                    <input type="text" id="pierna-derecha" placeholder="En centímetros" required>
-                    <span id="error-msg-leg" style="color: red; display: none;">Perímetro de la pierna derecha esta fuera del rango permitido</span>
-                  </div>
-                  
+                <div class="ToggleBlock">
+                    <div class="toggle-btn">
+                        <div id="kg-btn" class="toggle-active">Kg</div>
+                        <div id="lb-btn">Lb</div>
+                    </div>
+                    <input type="range" id="weight-slider" min="40" max="200" value="70"> 
+                    <div class="Result" id="weight-display">70 Kg</div>
                 </div>
-    
-                <div class="form-group">
-                  <div class="qIcon" id="nIcon"></div>
-                  <div class="inputs">
-                    <label for="cuello">Perímetro de cuello</label>
-                    <input type="text" id="cuello" placeholder="En centímetros" required>
-                    <span id="error-msg-neck" style="color: red; display: none;">Perímetro de cuello esta fuera del rango permitido</span>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <div class="qIcon" id="hrIcon"></div>
-                  <div class="inputs">
-                    <label for="heartRate">Frecuencia Cardíaca en Reposo</label>
-                    <input type="text" id="heartRate" placeholder="Latidos por minuto OPCIONAL">
-                    <span id="error-msg-heartRate" style="color: red; display: none;">
-                      Frecuencia cardíaca fuera del rango permitido
-                    </span>
-                  </div>
-                </div>
-    
-
-                <div class="form-group-dropdown">
-                  <div class="main-question" id="main-question-ejercicio">
-                    <a>¿Haces ejercicio?</a>
-                    <select id="ejercicio-select" name="ejercicio" required>
-                      <option value=""selected disabled>Seleccione una opción</option>
-                      <option value="true">Sí</option>
-                      <option value="false">No</option>
-                    </select>
-                  </div>
-                  
-    
-                  <div id="yes-extra-question" class="extra-question">
-                    <label for="Exersise-frequency">¿Con qué frecuencia haces ejercicio en una semana?</label>
-                    <select id="frequency" name="Exersise-frequency">
-                      <option value=""selected disabled>Seleccione una opción</option>
-                      <option value="1">1 vez a la semana</option>
-                      <option value="2">2 veces a la semana</option>
-                      <option value="3">3 veces a la semana</option>
-                      <option value="4">4 veces a la semana</option>
-                      <option value="5">5 veces a la semana</option>
-                      <option value="6">6 veces a la semana</option>
-                      <option value="7">Todos los días</option>
-                    </select>
-                  </div>
-    
-                  <div id="no-extra-question" class="extra-question">
-                    <label for="exercise-time">¿Hace cuánto tiempo has hecho ejercicio?</label>
-                    <select id="exercise-time" name="exercise-time">
-                      <option value=""selected disabled>Seleccione una opción</option>
-                      <option value="1-3-weeks">1 a 3 semanas</option>
-                      <option value="1-3-months">1 a 3 meses</option>
-                      <option value="4-6-months">4 a 6 meses</option>
-                      <option value="7-11-months">7 a 11 meses</option>
-                      <option value="1-year">1 año</option>
-                      <option value="more-than-1-year">Más de 1 año</option>
-                    </select>
-                  </div>
-    
-                </div>
-
-
-
-
-
-                <div class="form-group-dropdown">
-
-                  <div class="main-question" id="main-question-drink">
-                    <a>¿Bebes alcohol?</a>
-                    <select id="drink-select" name="drink" required>
-                      <option value="" selected disabled>Seleccione una opción</option>
-                      <option value="true">Sí</option>
-                      <option value="false">No</option>
-                    </select>
-                  </div>
-
-                  <div id="drink-consumption" class="drink-category">
-                    <h3 class="drink-tittle">Cantidad de vasos (100 cc) consumidos</h3>
-                  </div>
-
-                  <div class="extra-question" id="ChooseDrink">
-                      <label for="Drink">Bebidad</label>
-                      <select id="Drink" name="Drink">
-                        <option value="" selected disabled>Seleccione una opción</option>
-                        <option value="Cerveza">Cerveza</option>
-                        <option value="Vino">Vino y Espumante</option>
-                        <option value="Destilados">Destilados</option>
-                      </select>
-                  </div>
-                  
-                  <div class="extra-question" id="drink-category-amount">
-                      <label for="amount">Cantidad</label>
-                      <select id="amount" name="amount">
-                        <option value="" selected disabled>Seleccione una opción</option>
-                        <option value="1-3">1 a 3</option>
-                        <option value="4-6">4 a 6</option>
-                        <option value="7-10">7 a 10</option>
-                        <option value="10-14">10 a 14</option>
-                        <option value="more-than-14">Más de 14</option>
-                        <option value="never">Nunca</option>
-                      </select>
-                  </div>
-                  
-
-                  <div id="yes-extra-question-drink" class="extra-question">
-                    <label for="drink-frequency">¿Con qué frecuencia consumes alcohol en una semana?</label>
-                    <select id="drink-frequency" name="drink-frequency">
-                      <option value="" selected disabled>Seleccione una opción</option>
-                      <option value="1">1 vez a la semana</option>
-                      <option value="2">2 veces a la semana</option>
-                      <option value="3">3 veces a la semana</option>
-                      <option value="4">4 veces a la semana</option>
-                      <option value="5">5 veces a la semana</option>
-                      <option value="6">6 veces a la semana</option>
-                      <option value="7">Todos los días</option>
-                    </select>
-                  </div>
-                
-                  <div id="no-extra-question-drink" class="extra-question">
-                    <label for="quit-drinking-time">¿Hace cuánto tiempo dejaste de consumir alcohol o nunca?</label>
-                    <select id="quit-drinking-time" name="quit-drinking-time">
-                      <option value="" selected disabled>Seleccione una opción</option>
-                      <option value="never">Nunca</option>
-                      <option value="1-3-weeks">1 a 3 semanas</option>
-                      <option value="1-3-months">1 a 3 meses</option>
-                      <option value="4-6-months">4 a 6 meses</option>
-                      <option value="7-11-months">7 a 11 meses</option>
-                      <option value="1-year">1 año</option>
-                      <option value="more-than-1-year">Más de 1 año</option>
-                    </select>
-                  </div>
-
-                </div>
-
-                
-                
-                
-                
-                
-    
-                <div class="form-group-dropdown">
-                  <div class="main-question" id="main-question-smoking">
-                    <a>¿Fumas?</a>
-                    <select id="smoking-select" name="smoking" required>
-                      <option value="" selected disabled>Seleccione una opción</option>
-                      <option value="true">Sí</option>
-                      <option value="false">No</option>
-                    </select>
-                  </div>
-                
-                  <div id="yes-smoking-extra" class="extra-question">
-                    <label for="smoking-years-select">¿Cuántos años has fumado?</label>
-                    <select id="smoking-years-select" name="smoking-years">
-                      <option value="" selected disabled>Seleccione una opción</option>
-                      <option value="0-1">Menos de 1 año</option>
-                      <option value="1-5">1 a 5 años</option>
-                      <option value="6-10">6 a 10 años</option>
-                      <option value="11-20">11 a 20 años</option>
-                      <option value="21-plus">Más de 20 años</option>
-                    </select>
-                  </div>
-                
-                  <div id="no-smoking-extra" class="extra-question">
-                    <label for="quit-smoking-time">¿Hace cuánto tiempo dejaste de fumar?</label>
-                    <select id="quit-smoking-time" name="quit-smoking-time">
-                      <option value="" selected disabled>Seleccione una opción</option>
-                      <option value="1-3-weeks">1 a 3 semanas</option>
-                      <option value="1-3-months">1 a 3 meses</option>
-                      <option value="4-6-months">4 a 6 meses</option>
-                      <option value="7-11-months">7 a 11 meses</option>
-                      <option value="1-year">1 año</option>
-                      <option value="more-than-1-year">Más de 1 año</option>
-                    </select>
-                  </div>
-                </div>
-                <button type="button" class="Btn" id="BtnThree">Next</button>
-                
-                
-              </div>
-    
-                
             </div>
 
-            <div class="form-grid">
-              <div class="Block" id="three">
-                <a class="bTittle">¿Presenta alguna de estas Enfermedades  No Transmisibles (ENT)?</a>
-    
-                <div class="form-group-check">
-                  <!-- Hipercolesteremia -->
-                  <div class="checkBoxBlock">
-                    <label for="Hipercolesteremia">Hipercolesteremia</label>
-                    <input class="box" type="checkbox" id="Hipercolesteremia" name="Hipercolesteremia" value="true" />
-                  </div>
+            <button class="NextBtn" id="WBtn">SIGUIENTE</button>
+          </div>
+      
+        </div>
 
-                  <div class="hiddenQuestion" id="HipercolesteremiaTratadoBlock" style="display: none;">
-                    <a>Marque si está en tratamiento</a>
-                    <select id="HipercolesteremiaTratado-select" name="HipercolesteremiaTratado">
-                      <option value="" selected disabled>Seleccione una opción</option>
-                      <option value="true">Sí</option>
-                      <option value="false">No</option>
-                    </select>
-                  </div>
-                </div>
-                
-                <div class="form-group-checkbox">
-                  <!-- Diabetes -->
-                  <div class="checkBoxBlock">
-                    <label for="Diabetes">Diabetes</label>
-                    <input class="box" type="checkbox" id="Diabetes" name="Diabetes" value="true" />
-                  </div>
+        <div class="Block" id="one">
 
+          <div class="ruler-container" id="ruler-container">
+            <div class="ruler" id="ruler"></div>
+          </div>
 
+          <div class="container" id="hightBlock">
 
-                  <div class="hiddenQuestion" id="DiabeteTratadoBlock" style="display: none;">
-                    <a class="hiddentittle">Marque si está en tratamiento</a>
-
-                    <select id="DiabeteTratado-select" name="DiabeteTratado">
-                      <option value="" selected disabled>Seleccione una opción</option>
-                      <option value="true">Sí</option>
-                      <option value="false">No</option>
-                    </select>
-                  </div>
-
-
-
-                </div>
-                
-
-
-
-
-                <div class="form-group-check">
-                  <!-- Obesidad -->
-                  <div class="checkBoxBlock">
-                    <label for="Obesidad">Obesidad</label>
-                    <input class="box" type="checkbox" id="Obesidad" name="Obesidad" value="true" />
-                  </div>
-                  <div class="hiddenQuestion" id="ObesidadTratadoBlock" style="display: none;">
-                    <a>Marque si está en tratamiento</a>
-                    <select id="ObesidadTratado-select" name="ObesidadTratado">
-                      <option value="" selected disabled>Seleccione una opción</option>
-                      <option value="true">Sí</option>
-                      <option value="false">No</option>
-                    </select>
-                  </div>
-                </div>
-                
-                <div class="form-group-check">
-                  <!-- Hígado Graso -->
-                  <div class="checkBoxBlock">
-                    <label for="HígadoGraso">Hígado Graso</label>
-                    <input class="box" type="checkbox" id="HígadoGraso" name="HígadoGraso" value="true" />
-                  </div>
-                  <div class="hiddenQuestion" id="HígadoGrasoTratadoBlock" style="display: none;">
-                    <a>Marque si está en tratamiento</a>
-                    <select id="HígadoGrasoTratado-select" name="HígadoGrasoTratado">
-                      <option value="" selected disabled>Seleccione una opción</option>
-                      <option value="true">Sí</option>
-                      <option value="false">No</option>
-                    </select>
-                  </div>
-                </div>
-                
-                <div class="form-group-check">
-                  <!-- Otra ENT -->
-                  <div class="checkBoxBlock">
-                    <label for="OtraECNT">Otra ENT</label>
-                    <input class="box" type="checkbox" id="OtraECNT" name="OtraECNT" value="true" />
-                  </div>
-                  <div class="hiddenQuestion" id="OtraECNTTratadoBlock" style="display: none;">
-                    <a>Marque si está en tratamiento</a>
-                    <select id="OtraECNTTratado-select" name="OtraECNTTratado">
-                      <option value="" selected disabled>Seleccione una opción</option>
-                      <option value="true">Sí</option>
-                      <option value="false">No</option>
-                    </select>
-                  </div>
-                </div>
-    
-
-                <button type="button" class="Btn" id="BtnFour">Next</button>
+            <div class="Blocktext" id="Blocktext">
+              <div class="Tittle">
+              <h1 id="tittle">¿Cual es tu altura?</h1>
               </div>
     
-              <div class="Block" id="four">
-                <a class="bTittle">¿Presenta alguna enfermedad Autoinmune?</a>
-    
-                <div class="form-group-check">
-                  <!-- Lupus -->
-                  <div class="checkBoxBlock">
-                    <label for="Lupus">Lupus</label>
-                    <input class="box" type="checkbox" id="Lupus" name="Lupus" />
-                  </div>
-                  <div class="hiddenQuestion" id="LupusTratadoBlock" style="display: none;">
-                    <a>Marque si está en tratamiento</a>
-                    <select id="LupusTratado-select" name="LupusTratado">
-                      <option value="" selected disabled>Seleccione una opción</option>
-                      <option value="true">Sí</option>
-                      <option value="false">No</option>
-                    </select>
-                  </div>
+              <div class="ToggleBlock">
+                <div class="toggle-btn">
+                  <div id="ft-btn" class="toggle-active">ft</div>
+                  <div id="cm-btn" class="toggle-active">cm</div>
                 </div>
-                
-                <div class="form-group-check">
-                  <!-- Celíaca -->
-                  <div class="checkBoxBlock">
-                    <label for="Celíaca">Celíaca</label>
-                    <input class="box" type="checkbox" id="Celíaca" name="Celíaca" value="true" />
-                  </div>
-                  <div class="hiddenQuestion" id="CelíacaTratadoBlock" style="display: none;">
-                    <a>Marque si está en tratamiento</a>
-                    <select id="CelíacaTratado-select" name="CelíacaTratado">
-                      <option value="" selected disabled>Seleccione una opción</option>
-                      <option value="true">Sí</option>
-                      <option value="false">No</option>
-                    </select>
-                  </div>
-                </div>
-                
-                <div class="form-group-check">
-                  <!-- Cáncer -->
-                  <div class="checkBoxBlock">
-                    <label for="Cáncer">Cáncer</label>
-                    <input class="box" type="checkbox" id="Cáncer" name="Cáncer" value="true" />
-                  </div>
-                  <div class="hiddenQuestion" id="CáncerTratadoBlock" style="display: none;">
-                    <a>Marque si está en tratamiento</a>
-                    <select id="CáncerTratado-select" name="CáncerTratado">
-                      <option value="" selected disabled>Seleccione una opción</option>
-                      <option value="true">Sí</option>
-                      <option value="false">No</option>
-                    </select>
-                  </div>
-                </div>
-                
-                <div class="form-group-check">
-                  <!-- VIH -->
-                  <div class="checkBoxBlock">
-                    <label for="VIH">VIH</label>
-                    <input class="box" type="checkbox" id="VIH" name="VIH" value="true" />
-                  </div>
-                  <div class="hiddenQuestion" id="VIHTratadoBlock" style="display: none;">
-                    <a>Marque si está en tratamiento</a>
-                    <select id="VIHTratado-select" name="VIHTratado">
-                      <option value="" selected disabled>Seleccione una opción</option>
-                      <option value="true">Sí</option>
-                      <option value="false">No</option>
-                    </select>
-                  </div>
-                </div>
-                
-                <div class="form-group-check">
-                  <!-- Artritis -->
-                  <div class="checkBoxBlock">
-                    <label for="Artritis">Artritis</label>
-                    <input class="box" type="checkbox" id="Artritis" name="Artritis" value="true" />
-                  </div>
-                  <div class="hiddenQuestion" id="ArtritisTratadoBlock" style="display: none;">
-                    <a>Marque si está en tratamiento</a>
-                    <select id="ArtritisTratado-select" name="ArtritisTratado">
-                      <option value="" selected disabled>Seleccione una opción</option>
-                      <option value="true">Sí</option>
-                      <option value="false">No</option>
-                    </select>
-                  </div>
-                </div>
-                
-                <div class="form-group-check">
-                  <!-- Otra enfermedad autoinmune -->
-                  <div class="checkBoxBlock">
-                    <label for="OEA">Otra enfermedad </label>
-                    <input class="box" type="checkbox" id="OEA" name="OEA" value="true" />
-                  </div>
-                  <div class="hiddenQuestion" id="OEATratadoBlock" style="display: none;">
-                  
-                    
+                <input type="range" id="height-slider" min="140" max="230" value="165" class="w-full mt-4 appearance-none bg-transparent h-1 rounded-lg cursor-pointer"> 
 
-                    <a>Marque si está en tratamiento</a>
-                    <select id="OEATratado-select" name="OEATratado">
-                      <option value="" selected disabled>Seleccione una opción</option>
-                      <option value="true">Sí</option>
-                      <option value="false">No</option>
-                    </select>
-                  </div>
-                </div>
-    
-    
-                <button type="submit" class="Btn" id="rSendBtn">Submit</button>
-    
+                <div class="Result" id="height-display">165.0 cm</div>
               </div>
+            </div>
+
+            <button class="NextBtn" id="HBtn">SIGUIENTE</button>
+          </div>
+
+
+          
+      
+          
+        </div>
+
+        <div class="Block" id="two">
+
+          <div class="ImgBlock">
+            <img src="" id="ArmImg">
+          </div>
+
+          <div class="container" id="ArmBlock">
+            <div class="Tittle">
+              <h1 class="Qtittle" id="Atittle">¿Perímetro brazo derecho?</h1>
+            </div>
+  
+            <div id="picker" class="picker-container"></div>
+
+            <div class="measurementBlock" id="scrollBox">
+              <ul>
+                <li>30 cm</li>
+                <li>31 cm</li>
+                <li>32 cm</li>
+                <li>33 cm</li>
+                <li>34 cm</li>
+                <li>35 cm</li>
+                <li>36 cm</li>
+                <li>37 cm</li>
+                <li>38 cm</li>
+                <li>39 cm</li>
+                <li>40 cm</li>
+                <li>41 cm</li>
+                <li>42 cm</li>
+                <li>43 cm</li>
+                <li>44 cm</li>
+                <li>45 cm</li>
+                <li>46 cm</li>
+                <li>47 cm</li>
+                <li>48 cm</li>
+                <li>49 cm</li>
+                <li>50 cm</li>
+                <li>51 cm</li>
+                <li>52 cm</li>
+                <li>53 cm</li>
+                <li>54 cm</li>
+                <li>55 cm</li>
+                <li>56 cm</li>
+                <li>57 cm</li>
+                <li>58 cm</li>
+                <li>59 cm</li>
+                <li>60 cm</li>
+                <li>61 cm</li>
+                <li>62 cm</li>
+                <li>63 cm</li>
+                <li>64 cm</li>
+                <li>65 cm</li>
+                <li>66 cm</li>
+                <li>67 cm</li>
+                <li>68 cm</li>
+                <li>69 cm</li>
+                <li>70 cm</li>
+
+
+              </ul>
+            </div>
+
+            <button class="NextBtn" id="ABtn">SIGUIENTE</button>
+          </div>
+
+        </div>
+
+        <div class="Block" id="three">
+
+          <div class="ImgBlock">
+            <img src="" id="cinturaImg">
+          </div>
+
+          <div class="container" id="WaistBlock">
+            <div class="Tittle">
+              <h1 class="Qtittle" id="Ctittle">¿Perímetro de cintura?</h1>
+            </div>
+
+            <div class="measurementBlock" id="CscrollBox">
+              <ul>
+                <li>50 cm</li>
+                <li>51 cm</li>
+                <li>52 cm</li>
+                <li>53 cm</li>
+                <li>54 cm</li>
+                <li>55 cm</li>
+                <li>56 cm</li>
+                <li>57 cm</li>
+                <li>58 cm</li>
+                <li>59 cm</li>
+                <li>60 cm</li>
+                <li>61 cm</li>
+                <li>62 cm</li>
+                <li>63 cm</li>
+                <li>64 cm</li>
+                <li>65 cm</li>
+                <li>66 cm</li>
+                <li>67 cm</li>
+                <li>68 cm</li>
+                <li>69 cm</li>
+                <li>70 cm</li>
+                <li>71 cm</li>
+                <li>72 cm</li>
+                <li>73 cm</li>
+                <li>74 cm</li>
+                <li>75 cm</li>
+                <li>76 cm</li>
+                <li>77 cm</li>
+                <li>78 cm</li>
+                <li>79 cm</li>
+                <li>80 cm</li>
+                <li>81 cm</li>
+                <li>82 cm</li>
+                <li>83 cm</li>
+                <li>84 cm</li>
+                <li>85 cm</li>
+                <li>86 cm</li>
+                <li>87 cm</li>
+                <li>88 cm</li>
+                <li>89 cm</li>
+                <li>90 cm</li>
+                <li>91 cm</li>
+                <li>92 cm</li>
+                <li>93 cm</li>
+                <li>94 cm</li>
+                <li>95 cm</li>
+                <li>96 cm</li>
+                <li>97 cm</li>
+                <li>98 cm</li>
+                <li>99 cm</li>
+                <li>100 cm</li>
+                <li>101 cm</li>
+                <li>102 cm</li>
+                <li>103 cm</li>
+                <li>104 cm</li>
+                <li>105 cm</li>
+                <li>106 cm</li>
+                <li>107 cm</li>
+                <li>108 cm</li>
+                <li>109 cm</li>
+                <li>110 cm</li>
+                <li>111 cm</li>
+                <li>112 cm</li>
+                <li>113 cm</li>
+                <li>114 cm</li>
+                <li>115 cm</li>
+                <li>116 cm</li>
+                <li>117 cm</li>
+                <li>118 cm</li>
+                <li>119 cm</li>
+                <li>120 cm</li>
+                <li>121 cm</li>
+                <li>122 cm</li>
+                <li>123 cm</li>
+                <li>124 cm</li>
+                <li>125 cm</li>
+                <li>126 cm</li>
+                <li>127 cm</li>
+                <li>128 cm</li>
+                <li>129 cm</li>
+                <li>130 cm</li>
+                <li>131 cm</li>
+                <li>132 cm</li>
+                <li>133 cm</li>
+                <li>134 cm</li>
+                <li>135 cm</li>
+                <li>136 cm</li>
+                <li>137 cm</li>
+                <li>138 cm</li>
+                <li>139 cm</li>
+                <li>140 cm</li>
+                <li>141 cm</li>
+                <li>142 cm</li>
+                <li>143 cm</li>
+                <li>144 cm</li>
+                <li>145 cm</li>
+                <li>146 cm</li>
+                <li>147 cm</li>
+                <li>148 cm</li>
+                <li>149 cm</li>
+                <li>150 cm</li>
+
+
+              </ul>
+            </div>
+
+            <button class="NextBtn" id="CBtn">SIGUIENTE</button>
+          </div>
+
+        </div>
+
+        <div class="Block" id="four">
+          <div class="ImgBlock">
+            <img src="" id="hipsImg">
+          </div>
+
+          <div class="container" id="HipsBlock">
+
+            <div class="Tittle">
+              <h1 class="Qtittle" id="Htittle">¿Perímetro de cadera?</h1>
+            </div>
+
+            <div class="measurementBlock" id="HscrollBox">
+              <ul>
+                  <li>75 cm</li>
+                  <li>76 cm</li>
+                  <li>77 cm</li>
+                  <li>78 cm</li>
+                  <li>79 cm</li>
+                  <li>80 cm</li>
+                  <li>81 cm</li>
+                  <li>82 cm</li>
+                  <li>83 cm</li>
+                  <li>84 cm</li>
+                  <li>85 cm</li>
+                  <li>86 cm</li>
+                  <li>87 cm</li>
+                  <li>88 cm</li>
+                  <li>89 cm</li>
+                  <li>90 cm</li>
+                  <li>91 cm</li>
+                  <li>92 cm</li>
+                  <li>93 cm</li>
+                  <li>94 cm</li>
+                  <li>95 cm</li>
+                  <li>96 cm</li>
+                  <li>97 cm</li>
+                  <li>98 cm</li>
+                  <li>99 cm</li>
+                  <li>100 cm</li>
+                  <li>101 cm</li>
+                  <li>102 cm</li>
+                  <li>103 cm</li>
+                  <li>104 cm</li>
+                  <li>105 cm</li>
+                  <li>106 cm</li>
+                  <li>107 cm</li>
+                  <li>108 cm</li>
+                  <li>109 cm</li>
+                  <li>110 cm</li>
+                  <li>111 cm</li>
+                  <li>112 cm</li>
+                  <li>113 cm</li>
+                  <li>114 cm</li>
+                  <li>115 cm</li>
+                  <li>116 cm</li>
+                  <li>117 cm</li>
+                  <li>118 cm</li>
+                  <li>119 cm</li>
+                  <li>120 cm</li>
+                  <li>121 cm</li>
+                  <li>122 cm</li>
+                  <li>123 cm</li>
+                  <li>124 cm</li>
+                  <li>125 cm</li>
+                  <li>126 cm</li>
+                  <li>127 cm</li>
+                  <li>128 cm</li>
+                  <li>129 cm</li>
+                  <li>130 cm</li>
+                  <li>131 cm</li>
+                  <li>132 cm</li>
+                  <li>133 cm</li>
+                  <li>134 cm</li>
+                  <li>135 cm</li>
+                  <li>136 cm</li>
+                  <li>137 cm</li>
+                  <li>138 cm</li>
+                  <li>139 cm</li>
+                  <li>140 cm</li>
+                  <li>141 cm</li>
+                  <li>142 cm</li>
+                  <li>143 cm</li>
+                  <li>144 cm</li>
+                  <li>145 cm</li>
+                  <li>146 cm</li>
+                  <li>147 cm</li>
+                  <li>148 cm</li>
+                  <li>149 cm</li>
+                  <li>150 cm</li>
+                  <li>151 cm</li>
+                  <li>152 cm</li>
+                  <li>153 cm</li>
+                  <li>154 cm</li>
+                  <li>155 cm</li>
+                  <li>156 cm</li>
+                  <li>157 cm</li>
+                  <li>158 cm</li>
+                  <li>159 cm</li>
+                  <li>160 cm</li>
+                  <li>161 cm</li>
+                  <li>162 cm</li>
+                  <li>163 cm</li>
+                  <li>164 cm</li>
+                  <li>165 cm</li>
+                  <li>166 cm</li>
+                  <li>167 cm</li>
+                  <li>168 cm</li>
+                  <li>169 cm</li>
+                  <li>170 cm</li>
+                  <li>171 cm</li>
+                  <li>172 cm</li>
+                  <li>173 cm</li>
+                  <li>174 cm</li>
+                  <li>175 cm</li>
+                  <li>176 cm</li>
+                  <li>177 cm</li>
+
+              </ul>
+            </div>
+
+            <button class="NextBtn" id="HBtn">SIGUIENTE</button>
+
+          </div>
+
+        </div>
+
+        <div class="Block" id="five">
+
+          <div class="ImgBlock">
+            <img src="" id="piernaImg">
+          </div>
+
+          <div class="container" id="LegBlock">
+            <div class="Tittle">
+              <h1 class="Qtittle" id="Ptittle">¿Perímetro de pierna?</h1>
+            </div>
+            
+            <div class="measurementBlock" id="LscrollBox">
+              <ul>
+                <li>15 cm</li>
+                <li>16 cm</li>
+                <li>17 cm</li>
+                <li>18 cm</li>
+                <li>19 cm</li>
+                <li>20 cm</li>
+                <li>21 cm</li>
+                <li>22 cm</li>
+                <li>23 cm</li>
+                <li>24 cm</li>
+                <li>25 cm</li>
+                <li>26 cm</li>
+                <li>27 cm</li>
+                <li>28 cm</li>
+                <li>29 cm</li>
+                <li>30 cm</li>
+                <li>31 cm</li>
+                <li>32 cm</li>
+                <li>33 cm</li>
+                <li>34 cm</li>
+                <li>35 cm</li>
+                <li>36 cm</li>
+                <li>37 cm</li>
+                <li>38 cm</li>
+                <li>39 cm</li>
+                <li>40 cm</li>
+                <li>41 cm</li>
+                <li>42 cm</li>
+                <li>43 cm</li>
+                <li>44 cm</li>
+                <li>45 cm</li>
+                <li>46 cm</li>
+                <li>47 cm</li>
+                <li>48 cm</li>
+                <li>49 cm</li>
+                <li>50 cm</li>
+                <li>51 cm</li>
+                <li>52 cm</li>
+                <li>53 cm</li>
+                <li>54 cm</li>
+                <li>55 cm</li>
+                <li>56 cm</li>
+                <li>57 cm</li>
+                <li>58 cm</li>
+                <li>59 cm</li>
+                <li>60 cm</li>
+                <li>61 cm</li>
+                <li>62 cm</li>
+                <li>63 cm</li>
+                <li>64 cm</li>
+                <li>65 cm</li>
+                <li>66 cm</li>
+                
+              </ul>
             </div>
           
-          </form>
-  
-      </div>
 
-    </section>
+            <button class="NextBtn" id="PBtn">SIGUIENTE</button>
 
-  </main>
+          </div>
 
-  <script type="module" src="RevolFitActiveQuestions.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js')
-        .then(() => console.log('Service Worker Registered'))
-        .catch(err => console.error('Service Worker Registration Failed:', err));
-    }
-  </script>
-</body>
+        </div>
+
+        <div class="Block" id="six">
+
+          <div class="ImgBlock">
+            <img src="" id="RistImg">
+          </div>
+
+          <div class="container" id="RistBlock">
+            <div class="Tittle">
+              <h1 class="Qtittle" id="Rtittle">¿Perímetro de Muñeca?</h1>
+            </div>
+
+            <div class="measurementBlock" id="RscrollBox">
+              <ul>
+                <li>10 cm</li>
+                <li>11 cm</li>
+                <li>12 cm</li>
+                <li>13 cm</li>
+                <li>14 cm</li>
+                <li>15 cm</li>
+                <li>16 cm</li>
+                <li>17 cm</li>
+                <li>18 cm</li>
+                <li>19 cm</li>
+                <li>20 cm</li>
+                <li>21 cm</li>
+                <li>22 cm</li>
+              </ul>
+            </div>
+
+            <button class="NextBtn" id="RBtn">SIGUIENTE</button>
+
+          </div>
+
+        </div>
+
+        <div class="Block" id="seven">
+
+          <div class="ImgBlock">
+            <img src="" id="KneeImg">
+          </div>
+
+          <div class="container" id="KneeBlock">
+            <div class="Tittle">
+              <h1 class="Qtittle" id="Ktittle">¿Perímetro de Rodilla?</h1>
+            </div>
+
+            <div class="measurementBlock" id="KscrollBox">
+              <ul>
+                <li>30 cm</li>
+                <li>31 cm</li>
+                <li>32 cm</li>
+                <li>33 cm</li>
+                <li>34 cm</li>
+                <li>35 cm</li>
+                <li>36 cm</li>
+                <li>37 cm</li>
+                <li>38 cm</li>
+                <li>39 cm</li>
+                <li>40 cm</li>
+                <li>41 cm</li>
+                <li>42 cm</li>
+                <li>43 cm</li>
+                <li>44 cm</li>
+                <li>45 cm</li>
+                <li>46 cm</li>
+                <li>47 cm</li>
+                <li>48 cm</li>
+                <li>49 cm</li>
+                <li>50 cm</li>
+                <li>51 cm</li>
+                <li>52 cm</li>
+                <li>53 cm</li>
+                <li>54 cm</li>
+                <li>55 cm</li>
+                <li>56 cm</li>
+                <li>57 cm</li>
+                <li>58 cm</li>
+                <li>59 cm</li>
+                <li>60 cm</li>
+                <li>61 cm</li>
+                <li>62 cm</li>
+                <li>63 cm</li>
+                <li>64 cm</li>
+                <li>65 cm</li>
+                <li>66 cm</li>
+                <li>67 cm</li>
+                <li>68 cm</li>
+                <li>69 cm</li>
+                <li>70 cm</li>
+                <li>71 cm</li>
+                <li>72 cm</li>
+                <li>73 cm</li>
+                <li>74 cm</li>
+                <li>75 cm</li>
+                <li>76 cm</li>
+                <li>77 cm</li>
+                <li>78 cm</li>
+                <li>79 cm</li>
+                <li>80 cm</li>
+                <li>71 cm</li>
+                <li>72 cm</li>
+                <li>73 cm</li>
+                <li>74 cm</li>
+                <li>75 cm</li>
+                <li>76 cm</li>
+                <li>77 cm</li>
+              </ul>
+            </div>
+
+            <button class="NextBtn" id="KBtn">SIGUIENTE</button>
+
+          </div>
+
+        </div>
+
+        <div class="Block" id="eight">
+
+          <div class="ImgBlock">
+            <img src="" id="NeckImg">
+          </div>
+
+          <div class="container" id="NeckBlock">
+            <div class="Tittle">
+              <h1 class="Qtittle" id="Ntittle">¿Perímetro de cuello?</h1>
+            </div>
+
+            <div class="measurementBlock" id="NscrollBox">
+              <ul>
+                <li>30 cm</li>
+                <li>31 cm</li>
+                <li>32 cm</li>
+                <li>33 cm</li>
+                <li>34 cm</li>
+                <li>35 cm</li>
+                <li>36 cm</li>
+                <li>37 cm</li>
+                <li>38 cm</li>
+                <li>39 cm</li>
+                <li>40 cm</li>
+                <li>41 cm</li>
+                <li>42 cm</li>
+                <li>43 cm</li>
+                <li>44 cm</li>
+                <li>45 cm</li>
+              </ul>
+            </div>
+
+            <button class="NextBtn" id="NBtn">SIGUIENTE</button>
+
+          </div>
+
+        </div>
+
+        <div class="Block" id="nine">
+          
+          <div class="ImgBlock">
+            <img class="Multi-image-layer" src="" id="MultiBlockkImg">
+          </div>
+
+          <div class="container" id="MultiBlock">
+
+            <div class="Q-dropdown" id="Q1">
+              <div class="Tittle">
+                <h3 id="Q1T" class="Q-dropdown-tittle">¿Frecuencia Cardíaca en Reposo?</h3>
+              </div>
+
+              <div class="Q1InputBlock">
+                <select id="BpmM" name="beats-per-minute-male" required>
+                  <option value=""selected disabled>Elige una opción</option>
+                  <option value="62-73">62-73 Bpm</option>
+                  <option value="62-73">62-73 Bpm</option>
+                  <option value="63-75">63-75 Bpm</option>
+                  <option value="64-76">64-76 Bpm</option>
+                  <option value="62-75">62-75 Bpm</option>
+                  <option value="62-73">62-73 Bpm</option>
+                  <option value="otro">Otro</option>
+                </select>
+
+                <select id="BpmF" name="beats-per-minute-female" required>
+                  <option value=""selected disabled>Elige una opción</option>
+                  <option value="64-80">64-80 Bpm</option>
+                  <option value="64-81">64-81 Bpm</option>
+                  <option value="65-82">65-82 Bpm</option>
+                  <option value="66-83">66-83 Bpm</option>
+                  <option value="64-82">64-82 Bpm</option>
+                  <option value="64-81">64-81 Bpm</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="Q-toggle" id="Q2">
+              <div class="Tittle">
+                <h3 id="Q2T" class="Qtittle">¿Haces ejercicio?</h3>
+              </div>
+                
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Exercies-btn">Sí</div>
+                    <div id="no-Exercies-btn">No</div>
+                </div>
+              </div>
+            </div>
+              
+            <div class="Q-Answer" id="yes-Q2-question">
+
+              <div class="Tittle">
+                <h3 id="Q1TY" class="Q-Answer-tittle">¿Con qué frecuencia entrenas?</h3>
+              </div>
+
+              <div class="extra-question" id="yes-Exercies-frequency-block">
+                <select id="Exercies-frequency">
+                  <option value=""selected disabled>Elige una opción</option>
+                  <option value="1">1 vez a la semana</option>
+                  <option value="2">2 veces a la semana</option>
+                  <option value="3">3 veces a la semana</option>
+                  <option value="4">4 veces a la semana</option>
+                  <option value="5">5 veces a la semana</option>
+                  <option value="6">6 veces a la semana</option>
+                  <option value="7">Todos los días</option>
+                </select>
+              </div>
+            </div>  
+
+            <div class="Q-Answer" id="no-Q2-question">
+
+                <div class="Tittle">
+                  <h3 id="Q1TN" class="Q-Answer-tittle">¿Cuándo fue tu último entrenamiento?</h3>
+                </div>
+
+                <div class="extra-question" id="no-Exercies-time-block" >
+                  <select id="Exercies-time">
+                    <option value=""selected disabled>Elige una opción.</option>
+                    <option value="1-3-weeks">1 a 3 semanas</option>
+                    <option value="1-3-months">1 a 3 meses</option>
+                    <option value="4-6-months">4 a 6 meses</option>
+                    <option value="7-11-months">7 a 11 meses</option>
+                    <option value="1-year">1 año</option>
+                    <option value="more-than-1-year">Más de 1 año</option>
+                  </select>
+                </div>
+            </div>
+
+            <div class="Q-toggle" id="Q3">
+                <div class="Tittle">
+                  <h3 id="Q3T" class="Qtittle">¿Bebes alcohol?</h3>
+                </div>
+                
+                <div class="QToggleBlock">
+                  <div class="Qtoggle-btn">
+                      <div id="yes-alcohol-btn">Sí</div>
+                      <div id="no-alcohol-btn">No</div>
+                  </div>
+                </div>
+              
+            </div>
+
+            <div class="Q-Answer" id="yes-Q3-question">
+
+                <div class="Tittle">
+                  <h3 id="Q3TY" class="Q-Answer-tittle">¿Que tipo de bebidad?</h3>
+                </div>
+
+                <div class="extra-question" id="yes-Drink-block">
+                  <select id="Drink">
+                    <option value="" selected disabled>Elige una opción</option>
+                    <option value="Cerveza">Cerveza</option>
+                    <option value="Vino">Vino y Espumante</option>
+                    <option value="Destilados">Destilados</option>
+                  </select>
+                </div>
+            </div>
+
+            <div class="Q-Answer" id="yes-Q3-extra-question">
+
+                <div class="Tittle">
+                  <h3 id="Q3TYE" class="Q-Answer-tittle">¿Con qué frecuencia consumes alcohol en una semana?</h3>
+                </div>
+
+                <div class="extra-question" id="yes-drink-frequency-block">
+                  <select id="drink-frequency" name="drink-frequency">
+                    <option value="" selected disabled>Elige una opción</option>
+                    <option value="1">1 vez a la semana</option>
+                    <option value="2">2 veces a la semana</option>
+                    <option value="3">3 veces a la semana</option>
+                    <option value="4">4 veces a la semana</option>
+                    <option value="5">5 veces a la semana</option>
+                    <option value="6">6 veces a la semana</option>
+                    <option value="7">Todos los días</option>
+                  </select>
+                </div>
+            </div>
+
+            <div class="Q-Answer" id="no-Q3-question">
+
+                <div class="Tittle">
+                  <h3 id="Q3TN" class="Q-Answer-tittle">¿Hace cuánto tiempo dejaste de consumir alcohol o nunca?</h3>
+                </div>
+
+                <div class="extra-question" id="no-eDrinking-time-block">
+                  <select id="Drinking-time" name="Drinking-time">
+                    <option value="" selected disabled>Elige una opción</option>
+                    <option value="Nunca">Nunca</option>
+                    <option value="1-3-weeks">1 a 3 semanas</option>
+                    <option value="1-3-months">1 a 3 meses</option>
+                    <option value="4-6-months">4 a 6 meses</option>
+                    <option value="7-11-months">7 a 11 meses</option>
+                    <option value="1-year">1 año</option>
+                    <option value="more-than-1-year">Más de 1 año</option>
+                  </select>
+                </div>
+            </div>
+
+            <div class="Q-toggle" id="Q4">
+                <div class="Tittle">
+                  <h3 id="Q4T" class="Qtittle">¿Fumas?</h3>
+                </div>
+                
+                <div class="QToggleBlock">
+                  <div class="Qtoggle-btn">
+                      <div id="yes-Fumas-btn">Sí</div>
+                      <div id="no-Fumas-btn">No</div>
+                  </div>
+              </div>
+              
+            </div>
+
+            <div class="Q-Answer" id="yes-Q4-question">
+
+                <div class="Tittle">
+                  <h3 id="Q4TY" class="Q-Answer-tittle">¿Cuántos años fumaste?</h3>
+                </div>
+
+                <div id="yes-extra-question" class="extra-question">
+                  <select id="smoking-years-select" name="smoking-years">
+                    <option value="" selected disabled>Seleccione una opción</option>
+                    <option value="0-1">Menos de 1 año</option>
+                    <option value="1-5">1 a 5 años</option>
+                    <option value="6-10">6 a 10 años</option>
+                    <option value="11-20">11 a 20 años</option>
+                    <option value="21-Mas">Más de 20 años</option>
+                  </select>
+                </div>
+            </div>
+
+            <div class="Q-Answer" id="no-Q4-question">
+
+                <div class="Tittle">
+                  <h3 id="Q4TN" class="Q-Answer-tittle">¿Cuándo dejaste de fumar (o nunca lo hiciste)?</h3>
+                </div>
+
+                <div id="no-extra-question" class="extra-question">
+                  <select id="quit-smoking-time" name="quit-smoking-time">
+                    <option value="" selected disabled>Seleccione una opción</option>
+                    <option value="Nunca">Nunca</option>
+                    <option value="1-3-semanas">1 a 3 semanas</option>
+                    <option value="1-3-meses">1 a 3 meses</option>
+                    <option value="4-6-meses">4 a 6 meses</option>
+                    <option value="7-11-meses">7 a 11 meses</option>
+                    <option value="1-año">1 año</option>
+                    <option value="Más-de-1-año">Más de 1 año</option>
+                  </select>
+                </div>
+            </div>  
+
+
+              
+            
+
+
+    
+
+
+
+            
+
+            
+
+            <button class="NextBtn" id="MultiBtn">SIGUIENTE</button>
+
+          </div>
+
+        </div>
+
+        <div class="Block" id="Ten">
+          
+          <div class="ImgBlock">
+            <img class="Multi-image-layer" src="" id="MultiQBlockkImg">
+          </div>
+
+          <div class="container" id="MultiQBlock">
+
+            <div class="Main-Tittle-block">
+              <h2 id="MT" class="Main-Tittle">¿Presenta alguna de estas Enfermedades  No Transmisibles?</h2>
+            </div>
+
+            <div class="Q-dropdown" id="Q5">
+              <div class="Tittle">
+                <h3 id="Q5T" class="Q-dropdown-tittle">Hipercolesteremia</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Hipercolesteremia-btn">Sí</div>
+                    <div id="no-Hipercolesteremia-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="Q-Answer" id="yes-Q5-question">
+
+              <div class="Tittle">
+                <h3 id="Q5TY" class="Q-dropdown-tittle">¿Está en tratamiento?</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Hipercolesteremia-tratamiento-btn">Sí</div>
+                    <div id="no-Hipercolesteremia-tratamiento-btn">No</div>
+                </div>
+              </div>
+
+            </div> 
+
+            <div class="Q-dropdown" id="Q6">
+              <div class="Tittle">
+                <h3 id="Q6T" class="Q-dropdown-tittle">Diabetes</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Diabetes-btn">Sí</div>
+                    <div id="no-Diabetes-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="Q-Answer" id="yes-Q6-question">
+
+              <div class="Tittle">
+                <h3 id="Q6TY" class="Q-dropdown-tittle">¿Está en tratamiento?</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Diabetes-tratamiento-btn">Sí</div>
+                    <div id="no-Diabetes-tratamiento-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="Q-dropdown" id="Q7">
+              <div class="Tittle">
+                <h3 id="Q7T" class="Q-dropdown-tittle">Obesidad</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Obesidad-btn">Sí</div>
+                    <div id="no-Obesidad-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="Q-Answer" id="yes-Q7-question">
+
+              <div class="Tittle">
+                <h3 id="Q7TY" class="Q-dropdown-tittle">¿Está en tratamiento?</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Obesidad-tratamiento-btn">Sí</div>
+                    <div id="no-Obesidad-tratamiento-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="Q-dropdown" id="Q8">
+              <div class="Tittle">
+                <h3 id="Q8T" class="Q-dropdown-tittle">Hígado Graso</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Hígado-Graso-btn">Sí</div>
+                    <div id="no-Hígado-Graso-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="Q-Answer" id="yes-Q8-question">
+
+              <div class="Tittle">
+                <h3 id="Q8TY" class="Q-dropdown-tittle">¿Está en tratamiento?</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Hígado-Graso-tratamiento-btn">Sí</div>
+                    <div id="no-Hígado-Graso-tratamiento-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="Q-dropdown" id="Q9">
+              <div class="Tittle">
+                <h3 id="Q9T" class="Q-dropdown-tittle">Otra ENT</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Otra-ENT-btn">Sí</div>
+                    <div id="no-Otra-ENT-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="Q-Answer" id="yes-Q9-question">
+
+              <div class="Tittle">
+                <h3 id="Q9TY" class="Q-dropdown-tittle">¿Está en tratamiento?</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Otra-ENT-tratamiento-btn">Sí</div>
+                    <div id="no-Otra-ENT-tratamiento-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+
+            <button class="NextBtn" id="Multi1Btn">SIGUIENTE</button>
+
+          </div>
+
+        </div>
+
+        <div class="Block" id="eleven">
+          
+          <div class="ImgBlock">
+            <img class="Multi-image-layer" src="" id="MultiQ2BlockkImg">
+          </div>
+
+          <div class="container" id="MultiQ2Block">
+
+            <div class="Main-Tittle-block">
+              <h2 id="MT2" class="Main-Tittle">¿Presenta alguna enfermedad Autoinmune?</h2>
+            </div>
+            <div class="Q-dropdown" id="Q10">
+              <div class="Tittle">
+                <h3 id="Q10T" class="Q-dropdown-tittle">Lupus</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Lupus-btn">Sí</div>
+                    <div id="no-Lupus-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="Q-Answer" id="yes-Q10-question">
+
+              <div class="Tittle">
+                <h3 id="Q10TY" class="Q-dropdown-tittle">¿Está en tratamiento?</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Lupus-tratamiento-btn">Sí</div>
+                    <div id="no-Lupus-tratamiento-btn">No</div>
+                </div>
+              </div>
+
+            </div> 
+
+            <div class="Q-dropdown" id="Q11">
+              <div class="Tittle">
+                <h3 id="Q11T" class="Q-dropdown-tittle">Celíaca</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Celíaca-btn">Sí</div>
+                    <div id="no-Celíaca-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="Q-Answer" id="yes-Q11-question">
+
+              <div class="Tittle">
+                <h3 id="Q11TY" class="Q-dropdown-tittle">¿Está en tratamiento?</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Celíaca-tratamiento-btn">Sí</div>
+                    <div id="no-Celíaca-tratamiento-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="Q-dropdown" id="Q12">
+              <div class="Tittle">
+                <h3 id="Q12T" class="Q-dropdown-tittle">Cáncer</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Cáncer-btn">Sí</div>
+                    <div id="no-Cáncer-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="Q-Answer" id="yes-Q12-question">
+
+              <div class="Tittle">
+                <h3 id="Q12TY" class="Q-dropdown-tittle">¿Está en tratamiento?</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Cáncer-tratamiento-btn">Sí</div>
+                    <div id="no-Cáncer-tratamiento-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="Q-dropdown" id="Q13">
+              <div class="Tittle">
+                <h3 id="Q13T" class="Q-dropdown-tittle">VIH</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-VIH-btn">Sí</div>
+                    <div id="no-VIH-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="Q-Answer" id="yes-Q13-question">
+
+              <div class="Tittle">
+                <h3 id="Q13TY" class="Q-dropdown-tittle">¿Está en tratamiento?</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-VIH-tratamiento-btn">Sí</div>
+                    <div id="no-VIH-tratamiento-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="Q-dropdown" id="Q14">
+              <div class="Tittle">
+                <h3 id="Q14T" class="Q-dropdown-tittle">Artritis</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Artritis-btn">Sí</div>
+                    <div id="no-Artritis-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="Q-Answer" id="yes-Q14-question">
+
+              <div class="Tittle">
+                <h3 id="Q14TY" class="Q-dropdown-tittle">¿Está en tratamiento?</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Artritis-tratamiento-btn">Sí</div>
+                    <div id="no-Artritis-tratamiento-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="Q-dropdown" id="Q15">
+              <div class="Tittle">
+                <h3 id="Q15T" class="Q-dropdown-tittle">Otra enfermedad</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Otra-enfermedad-btn">Sí</div>
+                    <div id="no-Otra-enfermedad-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="Q-Answer" id="yes-Q15-question">
+
+              <div class="Tittle">
+                <h3 id="Q15TY" class="Q-dropdown-tittle">¿Está en tratamiento?</h3>
+              </div>
+
+              <div class="QToggleBlock">
+                <div class="Qtoggle-btn">
+                    <div id="yes-Otra-enfermedad-tratamiento-btn">Sí</div>
+                    <div id="no-Otra-enfermedad-tratamiento-btn">No</div>
+                </div>
+              </div>
+
+            </div>
+      
+            <button class="NextBtn" id="Multi2Btn">SIGUIENTE</button>
+
+          </div>
+
+        </div>
+
+        <div class="Block" id="twelve">
+          
+          <div class="ImgBlock">
+            <img class="Multi-image-layer" src="" id="ResultBlockImg">
+          </div>
+
+          <div class="container" id="MultiQ3Block">
+
+            <div class="Main-Tittle-block">
+              <h2 id="MT2" class="Main-Tittle">Results:</h2>
+            </div>
+
+            <section class="Result-block" id="Result-block-one">
+
+              <div class="ResultBlock">
+
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-0">
+                </div>
+
+                <div class="Result-Block-text">
+                <h3>Peso</h3>
+                <span class="ResultValue" id="R-peso"></span> 
+                </div>
+
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-1">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>Altura</h3>
+                  <span class="ResultValue" id="R-altura"></span> 
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-2">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>Perímetro de brazo</h3>
+                  <span class="ResultValue" id="R-Perímetro-brazo-derecho"></span> 
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-3">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>Perímetro de cintura</h3>
+                  <span class="ResultValue" id="R-Perímetro-de-cintura"></span>
+                </div>
+                
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-4">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>Perímetro de cadera</h3>
+                  <span class="ResultValue" id="R-Perímetro-de-cadera"></span>
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-5">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>Perímetro de pierna</h3>
+                  <span class="ResultValue" id="R-Perímetro-de-pierna"></span>
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-6">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>Perímetro de muñeca</h3>
+                  <span class="ResultValue" id="R-Perímetro-de-muñec"></span>
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-7">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>Perímetro de rodilla</h3>
+                  <span id="R-Perímetro-de-rodilla"></span>
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-8">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>Perímetro de cuello</h3>
+                  <span class="ResultValue" id="R-Perímetro-de-cuello"></span>
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-9">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>BPM</h3>
+                  <span id="R-BPM"></span> 
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-10">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>Ejercicio</h3>
+                  <span id="R-Exercies-A"></span>
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-11">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>Bebidad</h3>
+                  <span id="R-Drink"></span>
+                </div>   
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-12">
+                </div>
+                <div class="Result-Block-text">
+                  <h3 id="QS2">Ejercicio</h3>
+                  <span id="R-Drink-T"></span>
+                </div> 
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-14">
+                </div>
+                <div class="Result-Block-text">
+                  <h3 id="QS3">Fumas</h3>
+                  <span id="R-Fumas"></span>
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-15">
+                </div>
+                <div class="Result-Block-text">
+                  <h3 id="QS4"></h3>
+                  <span id="R-Fumas-2"></span>
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                    <img class="Return-pen" src="" id="Return-pen-16">
+                </div>
+                <div class="Result-Block-text">
+                    <h3>Hipercolesteremia</h3>
+                    <span id="R-ENT-1"></span>
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-17">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>Diabetes</h3>
+                  <span id="R-ENT-2"></span>
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-18">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>Obesidad</h3>
+                  <span id="R-ENT-3"></span>
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-19">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>Hígado Graso</h3>
+                  <span id="R-ENT-4"></span>
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-20">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>Otra ENT</h3>
+                  <span id="R-ENT-5"></span>
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-21">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>Lupus</h3>
+                  <span id="R-ENT-6"></span>
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-22">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>Celíaca</h3>
+                  <span id="R-ENT-7"></span>
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-23">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>Cáncer</h3>
+                  <span id="R-ENT-8"></span>
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-24">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>VIH</h3>
+                  <span id="R-ENT-9"></span>
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-25">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>Artritis</h3>
+                  <span id="R-ENT-10"></span>
+                </div>
+              </div>
+              <div class="ResultBlock">
+                <div class="Result-Block-Img">
+                  <img class="Return-pen" src="" id="Return-pen-26">
+                </div>
+                <div class="Result-Block-text">
+                  <h3>Otra enfermedad</h3>
+                  <span id="R-ENT-11"></span>
+                </div>
+              </div>
+
+            </section>
+
+            <button class="NextBtn" id="Send-Results-Btn">Send</button>
+
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="RevolFitActiveQuestions.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js')
+          .then(() => console.log('Service Worker Registered'))
+          .catch(err => console.error('Service Worker Registration Failed:', err));
+      }
+    </script>
+
+  </body>
 </html>

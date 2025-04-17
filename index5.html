@@ -12,31 +12,293 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="manifest" href="/site.webmanifest">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SHS/RevolFit/Reporte</title>
   <link rel="stylesheet" href="RevoFitAlgorithm.css">
-
-  <link rel="shortcut icon" href="images/Logos/flower_DB.webp">
 </head>
 <body>
 
   <section id="header">
     <div class="ReturnBlock">
-      <img id="ReturnIcon" src="">
+      <a href="index9.html"><img id="ReturnIcon" src=""></a>
     </div>
 
     <div>
       <div id="ImgBlock">
         <img id="UserImg" src="">
       </div>
+      <div class="TittlewBlock">
+        <h1 id="Tittle">Resultados de Evaluacion</h1>
+        <h2 id="SubTittle"></h2>
+      </div>
       
-      <h1 id="UserName"></h1>
     </div>
+  </section>
+
+  <section class="BtnBlock" id="BtnBlock">
+    
+    <div class="DatosPersonales" >
+
+      <div class="btn" id="DPBtn">
+        <h2>Datos Personales</h2>
+      </div>
+    
+      <div class="hiddendiv" id="Personales">
+        <div class="blocks">
+          <span>Nombre Completo:</span>
+          <a id="FullName"></a>
+        </div>
+        <div class="blocks">
+          <span>Fecha de Nacimiento:</span>
+          <a id="DateB"></a>
+        </div>
+        <div class="blocks">
+          <span>Género:</span>
+          <a id="Sex"></a>
+        </div>
+        <div class="blocks">
+          <span>Edad:</span>
+          <a id="Age"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="BodyFat" >
+
+      <div class="btn" id="BFBtn">
+        <h2>Grasa Corporal</h2>
+      </div>
+    
+      <div class="hiddendiv" id="BodyFat">
+        <div class="measurement">
+          <a>Grasa Corporal en Kg:</a>
+          <span id="bodyfatKg"></span>
+        </div> 
+
+        <div class="card">
+
+          <div class="progress-container">
+            <svg viewBox="0 0 100 100" class="progress-circle">
+              <circle class="background" cx="50" cy="50" r="45"></circle>
+              <circle class="progress" id="fatMassPer" cx="50" cy="50" r="45"></circle>
+              <text x="50" y="55" class="progress-text" id="fatText">18%</text>
+            </svg>
+          </div>
+
+          <p class="description">Nivel de grasa corporal</p>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="ResidualMass">
+
+      <div class="btn" id="RMBtn">
+        <h2>Masa Residual</h2>
+      </div>
+    
+      <div class="hiddendiv" id="residualMass">
+       <div>
+        <a for="progress-bar">Masa Residual en Kg:</a>
+        <span id="residualMassKg"></span>
+       </div> 
+      
+    
+
+       <div class="card">
+        <div class="progress-container">
+          <svg viewBox="0 0 100 100" class="progress-circle">
+            <circle class="background" cx="50" cy="50" r="45"></circle>
+            <circle class="progress" id="residualMassPer" cx="50" cy="50" r="45"></circle>
+            <text x="50" y="55" class="progress-text" id="residualText">22%</text>
+          </svg>
+        </div>
+        <p class="description">Masa Residual</p>
+      </div>
+      </div>
+
+      
+    </div>
+
+    <div class="SkinMass">
+
+      <div class="btn" id="SMBtn">
+        <h2>Peso de la piel</h2>
+      </div>
+      
+      <div class="hiddendiv" id="skinMass">
+       <div>
+        <a >Peso de la piel en Kg:</a>
+        <span id="skinMassKg"></span>
+       </div>
+       
+       <div class="card">
+
+        <div class="progress-container">
+          <svg viewBox="0 0 100 100" class="progress-circle">
+            <circle class="background" cx="50" cy="50" r="45"></circle>
+            <circle class="progress" id="skinMassPer" cx="50" cy="50" r="45"></circle>
+            <text x="50" y="55" class="progress-text" id="skinText">10%</text>
+          </svg>
+        </div>
+
+        <p class="description">Masa de Piel</p>
+       </div
+      
+      
+      </div>
+       </div>
+      </div>
+    </div>  
+
+
+    <div class="BoneMass">
+
+      <div class="btn" id="BMBtn">
+        <h2>Densidad Osea</h2>
+      </div>
+
+      <div class="hiddendiv" id="boneMass">
+       <div>
+        <a >Densidad ósea en Kg:</a>
+        <span id="boneMassKg"></span>
+       </div> 
+      
+       <div class="card">
+
+        <div class="progress-container">
+             <svg viewBox="0 0 100 100" class="progress-circle">
+                <circle class="background" cx="50" cy="50" r="45"></circle>
+                <circle class="progress" id="boneMassPer" cx="50" cy="50" r="45"></circle>
+                <text x="50" y="55" class="progress-text" id="boneText">15%</text>
+             </svg>
+        </div>
+
+        <p class="description">Masa Ósea</p>
+       </div>
+      
+
+      </div>
+    </div>
+
+    <div class="MuscleMass">
+
+      <div class="btn" id="MMBtn">
+        <h2>Masa Muscular</h2>
+      </div>
+
+      <div class="hiddendiv" id="MuscleMass">
+       <div>
+        <a >Masa Muscular en Kg:</a>
+        <span id="muscleMassKg"></span>
+       </div> 
+      
+       <div class="card">
+
+        <div class="progress-container">
+            <svg viewBox="0 0 100 100" class="progress-circle">
+                <circle class="background" cx="50" cy="50" r="45"></circle>
+                <circle class="progress" id="muscleMassPer" cx="50" cy="50" r="45"></circle>
+                <text x="50" y="55" class="progress-text" id="muscleText">35%</text>
+            </svg>
+        </div>
+
+        <p class="description">Masa Muscular</p>
+       </div>
+
+      </div>
+    </div>
+
+    <div class="MetabolicAge">
+
+      <div class="btn" id="EMBtn">
+        <h2>Edad Metabólica</h2>
+      </div>
+
+      <div class="hiddendiv" id="MetabolicAge">
+        <div class="MIBlock">
+          <img id="ImgAge" src="">
+         </div>
+        <div class="MITextBlock">
+        <a>Edad Metabólica</a>
+        <span id="MetabolicAgeKg"></span>
+        </div> 
+
+      
+      
+  
+
+      </div>
+    </div>
+
+    <div class="Datos">
+
+      <div class="btn" id="DBtn">
+        <h2>Datos</h2>
+      </div>
+
+      <div class="hiddendiv" id="Datos">
+
+        <div class="Dblock">
+
+          <div>
+            <a>Frecuencia Cardíaca</a>
+          </div>
+
+
+          <div class="DTextblock">
+            <img id="RHRimg" src="">
+            <span id="RHR"></span>
+          </div>
+
+        </div>
+
+        <div class="Dblock">
+
+          <div>
+            <a>Cintura</a>
+          </div>
+
+          <div class="DTextblock">
+            <img id="Cinturaimg" src="">
+            <span id="Cintura"></span>
+          </div>
+
+        </div>
+
+        <div class="Dblock">
+
+          <div>
+            <a>Nivel de Actividad Física</a>
+          </div>
+          
+          <div class="DTextblock" >
+            <img id="NDAFimg" src="">
+            <span id="NDAF"></span>
+          </div>
+        
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
   </section>
     
     
-
+  <div class="container">
+   
+    
+</div>
 
 
 
@@ -44,139 +306,19 @@
 
 
 
-    <div class="header">
-      <a href="index9.html" id="returnPop"><</a>
-      <h2>Resultados de Evaluacion</h2>
-    </div>
-
-    <div class="basicInfo">
-      
-      <div class="block">
-        <span>Nombre Completo:</span>
-        <a id="FullName"></a>
-      </div>
-
-      <div class="block">
-        <span>Fecha de Nacimiento:</span>
-        <a id="DateB"></a>
-      </div>
-      
-      <div class="block">
-        <span>Género:</span>
-        <a id="Sex"></a>
-      </div>
-
-      <div class="block">
-        <span>Edad:</span>
-        <a id="Age"></a>
-      </div>
-    </div>
-
-    <div class="BodyFat">
-      <h1 class="btns" id="bodyfatBtn">Grasa Corporal </h1>
-      <div class="hiddendiv" id="bodyfat">
-       <div>
-        <a for="progress-bar">Grasa Corporal en Kg:</a>
-        <span id="bodyfatKg"></span>
-       </div> 
-      
-      <span id="classification"></span>
-      <a for="progress-bar">Grasa Corporal en Percentage</a>
-      <div class="progress">
-        
-        <div class="progress-bar" id="progressbarGC" role="progressbar" aria-valuenow="50"
-        aria-valuemin="0" aria-valuemax="100" style="width:90%">
-          70%
-      </div>
-      </div>
-
-      </div>
-    </div>
+  
 
 
-    <div class="residual Mass">
-      <h1 class="btns" id="residualMassBtn">Masa Residual</h1>
-      <div class="hiddendiv" id="residualMass">
-       <div>
-        <a for="progress-bar">Masa Residual en Kg:</a>
-        <span id="residualMassKg"></span>
-       </div> 
-      
-      <span id="classification"></span>
-      <a>Masa Residual en Percentage</a>
-      <div class="progress">
-        
-        <div class="progress-bar" id="progressbarMR" role="progressbar" aria-valuenow="70"
-        aria-valuemin="0" aria-valuemax="100" style="width:70%">
-          70%
-      </div>
-      </div>
 
-      </div>
-    </div>
 
-    <div class="skin Mass">
-      <h1 class="btns" id="skinMassBtn">Peso de la piel</h1>
-      <div class="hiddendiv" id="skinMass">
-       <div>
-        <a >Peso de la piel en Kg:</a>
-        <span id="skinMassKg"></span>
-       </div> 
-      
-      <span id="classification"></span>
-      <a>Peso de la piel en Percentage</a>
-      <div class="progress">
-        
-        <div class="progress-bar" id="progressbarSM" role="progressbar" aria-valuenow="70"
-        aria-valuemin="0" aria-valuemax="100" style="width:70%">
-          70%
-      </div>
-      </div>
 
-      </div>
-    </div>
+    
 
-    <div class="bone Mass">
-      <h1 class="btns" id="boneMassBtn">Densidad ósea</h1>
-      <div class="hiddendiv" id="boneMass">
-       <div>
-        <a >Densidad ósea en Kg:</a>
-        <span id="boneMassKg"></span>
-       </div> 
-      
-      <span id="classification"></span>
-      <a>Densidad ósea en Percentage</a>
-      <div class="progress">
-        
-        <div class="progress-bar" id="progressbarBM" role="progressbar" aria-valuenow="70"
-        aria-valuemin="0" aria-valuemax="100" style="width:70%">
-          70%
-      </div>
-      </div>
+    
 
-      </div>
-    </div>
+    
 
-    <div class="muscle Mass">
-      <h1 class="btns" id="muscleMassBtn">Masa Muscular</h1>
-      <div class="hiddendiv" id="muscleMass">
-       <div>
-        <a >Masa Muscular en Kg:</a>
-        <span id="muscleMassKg"></span>
-       </div> 
-      
-      <span id="classification"></span>
-      <a>Masa Muscular en Percentage</a>
-      <div class="progress">
-        
-        <div class="progress-bar" id="progressbarMS" role="progressbar" aria-valuenow="70"
-        aria-valuemin="0" aria-valuemax="100" style="width:70%">
-          70%
-      </div>
-      </div>
-
-      </div>
-    </div>
+    
 
 
 

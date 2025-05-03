@@ -1,18 +1,24 @@
-import { 
-    initializeApp 
-  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-  
-  import { 
-    getAuth
-  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
-  
-  import { 
-    getFirestore, 
-    doc, 
-    getDoc
-  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
-  
-  let db, auth;
+// Import necessary Firebase modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBc3B7SM_Itr9LRCv8N3_tbl9BglxHKo-M",
+  authDomain: "revofit-ad7c3.firebaseapp.com",
+  projectId: "revofit-ad7c3",
+  storageBucket: "revofit-ad7c3.appspot.com",
+  messagingSenderId: "643801118133",
+  appId: "1:643801118133:web:d679abc998a18f7077d5fc",
+  measurementId: "G-E6P96D0M6Z"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
   
   async function fetchFirebaseConfig() {
     try {

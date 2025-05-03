@@ -1,36 +1,32 @@
-import { 
-  initializeApp 
-} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { 
-  getAuth, 
-  signInWithEmailAndPassword, 
-  onAuthStateChanged, 
-  signOut 
-} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+// Import necessary Firebase modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
 import { 
   getFirestore, 
   doc, 
   getDoc, 
   updateDoc, 
-  serverTimestamp,
+  serverTimestamp, 
   collection, 
-  addDoc  
-} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+  addDoc, 
+  setDoc  } 
+  from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
-let db, auth; // Declare Firestore and Auth globally
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBc3B7SM_Itr9LRCv8N3_tbl9BglxHKo-M",
+  authDomain: "revofit-ad7c3.firebaseapp.com",
+  projectId: "revofit-ad7c3",
+  storageBucket: "revofit-ad7c3.appspot.com",
+  messagingSenderId: "643801118133",
+  appId: "1:643801118133:web:d679abc998a18f7077d5fc",
+  measurementId: "G-E6P96D0M6Z"
+};
 
-// Fetch Firebase configuration
-async function fetchFirebaseConfig() {
-  try {
-    //console.log("Fetching Firebase config...");
-    const response = await fetch("http://localhost:3000/firebase-config"); // Change when deploying
-    if (!response.ok) throw new Error("Failed to fetch Firebase config");
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching Firebase config:", error);
-    return null;
-  }
-}
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
 
 // Initialize Firestore and Auth
 async function initializeFirebase() {
@@ -103,21 +99,19 @@ checkDocumentExists("RevoBusiness", transferredInfo);
 async function applyBranding() {
   const Buissnes = await checkDocumentExists("RevoBuissnes", transferredInfo);
 
-  function setAllcolors(){
-    const UBU = Buissnes.UBU;
-    const{bottom , center, top} = UBU.BackgroundColor
-
-    const {Base, Prime1, Prime2, Prime3, Prime4, Prime5, Prime6} = UBU.Colors;
-
+  function setAllcolors() {
+    const UBU = Buissnes.BuColors;
+    const { bottom, center, top } = UBU.BackgroundColor;
+    const { Base, Prime1, Prime2, Prime3, Prime4, Prime5, Prime6 } = UBU.Colors;
+  
     function GetBuFont(fontFamily) {
       document.body.style.fontFamily = fontFamily;
     }
-    function setGradient( Ctop, Ccenter, Cbottom ) {
+    function setGradient(Ctop, Ccenter, Cbottom) {
       document.body.style.background = `linear-gradient(to bottom, ${Ctop}, ${Ccenter}, ${Cbottom})`;
     }
     function setTGradient(Block, Ctop, Cbottom) {
       const elements = document.querySelectorAll(Block);
-
       if (elements.length > 0) {
         elements.forEach((element) => {
           element.style.background = `linear-gradient(to bottom, ${Ctop}, ${Cbottom})`;
@@ -126,27 +120,22 @@ async function applyBranding() {
         console.warn(`No elements found with selector "${Block}".`);
       }
     }
-
-    function SetetextColorPer(Uid, color){
+    function SetetextColorPer(Uid, color) {
       const element = document.getElementById(Uid);
-      element.style.color = color;
+      if (element) element.style.color = color;
     }
-    function SetetextColorBlock(Block, color){
+    function SetetextColorBlock(Block, color) {
       const elements = document.querySelectorAll(Block);
-     
       if (elements.length > 0) {
         elements.forEach((element) => {
           element.style.color = color;
         });
       } else {
-        console.warn('No elements found with class ".carrot".');
+        console.warn(`No elements found with class "${Block}".`);
       }
     }
-   
-
     function setBtnColors(selector, color, text, BgColor) {
       const elements = document.querySelectorAll(selector);
-    
       if (elements.length > 0) {
         elements.forEach((element) => {
           element.style.color = text;
@@ -158,19 +147,15 @@ async function applyBranding() {
         console.warn(`No elements found with selector "${selector}".`);
       }
     }
-    
-    setBtnColors('.bTN-Block', Base, Base, 'transperent');
+  
+    // Correct usage
+    setBtnColors('.bTN-Block', Base, Base, 'transparent');
     setBtnColors('.Action-Btn', Prime1, Base, Base);
-    
-   
-    setAllcolors()
-
-    setGradient( top, center, bottom )
-    GetBuFont(Buissnes.UBU.font);
-    SetetextColorPer("Mtittle", Prime5)
-    SetetextColorBlock(".carrot", Prime5 )
-    SetetextColorBlock(".panel-header", Base)
-
+    setGradient(top, center, bottom);
+    GetBuFont(Buissnes.Font);
+    SetetextColorPer("Mtittle", Prime5);
+    SetetextColorBlock(".carrot", Prime5);
+    SetetextColorBlock(".panel-header", Base);
   }
 
 
@@ -190,25 +175,25 @@ async function applyBranding() {
       }
     }
     
-    setBgImgs(Buissnes.UBU.BuIcon.BuLight, Buissnes.UBU.LogoText.Logo.description, "BuIcon")
+    setBgImgs(Buissnes.BuLogos.Icons[0], Buissnes.BuLogos.LogoText.description, "BuIcon")
 
-    setBgImgs(Buissnes.App.Settings.Profile, "Profile Icon", "User-Icon")
-    setBgImgs(Buissnes.App.Settings.Measurement, "Ruler Icon", "units-Icon")
-    setBgImgs(Buissnes.App.Settings.Sounds, "Sounds Icon", "Sounds-Icon")
-    setBgImgs(Buissnes.App.Settings.Reminders, "Reminder Icon", "Reminder-Icon")
+    setBgImgs(Buissnes.AppIcons.Settings.Profile, "Profile Icon", "User-Icon")
+    setBgImgs(Buissnes.AppIcons.Settings.Measurement, "Ruler Icon", "units-Icon")
+    setBgImgs(Buissnes.AppIcons.Settings.Sounds, "Sounds Icon", "Sounds-Icon")
+    setBgImgs(Buissnes.AppIcons.Settings.Reminders, "Reminder Icon", "Reminder-Icon")
 
-    setBgImgs(Buissnes.App.Settings.Alert, "Alert Icon", "Alert-Icon")
+    setBgImgs(Buissnes.AppIcons.Settings.Alert, "Alert Icon", "Alert-Icon")
     
 
 
-    setBgImgs(Buissnes.App.Settings.Message, "Message Icon", "Message-Icon")
-    setBgImgs(Buissnes.App.Settings.Model, "Model Icon", "Model-Icon")
-    setBgImgs(Buissnes.App.Settings.Report, "Report Icon", "Report-Icon")
+    setBgImgs(Buissnes.AppIcons.Settings.Message, "Message Icon", "Message-Icon")
+    setBgImgs(Buissnes.AppIcons.Settings.Model, "Model Icon", "Model-Icon")
+    setBgImgs(Buissnes.AppIcons.Settings.Report, "Report Icon", "Report-Icon")
 
-    setBgImgs(Buissnes.App.Settings.Membership, "Membership Icon", "Membership-Icon")
-    setBgImgs(Buissnes.App.Settings.Reminders, "Reminder Icon", "Reminder-Icon")
+    setBgImgs(Buissnes.AppIcons.Settings.Membership, "Membership Icon", "Membership-Icon")
+    setBgImgs(Buissnes.AppIcons.Settings.Reminders, "Reminder Icon", "Reminder-Icon")
 
-    setBgImgs(Buissnes.App.Settings.Logout, "Logout Icon", "Logout-Icon")
+    setBgImgs(Buissnes.AppIcons.Settings.Logout, "Logout Icon", "Logout-Icon")
   }
   SetAllImgs()
   setAllcolors()
@@ -276,7 +261,7 @@ async function SetPanelContent(){
   const Buissnes = await checkDocumentExists("RevoBuissnes", transferredInfo);
   const Users = await checkDocumentExists("users", transferreduserInfo);
 
-  const UBU = Buissnes.UBU;
+  const UBU = Buissnes.BuColors;
   const{bottom , center, top} = UBU.BackgroundColor
 
   const {Base, Prime1, Prime2, Prime3, Prime4, Prime5, Prime6} = UBU.Colors;
@@ -1293,12 +1278,20 @@ async function SetPanelContent(){
       }
       
 
-      function activeTierImg() {
-        
-        const tier =userInfo.Membership
-        const tierNumber = extractNumber(tier);
-        console.log( tier)
-        const userTier = tierNumber 
+      function activeTierImg(userInfo, Buissnes) {
+        if (!userInfo?.Membership) {
+          console.error("User Membership info is missing.");
+          return;
+        }
+      
+        if (!Buissnes?.App?.Settings?.Membership) {
+          console.error("Membership crown icon data missing in business config.");
+          return;
+        }
+      
+        const tier = userInfo.Membership;
+        const tierNumber = parseInt(tier.replace(/\D/g, ''), 10);
+        const userTier = tierNumber;
         const crown = Buissnes.App.Settings.Membership;
       
         for (let i = 0; i <= 3; i++) {
@@ -1314,7 +1307,6 @@ async function SetPanelContent(){
       
           BuyBtn(actionBtnId, userTier, i);
         }
-
       }
 
 
@@ -1457,7 +1449,57 @@ async function SetPanelContent(){
   
   
   
+  function createButton({ buttonType, divId, imgSrcIndex, redirectUrl, imgAlt = "Example image" }, Buttons) {
+    const buttonGroup = Buttons[buttonType];
+    const imgSrc = buttonGroup[imgSrcIndex];
   
+    const div = document.getElementById(divId);
+    if (!div) {
+      console.error(`Div with id '${divId}' not found.`);
+      return;
+    }
+  
+    const img = document.createElement("img");
+    img.src = imgSrc;
+    img.alt = imgAlt;
+    img.addEventListener("click", () => {
+      window.location.href = redirectUrl;
+    });
+  
+    div.appendChild(img);
+  }
+  function setControlBar() {
+    if (
+      !Buissnes ||
+      !Buissnes.AppIcons ||
+      !Buissnes.AppIcons.ControlBar
+    ) {
+      console.error("ControlBar data is not available.");
+      return;
+    }
+  
+    const { Goals, Home, Settings, Stats ,Calander} = Buissnes.AppIcons.ControlBar;
+
+    const Buttons = {
+      homeBtns: Home,
+      DateBtns: Calander, // Adjust as needed
+      GoalBtns: Goals,
+      StatBtns: Stats,
+      GearBtns: Settings, // Adjust as needed
+    };
+
+  
+    const buttonsConfig = [
+      { buttonType: "homeBtns", divId: "home", imgSrcIndex: 0, redirectUrl: "index9.html" },
+      { buttonType: "DateBtns", divId: "Date", imgSrcIndex: 0, redirectUrl: "index9.2.html" },
+      { buttonType: "GoalBtns", divId: "goals", imgSrcIndex: 0, redirectUrl: "index9.3.html" },
+      { buttonType: "StatBtns", divId: "stats", imgSrcIndex: 0, redirectUrl: "index9.4.html" },
+      { buttonType: "GearBtns", divId: "gear", imgSrcIndex: 1, redirectUrl: "index9.5.html" },
+    ];
+  
+    buttonsConfig.forEach((config) => createButton(config, Buttons));
+  }
+  setControlBar()
   
   evntListnerBtns()
   
@@ -1513,41 +1555,6 @@ async function getBtnIcons() {
   }
 }
 
-function createButton({ buttonType, divId, imgSrcIndex, redirectUrl, imgAlt = "Example image" }, Btns) {
-  const buttonGroup = Btns[buttonType];
-  const imgSrc = buttonGroup[imgSrcIndex];
-  
-  const div = document.getElementById(divId);
-  if (!div) {
-    console.error(`Div with id '${divId}' not found.`);
-    return;
-  }
-
-  const img = document.createElement("img");
-  img.src = imgSrc;
-  img.alt = imgAlt;
-  img.addEventListener("click", () => {
-    window.location.href = redirectUrl;
-  });
-
-  div.appendChild(img);
-}
-
-getBtnIcons().then((data) => {
-  if (!data) return;
-
-  const { Btns } = data.App;
-
-  const buttonsConfig = [
-    { buttonType: "homeBtns", divId: "home", imgSrcIndex: 1, redirectUrl: "index9.html" },
-    { buttonType: "DateBtns", divId: "Date", imgSrcIndex: 1, redirectUrl: "index9.2.html" },
-    { buttonType: "GoalBtns", divId: "goals", imgSrcIndex: 1, redirectUrl: "index9.3.html" },
-    { buttonType: "StatBtns", divId: "stats", imgSrcIndex: 1, redirectUrl: "index9.4.html" },
-    { buttonType: "GearBtns", divId: "gear", imgSrcIndex: 0, redirectUrl: "index9.5.html" },
-  ];
-
-  buttonsConfig.forEach((config) => createButton(config, Btns));
-});
 
 async function fetchDocument(collection, documentId) {
   try {
@@ -1573,8 +1580,8 @@ function setGradient({ top, center, bottom }) {
 fetchDocument("RevoBuissnes", transferredInfo).then((data) => {
   if (!data) return;
 
-  const { UBU } = data;
-  const { BackgroundColor, Colors } = UBU;
+  const { BuColors} = data;
+  const { BackgroundColor, Colors } = BuColors;
 
   // Apply the background gradient
   setGradient(BackgroundColor);

@@ -185,9 +185,6 @@ async function SetBulogo() {
   }
 }
 SetBulogo().then((data) => {
-  const UBU = data.UBU;
-  const { DarkLogo, LightLogo } = UBU.BuLogos;
-  
   function setBuIcon(imgSrc, imgAlt) {
       // Find the img element with id 'logo-img'
       const img = document.getElementById('logo');
@@ -202,7 +199,7 @@ SetBulogo().then((data) => {
       }
   }
   
-  setBuIcon(LightLogo, 'Example image');  
+  setBuIcon(data.BuLogos.Simple[0], data.BuLogos.LogoText.description);  
 });
 
 
@@ -224,33 +221,15 @@ async function backgroundColor() {
   }
 }
 backgroundColor().then((data) => {
-  const UBU = data.UBU;
-  const { top, bottom } = UBU.BackgroundColor;
-  const { Base, Prime1, Prime2, Prime3 } = UBU.Colors;
-// Function to change the background gradient dynamically
-function setGradient(color1, color2) {
-  document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2})`;
-}
 
+  const { top, bottom } = data.BuColors.BackgroundColor;
+  const { Base, Prime1, Prime2, Prime3 } = data.BuColors.Colors;
+  // Function to change the background gradient dynamically
+  function setGradient(color1, color2) {
+    document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2})`;
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-setGradient(top, bottom); 
-
+  setGradient(top, bottom); 
 });
 
 
@@ -275,41 +254,68 @@ async function getBtnIcons() {
   }
 }
 getBtnIcons().then((data) => {
-  const App = data.App;
-  const Btns = App.Btns;
+  const Buissnes = data;
 
-  function createButton(buttonType, divId, imgSrcIndex, redirectUrl, imgAlt = "Example image") {
-    const buttonGroup = Btns[buttonType];
+  function createButton({ buttonType, divId, imgSrcIndex, redirectUrl, imgAlt = "Example image" }, Buttons) {
+    const buttonGroup = Buttons[buttonType];
     const imgSrc = buttonGroup[imgSrcIndex];
-
+  
     const div = document.getElementById(divId);
     if (!div) {
       console.error(`Div with id '${divId}' not found.`);
       return;
     }
-
+  
     const img = document.createElement("img");
     img.src = imgSrc;
     img.alt = imgAlt;
     img.addEventListener("click", () => {
       window.location.href = redirectUrl;
     });
-
+  
     div.appendChild(img);
   }
 
-  const buttonsConfig = [
-    { buttonType: "homeBtns", divId: "home", imgSrcIndex: 0, redirectUrl: "index9.html" },
-    { buttonType: "DateBtns", divId: "Date", imgSrcIndex: 1, redirectUrl: "index9.2.html" },
-    { buttonType: "GoalBtns", divId: "goals", imgSrcIndex: 1, redirectUrl: "index9.3.html" },
-    { buttonType: "StatBtns", divId: "stats", imgSrcIndex: 1, redirectUrl: "index9.4.html" },
-    { buttonType: "GearBtns", divId: "gear", imgSrcIndex: 1, redirectUrl: "index9.5.html" },
-  ];
+  function setControlBar() {
+    if (
+      !Buissnes ||
+      !Buissnes.AppIcons ||
+      !Buissnes.AppIcons.ControlBar
+    ) {
+      console.error("ControlBar data is not available.");
+      return;
+    }
+  
+    const { Goals, Home, Settings, Stats ,Calander} = Buissnes.AppIcons.ControlBar;
 
-  buttonsConfig.forEach(({ buttonType, divId, imgSrcIndex, redirectUrl }) => {
-    createButton(buttonType, divId, imgSrcIndex, redirectUrl);
-  });
+    const Buttons = {
+      homeBtns: Home,
+      DateBtns: Calander, // Adjust as needed
+      GoalBtns: Goals,
+      StatBtns: Stats,
+      GearBtns: Settings, // Adjust as needed
+    };
+
+  
+    const buttonsConfig = [
+      { buttonType: "homeBtns", divId: "home", imgSrcIndex: 0, redirectUrl: "index9.html" },
+      { buttonType: "DateBtns", divId: "Date", imgSrcIndex: 0, redirectUrl: "index9.2.html" },
+      { buttonType: "GoalBtns", divId: "goals", imgSrcIndex: 0, redirectUrl: "index9.3.html" },
+      { buttonType: "StatBtns", divId: "stats", imgSrcIndex: 1, redirectUrl: "index9.4.html" },
+      { buttonType: "GearBtns", divId: "gear", imgSrcIndex: 0, redirectUrl: "index9.5.html" },
+    ];
+  
+    buttonsConfig.forEach((config) => createButton(config, Buttons));
+  }
+  setControlBar()
+  
 });
+
+
+
+
+
+
 document.addEventListener('touchstart', function (event) {
   if (event.touches.length > 1) {
     event.preventDefault(); // Prevents zooming

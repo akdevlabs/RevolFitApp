@@ -32,41 +32,15 @@ const transferreduserInfo = localStorage.getItem("transferreduserInfo");
 const transferredInfo = localStorage.getItem("transferredBu");
 const workoutLocation = getNewestWorkoutLocation();
 
-
-
-
-
 console.log("Transferred User Info:", transferreduserInfo);
 console.log("Transferred Info:", transferredInfo);
 console.log(workoutLocation)
 
-
-
-
-
-
 // Data to check
-const logrosData = {
-  Footsteps: { Active: true },
-  CCheckmarks: { Active: true },
-  FitGraph: { Active: true },
-  Clock: { Active: true },
-  Dumbbell: { Active: true },
-  BalancedScales: { Active: true },
-  Timer: { Active: true },
-  Stretching: { Active: false },
-  FullBody: { Active: false  },
-  Trophy: { Active: false  },
-};
-
-
-    
 
 
 
-
-
-async function backgroundColor() {
+async function SetaColor() {
   try {
     const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
     const docSnap = await getDoc(docRef);
@@ -83,20 +57,22 @@ async function backgroundColor() {
     return null;
   }
 }
-backgroundColor().then((data) => {
-  const UBU = data.UBU;
-  const { top, bottom } = UBU.BackgroundColor;
-  const { Base, Prime1, Prime2, Prime3 } = UBU.Colors;
-
-
-
-
-function setGradient(color1, color2) {
-  document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2})`;
-}
-setGradient(top, bottom); 
-
-
+SetaColor().then((data) => {
+  const { top, bottom } = data.BuColors.BackgroundColor;
+  const { Base, Prime1, Prime2, Prime3 } = data.BuColors.Colors;
+  function setGradient(color1, color2) {
+    document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2})`;
+  }
+  function setTittleColor(BtnUrl) {
+    const tittle = document.getElementById(BtnUrl);
+    if (tittle) {
+      tittle.style.color = Base || '#013948';
+    } else {
+      console.error(`Element with id "${BtnUrl}" not found.`);
+    }
+  }
+  setTittleColor('Troptittle') 
+  setGradient(top, bottom); 
 });
 
 async function SetBulogo() {
@@ -117,9 +93,6 @@ async function SetBulogo() {
   }
 }
 SetBulogo().then((data) => {
-  const UBU = data.UBU;
-  const { DarkLogo, LightLogo } = UBU.BuLogos;
-  
   function setBuIcon(imgSrc, imgAlt) {
       // Find the img element with id 'logo-img'
       const img = document.getElementById('logo');
@@ -134,10 +107,28 @@ SetBulogo().then((data) => {
       }
   }
   
-  setBuIcon(LightLogo, 'Example image');  
+  setBuIcon(data.BuLogos.Simple[0], data.BuLogos.LogoText.description);  
 });
 
-async function setTittleColor() {
+async function SetTrophies() {
+  try {
+    const docRef = doc(db, "RevolApp", "Logros"); // Ensure db and transferredInfo are initialized
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.error("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+
+async function SetColors() {
   try {
     const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
     const docSnap = await getDoc(docRef);
@@ -154,58 +145,11 @@ async function setTittleColor() {
     return null;
   }
 }
-setTittleColor().then((data) => {
-  const UBU = data.UBU;
 
-  const { Base, Prime1, Prime2, Prime3 } = UBU.Colors;
+Promise.all([SetTrophies(), SetColors()]).then(([data, colorData]) => {
+  if (!data || !colorData) return;
 
-
-  function setTittleColor(BtnUrl) {
-    const tittle = document.getElementById(BtnUrl);
-    if (tittle) {
-      tittle.style.color = Base || '#013948';
-    } else {
-      console.error(`Element with id "${BtnUrl}" not found.`);
-    }
-  }
-
-
-
-  setTittleColor('Troptittle') 
-
-});
-
-
-
-
-
-
-
-
-// Bottom Icons
-async function getSkillIcons() {
-  try {
-    const docRef = doc(db, "RevoBuissnes", transferredInfo);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const documentData = docSnap.data();
-      return documentData; // Return the document data
-    } else {
-      console.log("No such document!");
-      return null;
-    }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-    return null;
-  }
-}
-getSkillIcons().then((data) => {
-  const UBU = data.UBU;
-
-  const { Base, Prime1, Prime2, Prime3 } = UBU.Colors;
-
-  const App = data.App;
+  const App = data;
   const {
     Footsteps,
     CCheckmarks,
@@ -217,61 +161,57 @@ getSkillIcons().then((data) => {
     Stretching,
     FullBody,
     Trophy
-  } = App.Logros;
+  } = App;
 
-  // Target the logrosBlock element
+  const { Prime1, Prime2 } = colorData;
 
+  function renderSlotContent(logroData, slot, Tvalue) {
+    const logrosBlock = document.getElementById(slot);
+    if (!logrosBlock) return;
 
- 
+    const logroItem = document.createElement('div');
+    logroItem.className = 'SlotTittle';
 
+    const color = logroData.Active ? Prime2 : Prime1;
+    const AIcon = logroData.Active ? 0 : 1;
 
+    if (Tvalue.Icon) {
+      const iconElement = document.createElement('img');
+      iconElement.src = Tvalue.Icon[AIcon];
+      logroItem.appendChild(iconElement);
+    }
 
-// Function to render slot content
-function renderSlotContent(logroData, slot, Tvalue) {
-  const logrosBlock = document.getElementById(slot);
-  if (!logrosBlock) return; // Skip if the slot doesn't exist
+    const titleElement = document.createElement('h3');
+    titleElement.textContent = Tvalue.Tittle;
+    titleElement.style.color = color;
+    logroItem.appendChild(titleElement);
 
-  const logroItem = document.createElement('div');
-  logroItem.className = 'SlotTittle';
-
-  // Determine color based on Active status
-  const color = logroData.Active ? Prime2 : 
-  Prime1;
-  const AIcon = logroData.Active ? 0 : 
-  1;
-  // Green if true, white if false
-
-  // Add an icon if it exists
-  if (Tvalue.Icon) {
-    const iconElement = document.createElement('img');
-    iconElement.src = Tvalue.Icon[AIcon]; // Assuming Tvalue.Icon contains the URL of the icon
-
-    logroItem.appendChild(iconElement);
+    logrosBlock.appendChild(logroItem);
   }
-  // Add title with appropriate color
-  const titleElement = document.createElement('h3');
-  titleElement.textContent = Tvalue.Tittle; // Use slot name as title
-  titleElement.style.color = color;
-  logroItem.appendChild(titleElement);
 
+  const logrosData = {
+    Footsteps: { Active: true },
+    CCheckmarks: { Active: true },
+    FitGraph: { Active: true },
+    Clock: { Active: true },
+    Dumbbell: { Active: true },
+    BalancedScales: { Active: true },
+    Timer: { Active: true },
+    Stretching: { Active: false },
+    FullBody: { Active: false  },
+    Trophy: { Active: false  },
+  }; // Assuming this contains the Active flags
 
-  logrosBlock.appendChild(logroItem);
-
-  logrosBlock.appendChild(logroItem);
-}
-
-// Render content for each logro
-renderSlotContent(logrosData.Footsteps, 'slot1',Footsteps);
-renderSlotContent(logrosData.CCheckmarks, 'slot2',CCheckmarks);
-renderSlotContent(logrosData.FitGraph, 'slot3',FitGraph);
-renderSlotContent(logrosData.Clock, 'slot4', Clock);
-renderSlotContent(logrosData.Dumbbell, 'slot5',Dumbbell);
-renderSlotContent(logrosData.BalancedScales, 'slot6', BalancedScales);
-renderSlotContent(logrosData.Timer, 'slot7',Timer);
-renderSlotContent(logrosData.Stretching, 'slot8',Stretching);
-renderSlotContent(logrosData.FullBody, 'slot9',FullBody);
-renderSlotContent(logrosData.Trophy, 'slot10',Trophy);
-
+  renderSlotContent(logrosData.Footsteps, 'slot1', Footsteps);
+  renderSlotContent(logrosData.CCheckmarks, 'slot2', CCheckmarks);
+  renderSlotContent(logrosData.FitGraph, 'slot3', FitGraph);
+  renderSlotContent(logrosData.Clock, 'slot4', Clock);
+  renderSlotContent(logrosData.Dumbbell, 'slot5', Dumbbell);
+  renderSlotContent(logrosData.BalancedScales, 'slot6', BalancedScales);
+  renderSlotContent(logrosData.Timer, 'slot7', Timer);
+  renderSlotContent(logrosData.Stretching, 'slot8', Stretching);
+  renderSlotContent(logrosData.FullBody, 'slot9', FullBody);
+  renderSlotContent(logrosData.Trophy, 'slot10', Trophy);
 });
 
 
@@ -284,17 +224,20 @@ renderSlotContent(logrosData.Trophy, 'slot10',Trophy);
 
 
 
-// Bottom Icons
-async function getBtnIcons() {
+
+
+
+
+async function SetControlBar() {
   try {
-    const docRef = doc(db, "RevoBuissnes", transferredInfo);
+    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
       const documentData = docSnap.data();
       return documentData; // Return the document data
     } else {
-      console.log("No such document!");
+      console.error("No such document!");
       return null;
     }
   } catch (error) {
@@ -302,12 +245,13 @@ async function getBtnIcons() {
     return null;
   }
 }
-getBtnIcons().then((data) => {
-  const App = data.App;
-  const Btns = App.Btns;
 
-  function createButton(buttonType, divId, imgSrcIndex, redirectUrl, imgAlt = "Example image") {
-    const buttonGroup = Btns[buttonType];
+
+SetControlBar().then((data) => {
+  const Buissnes = data;
+
+  function createButton({ buttonType, divId, imgSrcIndex, redirectUrl, imgAlt = "Example image" }, Buttons) {
+    const buttonGroup = Buttons[buttonType];
     const imgSrc = buttonGroup[imgSrcIndex];
 
     const div = document.getElementById(divId);
@@ -325,19 +269,45 @@ getBtnIcons().then((data) => {
 
     div.appendChild(img);
   }
+  function setControlBar() {
+    if (
+      !Buissnes ||
+      !Buissnes.AppIcons ||
+      !Buissnes.AppIcons.ControlBar
+    ) {
+      console.error("ControlBar data is not available.");
+      return;
+    }
 
-  const buttonsConfig = [
-    { buttonType: "homeBtns", divId: "home", imgSrcIndex: 0, redirectUrl: "index9.html" },
-    { buttonType: "DateBtns", divId: "Date", imgSrcIndex: 1, redirectUrl: "index9.2.html" },
-    { buttonType: "GoalBtns", divId: "goals", imgSrcIndex: 1, redirectUrl: "index9.3.html" },
-    { buttonType: "StatBtns", divId: "stats", imgSrcIndex: 1, redirectUrl: "index9.4.html" },
-    { buttonType: "GearBtns", divId: "gear", imgSrcIndex: 1, redirectUrl: "index9.5.html" },
-  ];
+    const { Goals, Home, Settings, Stats ,Calander} = Buissnes.AppIcons.ControlBar;
 
-  buttonsConfig.forEach(({ buttonType, divId, imgSrcIndex, redirectUrl }) => {
-    createButton(buttonType, divId, imgSrcIndex, redirectUrl);
-  });
+    const Buttons = {
+      homeBtns: Home,
+      DateBtns: Calander, // Adjust as needed
+      GoalBtns: Goals,
+      StatBtns: Stats,
+      GearBtns: Settings, // Adjust as needed
+    };
+
+    const buttonsConfig = [
+      { buttonType: "homeBtns", divId: "home", imgSrcIndex: 0, redirectUrl: "index9.html" },
+      { buttonType: "DateBtns", divId: "Date", imgSrcIndex: 0, redirectUrl: "index9.2.html" },
+      { buttonType: "GoalBtns", divId: "goals", imgSrcIndex: 1, redirectUrl: "index9.3.html" },
+      { buttonType: "StatBtns", divId: "stats", imgSrcIndex: 0, redirectUrl: "index9.4.html" },
+      { buttonType: "GearBtns", divId: "gear", imgSrcIndex: 0, redirectUrl: "index9.5.html" },
+    ];
+
+    buttonsConfig.forEach((config) => createButton(config, Buttons));
+  }
+
+setControlBar()
+
 });
+
+
+
+
+
 document.addEventListener('touchstart', function (event) {
   if (event.touches.length > 1) {
     event.preventDefault(); // Prevents zooming

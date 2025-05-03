@@ -318,13 +318,18 @@ async function renderHNImgs() {
   }
 }
 renderHNImgs().then((data) => {
-  const App = data.App;
-  const {Fire,Save,SaveF } = App.MealPlanBtn;
+
+  const Fire = data.AppIcons.MealPlanBtn.Fire;
+  const Save = data.AppIcons.MealPlanBtn.Save;
+  console.log(data.AppIcons.MealPlanBtn.Fire)
+
 
   const firePopElement = document.getElementById("firePop");
   const SaveImgElement = document.getElementById("Save");
+
+
   firePopElement.src = Fire;
-  SaveImgElement.src = Save;
+  SaveImgElement.src = Save[0];
 });
 
 
@@ -979,9 +984,8 @@ async function RecipeingredientColor() {
   }
 }
 RecipeingredientColor().then((data) => {
-  const UBU = data.UBU;
-  const { top, bottom } = UBU.BackgroundColor;
-  const { Base, Prime1, Prime2, Prime3 } = UBU.Colors;
+  const { top, bottom } = data.BuColors.BackgroundColor;
+  const { Base, Prime1, Prime2, Prime3 } = data.BuColors.Colors;
 
   function timeElement(){
     // Set background color for the Time ID
@@ -1063,16 +1067,12 @@ async function backgroundColor() {
   }
 }
 backgroundColor().then((data) => {
-  const UBU = data.UBU;
-  const { top, bottom } = UBU.BackgroundColor;
-  const { Base, Prime1, Prime2, Prime3 } = UBU.Colors;
-// Function to change the background gradient dynamically
-function setGradient(color1, color2) {
-  document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2})`;
-}
+  const { top, bottom } = data.BuColors.BackgroundColor;
+  const { Base, Prime1, Prime2, Prime3 } = data.BuColors.Colors;
+  // Function to change the background gradient dynamically
+  function setGradient(color1, color2) {
+    document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2})`;
+  }
 
-
-
-setGradient(top, bottom); 
-
+  setGradient(top, bottom); 
 });

@@ -1,0 +1,499 @@
+@media (max-width: 700px) {
+  body, html {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    touch-action: none; /* Disable gestures like zoom */
+    overscroll-behavior: none; /* Prevent overscroll bounce on mobile */
+    overflow: hidden; /* Prevent scrolling */
+  }
+
+  
+   .ToggleBlock{
+     gap: 1rem;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+   }
+   .toggle-btn div {
+     flex: 1;
+     text-align: center;
+     padding: 8px;
+     cursor: pointer;
+     border-radius: 9999px;
+     transition: background 0.3s;
+   }
+   .toggle-active {
+     font-weight: bold;
+   }
+   .Blocktext{
+     padding: 2rem;
+     border-radius: 1rem;
+   }
+   .NextBtn{
+    width: 90%;
+    margin: 5rem 1.2rem 1rem 1.2rem;
+    border-radius: 1rem;
+    padding:.5rem 2rem;
+   }
+   .Tittle{
+    text-align: center;
+  }
+  /* ----------------- Start ------------------------ */
+  #Start{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+  #Startblock{
+    gap:3rem;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    margin: 0;
+    padding: 20rem 1rem;
+  }
+  .image-layer{
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    opacity: 0.3;
+    rotate: -10deg;
+    width: 20rem;
+    height: 60vh;
+    margin: 0 15%; 
+  }
+  /* ----------------- zero ------------------------ */
+  #zero{
+    display: none;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+  }
+  #WeightBlock{
+    gap: 3rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    margin: 0;
+   }
+
+  .ruler {
+    height:40rem;
+    position: relative;
+  }  
+  .ruler-container {
+    width: 25rem;
+    overflow-y: hidden;
+  }
+  .ruler-container-text{
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+  }
+  #height-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20rem;
+    height: 15px;  
+    border-radius: 5px;
+    outline: none;
+    transition: 0.3s;
+  }
+  #height-slider::-moz-range-track {
+    height: 10px;
+    border-radius: 5px;
+  }
+  #height-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .Result{
+    font-weight: bold;
+    font-size: 3.5rem;
+  }
+  .HightResult{
+    font-weight: bold;
+    font-size: 3rem;
+  }
+  /* ----------------- one ------------------------ */
+  #one {
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .hight-ruler-container{
+    display: none;
+  }
+  #hightBlock{
+    gap: 3rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    margin: 0;
+  }
+  /* ----------------- two ------------------------ */
+  #two {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0;
+  }
+  #ArmBlock{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    margin: 0;
+    padding:10rem 1rem;
+  }
+  #ArmImg{
+    width: 30rem;
+  }
+  .measurementBlock {
+    width: 150px;
+    height: 200px; /* Adjusted for 5 items */
+    margin:5rem 0 0 0 ;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    position: relative;
+    scroll-behavior: smooth; /* Smooth scrolling */
+  }
+  .measurementBlock ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  .measurementBlock li {
+    padding: 15px 10px;
+    text-align: center;
+    font-size: 16px;
+    transition: opacity 0.3s ease-in-out, font-size 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    opacity: 0.2;
+    cursor: pointer; /* Makes the list item clickable */
+    height: 24px; /* Adjust this to match the size of each item */
+  }
+  .measurementBlock li.active {
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    opacity: 1;
+  }
+  /* ----------------- three ------------------------ */
+  #three{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0;
+  }
+  #WaistBlock{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    margin: 0;
+    padding:12rem 3rem;
+  }
+  #cinturaImg{
+    width: 40rem;
+  }
+  /* ----------------- four ------------------------ */ 
+  #four{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  #HipsBlock{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    margin: 0;
+    padding:12rem 3rem;
+  }
+  #hipsImg{
+    width: 40rem;
+  }
+  /* ----------------- five ------------------------ */ 
+  #five{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  #LegBlock{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    margin: 0;
+    padding:12rem 4rem;
+  }
+  #piernaImg{
+    width: 50rem;
+  }
+  /* ----------------- six ------------------------ */ 
+  #six{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  #RistBlock{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    margin: 0;
+    padding:12rem 4rem;
+  }
+  #RistImg{
+    width: 50rem;
+  }
+  /* ----------------- seven ------------------------ */ 
+  #seven{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  #KneeBlock{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    margin: 0;
+    padding:12rem 4rem;
+  }
+  #KneeImg{
+    width: 50rem;
+  }
+  /* ----------------- eight ------------------------ */ 
+  #eight{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  #NeckBlock{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    margin: 0;
+    padding:12rem 4rem;
+  }
+  #NeckImg{
+    width: 50rem;
+  }
+  /* ----------------- nine ------------------------ */ 
+  #nine{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 10rem ;
+    
+  }
+  .Q-dropdown{
+    gap: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .Q-dropdown-tittle{
+    width: 11.86rem;
+    font-size: 1rem;
+    text-align: left;
+  }
+  .Q-toggle{
+    display: flex;
+    align-items: center;
+    transition: border 0.3s ease;
+    padding: 10px;
+    border-radius: 6px;
+    margin: .5rem;
+    justify-content: space-between;
+  }
+  .QToggleBlock {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+  }
+  .Qtoggle-btn {
+    display: flex;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .Qtoggle-btn div {
+    padding: 5px 20px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+  .Q-Answer{ 
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    transition: border 0.3s ease;
+    padding: 10px;
+    border-radius: 6px;
+    margin: .5rem;
+  }
+  .Q-Answer-tittle{
+    width: 12rem;
+    text-align: left;
+    font-size: 1rem;
+  }
+  .Multi-image-layer{
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    opacity: 0.3;
+    rotate: -10deg;
+    width: 30rem;
+    height: 60vh;
+    margin: 0;
+  }
+  #MultiBlock{
+    margin: 0;
+    display: flex;
+    position: absolute;
+    padding: 100%  2rem;
+    flex-direction: column;
+  }
+  /* ----------------- ten ------------------------ */ 
+  #Ten{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .Main-Tittle{
+    text-align: center;
+  }
+  #MultiQBlock{
+    margin: 0;
+    display: flex;
+    position: absolute;
+    padding: 100%  2rem;
+    flex-direction: column;
+  }
+  #yes-Q5-question{
+    margin-bottom:-2rem;
+  }
+  #yes-Q6-question{
+    margin-bottom:-2rem;
+  }
+  #yes-Q7-question{
+    margin-bottom:-2rem;
+  }
+  #yes-Q8-question{
+    margin-bottom:-2rem;
+  }
+  #yes-Q9-question{
+    margin-bottom:-2rem;
+  }
+
+  /* ----------------- eleven ------------------------ */ 
+  #eleven{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  #MultiQ2Block{
+    margin: 0 ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    padding: 100%  2rem;
+    flex-direction: column;
+  }
+  #yes-Q10-question, #yes-Q11-question, #yes-Q12-question, #yes-Q13-question, #yes-Q14-question{
+    margin:0 1rem -2rem 1rem;
+  }
+  /* ----------------- twelve ------------------------ */ 
+  #twelve{
+  display:none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  }
+  #MultiQ3Block{
+    gap: 3rem;
+    position: absolute;
+    padding: 100%  1rem;
+  
+  }
+  .Return-pen{
+    width: 1rem;
+  }
+  .Result-block{
+    width: 20rem;
+  }
+  .ResultBlock{
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+    
+    
+  }
+
+  .Result-Block-text{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+
+  .Result-Block-text h3{
+    width: 13rem;
+    font-size: 1rem;
+
+  }
+  
+
+
+
+
+
+
+  .Result-block {
+    max-height: 30rem; /* Set the desired height */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    padding: 4rem;
+  }
+
+
+
+
+
+}
+

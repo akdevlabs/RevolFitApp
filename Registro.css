@@ -1,0 +1,344 @@
+@media (max-width: 768px) {
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh; /* Use 100vh for fixed screen height */
+    overflow: hidden; /* Disable scroll */
+    position: fixed;  /* Prevent movement */
+    touch-action: none; /* Disable gestures like zoom, swipe */
+    overscroll-behavior: none; /* Prevent bounce effect */
+  }
+  /* -------------- Intro-Block -------------------*/
+  .Blocks {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .image-layer{
+    width: 28rem;
+  }
+  .Content-block{
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    padding:100% 0;
+  }
+  .Content-block-Text{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1rem;
+    padding: 1rem
+  }
+  .Qtittle{
+    text-align: center;
+    font-size: 2rem;
+  }
+  #instructions{
+    text-align: justify;
+  }
+  .Nex-Btn{
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 1rem 7rem;
+    border-radius: 1rem;
+  }
+  #Start-Text{
+    border-radius: 1rem;
+  }
+   
+
+  /* -------------- Name-Block -------------------*/
+  #Name-Block{
+    display: none;
+  }
+  .input-Blocks{
+    gap:1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  /* -------------- Age-Block -------------------*/
+  #Phone-Block{
+    display: none;
+  }
+  #input-Blocks-phone-1{
+    border-radius: 1rem;
+  }
+  #input-Blocks-phone-1 label{
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin: 1rem;
+  }
+  #input-Blocks-phone-1 select {
+    width: 8rem;
+    height: 3rem;
+    padding:  0  .5rem;
+    font-size: 14px;
+    border-radius: 0  8px 8px 0;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+  #input-Blocks-phone-1 select:focus {
+    outline: none;
+  }
+  .phone-block{
+    display: flex;
+    align-items: center;
+  }
+  #phone{
+    width: 10rem;
+    padding: .8rem ;
+    border-radius: 0  8px 8px 0;
+    transition: color 0.3s ease;
+  }
+  #phone::placeholder {
+    color: var(--placeholder-color, #bbd6f3); /* fallback color */
+    padding: 0 1rem;
+    
+  }
+  /* -------------- Age-Block -------------------*/
+  #Age-Block{
+    display: none;
+  }
+  #Age{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding: 1rem  0 0 0;
+  }
+  #Question-block-2{
+    margin: 0 2rem;
+  }
+  .picker {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 10px;
+  }
+  .selector-Block{
+    display: flex;
+  }
+  select {
+    background: transparent;
+    font-weight: bold;
+    font-size: 1.5rem;
+    border: none;
+    outline: none;
+    height: 150px;
+    overflow-y: scroll;
+    appearance: none;
+    text-align: center;
+    width: 80px;
+    scrollbar-width: none;
+  }
+  select::-webkit-scrollbar {
+    display: none;
+  }
+  /* -------------- Sex-Block -------------------*/
+  #Sex-Block{
+    display: none;
+    flex-direction:row;
+    margin: 1rem;
+  }
+  .Img-Block img{
+    width: 28rem;
+  }
+   #CB3{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    margin: 0 2rem
+  }
+  #Question-block-3{
+    margin:  12rem 0 2rem 0;
+    padding: 0 2rem 2rem 2rem;
+    border-radius: 1rem;
+    
+  }
+  .ChooseBlock{
+    gap: 1rem;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    
+  }
+  /* -------------- PPhoto-Block -------------------*/
+  #PPhoto-Block{
+    display: none;
+
+  }
+  #Photo-Content-block{
+    display: flex;
+    padding: 100% 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+
+  }
+  #Question-block-4{
+    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+     padding: 3rem;
+  }
+  #Q-tittle-4{
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+  }
+  #Q-tittle-4 h2{
+    margin: -1rem 0 -1rem 0;
+  }
+  .PhotoBtns{
+    padding:.5rem 1rem;
+    border-radius: 1rem;
+  }
+  .input-Photo-Blocks{
+    display: none;
+  }
+  #Take-Block{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+
+    
+  }
+  video, canvas {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  /* -------------- Country-Block -------------------*/
+  #Country-Block{
+    display: none;
+  }
+  #Country-Content-block{
+    display: flex;
+    padding: 100% 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+
+  }
+  #Question-block-5{
+    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+  }
+  #country-Inputs{
+    width: 30rem;
+    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  label[for="pais"] {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+  }
+  select#pais {
+    width: 19rem;
+    height: 2rem;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    background-position: right 12px center;
+    background-size: 1px;
+
+  }
+  select#pais:focus {
+    border-color: #007BFF;
+    outline: none;
+  }
+  select#pais:invalid {
+    color: #888; /* Style placeholder option */
+  }
+  .C-inputs{
+    width: 18rem;
+    padding: .5rem;
+    border-radius: .5rem;
+  }
+  #Q-tittle-C{
+    width: 20rem;
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
+  }
+
+
+
+
+  /* -------------- Results-Block -------------------*/
+  #Results-Block{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+
+  }
+  #Result-Content-block{
+    max-width: 30rem;
+    padding:1rem;
+    margin:-1rem  0 1rem 0;
+    border-radius: 1rem;
+  }
+  .Result-block{
+    gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin: -.8rem 0;
+
+  }
+  .Return-pen{
+    width: 1rem;
+
+  }
+  .Result-Block-text{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .Result-Block-text h4{
+    width:10rem;
+     font-size: .9rem;
+ 
+   }
+
+
+
+
+
+
+}
+

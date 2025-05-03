@@ -1,37 +1,32 @@
-import { 
-  initializeApp 
-} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { 
-  getAuth, 
-  signInWithEmailAndPassword, 
-  onAuthStateChanged, 
-  signOut 
-} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+// Import necessary Firebase modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
 import { 
   getFirestore, 
   doc, 
   getDoc, 
   updateDoc, 
-  serverTimestamp,
+  serverTimestamp, 
   collection, 
-  addDoc  
-} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+  addDoc, 
+  setDoc  } 
+  from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
-let db, auth; // Declare Firestore and Auth globally
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBc3B7SM_Itr9LRCv8N3_tbl9BglxHKo-M",
+  authDomain: "revofit-ad7c3.firebaseapp.com",
+  projectId: "revofit-ad7c3",
+  storageBucket: "revofit-ad7c3.appspot.com",
+  messagingSenderId: "643801118133",
+  appId: "1:643801118133:web:d679abc998a18f7077d5fc",
+  measurementId: "G-E6P96D0M6Z"
+};
 
-// Fetch Firebase configuration
-async function fetchFirebaseConfig() {
-  try {
-   // console.log("Fetching Firebase config...");
-    const response = await fetch("http://localhost:3000/firebase-config"); // Change when deploying
-    if (!response.ok) throw new Error("Failed to fetch Firebase config");
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching Firebase config:", error);
-    return null;
-  }
-}
-
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
 // Initialize Firestore and Auth
 async function initializeFirebase() {
   if (db && auth) return; // Prevent duplicate initialization
@@ -118,6 +113,7 @@ const Routine = 'Routine1'
 
 async function applyBranding() {
   const Buissnes = await checkDocumentExists("RevoBuissnes", transferredInfo);
+  const UserInfo = await checkDocumentExists("RevoBuissnes",transferreduserInfo);
 
   function setContent(){
     function setBgImgs(imgSrc, imgAlt, urlId) {
@@ -133,10 +129,10 @@ async function applyBranding() {
           console.error("Image element with id 'logo-img' not found.");
       }
     }
-    setBgImgs(Buissnes.UBU.BuLogos.DarkLogo, Buissnes.UBU.LogoText.Logo.description, 'logo')
+    setBgImgs(Buissnes.BuLogos.Simple[0], Buissnes.BuLogos.LogoText.description, 'logo')
   }
   function setAllcolors(){
-    const UBU = Buissnes.UBU;
+    const UBU = Buissnes.BuColors;
     const{bottom , center, top} = UBU.BackgroundColor
   
 
@@ -151,7 +147,6 @@ async function applyBranding() {
     function setGradient( Ctop, Ccenter, Cbottom ) {
       document.body.style.background = `linear-gradient(to bottom, ${Ctop}, ${Ccenter}, ${Cbottom})`;
     }
-  
     function SetCalanderColors(){
     
         function setHeaderBackgroundColor() {
@@ -163,7 +158,6 @@ async function applyBranding() {
             console.error('Element with id "header" not found.');
           }
         }
-    
         function setcalendarBackgroundColor() {
           const calendar = document.getElementById('calendar');
           if (calendar) {
@@ -174,8 +168,6 @@ async function applyBranding() {
             console.error('Element with id "calendar" not found.');
           }
         }
-    
-        
         function setcalendarBackgroundColor() {
           const calendar = document.getElementById('calendar');
           if (calendar) {
@@ -187,7 +179,6 @@ async function applyBranding() {
             console.error('Element with id "calendar" not found.');
           }
         }
-    
         function setDayBackgroundColor() {
           const day = document.getElementById('day');
           if (day) {
@@ -202,13 +193,9 @@ async function applyBranding() {
         setDayBackgroundColor();
         setcalendarBackgroundColor();
         setHeaderBackgroundColor();
-    
-    
-    
-    
-    
-    
     }
+
+
     function renderCalanderBlock() {
         const monthYearElement = document.getElementById('month-year');
         const datesElement = document.getElementById('dates');
@@ -222,6 +209,7 @@ async function applyBranding() {
         const eventList = document.getElementById('event-list');
     
         let currentDate = new Date();
+        
         const EventBase = {
           "2025-1-1": ["Año Nuevo"],
           "2025-1-14": ["Reunión a las 10 AM", "Almuerzo con Sarah"],
@@ -403,7 +391,7 @@ async function applyBranding() {
     SetCalanderColors()
     renderCalanderBlock();
     setGradient( top, center, bottom )
-    GetBuFont(Buissnes.UBU.font);
+    GetBuFont(Buissnes.font);
 
   }
 
@@ -456,7 +444,6 @@ async function getWorkouts() {
     return null;
   }
 }
-
 async function SetMealPlanBtn() {
   try {
     const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
@@ -475,12 +462,9 @@ async function SetMealPlanBtn() {
   }
 }
 SetMealPlanBtn().then((data) => {
-  const App = data.App;
-  const MealPlanBtn = App.MealPlanBtn;
-  const EventBtn = App.Btns;
-  const Icon = MealPlanBtn.Icon;
-  const EventIcon = EventBtn.EventBtns;
-  const IncentiveIcon = EventBtn.IncentiveBtns;
+  const Check = data.AppIcons.MealPlanBtn.Check;
+  const IncentiveIcon = data.AppIcons.Partnerships.IncentiveBtn;
+  const EventIcon = data.AppIcons.Events.EventBtn;
 
   function setBuIcon(imgSrc, imgAlt, urlImg)  {
       // Find the img element with id 'logo-img'
@@ -496,23 +480,21 @@ SetMealPlanBtn().then((data) => {
       }
   }
   
-  setBuIcon(Icon, 'Example image', 'mPlan');  
-  setBuIcon(IncentiveIcon[0], 'Example image', 'MPartnerships'); 
-  setBuIcon(EventIcon[0], 'Example image', 'MEvents'); 
+  setBuIcon(Check, 'CheckList icon', 'mPlan');  
+  setBuIcon(IncentiveIcon[0], 'Partnership Icon', 'MPartnerships'); 
+  setBuIcon(EventIcon, 'Event Icon', 'MEvents'); 
 
 });
-
-// Bottom Icons
-async function getBtnIcons() {
+async function SetControlBar() {
   try {
-    const docRef = doc(db, "RevoBuissnes", transferredInfo);
+    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
       const documentData = docSnap.data();
       return documentData; // Return the document data
     } else {
-      console.log("No such document!");
+      console.error("No such document!");
       return null;
     }
   } catch (error) {
@@ -520,12 +502,11 @@ async function getBtnIcons() {
     return null;
   }
 }
-getBtnIcons().then((data) => {
-  const App = data.App;
-  const Btns = App.Btns;
+SetControlBar().then((data) => {
+  const Buissnes = data;
 
-  function createButton(buttonType, divId, imgSrcIndex, redirectUrl, imgAlt = "Example image") {
-    const buttonGroup = Btns[buttonType];
+  function createButton({ buttonType, divId, imgSrcIndex, redirectUrl, imgAlt = "Example image" }, Buttons) {
+    const buttonGroup = Buttons[buttonType];
     const imgSrc = buttonGroup[imgSrcIndex];
 
     const div = document.getElementById(divId);
@@ -543,22 +524,51 @@ getBtnIcons().then((data) => {
 
     div.appendChild(img);
   }
+  function setControlBar() {
+    if (
+      !Buissnes ||
+      !Buissnes.AppIcons ||
+      !Buissnes.AppIcons.ControlBar
+    ) {
+      console.error("ControlBar data is not available.");
+      return;
+    }
 
-  const buttonsConfig = [
-    { buttonType: "homeBtns", divId: "home", imgSrcIndex: 1, redirectUrl: "index9.html" },
-    { buttonType: "DateBtns", divId: "Date", imgSrcIndex: 0, redirectUrl: "index9.2.html" },
-    { buttonType: "GoalBtns", divId: "goals", imgSrcIndex: 1, redirectUrl: "index9.3.html" },
-    { buttonType: "StatBtns", divId: "stats", imgSrcIndex: 1, redirectUrl: "index9.4.html" },
-    { buttonType: "GearBtns", divId: "gear", imgSrcIndex: 1, redirectUrl: "index9.5.html" },
-  ];
+    const { Goals, Home, Settings, Stats ,Calander} = Buissnes.AppIcons.ControlBar;
 
-  buttonsConfig.forEach(({ buttonType, divId, imgSrcIndex, redirectUrl }) => {
-    createButton(buttonType, divId, imgSrcIndex, redirectUrl);
-  });
+    const Buttons = {
+      homeBtns: Home,
+      DateBtns: Calander, // Adjust as needed
+      GoalBtns: Goals,
+      StatBtns: Stats,
+      GearBtns: Settings, // Adjust as needed
+    };
+
+    const buttonsConfig = [
+      { buttonType: "homeBtns", divId: "home", imgSrcIndex: 0, redirectUrl: "index9.html" },
+      { buttonType: "DateBtns", divId: "Date", imgSrcIndex: 1, redirectUrl: "index9.2.html" },
+      { buttonType: "GoalBtns", divId: "goals", imgSrcIndex: 0, redirectUrl: "index9.3.html" },
+      { buttonType: "StatBtns", divId: "stats", imgSrcIndex: 0, redirectUrl: "index9.4.html" },
+      { buttonType: "GearBtns", divId: "gear", imgSrcIndex: 0, redirectUrl: "index9.5.html" },
+    ];
+
+    buttonsConfig.forEach((config) => createButton(config, Buttons));
+  }
+
+setControlBar()
+
+
 });
 
-document.addEventListener('touchstart', function (event) {
-  if (event.touches.length > 1) {
-    event.preventDefault(); // Prevents zooming
-  }
-}, { passive: false });
+
+
+
+
+
+
+
+
+
+
+
+

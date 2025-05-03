@@ -1,0 +1,61 @@
+@media (max-width: 700px) {
+  body {
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    touch-action: none; /* Disable gestures like zoom */
+    overscroll-behavior: none; /* Prevent overscroll bounce on mobile */
+  }
+  
+
+  #forgot-password-Img img{
+    width: 100%;
+    height: auto;
+    -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 0) 100%);
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 0) 100%);
+    
+  }
+  #FPC{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 3.7rem;
+
+  }
+
+  #logoBlock img{
+    width: 10rem;
+  }
+  .forgot-password-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 2rem;
+    padding:0  0 auto 0 ;
+    
+  
+  }
+ 
+  #forgotPasswordForm{
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .inputSec{
+    gap: .5rem;
+    display: flex;
+
+  }
+  .inputSec input{
+  width: 17rem;
+  }
+  #getPassword{
+    background-color: transparent;
+    width: 20rem;
+    padding: .2rem 1rem;
+  }
+
+}
+

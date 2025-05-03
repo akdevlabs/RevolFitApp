@@ -1,0 +1,132 @@
+@media (max-width: 700px) {
+  body {
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    touch-action: none; /* Disable gestures like zoom */
+    overscroll-behavior: none; /* Prevent overscroll bounce on mobile */
+  }
+  header{
+    gap: 2rem;
+    display: flex;
+    align-items: center;
+    padding: 2rem 0 3rem 0;
+    margin-bottom: -3rem;
+  }
+  .Return{
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-decoration: none;
+    margin: 0 1.5rem;
+    padding: .5rem 1rem;
+    border-radius: 10rem;
+  }
+  #Card{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem  1.5rem;
+    border-radius: 2rem 2rem 0  0;
+  }
+  .Tittles{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  #Main-Tittle{
+    text-align: center;
+    margin: 2rem 0 -.5rem 0;
+  }
+  .Center-Block{
+    gap:7rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 0 0 1.5rem 0;
+  }
+  .Date-block{
+    display: flex;
+    align-items: last baseline;
+    margin-bottom:  -1rem;
+  }
+  #Day{
+    font-size: 4rem;
+    margin: 0 .5rem;  
+  }
+  #Map-Icon{
+    width: 4rem;
+  }
+
+
+
+
+
+
+
+  .Bottom-Block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 4rem;
+
+  
+
+  }
+
+
+
+  #Event-Img{
+    width: 100%;
+    border-radius: 2rem;
+  }
+
+  .top-Bottom{
+    gap:1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+
+  .host-content{
+    display: flex;
+    flex-direction: column;
+  }
+  #Host-Headshot {
+    width: 6rem;
+    height: 4rem;
+    border-radius: 50%;         /* Makes it a circle */
+    object-fit: cover;          /* Ensures the image fills the circle */
+    overflow: hidden;           /* Hides any overflow outside the circle */
+    display: block;             /* Removes any extra inline spacing */
+  }
+  #Text-Event{
+    display: flex;
+    align-items: center;
+    text-align: justify;
+    margin: 0 1rem;
+
+  }
+  #SetBtn {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    border: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 1000; /* Ensures it stays above other elements */
+  }
+
+  
+
+
+
+
+}

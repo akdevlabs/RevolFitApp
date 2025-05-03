@@ -1,36 +1,32 @@
-import { 
-  initializeApp 
-} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { 
-  getAuth, 
-  signInWithEmailAndPassword, 
-  onAuthStateChanged, 
-  signOut 
-} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+// Import necessary Firebase modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
 import { 
   getFirestore, 
   doc, 
   getDoc, 
   updateDoc, 
-  serverTimestamp,
+  serverTimestamp, 
   collection, 
-  addDoc  
-} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+  addDoc, 
+  setDoc  } 
+  from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
-let db, auth; // Declare Firestore and Auth globally
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBc3B7SM_Itr9LRCv8N3_tbl9BglxHKo-M",
+  authDomain: "revofit-ad7c3.firebaseapp.com",
+  projectId: "revofit-ad7c3",
+  storageBucket: "revofit-ad7c3.appspot.com",
+  messagingSenderId: "643801118133",
+  appId: "1:643801118133:web:d679abc998a18f7077d5fc",
+  measurementId: "G-E6P96D0M6Z"
+};
 
-// Fetch Firebase configuration
-async function fetchFirebaseConfig() {
-  try {
-    console.log("Fetching Firebase config...");
-    const response = await fetch("http://localhost:3000/firebase-config"); // Change when deploying
-    if (!response.ok) throw new Error("Failed to fetch Firebase config");
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching Firebase config:", error);
-    return null;
-  }
-}
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
 
 // Initialize Firestore and Auth
 async function initializeFirebase() {

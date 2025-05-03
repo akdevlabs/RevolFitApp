@@ -58,10 +58,7 @@ async function SetBulogo() {
     return null;
   }
 }
-SetBulogo().then((data) => {
-  const UBU = data.UBU;
-  const { DarkLogo, LightLogo } = UBU.BuLogos;
-  
+SetBulogo().then((data) => {  
   function setBuIcon(imgSrc, imgAlt) {
       // Find the img element with id 'logo-img'
       const img = document.getElementById('logo');
@@ -76,8 +73,10 @@ SetBulogo().then((data) => {
       }
   }
   
-  setBuIcon(LightLogo, 'Example image');  
+  setBuIcon(data.BuLogos.Simple[0],  data.BuLogos.LogoText.description);  
 });
+
+
 
 async function SetBuBtns() {
   try {
@@ -97,14 +96,6 @@ async function SetBuBtns() {
   }
 }
 SetBuBtns().then((data) => {
-  const App = data.App;
-
-  const Btns = App.Btns;
-
-  const Icons = Btns.CalanderBtn;
-
-
-
   function setBuIcon(imgSrc, imgAlt, imgId) {
       // Find the img element with id 'logo-img'
       const img = document.getElementById(imgId);
@@ -119,7 +110,7 @@ SetBuBtns().then((data) => {
       }
   }
   
-  setBuIcon(Icons, 'Example image', "Calander");  
+  setBuIcon(data.Event.CalanderBtn, 'Example image', "Calander");  
   
 
 });
@@ -141,89 +132,6 @@ SetBuBtns().then((data) => {
 
 
 
-async function CalanderColors() {
-  try {
-      const docRef = doc(db, "RevoBuissnes", transferredInfo);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-          return docSnap.data();
-      } else {
-          console.error("No such document!");
-          return null;
-      }
-  } catch (error) {
-      console.error("Error fetching document:", error);
-      return null;
-  }
-}
-
-async function renderWeeklyCalendar() {
-  const data = await CalanderColors();
-  if (!data) return;
-
-  const UBU = data.UBU;
-  const { top, bottom } = UBU.BackgroundColor;
-  const { Base, Prime1,Prime2  } = UBU.Colors;
-
-  const daysContainer = document.getElementById("days-container");
-  let currentDate = new Date();
-  const today = new Date().setHours(0, 0, 0, 0);
-
-  function getWeekDates(date) {
-      const startOfWeek = new Date(date);
-      startOfWeek.setDate(date.getDate() - ((date.getDay() + 6) % 7)); // Start on Monday
-      return Array.from({ length: 7 }, (_, i) => {
-          const day = new Date(startOfWeek);
-          day.setDate(startOfWeek.getDate() + i);
-          return day;
-      });
-  }
-
-  function updateCalendar() {
-      daysContainer.innerHTML = "";
-      const weekDates = getWeekDates(currentDate);
-
-      weekDates.forEach(date => {
-          const isActive = date.setHours(0, 0, 0, 0) === today;
-          const dayElement = document.createElement("div");
-          dayElement.className = "day";
-          dayElement.id = `day-${date.getDate()}`;
-          //dayElement.style.backgroundColor = isActive ? bottom : "transparent";
-          dayElement.innerHTML = `<span style="font-size: ${isActive ? '1.6rem' : '1.2rem'}; color: ${isActive ? top : Prime2}; font-weight: ${isActive ? 'bold' : 'normal'};">
-                                  ${date.toLocaleString('es-ES', { weekday: 'short' })}
-                                </span>
-                                <span style="font-size: ${isActive ? '3.5rem' : '1.3rem'}; color: ${isActive ? Base : Prime1}; font-weight: bold;">
-                                  ${date.getDate()}
-                                </span>`;
-          daysContainer.appendChild(dayElement);
-      });
-  }
-
-  let touchStartX = 0;
-  let touchEndX = 0;
-
-  daysContainer.addEventListener("touchstart", (e) => {
-      touchStartX = e.touches[0].clientX;
-  });
-
-  daysContainer.addEventListener("touchend", (e) => {
-      touchEndX = e.changedTouches[0].clientX;
-      handleSwipe();
-  });
-
-  function handleSwipe() {
-      if (touchEndX < touchStartX) {
-          currentDate.setDate(currentDate.getDate() + 7);
-      } else if (touchEndX > touchStartX) {
-          currentDate.setDate(currentDate.getDate() - 7);
-      }
-      updateCalendar();
-  }
-
-  updateCalendar();
-}
-
-document.addEventListener("DOMContentLoaded", renderWeeklyCalendar);
 
 
 
@@ -258,90 +166,98 @@ async function RenderSlots() {
 }
 
 RenderSlots().then((data) => {
-  if (!data) return;
+  if (!data || !data.Events) return;
 
   const Events = data.Events;
+   console.log(Events)
+
+  const like = data.Event.LikeIcon
 
   function countItems(obj) {
     return Object.keys(obj).length;
   }
+  const count = countItems(Events)
 
   function checkTstamp(tstamp) {
     const eventTime = tstamp instanceof Timestamp ? tstamp.toDate() : new Date(tstamp);
     const currentTime = new Date();
     return eventTime.toDateString() === currentTime.toDateString() || eventTime > currentTime;
   }
-
-  function formatTimestamp(date) {
-    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+  function formatTime(date) {
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   }
-
   function getGoodSlots(obj) {
     const goodSlots = [];
     for (let i = 1; i <= countItems(obj); i++) {
       const slotKey = `slot${i}`;
-      if (obj[slotKey] && obj[slotKey].Tstamp) {
-        const tstamp = obj[slotKey].Tstamp;
+      const slot = obj[slotKey];
+      if (slot && slot.Tstamp) {
+        const tstamp = slot.Tstamp instanceof Timestamp ? slot.Tstamp.toDate() : new Date(slot.Tstamp);
         if (checkTstamp(tstamp)) {
           goodSlots.push({
-            ...obj[slotKey],
-            dateObject: new Date(tstamp),
-            day: new Date(tstamp).getDate(),
-            month: new Date(tstamp).getMonth() + 1,
+            ...slot,
+            dateObject: tstamp,
+            Day: tstamp.getDate(),
+            Month: tstamp.getMonth() + 1,
+            Time: formatTime(tstamp),
             slotId: slotKey
           });
         }
       }
     }
-    return goodSlots.sort((a, b) => a.dateObject - b.dateObject); // Sort by date ascending
+    return goodSlots.sort((a, b) => a.dateObject - b.dateObject);
   }
 
   function createSlots(data) {
     const container = document.getElementById("slotsContainer");
     container.innerHTML = "";
+
+
     data.forEach((event, index) => {
       const slotId = index + 1;
       const slot = document.createElement("div");
       slot.className = "slot";
       slot.id = `slot${slotId}`;
+
       slot.innerHTML = `
         <div class="top">
           <div class="DateTimeBlock">
             <div class="dateBlock">
-              <span class="SDate" id="S${slotId}Date">${event.Day}</span>
-              <span class="SMonth" id="S${slotId}Month">${event.Month}</span>
+              <span class="SDate" id="S${slotId}Date">${event.EventDate.Date[0]}</span>
+              <span class="SMonth" id="S${slotId}Month">${event.EventDate.Date[1]}</span>
             </div>
-            <a class="STime" id="S${slotId}Time">${event.Time}</a>
+            <a class="STime" id="S${slotId}Time">${event.EventDate.Time}</a>
           </div>
-          <img class="like" id="S${slotId}like" src="${event.likeIcon}" alt="Like">
+          <img class="like" id="S${slotId}like" src="${like[1] || ''}" alt="Like">
         </div>
         <div class="center">
-          <h1 class="Stittle" id="S${slotId}tittle">${event.Tittle}</h1>
-          <h2 class="SLocation" id="S${slotId}Location">${event.Location}</h2>
+          <h1 class="Stittle" id="S${slotId}tittle">${event.Tittle || ''}</h1>
+          <h2 class="SLocation" id="S${slotId}Location">${event.Location || ''}</h2>
         </div>
         <div class="bottom">
-          <img class="SImg" id="S${slotId}Img" src="${event.Img}" alt="Event Image">
+          <img class="SImg" id="S${slotId}Img" src="${event.EventImgs.Img || ''}" alt="Event Image">
         </div>
       `;
-      
+
       slot.addEventListener("click", () => {
         localStorage.setItem("selectedSlot", JSON.stringify(event));
         window.location.href = "index9.2.5.html";
       });
-      
+
       container.appendChild(slot);
     });
   }
-
+  
   function scrollToBottom() {
     const container = document.getElementById("slotsContainer");
     container.scrollTop = container.scrollHeight;
   }
 
-  const goodSlots = getGoodSlots(Events);
-  createSlots(goodSlots);
-  scrollToBottom();
+  console.log(count)
+  
+  createSlots(getGoodSlots(data.Events))
 });
+
 
 
 
@@ -400,58 +316,24 @@ async function backgroundColor() {
   }
 }
 backgroundColor().then((data) => {
-  const UBU = data.UBU;
-  const { top, bottom } = UBU.BackgroundColor;
-  const { Base, Prime1, Prime2, Prime3, Prime4 } = UBU.Colors;
-
-
-
-function changeBackgroundImg(color, Tcolor, SBtn) {
-  const Btn = document.getElementById(SBtn);
-  if (Btn) {
-    Btn.style.backgroundColor = color;
-    Btn.style.color = Tcolor;
-  } else {
-    console.error("Element not found:", SBtn);
-  }
-}
-function setGradient(color1, color2) {
-  document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2})`;
-}
-
-
-
-
-changeBackgroundImg(Prime1, Base, 'BackBtn'); // Example color change
-
-setGradient(top, bottom); 
  
+  const { top, bottom } = data.BuColors.BackgroundColor;
+  const { Base, Prime1, Prime2, Prime3, Prime4 } = data.BuColors.Colors;
 
-});
 
-async function setTittleColor() {
-  try {
-    const docRef = doc(db, "RevoBuissnes", transferredInfo); // Ensure db and transferredInfo are initialized
-    const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-      const documentData = docSnap.data();
-      return documentData; // Return the document data
+  function changeBackgroundImg(color, Tcolor, SBtn) {
+    const Btn = document.getElementById(SBtn);
+    if (Btn) {
+      Btn.style.backgroundColor = color;
+      Btn.style.color = Tcolor;
     } else {
-      console.error("No such document!");
-      return null;
+      console.error("Element not found:", SBtn);
     }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-    return null;
   }
-}
-setTittleColor().then((data) => {
-  const UBU = data.UBU;
-
-  const { Base, Prime1, Prime2, Prime3 } = UBU.Colors;
-
-
+  function setGradient(color1, color2) {
+    document.body.style.background = `linear-gradient(to bottom, ${color1}, ${color2})`;
+  }
   function setTittleColor(BtnUrl) {
     const tittle = document.getElementById(BtnUrl);
     if (tittle) {
@@ -462,14 +344,96 @@ setTittleColor().then((data) => {
     
   }
 
+  const daysContainer = document.getElementById("days-container");
+  let currentDate = new Date();
+  const today = new Date().setHours(0, 0, 0, 0);
+
+  function getWeekDates(date) {
+      const startOfWeek = new Date(date);
+      startOfWeek.setDate(date.getDate() - ((date.getDay() + 6) % 7)); // Start on Monday
+      return Array.from({ length: 7 }, (_, i) => {
+          const day = new Date(startOfWeek);
+          day.setDate(startOfWeek.getDate() + i);
+          return day;
+      });
+  }
+
+  function updateCalendar() {
+      daysContainer.innerHTML = "";
+      const weekDates = getWeekDates(currentDate);
+
+      weekDates.forEach(date => {
+          const isActive = date.setHours(0, 0, 0, 0) === today;
+          const dayElement = document.createElement("div");
+          dayElement.className = "day";
+          dayElement.id = `day-${date.getDate()}`;
+          //dayElement.style.backgroundColor = isActive ? bottom : "transparent";
+          dayElement.innerHTML = `<span style="font-size: ${isActive ? '1.6rem' : '1.2rem'}; color: ${isActive ? top : Prime2}; font-weight: ${isActive ? 'bold' : 'normal'};">
+                                  ${date.toLocaleString('es-ES', { weekday: 'short' })}
+                                </span>
+                                <span style="font-size: ${isActive ? '3.5rem' : '1.3rem'}; color: ${isActive ? Base : Prime1}; font-weight: bold;">
+                                  ${date.getDate()}
+                                </span>`;
+          daysContainer.appendChild(dayElement);
+      });
+  }
+
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  daysContainer.addEventListener("touchstart", (e) => {
+      touchStartX = e.touches[0].clientX;
+  });
+
+  daysContainer.addEventListener("touchend", (e) => {
+      touchEndX = e.changedTouches[0].clientX;
+      handleSwipe();
+  });
+
+  function handleSwipe() {
+      if (touchEndX < touchStartX) {
+          currentDate.setDate(currentDate.getDate() + 7);
+      } else if (touchEndX > touchStartX) {
+          currentDate.setDate(currentDate.getDate() - 7);
+      }
+      updateCalendar();
+  }
+
+  updateCalendar();
+
 
 
   setTittleColor('Toptittle') 
 
 
 
+  changeBackgroundImg(Prime1, Base, 'BackBtn'); // Example color change
+
+  setGradient(top, bottom); 
+ 
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 document.addEventListener('touchstart', function (event) {
   if (event.touches.length > 1) {
     event.preventDefault(); // Prevents zooming

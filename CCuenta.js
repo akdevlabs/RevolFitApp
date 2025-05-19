@@ -1,7 +1,20 @@
 // Import necessary Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+import { 
+  getAuth, 
+  signInWithEmailAndPassword, 
+  onAuthStateChanged, 
+  signOut, 
+  createUserWithEmailAndPassword // ✅ Added this
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+import { 
+  getFirestore, 
+  doc, 
+  getDoc, 
+  updateDoc, 
+  serverTimestamp, 
+  setDoc 
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -16,15 +29,14 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+let db = getFirestore(app);
+let auth = getAuth(app);
 
-
-// Fetch Firebase configuration
+// Optional: Fetch Firebase config from server (used if dynamically loading config)
 async function fetchFirebaseConfig() {
   try {
     console.log("Fetching Firebase config...");
-    const response = await fetch("http://localhost:3000/firebase-config"); // Change when deploying
+    const response = await fetch("http://localhost:3000/firebase-config"); // Update for production
     if (!response.ok) throw new Error("Failed to fetch Firebase config");
     return await response.json();
   } catch (error) {
@@ -33,10 +45,9 @@ async function fetchFirebaseConfig() {
   }
 }
 
-// Initialize Firebase
+// Optional: Dynamic initialization (in case you're switching configs)
 async function initializeFirebase() {
-  if (db && auth) return; // Prevent duplicate initialization
-
+  if (db && auth) return; // Already initialized
   try {
     const firebaseConfig = await fetchFirebaseConfig();
     if (!firebaseConfig) throw new Error("Firebase config is undefined");
@@ -51,15 +62,13 @@ async function initializeFirebase() {
   }
 }
 
-// Function to handle account creation
+// Handle account creation
 async function registerAccount() {
-  // Get input values
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
   const confirmPassword = document.getElementById("confirmPassword").value.trim();
   const termsAccepted = document.getElementById("terms").checked;
 
-  // Validate inputs
   if (!email || !password || !confirmPassword) {
     alert("Por favor, complete todos los campos.");
     return;
@@ -76,7 +85,6 @@ async function registerAccount() {
   }
 
   try {
-    // Create user with Firebase Authentication
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
@@ -86,7 +94,6 @@ async function registerAccount() {
       throw new Error("User creation failed or UID is undefined.");
     }
 
-    // Prepare user data for Firestore
     const userData = {
       email: user.email,
       uid: user.uid,
@@ -96,20 +103,19 @@ async function registerAccount() {
       TermsAndConditions: termsAccepted,
     };
 
-    // Save user data in Firestore
     await setDoc(doc(db, "users", user.uid), userData);
 
     console.log("User data saved in Firestore:", userData);
 
     alert("Cuenta creada con éxito.");
-    window.location.href = "index.html"; // Redirect to a success page
+    window.location.href = "index.html"; // ✅ Redirect to landing or success page
   } catch (error) {
     console.error("Error creating user:", error);
     alert(`Error al crear la cuenta: ${error.message}`);
   }
 }
 
-// Function to fetch Firestore document data
+// Fetch data from Firestore
 async function fetchFirestoreData(collection, documentId) {
   try {
     if (!db) throw new Error("Firestore is not initialized yet");
@@ -129,6 +135,7 @@ async function fetchFirestoreData(collection, documentId) {
     return null;
   }
 }
+
 
 // Function to apply branding based on the document (RevoFit, MetaV, SHS)
 async function applyBranding(documentId) {

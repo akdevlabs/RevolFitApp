@@ -8,7 +8,8 @@ import {
   updateDoc, 
   serverTimestamp, 
   collection, 
-  addDoc, 
+  addDoc,
+  arrayUnion, 
   setDoc  } 
   from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
@@ -113,8 +114,8 @@ const Routine = 'Routine1'
 
 async function applyBranding() {
   const Buissnes = await checkDocumentExists("RevoBuissnes", transferredInfo);
-  const UserInfo = await checkDocumentExists("RevoBuissnes",transferreduserInfo);
-
+  const UserInfo = await checkDocumentExists("users",transferreduserInfo);
+  
   function setContent(){
     function setBgImgs(imgSrc, imgAlt, urlId) {
       // Find the img element with id 'logo-img'
@@ -195,6 +196,51 @@ async function applyBranding() {
         setHeaderBackgroundColor();
     }
 
+    
+    function parseEventString(input) {
+      // coerce to string so .split() never blows up
+      const str = String(input);
+      const [datePart, ...eventParts] = str.split(' ');
+      const [month, day, year] = datePart
+        .split('/')
+        .map(n => parseInt(n, 10));
+      const key = `${year}-${month}-${day}`;      // "2025-6-19"
+      const eventName = eventParts.join(' ');
+      return { [key]: [eventName] };
+    }
+    
+    /**
+     * Take multiple inputs (array or object) and merge into one calendar object.
+     *
+     * @param {string[]|object} inputs
+     *   - If it's an array, each element is one raw event‐string.
+     *   - If it's an object, we use its values as raw event‐strings.
+     *
+     * @returns {object}  { "YYYY-M-D": [ ...events ] }
+     */
+    function parseEvents(inputs) {
+      // Normalize to a flat array of strings:
+      const list = Array.isArray(inputs)
+        ? inputs
+        : typeof inputs === 'object' && inputs !== null
+          ? Object.values(inputs)
+          : [inputs];
+    
+      return list.reduce((calendar, raw) => {
+        const parsed = parseEventString(raw);
+        for (const dateKey in parsed) {
+          // init array if needed
+          if (!calendar[dateKey]) calendar[dateKey] = [];
+          // append all events for this date
+          calendar[dateKey].push(...parsed[dateKey]);
+        }
+        return calendar;
+      }, {});
+    }
+    
+    
+    
+    
 
     function renderCalanderBlock() {
         const monthYearElement = document.getElementById('month-year');
@@ -209,26 +255,18 @@ async function applyBranding() {
         const eventList = document.getElementById('event-list');
     
         let currentDate = new Date();
+
+        const SocialEvent = UserInfo.Events.SocialEvent;
+        const MealPlanEvent = UserInfo.Events.MealPlanEvent
+        const WorkoutEvent = UserInfo.Events.WorkoutEvent
         
-        const EventBase = {
-          "2025-1-1": ["Año Nuevo"],
-          "2025-1-14": ["Reunión a las 10 AM", "Almuerzo con Sarah"],
-          "2025-1-20": ["Fecha límite del proyecto"]
-        };
+
+
+        const EventBase = parseEvents(SocialEvent)
     
-        const WorkoutBase = {
-          "2025-1-5": ["Entrenamiento de cardio"],
-          "2025-1-10": ["Día de pierna"],
-          "2025-1-15": ["Sesión de yoga"],
-          "2025-1-20": ["Sesión de HIIT"],
-        };
+        const WorkoutBase = parseEvents(WorkoutEvent)
     
-        const MealPlanBase = {
-          "2025-1-3": ["Desayuno: Avena", "Almuerzo: Ensalada de pollo a la parrilla", "Cena: Salmón con verduras"],
-          "2025-1-10": ["Desayuno: Tazón de batido", "Almuerzo: Sándwich de pavo", "Cena: Espaguetis a la boloñesa"],
-          "2025-1-15": ["Desayuno: Tostada de aguacate", "Almuerzo: Ensalada César", "Cena: Salteado de pollo"],
-          "2025-1-20": ["Desayuno: Panqueques", "Almuerzo: Wrap de atún", "Cena: Bistec con papas"],
-        };
+        const MealPlanBase = parseEvents(MealPlanEvent)
     
         function renderCalendar() {
           const year = currentDate.getFullYear();
@@ -277,11 +315,10 @@ async function applyBranding() {
             datesElement.appendChild(dateElement);
           }
         }
-    
-        function openEventPopup(date) {
+        async function openEventPopup(date) {
           overlay.style.display = 'block';
           eventPopup.style.display = 'block';
-    
+        
           eventList.innerHTML = '';
           if (EventBase[date]) {
             EventBase[date].forEach(event => {
@@ -290,7 +327,7 @@ async function applyBranding() {
               eventList.appendChild(eventItem);
             });
           }
-    
+        
           if (WorkoutBase[date]) {
             WorkoutBase[date].forEach(workout => {
               const workoutItem = document.createElement('div');
@@ -298,7 +335,7 @@ async function applyBranding() {
               eventList.appendChild(workoutItem);
             });
           }
-    
+        
           if (MealPlanBase[date]) {
             MealPlanBase[date].forEach(meal => {
               const mealItem = document.createElement('div');
@@ -306,28 +343,78 @@ async function applyBranding() {
               eventList.appendChild(mealItem);
             });
           }
-    
+        
           if (!EventBase[date] && !WorkoutBase[date] && !MealPlanBase[date]) {
             eventList.textContent = 'No hay eventos para esta fecha.';
           }
-    
-          addEventButton.onclick = () => {
-            const eventTitle = eventTitleInput.value;
+          function formatDateString(input) {
+            // Split the input into date and title parts
+            const [datePart, ...titleParts] = input.split(" ");
+            const [year, month, day] = datePart.split("-");
+          
+            // Join back the rest as the title
+            const title = titleParts.join(" ");
+          
+            // Format to dd/mm/yyyy
+            const formattedDate = `${day}/${month}/${year}`;
+          
+            // Return the final string
+            return `${formattedDate} ${title}`;
+          }
+        
+          addEventButton.onclick = async () => {
+            const eventTitle = eventTitleInput.value.trim();
             const eventType = eventTypeSelect.value;
-            if (eventTitle) {
-              const newEvent = `${eventType}: ${eventTitle}`;
-              if (!EventBase[date]) {
-                EventBase[date] = [];
-              }
-              EventBase[date].push(newEvent);
-    
-              console.log(`Nuevo evento agregado el ${date}: ${newEvent}`);
-              renderCalendar();
-              overlay.style.display = 'none';
-              eventPopup.style.display = 'none';
+        
+            if (!eventTitle) return;
+        
+            const newEvent = `${date} ${eventTitle}`;
+            if (!EventBase[date]) {
+              EventBase[date] = [];
+            }
+            EventBase[date].push(newEvent);
+        
+            console.log(`Nuevo evento agregado el ${date}: ${newEvent}`);
+            renderCalendar();
+            overlay.style.display = 'none';
+            eventPopup.style.display = 'none';
+        
+            const userId = transferreduserInfo;
+            if (!userId) {
+              console.error("No user ID available.");
+              return;
+            }
+        
+            let fieldToUpdate;
+            switch (eventType) {
+              case "Social":
+                fieldToUpdate = "SocialEvent";
+                break;
+              case "Workout":
+                fieldToUpdate = "WorkoutEvent";
+                break;
+              case "MealPlan":
+                fieldToUpdate = "MealPlanEvent";
+                break;
+              default:
+                console.error("Tipo de evento desconocido.");
+                return;
+            }
+        
+            const eventsDocRef = doc(db, "users", userId);
+            const output = formatDateString(newEvent);
+            try {
+              await updateDoc(eventsDocRef, {
+                [`Events.${fieldToUpdate}`]: arrayUnion(output)
+              }, { merge: true });
+        
+              console.log(`Evento agregado en '${fieldToUpdate}': ${output}`);
+            } catch (error) {
+              console.error("Error al guardar el evento en Firestore:", error);
             }
           };
         }
+        
     
         overlay.addEventListener('click', () => {
           overlay.style.display = 'none';
